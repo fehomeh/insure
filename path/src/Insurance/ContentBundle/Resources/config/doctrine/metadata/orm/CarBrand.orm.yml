@@ -1,0 +1,23 @@
+CarBrand:
+    type: entity
+    table: car_brand
+    id:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    fields:
+        value:
+            type: string
+            length: 30
+            fixed: true
+            nullable: false
+    oneToMany:
+        modelcar:
+            targetEntity: CarModel
+            mappedBy: brand
+            cascade: { persist, delete }
+    lifecycleCallbacks: {  }

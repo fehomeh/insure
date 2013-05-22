@@ -1,0 +1,44 @@
+CompanyRate:
+    type: entity
+    table: company_rate
+    id:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    fields:
+        value:
+            type: decimal
+            nullable: false
+    manyToOne:
+        rate:
+            targetEntity: Rate
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                rate_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        company:
+            targetEntity: InsuranceCompany
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                company_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        rateValue:
+            targetEntity: RateValue
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                rate_value_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

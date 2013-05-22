@@ -1,0 +1,30 @@
+InsuranceCompany:
+    type: entity
+    table: insurance_company
+    id:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+        description:
+            type: text
+            nullable: true
+        logo:
+            type: string
+            length: 200
+            fixed: false
+            nullable: true
+        defaultRate:
+            type: decimal
+            nullable: true
+            column: default_rate
+    lifecycleCallbacks: {  }

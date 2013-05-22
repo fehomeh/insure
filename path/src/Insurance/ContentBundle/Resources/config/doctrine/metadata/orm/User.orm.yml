@@ -1,0 +1,23 @@
+User:
+    type: entity
+    table: user
+    id:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    fields:
+        login:
+            type: string
+            length: 15
+            fixed: true
+            nullable: false
+        password:
+            type: string
+            length: 45
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

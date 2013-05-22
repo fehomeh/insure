@@ -1,0 +1,183 @@
+<?php
+
+namespace Insurance\ContentBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * InsuranceCompany
+ *
+ * @ORM\Table(name="insurance_company")
+ * @ORM\Entity
+ */
+class InsuranceCompany
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", length=200, nullable=true)
+     */
+    private $logo;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="default_rate", type="decimal", nullable=true)
+     */
+    private $defaultRate;
+
+    /**
+     *
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="CompanyRate", mappedBy="company")
+     */
+    private $companyRate;
+
+    /**
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Policy", mappedBy="company")
+     */
+    private $policy;
+
+    /**
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="InsuranceOrder", mappedBy="company")
+     */
+    private $order;
+
+    public function __construct()
+    {
+      $this->companyRate = new ArrayCollection();
+      $this->policy = new ArrayCollection();
+      $this->order = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return InsuranceCompany
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return InsuranceCompany
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     * @return InsuranceCompany
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set defaultRate
+     *
+     * @param float $defaultRate
+     * @return InsuranceCompany
+     */
+    public function setDefaultRate($defaultRate)
+    {
+        $this->defaultRate = $defaultRate;
+
+        return $this;
+    }
+
+    /**
+     * Get defaultRate
+     *
+     * @return float
+     */
+    public function getDefaultRate()
+    {
+        return $this->defaultRate;
+    }
+}

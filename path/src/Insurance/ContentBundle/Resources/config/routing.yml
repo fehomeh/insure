@@ -1,0 +1,3 @@
+insurance_content_homepage:
+    pattern:  /
+    defaults: { _controller: InsuranceContentBundle:Default:index }

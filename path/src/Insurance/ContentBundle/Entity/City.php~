@@ -1,0 +1,120 @@
+<?php
+
+namespace Insurance\ContentBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * City
+ *
+ * @ORM\Table(name="city")
+ * @ORM\Entity
+ */
+class City
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="string", length=80, nullable=false)
+     */
+    private $value;
+
+    /**
+     * @var \Region
+     *
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="city")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     * })
+     */
+    private $region;
+
+    /**
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="InsuranceOrder", mappedBy="city")
+     */
+    private $insuranceCity;
+
+    /**
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="InsuranceOrder", mappedBy="registerCity")
+     */
+    private $insuranceRegisterCity;
+
+    /**
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="InsuranceOrder", mappedBy="deliveryCity")
+     */
+    private $insuranceDeliveryCity;
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set value
+     *
+     * @param string $value
+     * @return City
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set region
+     *
+     * @param \Insurance\ContentBundle\Entity\Region $region
+     * @return City
+     */
+    public function setRegion(\Insurance\ContentBundle\Entity\Region $region = null)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return \Insurance\ContentBundle\Entity\Region
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+}

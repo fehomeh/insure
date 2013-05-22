@@ -1,0 +1,28 @@
+City:
+    type: entity
+    table: city
+    id:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    fields:
+        value:
+            type: string
+            length: 80
+            fixed: false
+            nullable: false
+    manyToOne:
+        region:
+            targetEntity: Region
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                region_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

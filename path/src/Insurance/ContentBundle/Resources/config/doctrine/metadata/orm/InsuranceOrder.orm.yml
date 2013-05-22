@@ -1,0 +1,169 @@
+InsuranceOrder:
+    type: entity
+    table: insurance_order
+    id:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    fields:
+        active:
+            type: boolean
+            nullable: false
+        activeFrom:
+            type: date
+            nullable: false
+            column: active_from
+        vinCode:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+            column: vin_code
+        carNumber:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+            column: car_number
+        surname:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+        firstname:
+            type: string
+            length: 30
+            fixed: false
+            nullable: false
+        middlename:
+            type: string
+            length: 30
+            fixed: false
+            nullable: false
+        documentType:
+            type: string
+            length: 1
+            fixed: true
+            nullable: false
+            column: document_type
+        documentSerie:
+            type: string
+            length: 2
+            fixed: true
+            nullable: true
+            column: document_serie
+        documentNumber:
+            type: string
+            length: 10
+            fixed: true
+            nullable: true
+            column: document_number
+        documentAuthority:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+            column: document_authority
+        documentDate:
+            type: date
+            nullable: false
+            column: document_date
+        phone:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+        registerAddress:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+            column: register_address
+        registerBuilding:
+            type: string
+            length: 5
+            fixed: false
+            nullable: false
+            column: register_building
+        deliveryAddress:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+            column: delivery_address
+        deliveryBuiding:
+            type: string
+            length: 5
+            fixed: false
+            nullable: false
+            column: delivery_buiding
+        payStatus:
+            type: boolean
+            nullable: false
+            column: pay_status
+        payType:
+            type: string
+            length: 20
+            fixed: false
+            nullable: false
+            column: pay_type
+    manyToOne:
+        carModel:
+            targetEntity: CarModel
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                car_model_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        company:
+            targetEntity: InsuranceCompany
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                company_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        city:
+            targetEntity: City
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                city_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        registerCity:
+            targetEntity: City
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                register_city_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        deliveryCity:
+            targetEntity: City
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                delivery_city_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

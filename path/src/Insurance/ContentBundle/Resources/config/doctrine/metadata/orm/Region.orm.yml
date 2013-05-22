@@ -1,0 +1,18 @@
+Region:
+    type: entity
+    table: region
+    id:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+    fields:
+        value:
+            type: string
+            length: 80
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }

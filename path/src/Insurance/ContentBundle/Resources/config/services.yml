@@ -1,0 +1,7 @@
+parameters:
+#    insurance_content.example.class: Insurance\ContentBundle\Example
+
+services:
+#    insurance_content.example:
+#        class: %insurance_content.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
