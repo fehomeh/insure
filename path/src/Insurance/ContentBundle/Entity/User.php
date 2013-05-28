@@ -3,6 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -131,7 +132,7 @@ class User
     /**
      * Get order
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrder()
     {

@@ -3,7 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * CarBrand
  *
@@ -99,7 +99,7 @@ class CarBrand
     /**
      * Get model
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModel()
     {

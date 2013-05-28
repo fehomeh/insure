@@ -29,11 +29,11 @@ class AppKernel extends Kernel
       new Knp\Bundle\MenuBundle\KnpMenuBundle(),
       new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
       new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-        new Application\Sonata\UserBundle\ApplicationSonataUserBundle()
-        );
+      new Application\Sonata\UserBundle\ApplicationSonataUserBundle()
+      );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
+            //$bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

@@ -3,6 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Region
@@ -99,7 +100,7 @@ class Region
     /**
      * Get city
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCity()
     {

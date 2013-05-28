@@ -3,7 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * InsuranceCompany
  *
@@ -207,7 +207,7 @@ class InsuranceCompany
     /**
      * Get companyRate
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCompanyRate()
     {
@@ -240,7 +240,7 @@ class InsuranceCompany
     /**
      * Get policy
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPolicy()
     {
@@ -273,7 +273,7 @@ class InsuranceCompany
     /**
      * Get order
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOrder()
     {
