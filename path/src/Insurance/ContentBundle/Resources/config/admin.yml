@@ -1,0 +1,8 @@
+services:
+    insurance.content.admin.insuranceCompany:
+        class: Insurance\ContentBundle\Admin\InsuranceCompanyAdmin
+        arguments: [ null, Insurance\ContentBundle\Entity\InsuranceCompany, SonataAdminBundle:CRUD ]
+        calls:
+            - []
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Insurance', label: 'Страхование' }
