@@ -225,4 +225,9 @@ class City
     {
         return $this->insuranceDeliveryCity;
     }
+
+    public function __toString()
+    {
+      return $this->getValue();
+    }
 }

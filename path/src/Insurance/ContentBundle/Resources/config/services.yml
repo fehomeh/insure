@@ -2,6 +2,28 @@ parameters:
 #    insurance_content.example.class: Insurance\ContentBundle\Example
 
 services:
-#    insurance_content.example:
-#        class: %insurance_content.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    insurance.content.admin.rate:
+        class: Insurance\ContentBundle\Admin\RateAdmin
+        arguments: [null, Insurance\ContentBundle\Entity\Rate, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Коэффициенты' }
+    insurance.content.admin.rateValue:
+        class: Insurance\ContentBundle\Admin\RateValueAdmin
+        arguments: [null, Insurance\ContentBundle\Entity\RateValue, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Значение коэффициента' }
+    insurance.content.admin.companyRate:
+        class: Insurance\ContentBundle\Admin\CompanyRateAdmin
+        arguments: [null, Insurance\ContentBundle\Entity\CompanyRate, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Коэффициенты компании' }
+    insurance.content.admin.city:
+        class: Insurance\ContentBundle\Admin\CityAdmin
+        arguments: [null, Insurance\ContentBundle\Entity\City, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Регионы', label: 'Города' }
+    insurance.content.admin.region:
+        class: Insurance\ContentBundle\Admin\RegionAdmin
+        arguments: [null, Insurance\ContentBundle\Entity\Region, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Регионы', label: 'Регионы' }

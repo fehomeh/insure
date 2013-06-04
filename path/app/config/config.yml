@@ -1,7 +1,6 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }
@@ -19,7 +18,7 @@ framework:
     trusted_proxies: ~
     session:         ~
     fragments:       ~
-    translator: ~
+    translator: { fallback: %locale% }
 
 # Twig Configuration
 twig:
@@ -90,7 +89,7 @@ sonata_block:
         #sonata.media.block.feature_media:
 
 sonata_admin:
-    title:      Admin Panel
+    title:      Административный раздел
     title_logo: /bundles/sonataadmin/logo_title.png
     templates:
         # default global templates
@@ -105,6 +104,15 @@ sonata_admin:
         blocks:
             # display a dashboard block
             - { position: left, type: sonata.admin.block.admin_list }
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        sonata.block.service.text:
+        sonata.block.service.rss:
+
 
 sonata_doctrine_orm_admin:
     # default value is null, so doctrine uses the value defined in the configuration

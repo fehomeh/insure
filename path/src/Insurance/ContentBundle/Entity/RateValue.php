@@ -106,4 +106,9 @@ class RateValue
     {
         return $this->companyRate;
     }
+
+    public function __toString()
+    {
+      return $this->getValue();
+    }
 }

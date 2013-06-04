@@ -106,4 +106,9 @@ class Region
     {
         return $this->city;
     }
+
+    public function __toString()
+    {
+      return $this->getValue();
+    }
 }
