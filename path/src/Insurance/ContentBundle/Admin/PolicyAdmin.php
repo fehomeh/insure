@@ -13,7 +13,8 @@ class PolicyAdmin extends Admin {
 
    protected function configureFormFields(FormMapper $form)
    {
-     $form->add('value', null, array('label' => 'Номер полиса'))
+     $form->add('serie', null, array('label' => 'Серия полиса'))
+       ->add('value', null, array('label' => 'Номер полиса'))
        ->add('company', null, array('label' => 'Страховая компания'))
        ->add('status', null, array('label' => 'Статус'));
    }
@@ -21,6 +22,7 @@ class PolicyAdmin extends Admin {
    protected function configureListFields(ListMapper $list)
    {
      $list->addIdentifier('id')
+       ->addIdentifier('serie', null, array('label' => 'Серия полиса'))
        ->addIdentifier('value', null, array('label' => 'Номер полиса'))
        ->addIdentifier('company', null, array('label' => 'Страховая компания'))
        ->addIdentifier('status', null, array('label' => 'Статус'));
@@ -28,7 +30,8 @@ class PolicyAdmin extends Admin {
 
    protected function configureDatagridFilters(DatagridMapper $filter)
    {
-     $filter->add('value', null, array('label' => 'Номер полиса'))
+     $filter->add('serie', null, array('label' => 'Серия полиса'))
+       ->add('value', null, array('label' => 'Номер полиса'))
        ->add('company', null, array('label' => 'Страховая компания'));
    }
 }

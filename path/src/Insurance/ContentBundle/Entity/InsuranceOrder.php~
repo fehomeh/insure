@@ -136,9 +136,9 @@ class InsuranceOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="delivery_buiding", type="string", length=5, nullable=false)
+     * @ORM\Column(name="delivery_building", type="string", length=5, nullable=false)
      */
-    private $deliveryBuiding;
+    private $deliveryBuilding;
 
     /**
      * @var boolean
@@ -165,9 +165,9 @@ class InsuranceOrder
     private $carModel;
 
     /**
-     * @var \User
+     * @var \Application\Sonata\UserBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="order")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="order")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })

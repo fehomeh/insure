@@ -3,6 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * RateValue
@@ -71,5 +72,43 @@ class RateValue
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Add companyRate
+     *
+     * @param \Insurance\ContentBundle\Entity\CompanyRate $companyRate
+     * @return RateValue
+     */
+    public function addCompanyRate(\Insurance\ContentBundle\Entity\CompanyRate $companyRate)
+    {
+        $this->companyRate[] = $companyRate;
+
+        return $this;
+    }
+
+    /**
+     * Remove companyRate
+     *
+     * @param \Insurance\ContentBundle\Entity\CompanyRate $companyRate
+     */
+    public function removeCompanyRate(\Insurance\ContentBundle\Entity\CompanyRate $companyRate)
+    {
+        $this->companyRate->removeElement($companyRate);
+    }
+
+    /**
+     * Get companyRate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompanyRate()
+    {
+        return $this->companyRate;
+    }
+
+    public function __toString()
+    {
+      return $this->getValue();
     }
 }

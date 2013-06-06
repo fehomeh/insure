@@ -22,6 +22,14 @@ class Policy
     private $id;
 
     /**
+     *
+     * @var string
+     *
+     * @ORM\Column(name="serie", type="string", length=20, nullable=false)
+     */
+    private $serie;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=20, nullable=false)
@@ -124,5 +132,28 @@ class Policy
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * Set serie
+     *
+     * @param string $serie
+     * @return Policy
+     */
+    public function setSerie($serie)
+    {
+        $this->serie = $serie;
+
+        return $this;
+    }
+
+    /**
+     * Get serie
+     *
+     * @return string 
+     */
+    public function getSerie()
+    {
+        return $this->serie;
     }
 }

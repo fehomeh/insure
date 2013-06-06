@@ -3,7 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * CarModel
  *
@@ -104,5 +104,38 @@ class CarModel
     public function getBrand()
     {
         return $this->brand;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $order
+     * @return CarModel
+     */
+    public function addOrder(\Insurance\ContentBundle\Entity\InsuranceOrder $order)
+    {
+        $this->order[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $order
+     */
+    public function removeOrder(\Insurance\ContentBundle\Entity\InsuranceOrder $order)
+    {
+        $this->order->removeElement($order);
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

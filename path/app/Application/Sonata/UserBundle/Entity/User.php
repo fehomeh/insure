@@ -29,6 +29,17 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var \Insure\CalculatorBundle\Entity\News
+     *
+     * @ORM\OneToMany(tagetEntity="Insure\CalculatorBundle\Entity\News", mappedBy="user")
+     */
+    protected $news;
+
+    public function __construct()
+    {
+      $this->news = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    /**
      * Get id
      *
      * @return integer $id

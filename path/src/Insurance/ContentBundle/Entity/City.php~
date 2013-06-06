@@ -3,7 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * City
  *
@@ -116,5 +116,118 @@ class City
     public function getRegion()
     {
         return $this->region;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->insuranceCity = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->insuranceRegisterCity = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->insuranceDeliveryCity = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add insuranceCity
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $insuranceCity
+     * @return City
+     */
+    public function addInsuranceCity(\Insurance\ContentBundle\Entity\InsuranceOrder $insuranceCity)
+    {
+        $this->insuranceCity[] = $insuranceCity;
+
+        return $this;
+    }
+
+    /**
+     * Remove insuranceCity
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $insuranceCity
+     */
+    public function removeInsuranceCity(\Insurance\ContentBundle\Entity\InsuranceOrder $insuranceCity)
+    {
+        $this->insuranceCity->removeElement($insuranceCity);
+    }
+
+    /**
+     * Get insuranceCity
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInsuranceCity()
+    {
+        return $this->insuranceCity;
+    }
+
+    /**
+     * Add insuranceRegisterCity
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $insuranceRegisterCity
+     * @return City
+     */
+    public function addInsuranceRegisterCity(\Insurance\ContentBundle\Entity\InsuranceOrder $insuranceRegisterCity)
+    {
+        $this->insuranceRegisterCity[] = $insuranceRegisterCity;
+
+        return $this;
+    }
+
+    /**
+     * Remove insuranceRegisterCity
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $insuranceRegisterCity
+     */
+    public function removeInsuranceRegisterCity(\Insurance\ContentBundle\Entity\InsuranceOrder $insuranceRegisterCity)
+    {
+        $this->insuranceRegisterCity->removeElement($insuranceRegisterCity);
+    }
+
+    /**
+     * Get insuranceRegisterCity
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInsuranceRegisterCity()
+    {
+        return $this->insuranceRegisterCity;
+    }
+
+    /**
+     * Add insuranceDeliveryCity
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $insuranceDeliveryCity
+     * @return City
+     */
+    public function addInsuranceDeliveryCity(\Insurance\ContentBundle\Entity\InsuranceOrder $insuranceDeliveryCity)
+    {
+        $this->insuranceDeliveryCity[] = $insuranceDeliveryCity;
+
+        return $this;
+    }
+
+    /**
+     * Remove insuranceDeliveryCity
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $insuranceDeliveryCity
+     */
+    public function removeInsuranceDeliveryCity(\Insurance\ContentBundle\Entity\InsuranceOrder $insuranceDeliveryCity)
+    {
+        $this->insuranceDeliveryCity->removeElement($insuranceDeliveryCity);
+    }
+
+    /**
+     * Get insuranceDeliveryCity
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInsuranceDeliveryCity()
+    {
+        return $this->insuranceDeliveryCity;
+    }
+
+    public function __toString()
+    {
+      return $this->getValue();
     }
 }

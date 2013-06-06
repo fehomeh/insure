@@ -32,3 +32,8 @@ services:
         arguments: [null, Insurance\ContentBundle\Entity\Region, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Регионы', label: 'Регионы' }
+    insurance.content.admin.insuranceOrder:
+        class: Insurance\ContentBundle\Admin\InsuranceOrderAdmin
+        arguments: [null, Insurance\ContentBundle\Entity\InsuranceOrder, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Заказы' }

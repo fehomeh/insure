@@ -3,7 +3,7 @@
 namespace Insurance\ContentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * InsuranceCompany
  *
@@ -179,5 +179,109 @@ class InsuranceCompany
     public function getDefaultRate()
     {
         return $this->defaultRate;
+    }
+
+    /**
+     * Add companyRate
+     *
+     * @param \Insurance\ContentBundle\Entity\CompanyRate $companyRate
+     * @return InsuranceCompany
+     */
+    public function addCompanyRate(\Insurance\ContentBundle\Entity\CompanyRate $companyRate)
+    {
+        $this->companyRate[] = $companyRate;
+
+        return $this;
+    }
+
+    /**
+     * Remove companyRate
+     *
+     * @param \Insurance\ContentBundle\Entity\CompanyRate $companyRate
+     */
+    public function removeCompanyRate(\Insurance\ContentBundle\Entity\CompanyRate $companyRate)
+    {
+        $this->companyRate->removeElement($companyRate);
+    }
+
+    /**
+     * Get companyRate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompanyRate()
+    {
+        return $this->companyRate;
+    }
+
+    /**
+     * Add policy
+     *
+     * @param \Insurance\ContentBundle\Entity\Policy $policy
+     * @return InsuranceCompany
+     */
+    public function addPolicy(\Insurance\ContentBundle\Entity\Policy $policy)
+    {
+        $this->policy[] = $policy;
+
+        return $this;
+    }
+
+    /**
+     * Remove policy
+     *
+     * @param \Insurance\ContentBundle\Entity\Policy $policy
+     */
+    public function removePolicy(\Insurance\ContentBundle\Entity\Policy $policy)
+    {
+        $this->policy->removeElement($policy);
+    }
+
+    /**
+     * Get policy
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPolicy()
+    {
+        return $this->policy;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $order
+     * @return InsuranceCompany
+     */
+    public function addOrder(\Insurance\ContentBundle\Entity\InsuranceOrder $order)
+    {
+        $this->order[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $order
+     */
+    public function removeOrder(\Insurance\ContentBundle\Entity\InsuranceOrder $order)
+    {
+        $this->order->removeElement($order);
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    public function __toString()
+    {
+      return $this->getName();
     }
 }
