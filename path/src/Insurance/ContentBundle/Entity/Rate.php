@@ -136,6 +136,7 @@ class Rate
     {
         return $this->companyRate;
     }
+
     public function __toString()
     {
       return $this->getValue();

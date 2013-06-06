@@ -7,11 +7,16 @@ services:
         arguments: [null, Insurance\ContentBundle\Entity\Rate, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Коэффициенты' }
+    insurance.content.admin.insuranceCompany:
+        class: Insurance\ContentBundle\Admin\InsuranceCompanyAdmin
+        arguments: [null, Insurance\ContentBundle\Entity\InsuranceCompany, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Страховые компании' }
     insurance.content.admin.rateValue:
         class: Insurance\ContentBundle\Admin\RateValueAdmin
         arguments: [null, Insurance\ContentBundle\Entity\RateValue, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Значение коэффициента' }
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false }
     insurance.content.admin.companyRate:
         class: Insurance\ContentBundle\Admin\CompanyRateAdmin
         arguments: [null, Insurance\ContentBundle\Entity\CompanyRate, SonataAdminBundle:CRUD]

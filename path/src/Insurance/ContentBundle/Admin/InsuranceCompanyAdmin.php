@@ -6,7 +6,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\AdminBundle\Admin\AdminInterface;
+//use Sonata\AdminBundle\Admin\AdminInterface;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 
 class InsuranceCompanyAdmin extends Admin {
@@ -49,13 +49,13 @@ class InsuranceCompanyAdmin extends Admin {
     $filter->add('name', null, array('label' => 'Название компании'));
   }
 
-  protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+  /*protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
   {
     $menu->addChild($action == 'edit' ? 'Просмотр компании' : 'Редактирование компании',
       array('uri' => $this->generateUrl($action == 'edit' ? 'show' : 'edit',
         array('id' => $this->getRequest()->get('id'))))
     );
-  }
+  }*/
 }
 
 ?>
