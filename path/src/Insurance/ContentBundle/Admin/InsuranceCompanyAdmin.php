@@ -21,11 +21,11 @@ class InsuranceCompanyAdmin extends Admin {
 
   protected function configureFormFields(FormMapper $form)
   {
-    $form->add('name', null, array('label' => 'Название'));
-      //->add('description', null, array('label' => 'Описание'))
-      //->add('logo', null, array('label' => 'Логотип'))
-      //->add('defaultRate', null, array('label' => 'Коэффициент по умолчанию'));
-      /*->add('companyRate', 'sonata_type_collection', array(
+    $form->add('name', null, array('label' => 'Название'))
+      ->add('description', null, array('label' => 'Описание'))
+      ->add('logo', null, array('label' => 'Логотип'))
+      ->add('defaultRate', null, array('label' => 'Коэффициент по умолчанию'))
+      ->add('companyRate', 'sonata_type_collection', array(
         'label' => 'Коэффициенты',
         'by_reference' => false,
       ), array(
@@ -33,8 +33,8 @@ class InsuranceCompanyAdmin extends Admin {
         //'sortable' => 'pos',
         'inline' => 'table',
         'targetEntity' => 'Insurance\ContentBundle\Entity\CompanyRate',
-      ))*/
-      //->add('policy', null, array('label' => 'Номер полиса',));
+      ))
+      ->add('policy', null, array('label' => 'Номер полиса',));
   }
 
   protected function configureListFields(ListMapper $list)

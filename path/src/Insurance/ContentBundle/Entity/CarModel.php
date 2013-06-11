@@ -138,4 +138,19 @@ class CarModel
     {
         return $this->order;
     }
+    /**
+     * This function is for use in form with entity type to display model and brand in one field
+     *
+     * @return string
+     */
+    public function getBrandCar()
+    {
+
+      return $this->getValue() . ' (' . $this->getBrand()->getValue() . ')';
+    }
+
+    public function __toString()
+    {
+      return $this->getValue();
+    }
 }

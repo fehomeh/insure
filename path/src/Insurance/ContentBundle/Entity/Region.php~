@@ -109,6 +109,6 @@ class Region
 
     public function __toString()
     {
-      return $this->getValue();
+      return ($this->getValue()?$this->getValue():'');
     }
 }

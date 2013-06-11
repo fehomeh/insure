@@ -29,6 +29,19 @@ class InsuranceOrder
     private $active;
 
     /**
+     *
+     * @var string (W -waiting, P - paid, C - confirmed)
+     * @ORM\Column(name="status", type="string", length=1, nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var float
+     * @ORM\Column(name="price", type="decimal", scale=2, nullable=false)
+     */
+    private $price;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="active_from", type="date", nullable=false)
@@ -817,10 +830,56 @@ class InsuranceOrder
     /**
      * Get deliveryBuilding
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryBuilding()
     {
         return $this->deliveryBuilding;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return InsuranceOrder
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return InsuranceOrder
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

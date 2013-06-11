@@ -230,4 +230,9 @@ class City
     {
       return $this->getValue();
     }
+
+    public function getCityRegion()
+    {
+      return $this->getValue() . '(' . $this->getRegion()->getValue() . ')';
+    }
 }

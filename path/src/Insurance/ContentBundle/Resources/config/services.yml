@@ -37,3 +37,8 @@ services:
         arguments: [null, Insurance\ContentBundle\Entity\InsuranceOrder, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Заказы' }
+    insurance.block.service.policy:
+       class: Insurance\ContentBundle\Block\PolicyBlockService
+       arguments: ['sonata.block.service.policy', '@templating']
+       tags:
+           - { name: sonata.block }
