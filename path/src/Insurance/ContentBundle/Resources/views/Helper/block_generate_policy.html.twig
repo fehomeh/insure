@@ -1,5 +1,13 @@
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
+{% set message = app.session.flashbag.get('generate_success_message')%}
+{% if message %}
+<div class="success">{% for m in message %} {{m}} {% endfor %}</div>
+{% endif %}
     <a class="btn" href="{{path('generate_polices')}}">Сгенерировать полисы</a>
+{% endblock %}
+{%block stylesheets%}
+    <link rel="stylesheet" href="{{ asset('bundles/insurance/css/block_style.css') }}" type="text/css" media="all">
+    {{parent()}}
 {% endblock %}

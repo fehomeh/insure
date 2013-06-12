@@ -34,7 +34,7 @@ class InsuranceCompanyAdmin extends Admin {
         'inline' => 'table',
         'targetEntity' => 'Insurance\ContentBundle\Entity\CompanyRate',
       ))
-      ->add('policy', null, array('label' => 'Номер полиса',));
+      ->add('policy', null, array('label' => 'Номер полиса', 'required' => false, 'disabled' => true));
   }
 
   protected function configureListFields(ListMapper $list)

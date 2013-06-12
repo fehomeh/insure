@@ -1,6 +1,9 @@
 {# empty Twig template #}
 {% extends 'SonataAdminBundle::standard_layout.html.twig' %}
 {% block content %}
-{{ form_widget(form) }}
-{{ form_rest(form) }}
+  <form action="{{ path('generate_polices') }}" method="POST">
+    {{ form_widget(form) }}
+      <button class="btn btn-primary" name="generate" type="submit" value>{{ 'Generate' | trans }}</button>
+      <a href="{{path('sonata_admin_dashboard')}}">{{ 'Back' | trans }}</a>
+  </form>
 {% endblock %}

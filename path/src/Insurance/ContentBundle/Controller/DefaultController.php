@@ -16,6 +16,6 @@ class DefaultController extends Controller
       //$em->flush();
       $productRep = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region');
       $reg = $productRep->find('1');
-        return $this->render('InsuranceContentBundle:Default:index.html.twig', array('name' => $name, 'id' => $reg->getId()));
+        return $this->render('InsuranceContentBundle:Default:index.html.twig', array('name' => $name, 'id' => 1));
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Insurance\ContentBundle\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="policy")
  * @ORM\Entity
+ * @UniqueEntity({"serie", "value"})
  */
 class Policy
 {
@@ -33,6 +37,7 @@ class Policy
      * @var string
      *
      * @ORM\Column(name="value", type="string", length=20, nullable=false)
+     * @Assert\NotBlank()
      */
     private $value;
 
@@ -40,6 +45,7 @@ class Policy
      * @var boolean
      *
      * @ORM\Column(name="status", type="boolean", nullable=false)
+     * @Assert\NotBlank()
      */
     private $status;
 
@@ -155,5 +161,9 @@ class Policy
     public function getSerie()
     {
         return $this->serie;
+    }
+
+    public function __toString() {
+        return strtoupper($this->getSerie()) . ' ' . $this->getValue();
     }
 }
