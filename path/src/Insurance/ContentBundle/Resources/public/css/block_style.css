@@ -1,0 +1,12 @@
+.cms-block .success {
+  border: 1px solid #befdbf;
+  background: #effdef;
+  color: green;
+  margin: 10px 5px;
+  padding: 5px;
+}
+.cms-block {
+  border: 1px solid #cfcfcf;
+  border-radius: 5px;
+  padding: 5px;
+}
