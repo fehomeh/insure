@@ -18,4 +18,22 @@ class DefaultController extends Controller
       $reg = $productRep->find('1');
         return $this->render('InsuranceContentBundle:Default:index.html.twig', array('name' => $name, 'id' => 1));
     }
+    
+    public function sendAction()
+    {
+        $name = 'sly';
+        $message = \Swift_Message::newInstance()
+        ->setSubject('Hello Email')
+        ->setFrom('root@localhost')
+        ->setTo('fomenkos@fomenko-s')
+        ->setBody(
+            $this->renderView(
+                'InsuranceContentBundle:Default:ask_notify.html.twig',
+                array('name' => $name)
+            )
+        );
+    $this->get('mailer')->send($message);
+
+    return $this->render('InsuranceContentBundle:Default:index.html.twig',  array('name' => $name, 'id' => 1));
+    }
 }

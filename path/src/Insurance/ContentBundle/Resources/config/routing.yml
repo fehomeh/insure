@@ -4,3 +4,6 @@ insurance_content_homepage:
 generate_polices:
     pattern: /admin/generate_polices
     defaults: { _controller: InsuranceContentBundle:Helper:generatePolicy }
+mail_send:
+    pattern: /notify
+    defaults: { _controller: InsuranceContentBundle:Default:send }

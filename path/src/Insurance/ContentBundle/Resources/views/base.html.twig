@@ -4,10 +4,22 @@
     {% block head %}{% endblock %}
     <title>{% block title %}Hello!{% endblock %}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% block scripts %}
+    <script>
+      var dojoConfig = {
+      async: true
+      }
+    </script>
+    {% endblock %}
   </head>
   <body>
     <div>{% block content %}{% endblock %}
     element was added to DB with ID: {{ id }}
     </div>
+      <input type="text" id="phone_no" placeholder="+(xxxxx)xxx-xx-xx">
+      {% block final_scripts %}
+      <script src="//ajax.googleapis.com/ajax/libs/dojo/1.9.0/dojo/dojo.js"></script>
+
+      {% endblock %}
   </body>
 </html>
