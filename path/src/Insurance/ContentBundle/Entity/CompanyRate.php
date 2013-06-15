@@ -24,7 +24,7 @@ class CompanyRate
     /**
      * @var float
      *
-     * @ORM\Column(name="value", type="decimal", nullable=false)
+     * @ORM\Column(name="value", type="decimal", nullable=false, precision=8, scale=2)
      */
     private $value;
 
@@ -164,6 +164,6 @@ class CompanyRate
 
     public function __toString()
     {
-      return ($this->getRate()?$this->getRate():'');
+      return ($this->getRate()?(string)$this->getRate():'aaa');
     }
 }

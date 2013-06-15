@@ -42,6 +42,19 @@ class InsuranceOrder
     private $price;
 
     /**
+     *
+     * @var float
+     * @ORM\Column(name="price_dgo", type="decimal", precision=8, scale=2)
+     */
+    private $priceDgo;
+
+    /**
+     *
+     * @var float
+     * @ORM\Column(name="price_ns", type="decimal", precision=8, scale=2)
+     */
+    private $priceNs;
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="active_from", type="date", nullable=false)
@@ -858,5 +871,28 @@ class InsuranceOrder
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return InsuranceOrder
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 }

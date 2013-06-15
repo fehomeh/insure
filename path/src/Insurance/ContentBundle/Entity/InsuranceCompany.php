@@ -36,6 +36,26 @@ class InsuranceCompany
     private $description;
 
     /**
+     *
+     * @var string
+     * @ORM\Column(name="requisites", type="text", nullable=true)
+     */
+    private $requisites;
+
+    /**
+     *
+     * @var string
+     * @ORM\Column(name="insurer_code", type="string", length=10, nullable=true)
+     */
+    private $insurerCode;
+
+    /**
+     *
+     * @var string
+     * @ORM\Column(name="franchise", type="string", length=100)
+     */
+    private $franchise;
+    /**
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=200, nullable=true)
@@ -45,7 +65,7 @@ class InsuranceCompany
     /**
      * @var float
      *
-     * @ORM\Column(name="default_rate", type="decimal", nullable=true)
+     * @ORM\Column(name="default_rate", type="decimal", precision=8, scale=2, nullable=true)
      */
     private $defaultRate;
 
@@ -283,5 +303,74 @@ class InsuranceCompany
     public function __toString()
     {
       return ($this->getName()?$this->getName():'');
+    }
+
+    /**
+     * Set requisites
+     *
+     * @param string $requisites
+     * @return InsuranceCompany
+     */
+    public function setRequisites($requisites)
+    {
+        $this->requisites = $requisites;
+
+        return $this;
+    }
+
+    /**
+     * Get requisites
+     *
+     * @return string
+     */
+    public function getRequisites()
+    {
+        return $this->requisites;
+    }
+
+    /**
+     * Set insurerCode
+     *
+     * @param string $insurerCode
+     * @return InsuranceCompany
+     */
+    public function setInsurerCode($insurerCode)
+    {
+        $this->insurerCode = $insurerCode;
+
+        return $this;
+    }
+
+    /**
+     * Get insurerCode
+     *
+     * @return string
+     */
+    public function getInsurerCode()
+    {
+        return $this->insurerCode;
+    }
+
+    /**
+     * Set franchise
+     *
+     * @param \stringe $franchise
+     * @return InsuranceCompany
+     */
+    public function setFranchise($franchise)
+    {
+        $this->franchise = $franchise;
+
+        return $this;
+    }
+
+    /**
+     * Get franchise
+     *
+     * @return \string
+     */
+    public function getFranchise()
+    {
+        return $this->franchise;
     }
 }

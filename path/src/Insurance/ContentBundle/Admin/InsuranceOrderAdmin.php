@@ -13,8 +13,11 @@ class InsuranceOrderAdmin extends Admin {
   public function configureFormFields(FormMapper $form)
   {
     $form->add('active', null, array('label' => 'Активность', 'required'=>false))
-      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',)))
+      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден', 'label'
+        => 'Статус платежа')))
       ->add('price', null, array('label' => 'Цена'))
+      ->add('priceDgo', null, array('label' => 'Цена ДГО'))
+      ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
       ->add('city', null, array('label' => 'Город'))
@@ -45,9 +48,13 @@ class InsuranceOrderAdmin extends Admin {
   public function configureListFields(ListMapper $list)
   {
     $list->addIdentifier('id')
-      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',)))
+      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),
+        'label' => 'Статус платежа'))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
+      ->add('price', null, array('label' => 'Цена'))
+      ->add('priceDgo', null, array('label' => 'Цена ДГО'))
+      ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('city', null, array('label' => 'Город'))
       ->add('carModel', null, array('label' => 'Модель авто', 'property' => 'value'))
       ->add('surname', null, array('label' => 'Фамилия'))
@@ -62,7 +69,8 @@ class InsuranceOrderAdmin extends Admin {
   public function configureDatagridFilters(DatagridMapper $filter)
   {
     $filter->add('id')
-      ->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',)))
+      ->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),'label'
+        => 'Статус платежа'))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
       ->add('city', null, array('label' => 'Город'))
@@ -72,13 +80,15 @@ class InsuranceOrderAdmin extends Admin {
       ->add('middlename', null, array('label' => 'Отчество'))
       ->add('phone', null, array('label' => 'Телефон'))
       ->add('price', null, array('label' => 'Цена'))
+      ->add('priceDgo', null, array('label' => 'Цена ДГО'))
+      ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
       ->add('payType', null, array('label' => 'Тип оплаты'));
   }
   public function configureShowFields(ShowMapper $filter)
   {
     $filter->add('id')
-      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),'label' => 'Статус'))
+      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),'label' => 'Статус',))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
       ->add('city', null, array('label' => 'Город'))
@@ -88,6 +98,8 @@ class InsuranceOrderAdmin extends Admin {
       ->add('middlename', null, array('label' => 'Отчество'))
       ->add('phone', null, array('label' => 'Телефон'))
       ->add('price', null, array('label' => 'Цена'))
+      ->add('priceDgo', null, array('label' => 'Цена ДГО'))
+      ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
       ->add('payType', null, array('label' => 'Тип оплаты'));
   }

@@ -14,7 +14,7 @@ class CompanyRateAdmin extends Admin {
   protected function configureFormFields(FormMapper $form)
   {
     $form->add('value', null, array('label' => 'Значение'))
-    ->add('rate', 'sonata_type_model_list', array('label' => 'Коэф-т',))
+    ->add('rate', 'sonata_type_model_list', array('label' => 'Коэф-т', ))
     ->add('company', null, array('label' => 'Страховая'))
     ->add('rateValue', 'sonata_type_model_list', array('label' => 'Значение коэф-та',));
   }

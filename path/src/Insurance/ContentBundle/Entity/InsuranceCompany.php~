@@ -36,6 +36,26 @@ class InsuranceCompany
     private $description;
 
     /**
+     *
+     * @var string
+     * @ORM\Column(name="requisites", type="text", nullable=true)
+     */
+    private $requisites;
+
+    /**
+     *
+     * @var string
+     * @ORM\Column(name="insurer_code", type="string", length=10, nullable=true)
+     */
+    private $insurerCode;
+
+    /**
+     *
+     * @var string
+     * @ORM\Column(name="franchise", type="stringe", length=100)
+     */
+    private $franchise;
+    /**
      * @var string
      *
      * @ORM\Column(name="logo", type="string", length=200, nullable=true)
@@ -45,7 +65,7 @@ class InsuranceCompany
     /**
      * @var float
      *
-     * @ORM\Column(name="default_rate", type="decimal", nullable=true)
+     * @ORM\Column(name="default_rate", type="decimal", precision=8, scale=2, nullable=true)
      */
     private $defaultRate;
 
