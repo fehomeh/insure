@@ -354,7 +354,7 @@ class InsuranceCompany
     /**
      * Set franchise
      *
-     * @param \stringe $franchise
+     * @param string $franchise
      * @return InsuranceCompany
      */
     public function setFranchise($franchise)
@@ -367,7 +367,7 @@ class InsuranceCompany
     /**
      * Get franchise
      *
-     * @return \string
+     * @return string
      */
     public function getFranchise()
     {
