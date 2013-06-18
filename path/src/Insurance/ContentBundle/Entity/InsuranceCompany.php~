@@ -52,7 +52,7 @@ class InsuranceCompany
     /**
      *
      * @var string
-     * @ORM\Column(name="franchise", type="stringe", length=100)
+     * @ORM\Column(name="franchise", type="string", length=100)
      */
     private $franchise;
     /**
@@ -303,5 +303,74 @@ class InsuranceCompany
     public function __toString()
     {
       return ($this->getName()?$this->getName():'');
+    }
+
+    /**
+     * Set requisites
+     *
+     * @param string $requisites
+     * @return InsuranceCompany
+     */
+    public function setRequisites($requisites)
+    {
+        $this->requisites = $requisites;
+
+        return $this;
+    }
+
+    /**
+     * Get requisites
+     *
+     * @return string
+     */
+    public function getRequisites()
+    {
+        return $this->requisites;
+    }
+
+    /**
+     * Set insurerCode
+     *
+     * @param string $insurerCode
+     * @return InsuranceCompany
+     */
+    public function setInsurerCode($insurerCode)
+    {
+        $this->insurerCode = $insurerCode;
+
+        return $this;
+    }
+
+    /**
+     * Get insurerCode
+     *
+     * @return string
+     */
+    public function getInsurerCode()
+    {
+        return $this->insurerCode;
+    }
+
+    /**
+     * Set franchise
+     *
+     * @param string $franchise
+     * @return InsuranceCompany
+     */
+    public function setFranchise($franchise)
+    {
+        $this->franchise = $franchise;
+
+        return $this;
+    }
+
+    /**
+     * Get franchise
+     *
+     * @return string
+     */
+    public function getFranchise()
+    {
+        return $this->franchise;
     }
 }

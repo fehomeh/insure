@@ -59,7 +59,12 @@ class Policy
      */
     private $company;
 
-
+    /**
+     * @var ArrayCollection
+     * 
+     * @ORM\OneToOne(targetEntity="InsuranceOrder", inversedBy="policy")
+     */
+    private $order;
 
     /**
      * Get id
@@ -165,5 +170,28 @@ class Policy
 
     public function __toString() {
         return strtoupper($this->getSerie()) . ' ' . $this->getValue();
+    }
+
+    /**
+     * Set order
+     *
+     * @param \Insurance\ContentBundle\Entity\InsuranceOrder $order
+     * @return Policy
+     */
+    public function setOrder(\Insurance\ContentBundle\Entity\InsuranceOrder $order = null)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Insurance\ContentBundle\Entity\InsuranceOrder 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

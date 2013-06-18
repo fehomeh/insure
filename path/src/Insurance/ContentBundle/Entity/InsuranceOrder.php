@@ -193,7 +193,7 @@ class InsuranceOrder
     /**
      * @var \Application\Sonata\UserBundle\Entity\User
      *
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", inversedBy="order")
+     * @ORM\ManyToOne(targetEntity="\Application\Sonata\UserBundle\Entity\User", inversedBy="insuranceOrder")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
@@ -240,6 +240,15 @@ class InsuranceOrder
      */
     private $deliveryCity;
 
+    /**
+     * @var \Policy
+     * @ORM\OneToOne(targetEntity="Policy", inversedBy="order")
+     * @ORM\JoinColumns({
+     * @ORM\JoinColumn(name="policy_id", referencedColumnName="id")
+     * })
+     *
+     */
+    private $policy;
 
 
     /**
@@ -713,29 +722,6 @@ class InsuranceOrder
     }
 
     /**
-     * Set user
-     *
-     * @param \Insurance\ContentBundle\Entity\User $user
-     * @return InsuranceOrder
-     */
-    public function setUser(\Insurance\ContentBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Insurance\ContentBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Set company
      *
      * @param \Insurance\ContentBundle\Entity\InsuranceCompany $company
@@ -940,5 +926,51 @@ class InsuranceOrder
     public function getPriceNs()
     {
         return $this->priceNs;
+    }
+
+    /**
+     * Set policy
+     *
+     * @param \Insurance\ContentBundle\Entity\Policy $policy
+     * @return InsuranceOrder
+     */
+    public function setPolicy(\Insurance\ContentBundle\Entity\Policy $policy = null)
+    {
+        $this->policy = $policy;
+
+        return $this;
+    }
+
+    /**
+     * Get policy
+     *
+     * @return \Insurance\ContentBundle\Entity\Policy 
+     */
+    public function getPolicy()
+    {
+        return $this->policy;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @return InsuranceOrder
+     */
+    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

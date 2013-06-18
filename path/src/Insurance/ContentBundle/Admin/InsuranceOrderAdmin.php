@@ -52,7 +52,7 @@ class InsuranceOrderAdmin extends Admin {
         'label' => 'Статус платежа'))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
-      ->add('price', null, array('label' => 'Цена'))
+      ->add('policy', null, array('label' => 'Номер полиса'))
       ->add('priceDgo', null, array('label' => 'Цена ДГО'))
       ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('city', null, array('label' => 'Город'))
@@ -102,5 +102,15 @@ class InsuranceOrderAdmin extends Admin {
       ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
       ->add('payType', null, array('label' => 'Тип оплаты'));
+  }
+
+  public function prePersist($object) {
+
+    $policy = $this->getConfigurationPool()->getContainer()->get('doctrine')
+            ->getRepository('InsuranceContentBundle:Policy')
+            ->findOneBy(array('status' => 0, 'company' => $object->getCompany()), array('id' => 'ASC'));
+    $object->setPolicy($policy);
+    $policy->setStatus(1);
+    parent::prePersist($object);
   }
 }

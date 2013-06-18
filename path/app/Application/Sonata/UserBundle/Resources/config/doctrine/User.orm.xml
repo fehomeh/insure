@@ -9,7 +9,9 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
+        <one-to-many mapped-by="user" field="insuranceOrder" target-entity="Insurance\ContentBundle\Entity\InsuranceOrder">
 
+        </one-to-many>
     </entity>
 
 </doctrine-mapping>
