@@ -7,3 +7,9 @@ generate_polices:
 mail_send:
     pattern: /notify
     defaults: { _controller: InsuranceContentBundle:Default:send }
+generate_policy:
+    pattern: /generate-pdf-policy/{orderId}
+    defaults: { _controller: InsuranceContentBundle:PDF:notifyUserPolicy }
+generate_admin_notification:
+    pattern: /generate-admin-notification/{feedback_id}
+    defaults: { _controller: InsuranceContentBundle:PDF:notifyFeedback }

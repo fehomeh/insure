@@ -16,11 +16,13 @@ class PDFController extends Controller {
         }
     }
 
-    public function notifyUserPolicy($orderId)
+    public function notifyUserPolicyAction($orderId)
     {
       try {
-        $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOne($orderId);
-        return $this->render('InsuranceContentBundle:PDFController:userPolicy.html.twig', array('order' => $order));
+        $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+        if (!is_null($order))
+        return $this->render('InsuranceContentBundle:PDF:userPolicy.html.twig', array('order' => $order));
+        else return new Response('<html><head></head><body>Not found!</body></html>', 404);
       } catch (Exception $e){
         return $this->render(new Response ($e->getMessage(), 404));
       }

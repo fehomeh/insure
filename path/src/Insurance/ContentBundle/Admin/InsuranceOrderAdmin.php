@@ -40,7 +40,6 @@ class InsuranceOrderAdmin extends Admin {
       ->add('deliveryCity', null, array('label' => 'Город доставки'))
       ->add('deliveryAddress', null, array('label' => 'Адрес доставки'))
       ->add('deliveryBuilding', 'text', array('label' => 'Дом доставки'))
-      ->add('price', null, array('label' => 'Цена'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
       ->add('payType', null, array('label' => 'Тип оплаты'));
   }
@@ -61,7 +60,6 @@ class InsuranceOrderAdmin extends Admin {
       ->add('firstname', null, array('label' => 'Имя'))
       ->add('middlename', null, array('label' => 'Отчество'))
       ->add('phone', null, array('label' => 'Телефон'))
-      ->add('price', null, array('label' => 'Цена'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
       ->add('payType', null, array('label' => 'Тип оплаты'));
   }
