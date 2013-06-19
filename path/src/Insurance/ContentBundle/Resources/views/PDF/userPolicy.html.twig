@@ -57,15 +57,10 @@
     <tbody><tr>
         <td width="40%" valign="top" rowspan="2">
             <strong>1. Страховик</strong><br><font size="-1">(назва, адреса, № телефону)</font><br>
-            <font size="-1">ЗАТ "УКРАЇНСЬКА АКЦІОНЕРНА СТРАХОВА КОМПАНІЯ АСКА" <br>
-03186, м.Київ, вул. Антонова, 5<br>
-(044) 455-99-70 - багатоканальний<br>
-456 - для абонентів UMC-MTC, KYIVSTAR, life:)<br>
-0 800 501 501 - безкоштовно по Україні<br>
-</font>
+            {{order.company.requisites}}
         </td>
         <td width="60%" valign="top">
-        	<font size="-1">Код страховика:</font> <strong>004</strong>
+        	<font size="-1">Код страховика:</font> <strong>{{order.company.insurerCode}}</strong>
         </td>
     </tr>
     <tr>
@@ -82,9 +77,9 @@
 <p><strong>3. Строк дії</strong></p>
 <p align="center">
     з
-    <strong>00:00 15/06/2013</strong>
+    <strong>{{ date_from }}</strong>
     до
-    <strong>14/06/2014</strong>
+    <strong> {{date_to}} </strong>
     включно<br>
     <em>Договір (поліс) набирає чинності з початку зазначенного строку його дії</em>
 </p>
@@ -125,17 +120,17 @@
             <table width="100%" cellpadding="3" border="1">
                 <tbody><tr>
                     <td>
-                    	<strong>реоегоеоеог</strong>
+                    	<strong>{{ order.surname }}</strong>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                    	<strong>оьпоьпьлорп</strong>
+                    	<strong>{{ order.firstname }}</strong>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                    	<strong>атаронаоао</strong>
+                    	<strong>{{ order.middlename }}</strong>
                     </td>
                 </tr>
             </tbody></table>
@@ -145,13 +140,9 @@
             <table width="100%" cellpadding="3" border="1">
                 <tbody><tr>
                     <td><strong>Адреса</strong></td>
-                    <td style="text-align: right;"><strong>Поштовий індекс</strong></td>
-                	<td>
-                		<strong>74576</strong>
-            		</td>
                 </tr>
                 <tr>
-                	<td colspan="3"><strong>улица парапр 56, кв. 665, 74576, город Киев, Киев, Украина</strong></td>
+                	<td colspan="3"><strong>{{ order.registerAddress }}, {{order.registerCity}}, Україна</strong></td>
                 </tr>
             </tbody></table>
             <table width="100%" cellpadding="3" border="1">
@@ -159,8 +150,7 @@
                     <td>
                     	Телефон
                     </td>
-                    <td>
-                                            	    +380 (66) 657-74-77                    	                    </td>
+                    <td>{{ order.phone }}</td>
                 </tr>
             </tbody></table>
         </td>
@@ -178,10 +168,10 @@
 	<em>(для пільговика - документ, що підтверджує його право на зменшення розміру страхового платежу)</em>
 	<br>
 	назва документа <strong>паспорт</strong>,
-	серія <strong>пр</strong>,
-	номер <strong>547547</strong>,
-	дата видачі <strong>3 червня 2002 р.</strong>,
-	ким виданий документ <strong>апраперапр</strong>
+	серія <strong>{{ order.documentSerie }}</strong>,
+	номер <strong>{{ order.documentNumber }}</strong>,
+	дата видачі <strong>{{ order.documentDate.format('d.m.Y H:i:s') }}</strong>,
+	ким виданий документ <strong> {{ order.documentAuthority }}</strong>
 </p>
 
 <br>
@@ -194,26 +184,26 @@
             <strong>B2</strong>
             &nbsp;
             Марка, модель
-            <strong>Chev Lacce</strong>
+            <strong>{{ order.carModel.brand }}</strong>
             &nbsp;
             Номерний знак
-            <strong>FF5656HH</strong>
+            <strong>{{ order.carNumber }}</strong>
             &nbsp;
             Номер кузова (шасі)
-            <strong>WBACD91870PK91670</strong>
+            <strong>{{ order.vinCode }}</strong>
             &nbsp;
             Рік випуску
             <strong>2010</strong>
             &nbsp;
             Місце реєстрації
-            <strong>Київ</strong>
+            <strong>{{ order.registerCity }}</strong>
         </td>
     </tr>
 </tbody></table>
 
 <br>
 
-<p><strong>Страхова премія</strong> <strong>753,49&nbsp;грн. &nbsp; сімсот п'ятдесят три  гривні сорок дев'ять  копійок</strong><br>
+<p><strong>Страхова премія</strong> <strong>{{ order.price }}&nbsp;грн.</strong><br>
 Сплачена <strong>Пт, 14 июня 2013 21 ч 08 м 11 с</strong></p>
 
 <p><strong>8. Примітка</strong><br>
@@ -281,7 +271,7 @@
 
 
 
-          <p>На адрес электронной почты <strong>nhfjhfhfjh@gmail.com</strong>,
+          <p>На адрес электронной почты <strong>{{ order.user.email }}</strong>,
  указанный вами при регистрации, было отправлено письмо с кодом
 электронной подписи к данному полису. Скопируйте ее и введите в поле
 ниже:</p>

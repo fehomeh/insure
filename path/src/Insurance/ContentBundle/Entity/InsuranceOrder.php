@@ -630,29 +630,6 @@ class InsuranceOrder
     }
 
     /**
-     * Set deliveryBuiding
-     *
-     * @param string $deliveryBuiding
-     * @return InsuranceOrder
-     */
-    public function setDeliveryBuiding($deliveryBuiding)
-    {
-        $this->deliveryBuiding = $deliveryBuiding;
-
-        return $this;
-    }
-
-    /**
-     * Get deliveryBuiding
-     *
-     * @return string
-     */
-    public function getDeliveryBuiding()
-    {
-        return $this->deliveryBuiding;
-    }
-
-    /**
      * Set payStatus
      *
      * @param boolean $payStatus

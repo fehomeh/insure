@@ -13,8 +13,8 @@ class InsuranceOrderAdmin extends Admin {
   public function configureFormFields(FormMapper $form)
   {
     $form->add('active', null, array('label' => 'Активность', 'required'=>false))
-      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден', 'label'
-        => 'Статус платежа')))
+      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',
+          'label' => 'Статус платежа')))
       ->add('price', null, array('label' => 'Цена'))
       ->add('priceDgo', null, array('label' => 'Цена ДГО'))
       ->add('priceNs', null, array('label' => 'Цена НС'))
@@ -46,10 +46,12 @@ class InsuranceOrderAdmin extends Admin {
 
   public function configureListFields(ListMapper $list)
   {
+    //$policy = $this->getConfigurationPool()->getContainer()->get('translation');
     $list->addIdentifier('id')
-      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),
-        'label' => 'Статус платежа'))
-      ->add('user', null, array('label' => 'Пользователь'))
+      ->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),
+        'label' => 'Статус платежа',
+          'template' => 'InsuranceContentBundle:Helper:enum_field_list.html.twig',
+            ))
       ->add('company', null, array('label' => 'Страховая'))
       ->add('policy', null, array('label' => 'Номер полиса'))
       ->add('priceDgo', null, array('label' => 'Цена ДГО'))

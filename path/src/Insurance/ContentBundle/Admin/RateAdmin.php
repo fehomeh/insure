@@ -14,14 +14,35 @@ class RateAdmin extends Admin {
   protected function configureFormFields(FormMapper $form)
   {
     $form->add('value', null, array('label' => 'Значение'))
-      ->add('code', null, array('label' => 'Символьный код'));
+      ->add('type', 'choice',
+        array(
+          'choices' => array(
+            'base' => 'Основоной расчет',
+            'ns' => 'Несчастный случай',
+            'dgo' => 'Доп. гражданская ответственность',
+            ),
+          'label' => 'Тип коэффициента',
+        )
+      )
+      ->add('code', null, array('label' => 'Символьный код'))
+          ->setHelps(array('type' => 'Тип коэффициента для различных видов страховок'));
   }
 
   protected function configureListFields(ListMapper $list)
   {
     $list->addIdentifier('id')
-      ->addIdentifier('value', null, array('label' => 'Значение'))
-      ->addIdentifier('code', null, array('label' => 'Символьный код'));
+      ->add('value', null, array('label' => 'Значение'))
+      ->add('type', null, array(
+          'label' => 'Тип коэффициента',
+          'template' => 'InsuranceContentBundle:Helper:enum_field_list.html.twig',
+          'choices' => array(
+            'base' => 'Основной расчет',
+            'ns' => 'Несчастный случай',
+            'dgo' => 'Доп. гражданская ответственность',
+            )
+          )
+        )
+      ->add('code', null, array('label' => 'Символьный код'));
   }
 
   protected function configureDatagridFilters(DatagridMapper $filter)

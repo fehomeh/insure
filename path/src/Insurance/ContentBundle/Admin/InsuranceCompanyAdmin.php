@@ -13,16 +13,21 @@ class InsuranceCompanyAdmin extends Admin {
 
   protected function configureShowFields(ShowMapper $filter)
   {
-    $filter->add('name', null, array('label' => 'Название'));
-    $filter->add('description', null, array('label' => 'Описание'));
-    $filter->add('logo', null, array('label' => 'Логотип'));
-    $filter->add('default_rate', null, array('label' => 'Коэффициент по умолчанию'));
+    $filter->add('name', null, array('label' => 'Название'))
+      ->add('description', null, array('label' => 'Описание'))
+      ->add('requisites', null, array('label' => 'Реквизиты компании'))
+      ->add('insurerCode', null, array('label' => 'Код страховщика'))
+      ->add('franchise', null, array('label' => 'Франшиза'))
+      ->add('default_rate', null, array('label' => 'Коэффициент по умолчанию'));
   }
 
   protected function configureFormFields(FormMapper $form)
   {
     $form->add('name', null, array('label' => 'Название'))
       ->add('description', null, array('label' => 'Описание'))
+      ->add('requisites', null, array('label' => 'Реквизиты компании'))
+      ->add('insurerCode', null, array('label' => 'Код страховщика'))
+      ->add('franchise', null, array('label' => 'Франшиза'))
       ->add('logo', null, array('label' => 'Логотип'))
       ->add('defaultRate', null, array('label' => 'Коэффициент по умолчанию'))
       ->add('companyRate', 'sonata_type_collection', array(
@@ -41,6 +46,8 @@ class InsuranceCompanyAdmin extends Admin {
   {
     $list->addIdentifier('id')
       ->addIdentifier('name', null, array('label' => 'Название компании'))
+      ->add('insurerCode', null, array('label' => 'Код страховщика'))
+      ->add('franchise', null, array('label' => 'Франшиза'))
       ->add('default_rate', null, array('label' => 'Коэффициент по умолчанию'));
   }
 

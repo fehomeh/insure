@@ -43,6 +43,14 @@ class Rate
      */
     private $companyRate;
 
+    /**
+     *
+     * @var string
+     * @ORM\Column(type="string", name="rate_type", columnDefinition="ENUM('base', 'ns', 'dgo')")
+     */
+    private $type;
+
+
     public function __construct()
     {
       $this->companyRate = new ArrayCollection();
@@ -140,5 +148,28 @@ class Rate
     public function __toString()
     {
       return ($this->getValue()?$this->getValue():'');
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Rate
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
