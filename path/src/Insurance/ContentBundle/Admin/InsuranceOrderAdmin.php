@@ -41,7 +41,8 @@ class InsuranceOrderAdmin extends Admin {
       ->add('deliveryAddress', null, array('label' => 'Адрес доставки'))
       ->add('deliveryBuilding', 'text', array('label' => 'Дом доставки'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
-      ->add('payType', null, array('label' => 'Тип оплаты'));
+      ->add('payType', null, array('label' => 'Тип оплаты'))
+      ->add('pdfUrl', null, array('label' => 'Файл договора (PDF)'));
   }
 
   public function configureListFields(ListMapper $list)

@@ -16,23 +16,31 @@ class PDFController extends Controller {
         }
     }
 
-    public function notifyUserPolicyAction($orderId)
+    public function generatePDFPolicyAction($orderId)
     {
+      $tcPdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+      $request = $this->getRequest();
       try {
-        $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
-        if (!is_null($order)) {
-        return $this->render('InsuranceContentBundle:PDF:userPolicy.html.twig', array(
-            'order' => $order,
-            'date_from' => date('00:00 d.m.Y'),
-            'date_to' => date('23:59 d.m.Y', strtotime('+11 months 30 days')),
-            'pay_date' => date('d.m.Y H г. i хв. s с'),
-            ));
-            }
-        else return new Response('<html><head></head><body>Not found!</body></html>', 404);
-      } catch (Exception $e){
-        return $this->render(new Response ($e->getMessage(), 404));
+        $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
+      $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $this->generateUrl('generate_html_policy', array('orderId' => $orderId)));
+      error_reporting(E_ERROR);
+      $tcPdf->SetFont('dejavusans', '', 10);
+      $tcPdf->AddPage();
+      $tcPdf->writeHTML($policyHTML);
+      $fileName = sha1(microtime());
+      $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
+      $tcPdf->Output($file, 'F');
+      $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+      $httpFile = $protocol . $request->server->get('HTTP_HOST') . '/pdf/' . $fileName . '.pdf';
+      $order->setPdfUrl($httpFile);
+      $em = $this->getDoctrine()->getEntityManager();
+      $em->persist($order);
+      $em->flush();
+      } catch (Exception $e) {
+        return new Response($e->getMessage(), 500);
       }
+      return new Response($policyHTML);
+      return $this->redirect($this->generateUrl('dashboard', array()));
     }
 }
-
 ?>

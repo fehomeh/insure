@@ -956,27 +956,4 @@ class InsuranceOrder
     {
         return $this->user;
     }
-
-    /**
-     * Set pdfUrl
-     *
-     * @param string $pdfUrl
-     * @return InsuranceOrder
-     */
-    public function setPdfUrl($pdfUrl)
-    {
-        $this->pdfUrl = $pdfUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get pdfUrl
-     *
-     * @return string 
-     */
-    public function getPdfUrl()
-    {
-        return $this->pdfUrl;
-    }
 }

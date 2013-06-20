@@ -184,7 +184,7 @@
             <strong>B2</strong>
             &nbsp;
             Марка, модель
-            <strong>{{ order.carModel.brand }}</strong>
+            <strong>{{ order.carModel.brand.value }} {{order.carModel.value}}</strong>
             &nbsp;
             Номерний знак
             <strong>{{ order.carNumber }}</strong>
@@ -205,11 +205,7 @@
 
 <p><strong>Страхова премія</strong> <strong>{{ order.price }}&nbsp;грн.</strong><br>
 Сплачена <strong>Пт, 14 июня 2013 21 ч 08 м 11 с</strong></p>
-
-<p><strong>8. Примітка</strong><br>
-Для перевірки валідності договору страхування відправте СМС з текстом
-65619897 на номер 4440<br>
-</p><table width="100%" cellpadding="0" border="0">
+<table width="100%" cellpadding="0" border="0">
   <tbody><tr>
     <td width="40%" align="left"></td>
     <td width="60%" align="right">При настанні страхового випадку негайно телефонуйте за телефоном: 0-800-501-501.</td>
@@ -253,47 +249,6 @@
       }
     </style>
     <br>
-
-    <form action="/policy/payment/confirm/P-26A1.html" method="post">
-    <div style="width: auto; margin: 0 auto; text-align: left;" class="yr-block">
-          <i class="cn tl"></i>
-          <i class="cn tr"></i>
-          <div class="yr-content">
-            <h3>Подписи сторон</h3>
-    <table width="100%" cellspacing="4" cellpadding="5">
-      <tbody><tr>
-        <td width="50%" valign="top">Страхователь</td>
-        <td width="*" valign="top">Страховщик</td>
-      </tr>
-      <tr>
-        <td width="50%" valign="top">
-
-
-
-
-          <p>На адрес электронной почты <strong>{{ order.user.email }}</strong>,
- указанный вами при регистрации, было отправлено письмо с кодом
-электронной подписи к данному полису. Скопируйте ее и введите в поле
-ниже:</p>
-
-          <input type="text" id="sign_policy_signature" name="sign_policy[signature]">          <div style="font-size: 13px;" class="wrong">
-                        </div>
-          <p>
-            <a load="/images/loader.gif" id="policy_request_signature" rel="http://www.comfin.ua/policy/P-26A1/request-signature.html" href="#">Отправить подпись повторно</a></p>
-          <br>
-
-          <input type="checkbox" id="sign_policy_accept" name="sign_policy[accept]">          <font size="-1"><label for="sign_policy_accept">«С условиями и правилами страхования ознакомлен(-а).»</label></font>
-          <div style="font-size: 13px;" class="wrong">
-                        </div>
-
-
-
-        </td>
-        <td width="*" valign="top">
-
-                            <img src="%D0%A1%D1%82%D1%80%D0%B0%D1%85%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5,%20%D1%81%D1%82%D1%80%D0%B0%D1%85%D0%BE%D0%B2%D0%BA%D0%B0,%20%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD%20%D1%81%D1%82%D1%80%D0%B0%D1%85%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%BC%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B0:%20%D0%B6%D0%B8%D0%BB%D1%8C%D1%8F,%20%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B,%20%D0%BD%D0%B5%D0%B4%D0%B2%D0%B8%D0%B6%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8,%20%D1%81%D1%82%D1%80%D0%B0%D1%85%D0%BE%D0%B2%D0%BE%D0%B9%20%D0%BF%D0%BE%D0%BB%D0%B8%D1%81_files/pechat002.png">                    </td>
-      </tr>
-    </tbody></table>
           </div>
           <i class="cn bl"></i>
           <i class="cn br"></i>
@@ -304,10 +259,6 @@
             <p align="center">
             	<input type="submit" value="Подписать полис">
             </p>
-
-
-        </form>
-
   </div>
   <i class="cn bl"></i>
   <i class="cn br"></i>
