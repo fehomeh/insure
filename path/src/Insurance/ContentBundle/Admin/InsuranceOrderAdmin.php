@@ -42,6 +42,8 @@ class InsuranceOrderAdmin extends Admin {
       ->add('deliveryBuilding', 'text', array('label' => 'Дом доставки'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
       ->add('payType', null, array('label' => 'Тип оплаты'))
+      ->add('orderDate', null, array('label' => 'Дата оформления заказа'))
+      ->add('payDate', null, array('label' => 'Дата оплаты'))
       ->add('pdfUrl', null, array('label' => 'Файл договора (PDF)'));
   }
 
@@ -84,6 +86,8 @@ class InsuranceOrderAdmin extends Admin {
       ->add('priceDgo', null, array('label' => 'Цена ДГО'))
       ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
+      ->add('orderDate', null, array('label' => 'Дата заказа'))
+      ->add('payDate', null, array('label' => 'Дата оплаты'))
       ->add('payType', null, array('label' => 'Тип оплаты'));
   }
   public function configureShowFields(ShowMapper $filter)

@@ -23,18 +23,22 @@ class CompanyRateAdmin extends Admin {
   {
     $list->addIdentifier('id')
       ->add('rate', null, array('label' => 'Коэф-т'))
-      ->add('rateValue', null, array('label' => 'Значение коэф-та'))
-      ->addIdentifier('value', null, array('label' => 'Значение'));
+      ->add('value', null, array('label' => 'Значение'))
+      ->add('rateValue', null, array('label' => 'Значение коэф-та'));
   }
 
   protected function configureDatagridFilters(DatagridMapper $filter)
   {
-    $filter->add('value', null, array('label' => 'Значение'));
+    $filter->add('rate', null, array('label' => 'Коэф-т'))
+      ->add('value', null, array('label' => 'Значение'))
+      ->add('rateValue', null, array('label' => 'Значение коэф-та'));
   }
 
   protected function configureShowField(ShowMapper $show)
   {
-    $show->add('value', null, array('label' => 'Значение'));
+    $show->add('rate', null, array('label' => 'Коэф-т'))
+      ->add('value', null, array('label' => 'Значение'))
+      ->add('rateValue', null, array('label' => 'Значение коэф-та'));
   }
 
   /*protected function configureSideMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)

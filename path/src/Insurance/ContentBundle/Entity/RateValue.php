@@ -23,11 +23,26 @@ class RateValue
     private $id;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="value", type="string", length=100, nullable=false)
+     * @ORM\Column(name="value_from", type="decimal", nullable=true, precision=8, scale=2)
      */
-    private $value;
+    private $valueFrom;
+
+    /**
+     *
+     * @var float
+     * @ORM\Column(name="value_to", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $valueTo;
+
+    /**
+     *
+     * @var float
+     * @ORM\Column(name="value_equal", type="string", length=50, nullable=true)
+     */
+    private $valueEqual;
+
 
     /**
      *
@@ -49,29 +64,6 @@ class RateValue
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set value
-     *
-     * @param string $value
-     * @return RateValue
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
-     * Get value
-     *
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 
     /**
@@ -109,6 +101,75 @@ class RateValue
 
     public function __toString()
     {
-      return ($this->getValue()?$this->getValue():'');
+      return ('От ' . $this->getValueFrom() . ' до ' . $this->getValueTo() . ' | точно ' . $this->getValueEqual());
+    }
+
+    /**
+     * Set valueFrom
+     *
+     * @param float $valueFrom
+     * @return RateValue
+     */
+    public function setValueFrom($valueFrom)
+    {
+        $this->valueFrom = $valueFrom;
+
+        return $this;
+    }
+
+    /**
+     * Get valueFrom
+     *
+     * @return float
+     */
+    public function getValueFrom()
+    {
+        return $this->valueFrom;
+    }
+
+    /**
+     * Set valueTo
+     *
+     * @param float $valueTo
+     * @return RateValue
+     */
+    public function setValueTo($valueTo)
+    {
+        $this->valueTo = $valueTo;
+
+        return $this;
+    }
+
+    /**
+     * Get valueTo
+     *
+     * @return float
+     */
+    public function getValueTo()
+    {
+        return $this->valueTo;
+    }
+
+    /**
+     * Set valueEqual
+     *
+     * @param string $valueEqual
+     * @return RateValue
+     */
+    public function setValueEqual($valueEqual)
+    {
+        $this->valueEqual = $valueEqual;
+
+        return $this;
+    }
+
+    /**
+     * Get valueEqual
+     *
+     * @return string
+     */
+    public function getValueEqual()
+    {
+        return $this->valueEqual;
     }
 }

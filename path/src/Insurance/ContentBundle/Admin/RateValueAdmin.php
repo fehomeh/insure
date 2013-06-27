@@ -9,13 +9,17 @@ class RateValueAdmin extends Admin {
 
    protected function configureFormFields(FormMapper $form)
    {
-     $form->add('value', null, array('label' => 'Значение коэффициента'));
+     $form->add('valueFrom', null, array('label' => 'Нижнее значение'))
+    ->add('valueTo', null, array('label' => 'Верхнее значение', ))
+    ->add('valueEqual', null, array('label' => 'Точное значение', ));
    }
 
   protected function configureListFields(ListMapper $list)
   {
     $list->addIdentifier('id')
-      ->addIdentifier('value', null, array('label' => 'Значение коэффициента'));
+      ->add('valueFrom', null, array('label' => 'Нижнее значение'))
+    ->add('valueTo', null, array('label' => 'Верхнее значение', ))
+    ->add('valueEqual', null, array('label' => 'Точное значение', ));
   }
 }
 ?>

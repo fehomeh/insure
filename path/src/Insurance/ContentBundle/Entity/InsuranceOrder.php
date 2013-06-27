@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="insurance_order")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class InsuranceOrder
 {
@@ -257,6 +258,27 @@ class InsuranceOrder
      *
      */
     private $pdfUrl;
+
+    /**
+     *
+     * @var \DateTime
+     * @ORM\Column(type="datetime", name="order_date")
+     */
+    private $orderDate;
+
+    /**
+     *
+     * @var \DateTime
+     * @ORM\Column(type="datetime", name="pay_date", nullable=true)
+     */
+    private $payDate;
+
+
+    public function onPrePersistSetOrderDate()
+    {
+      $this->orderDate = new \DateTime();
+    }
+
     /**
      * Get id
      *
@@ -881,7 +903,7 @@ class InsuranceOrder
     /**
      * Get priceDgo
      *
-     * @return float 
+     * @return float
      */
     public function getPriceDgo()
     {
@@ -904,7 +926,7 @@ class InsuranceOrder
     /**
      * Get priceNs
      *
-     * @return float 
+     * @return float
      */
     public function getPriceNs()
     {
@@ -927,7 +949,7 @@ class InsuranceOrder
     /**
      * Get policy
      *
-     * @return \Insurance\ContentBundle\Entity\Policy 
+     * @return \Insurance\ContentBundle\Entity\Policy
      */
     public function getPolicy()
     {
@@ -950,7 +972,7 @@ class InsuranceOrder
     /**
      * Get user
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -973,10 +995,57 @@ class InsuranceOrder
     /**
      * Get pdfUrl
      *
-     * @return string 
+     * @return string
      */
     public function getPdfUrl()
     {
         return $this->pdfUrl;
+    }
+
+
+    /**
+     * Set orderDate
+     *
+     * @param \DateTime $orderDate
+     * @return InsuranceOrder
+     */
+    public function setOrderDate($orderDate)
+    {
+        $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    /**
+     * Get orderDate
+     *
+     * @return \DateTime
+     */
+    public function getOrderDate()
+    {
+        return $this->orderDate;
+    }
+
+    /**
+     * Set payDate
+     *
+     * @param \DateTime $payDate
+     * @return InsuranceOrder
+     */
+    public function setPayDate($payDate)
+    {
+        $this->payDate = $payDate;
+
+        return $this;
+    }
+
+    /**
+     * Get payDate
+     *
+     * @return \DateTime
+     */
+    public function getPayDate()
+    {
+        return $this->payDate;
     }
 }
