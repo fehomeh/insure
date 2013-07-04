@@ -17,17 +17,22 @@ class NotifySender
   {
     $entity = $args->getEntity();
     if ($entity instanceof Feedback) {
-      //var_dump($entity);exit;
+      //var_dump($this->sc->getParameter('admin_emails'));exit;
+      $to = $this->sc->getParameter('admin.emails');
+      $from = $this->sc->getParameter('email.send.from');
+      $conType = $entity->getConnectionType();
       $message = \Swift_Message::newInstance()
-        ->setSubject('Hello Email')
-        ->setFrom('send@example.com')
-        ->setTo('recipient@example.com')
+        ->setSubject('Поступил новый ' . $conType == Feedback::CALLBACK ?
+        'запрос на обратный звонок' : 'вопрос' )
+        ->setFrom($conType == Feedback::CALLBACK ? $from : $entity->getEmail())
+        ->setTo($to)
         ->setBody(
             $this->sc->get('templating')->render(
-                'InsuranceContentBundle:Notifications:feedbackNotification.txt.twig'
-                //array('name' => $name)
+                'InsuranceContentBundle:Notifications:feedbackNotification.txt.twig',
+                array('contact' => $entity)
             )
         )
+        //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
     ;
     $this->sc->get('mailer')->send($message);
     }

@@ -7,9 +7,13 @@ use Insurance\ContentBundle\Entity\Region;
 use Insurance\ContentBundle\Entity\City;
 use Insurance\ContentBundle\Form\FeedbackType;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Insurance\ContentBundle\Entity\Feedback;
+
 
 class DefaultController extends Controller
 {
+    
     public function indexAction($name = 'Stranger')
     {
       $regions = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll();
@@ -23,25 +27,9 @@ class DefaultController extends Controller
         return $this->render('InsuranceContentBundle:Default:index.html.twig', array(
           'regions' => $regions,
           'brands' => $carBrands,
-          'feedback_form' => $feedbackForm->createView()));
-    }
-
-    public function sendAction()
-    {
-        $name = 'sly';
-        $message = \Swift_Message::newInstance()
-        ->setSubject('Hello Email')
-        ->setFrom('root@localhost')
-        ->setTo('fomenkos@fomenko-s')
-        ->setBody(
-            $this->renderView(
-                'InsuranceContentBundle:Default:ask_notify.html.twig',
-                array('name' => $name)
-            )
-        );
-    $this->get('mailer')->send($message);
-
-    return $this->render('InsuranceContentBundle:Default:index.html.twig',  array('name' => $name, 'id' => 1));
+          'feedback_form' => $feedbackForm->createView(),
+          'callback_form' => $feedbackForm->createView(),
+          ));
     }
 
     public function getCitiesAction()
@@ -56,6 +44,7 @@ class DefaultController extends Controller
       $response->headers->set('Content-Type', 'application/json');
       return $response;
     }
+    
     public function getCarModelsAction()
     {
       $request = $this->getRequest();
@@ -82,5 +71,32 @@ class DefaultController extends Controller
     {
       var_dump($this->getRequest()->getSession()->get('carModel'));
       return new Response();
+    }
+    
+    /**
+     * Creates a new Feedback entity.
+     *
+     */
+    public function createFeedbackAction(Request $request)
+    {
+        $entity  = new Feedback();
+        $form = $this->createForm(new FeedbackType(), $entity);
+        $form->bind($request);
+
+        //if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('feedback_show', array('id' => $entity->getId())));
+        //}
+
+        return $this->render('InsuranceContentBundle:Default:index.html.twig', array(
+            'regions' => null,
+            'brands' => null,
+            'entity' => $entity,
+            'feedback_form'   => $form->createView(),
+            'callback_form'   => $form->createView(),
+        ));
     }
 }

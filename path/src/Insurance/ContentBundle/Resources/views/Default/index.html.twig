@@ -25,10 +25,8 @@
   </select>
     <button type="submit">Расчитать</button>
 </form>
-<form action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
-  {{form_widget(feedback_form)}}
-    <button type="submit">Send</button>
-</form>
+{% include 'InsuranceContentBundle:Form:feedback_form.html.twig' %}
+{% include 'InsuranceContentBundle:Form:callback_form.html.twig' %}
 {% endif %}
 <script type="text/javascript">
 $('#region').on('change', function (e){

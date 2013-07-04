@@ -1,0 +1,20 @@
+<br>
+<form action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
+  {{form_row(callback_form.name)}}aaa
+  {{form_row(callback_form.timeToCall, {date_widget: 'string'})}}
+  {{form_row(callback_form.phoneNumber)}}
+  {{form_row(callback_form.connectionType, {type: 'hidden', value: 'C'})}}
+    <button type="submit">Send</button>
+</form>
+<script>
+$.datepicker.setDefaults($.datepicker.regional[ "ru" ]);
+$('.callback-time').datetimepicker({timeOnlyTitle: 'Выберите время',
+	timeText: 'Время',
+	hourText: 'Часы',
+	minuteText: 'Минуты',
+	secondText: 'Секунды',
+	currentText: 'Теперь',
+	closeText: 'Закрыть',
+    dateFormat: 'dd.mm.yy',
+    timeFormat: 'HH:mm:ss'});
+</script>

@@ -1,0 +1,3 @@
+parameters:
+    admin.emails: ['test@me.ru', 'test2@him.ua']
+    email.send.from: 'noreply@insurance.com.ua'

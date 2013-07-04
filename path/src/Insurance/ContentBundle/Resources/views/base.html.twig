@@ -7,13 +7,20 @@
     {% block scripts %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="{{asset('bundles/insurancecontent/js/jquery.ui.date-picker.ru.js')}}"></script>
+    <script src="{{asset('bundles/insurancecontent/js/jquery-ui-timepicker-addon.js')}}"></script>
+    {% endblock %}
+    {% block styles%}
+    <link rel="stylesheet" href="{{asset('bundles/insurancecontent/css/dark-hive/jquery-ui.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('bundles/insurancecontent/css/dark-hive/jquery.ui.theme.css')}}"/>
+    <link rel="stylesheet" href="{{asset('bundles/insurancecontent/css/timepicker.css')}}"/>
     {% endblock %}
   </head>
   <body>
     <div>{% block content %}{% endblock %}
     </div>
       <input type="text" id="phone_no" placeholder="+(xxxxx)xxx-xx-xx">
-      {% block final_scripts %}
+      {% block footer_scripts %}
 
 
       {% endblock %}

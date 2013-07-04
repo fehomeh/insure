@@ -25,6 +25,10 @@ get_car_models:
 calculate_go:
     pattern: /calculate
     defaults: { _controller: InsuranceContentBundle:Default:goToStepOne, method: POST }
+feedback_create:
+    pattern:  /create
+    defaults: { _controller: "InsuranceContentBundle:Default:createFeedback" }
+    requirements: { _method: POST }
 step1:
     pattern: /step1.htm
     defaults: { _controller: InsuranceContentBundle:Default:stepOne }

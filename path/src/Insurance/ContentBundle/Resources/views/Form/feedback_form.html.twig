@@ -1,0 +1,7 @@
+<form action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
+  {{form_widget(feedback_form.name)}}
+  {{form_widget(feedback_form.email)}}
+  {{form_widget(feedback_form.question)}}
+  {{form_widget(feedback_form.connectionType, {type: 'hidden', value: 'F'})}}
+    <button type="submit">Send</button>
+</form>

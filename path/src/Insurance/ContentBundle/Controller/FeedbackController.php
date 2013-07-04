@@ -29,29 +29,7 @@ class FeedbackController extends Controller
         ));
     }
 
-    /**
-     * Creates a new Feedback entity.
-     *
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new Feedback();
-        $form = $this->createForm(new FeedbackType(), $entity);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('feedback_show', array('id' => $entity->getId())));
-        }
-
-        return $this->render('InsuranceContentBundle:Feedback:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
+    
 
     /**
      * Displays a form to create a new Feedback entity.

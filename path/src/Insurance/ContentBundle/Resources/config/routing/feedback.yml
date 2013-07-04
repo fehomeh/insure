@@ -10,11 +10,6 @@
 #    pattern:  /new
 #    defaults: { _controller: "InsuranceContentBundle:Feedback:new" }
 
-feedback_create:
-    pattern:  /create
-    defaults: { _controller: "InsuranceContentBundle:Feedback:create" }
-    requirements: { _method: post }
-
 #feedback_edit:
 #    pattern:  /{id}/edit
 #    defaults: { _controller: "InsuranceContentBundle:Feedback:edit" }

@@ -12,7 +12,10 @@ class FeedbackType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('timeToCall')
+            ->add('timeToCall', 'datetime', array('attr' => 
+                array('class' => 'callback-time'), 
+                'widget' => 'single_text',
+            ))
             ->add('phoneNumber')
             ->add('email')
             ->add('question')
