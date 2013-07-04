@@ -1,5 +1,46 @@
 <html>
-  <head></head>
+  <head>
+    <style>
+        sign-info {
+	margin: 2em 0;
+}
+
+	.sign-info h1 {
+		font:normal 28px 'PT Serif',arial,serif;
+		margin:1em 0 .2em 0;
+		padding:0;
+	}
+
+	.sign-info h2 {
+		font: bold 18px arial,serif;
+		margin:.5em 0;
+		padding:0;
+		color:#333;
+		line-height:1.2em;
+	}
+
+	.sign-info table, .sign-info table td {
+		border: 1px dashed silver;
+	}
+
+	.sign-info table {
+		border-top:0; border-left:0;
+	}
+
+	.sign-info table td {
+		border-right:0; border-bottom:0;
+		padding:.75em 1.5em;
+	}
+
+		.sign-info table table, .sign-info table table td {
+			border:0;
+		}
+
+		.sign-info table table td {
+			padding:0;
+		}
+    </style>
+  </head>
   <body>
 <div id="content">
             <div style="margin: 0 20px;">
@@ -13,33 +54,6 @@
                     <div class="inner-header">
                         <h1>Подписание договора</h1>
                     </div>
-
-
-
-	<div class="yui3-g ui2-request-steps">
-            		<div class="yui3-u-1-5">
-    			<div class="step  first " style="z-index:6;">
-    				1. Расчет стоимости    			</div>
-    		</div>
-            		<div class="yui3-u-1-5">
-    			<div class="step   " style="z-index:5;">
-    				2. Личные данные    			</div>
-    		</div>
-            		<div class="yui3-u-1-5">
-    			<div class="step   " style="z-index:4;">
-    				3. Дата начала действия    			</div>
-    		</div>
-            		<div class="yui3-u-1-5">
-    			<div class="step   active" style="z-index:3;">
-    				4. Подписание договора    			</div>
-    		</div>
-            		<div class="yui3-u-1-5">
-    			<div class="step last  " style="z-index:2;">
-    				5. Варианты оплаты    			</div>
-    		</div>
-        	</div>
-
-
     <!-- Policy info -->
     <div class="sign-info">
 
@@ -87,25 +101,27 @@
 
 <p><strong>4. Страхова сума (ліміт відповідальності) на одного потерпілого</strong>, грн.</p>
 <table width="100%" cellspacing="0" cellpadding="5" border="1">
-    <tbody><tr>
+    <tbody>
+      {% if (order.priceNs) %}
+      <tr>
         <td width="50%"><em>За шкоду, заподіяну життю і здоров'ю (на одного потерпілого)</em></td>
         <td width="50%">
-        	<strong>100000
-        	(сто тисяч гривень )</strong>
+        	<strong> {{order.priceNs}} гривень </strong>
         </td>
     </tr>
+    {% endif %}
+    {% if (order.priceDgo) %}
     <tr>
         <td width="50%"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
         <td width="50%">
-        	<strong>50000
-        	(п'ятдесят тисяч гривень )</strong>
+        	<strong>{{order.priceDgo}} гривень</strong>
         </td>
     </tr>
+    {% endif %}
     <tr>
         <td width="50%"><em><strong>5. Розмір франшизи</strong>, грн.</em></td>
         <td width="50%">
-                        	<strong>1000
-            	(одна тисяча гривень )</strong>
+                        	<strong> {{order.company.franchise}} гривень </strong>
                     </td>
     </tr>
 </tbody></table>
@@ -170,7 +186,7 @@
 	назва документа <strong>паспорт</strong>,
 	серія <strong>{{ order.documentSerie }}</strong>,
 	номер <strong>{{ order.documentNumber }}</strong>,
-	дата видачі <strong>{{ order.documentDate.format('d.m.Y H:i:s') }}</strong>,
+	дата видачі <strong>{{ order.documentDate.format('d.m.Y') }}</strong>,
 	ким виданий документ <strong> {{ order.documentAuthority }}</strong>
 </p>
 
@@ -204,7 +220,7 @@
 <br>
 
 <p><strong>Страхова премія</strong> <strong>{{ order.price }}&nbsp;грн.</strong><br>
-Сплачена <strong>Пт, 14 июня 2013 21 ч 08 м 11 с</strong></p>
+Сплачена <strong>{{order.payDate|date('D, d F Y H г i хв s с', 'Europe/Kiev')}}</strong></p>
 <table width="100%" cellpadding="0" border="0">
   <tbody><tr>
     <td width="40%" align="left"></td>
@@ -253,16 +269,7 @@
           <i class="cn bl"></i>
           <i class="cn br"></i>
         </div>
-
-    	            <br>
-            <hr size="1" color="#CCCCCC">
-            <p align="center">
-            	<input type="submit" value="Подписать полис">
-            </p>
   </div>
-  <i class="cn bl"></i>
-  <i class="cn br"></i>
-</div>            </div>
-        </div>
+</div>
     </body>
     </html>

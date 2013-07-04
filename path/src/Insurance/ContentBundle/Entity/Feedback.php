@@ -71,7 +71,7 @@ class Feedback
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -94,7 +94,7 @@ class Feedback
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -117,7 +117,7 @@ class Feedback
     /**
      * Get timeToCall
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTimeToCall()
     {
@@ -140,7 +140,7 @@ class Feedback
     /**
      * Get phoneNumber
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber()
     {
@@ -163,7 +163,7 @@ class Feedback
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -186,7 +186,7 @@ class Feedback
     /**
      * Get question
      *
-     * @return string 
+     * @return string
      */
     public function getQuestion()
     {
@@ -209,7 +209,7 @@ class Feedback
     /**
      * Get connectionType
      *
-     * @return string 
+     * @return string
      */
     public function getConnectionType()
     {

@@ -1,12 +1,11 @@
 <?php
-
 namespace Insurance\ContentBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CityType extends AbstractType
+class RegionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,12 +16,14 @@ class CityType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Insurance\ContentBundle\Entity\City'
+            'data_class' => 'Insurance\ContentBundle\Entity\Region'
         ));
     }
 
     public function getName()
     {
-        return 'insurance_contentbundle_citytype';
+        return 'insurance_contentbundle_regiontype';
     }
 }
+
+?>

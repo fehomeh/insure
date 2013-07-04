@@ -16,3 +16,15 @@ generate_admin_notification:
 generate_pdf_policy:
     pattern: generate-pdf-policy/{orderId}
     defaults: { _controller: InsuranceContentBundle:PDF:generatePDFPolicy }
+get_cities:
+    pattern: /get-city
+    defaults: { _controller: InsuranceContentBundle:Default:getCities }
+get_car_models:
+    pattern: /get-car-model
+    defaults: { _controller: InsuranceContentBundle:Default:getCarModels }
+calculate_go:
+    pattern: /calculate
+    defaults: { _controller: InsuranceContentBundle:Default:goToStepOne, method: POST }
+step1:
+    pattern: /step1.htm
+    defaults: { _controller: InsuranceContentBundle:Default:stepOne }

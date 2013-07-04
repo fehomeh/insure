@@ -2,6 +2,11 @@ parameters:
 #    insurance_content.example.class: Insurance\ContentBundle\Example
 
 services:
+    feedback.notify.listener:
+        class: Insurance\ContentBundle\EventListener\NotifySender
+        arguments: [ '@service_container' ]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
     insurance.content.admin.rate:
         class: Insurance\ContentBundle\Admin\RateAdmin
         arguments: [null, Insurance\ContentBundle\Entity\Rate, SonataAdminBundle:CRUD]

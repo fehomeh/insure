@@ -1,4 +1,61 @@
 {% extends 'InsuranceContentBundle::base.html.twig' %}
 {% block content %}
 <h1>Hello world!</h1>
+{% if (regions)%}
+<select name="region" id="region" >
+  <option value="0">Выберите область</option>
+  {% for region in regions %}
+    <option value="{{region.id}}">{{region.value}}</option>
+  {% endfor %}
+</select>
+<select disabled="" name="city" id="city">
+  <option>Выберите город</option>
+</select>
+{% endif %}
+{% if (brands)%}
+<form name="calculate-go" id="calculate-go" action="{{path('calculate_go')}}" method="POST">
+  <select name="carBrand" id="carBrand" >
+    <option value="0">Выберите марку</option>
+    {% for brand in brands %}
+      <option value="{{brand.id}}">{{brand.value}}</option>
+    {% endfor %}
+  </select>
+  <select disabled="" name="carModel" id="carModel">
+    <option>Выберите модель</option>
+  </select>
+    <button type="submit">Расчитать</button>
+</form>
+<form action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
+  {{form_widget(feedback_form)}}
+    <button type="submit">Send</button>
+</form>
+{% endif %}
+<script type="text/javascript">
+$('#region').on('change', function (e){
+  if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {
+      var opts = '<option>Выберите город</option>';
+      for (k in data) opts += '<option value="' + k + '">' + data[k] + '</option>';
+      $('#city').html(opts);
+      $('#city').removeAttr('disabled');
+  });
+  else {
+    $('#city').html('<option>Выберите город</option>');
+    $('#city').attr('disabled', '');
+
+  }
+});
+$('#carBrand').on('change', function (e){
+  if ($(this).val()>0) $.get('{{path('get_car_models')}}', {brand_id: $(this).val()}).done(function (data) {
+      var opts = '<option>Выберите модель</option>';
+      for (k in data) opts += '<option value="' + k + '">' + data[k] + '</option>';
+      $('#carModel').html(opts);
+      $('#carModel').removeAttr('disabled');
+  });
+  else {
+    $('#carModel').html('<option>Выберите модель</option>');
+    $('#carModel').attr('disabled', '');
+
+  }
+});
+</script>
 {% endblock %}
