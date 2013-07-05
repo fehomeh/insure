@@ -7,6 +7,7 @@ services:
         arguments: [ '@service_container' ]
         tags:
             - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
     insurance.content.admin.rate:
         class: Insurance\ContentBundle\Admin\RateAdmin
         arguments: [null, Insurance\ContentBundle\Entity\Rate, SonataAdminBundle:CRUD]

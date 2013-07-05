@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class InsuranceOrder
 {
+    const PAYTYPE_CASH = 'cash';
+    const PAYTYPE_CARD = 'card';
     /**
      * @var integer
      *

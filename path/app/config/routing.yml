@@ -2,14 +2,6 @@ insurance_content:
     resource: "@InsuranceContentBundle/Resources/config/routing.yml"
     prefix:   /
 
-city_content:
-    resource: "@InsuranceContentBundle/Resources/config/routing/city.yml"
-    prefix:   /city
-
-feedback:
-    resource: "@InsuranceContentBundle/Resources/config/routing/feedback.yml"
-    prefix:   /
-
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
