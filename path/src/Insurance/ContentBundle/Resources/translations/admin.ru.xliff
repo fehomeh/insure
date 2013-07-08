@@ -30,6 +30,14 @@
               <source>C</source>
               <target>Подтвержден</target>
             </trans-unit>
+            <trans-unit id="8">
+              <source>Pay</source>
+              <target>Оплата</target>
+            </trans-unit>
+            <trans-unit id="9">
+              <source>Additional</source>
+              <target>Дополнительные данные</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -9,15 +9,13 @@ use Sonata\AdminBundle\Show\ShowMapper;
 //use Doctrine\ORM\EntityRepository;
 
 class InsuranceOrderAdmin extends Admin {
-
+    protected $translationDomain = 'admin';
   public function configureFormFields(FormMapper $form)
   {
-    $form->add('active', null, array('label' => 'Активность', 'required'=>false))
+    $form->with('General')
+      ->add('active', null, array('label' => 'Активность', 'required'=>false))
       ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',
           'label' => 'Статус платежа')))
-      ->add('price', null, array('label' => 'Цена'))
-      ->add('priceDgo', null, array('label' => 'Цена ДГО', 'required' => false, ))
-      ->add('priceNs', null, array('label' => 'Цена НС', 'required' => false, ))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
       ->add('city', null, array('label' => 'Город'))
@@ -28,6 +26,17 @@ class InsuranceOrderAdmin extends Admin {
       ->add('surname', null, array('label' => 'Фамилия'))
       ->add('firstname', null, array('label' => 'Имя'))
       ->add('middlename', null, array('label' => 'Отчество'))
+      ->end()
+      ->with('Pay')
+      ->add('price', null, array('label' => 'Цена'))
+      ->add('priceDgo', null, array('label' => 'Цена ДГО', 'required' => false, ))
+      ->add('priceNs', null, array('label' => 'Цена НС', 'required' => false, ))
+      ->add('payStatus', null, array('label' => 'Состояние оплаты', 'required' => false, ))
+      ->add('payType', null, array('label' => 'Тип оплаты'))
+      ->add('orderDate', null, array('label' => 'Дата оформления заказа'))
+      ->add('payDate', null, array('label' => 'Дата оплаты'))
+      ->end()
+      ->with('Additional')
       ->add('documentType', 'choice', array('choices' => array('P' => 'Паспорт', 'D' => 'Водительское удостоверение'),'label' => 'Тип документа'))
       ->add('documentSerie', null, array('label' => 'Серия документа'))
       ->add('documentNumber', null, array('label' => 'Номер документа'))
@@ -40,11 +49,7 @@ class InsuranceOrderAdmin extends Admin {
       ->add('deliveryCity', null, array('label' => 'Город доставки'))
       ->add('deliveryAddress', null, array('label' => 'Адрес доставки'))
       ->add('deliveryBuilding', 'text', array('label' => 'Дом доставки'))
-      ->add('payStatus', null, array('label' => 'Состояние оплаты', 'required' => false, ))
-      ->add('payType', null, array('label' => 'Тип оплаты'))
-      ->add('orderDate', null, array('label' => 'Дата оформления заказа'))
-      ->add('payDate', null, array('label' => 'Дата оплаты'))
-      ->add('pdfUrl', null, array('label' => 'Файл договора (PDF)'));
+      ->add('pdfUrl', null, array('label' => 'Файл договора (PDF)'))      ->end();
   }
 
   public function configureListFields(ListMapper $list)

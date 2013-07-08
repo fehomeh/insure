@@ -25,7 +25,7 @@ class CompanyRate
     /**
      * @var float
      *
-     * @ORM\Column(name="value", type="decimal", precision=8, scale=2, nullable=false)
+     * @ORM\Column(name="value", type="decimal", precision=10, scale=5, nullable=false)
      */
     private $value;
 

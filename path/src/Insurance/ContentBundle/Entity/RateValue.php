@@ -25,14 +25,14 @@ class RateValue
     /**
      * @var float
      *
-     * @ORM\Column(name="value_from", type="decimal", nullable=true, precision=8, scale=2)
+     * @ORM\Column(name="value_from", type="decimal", nullable=true, precision=10, scale=5)
      */
     private $valueFrom;
 
     /**
      *
      * @var float
-     * @ORM\Column(name="value_to", type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(name="value_to", type="decimal", precision=10, scale=5, nullable=true)
      */
     private $valueTo;
 
