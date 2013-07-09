@@ -18,7 +18,7 @@ class InsuranceOrderAdmin extends Admin {
           'label' => 'Статус платежа')))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
-      ->add('city', null, array('label' => 'Город'))
+      ->add('city', null, array('label' => 'Город', 'property' => 'cityRegion'))
       ->add('carModel', null, array('label' => 'Модель авто', 'property' => 'brandCar', ))
       ->add('activeFrom', null, array('label' => 'Активен с', 'years' => range(date('Y')-10, date('Y')+10)))
       ->add('vinCode', null, array('label' => 'VIN код'))
@@ -46,7 +46,7 @@ class InsuranceOrderAdmin extends Admin {
       ->add('registerCity', null, array('label' => 'Город регистрации', 'property' => 'cityRegion'))
       ->add('registerAddress', null, array('label' => 'Адрес регистрации'))
       ->add('registerBuilding', null, array('label' => 'Дом регистрации'))
-      ->add('deliveryCity', null, array('label' => 'Город доставки'))
+      ->add('deliveryCity', null, array('label' => 'Город доставки', 'property' => 'cityRegion'))
       ->add('deliveryAddress', null, array('label' => 'Адрес доставки'))
       ->add('deliveryBuilding', 'text', array('label' => 'Дом доставки'))
       ->add('pdfUrl', null, array('label' => 'Файл договора (PDF)'))      ->end();

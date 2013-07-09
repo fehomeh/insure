@@ -1,1 +1,8 @@
-aylele
+Здравствуйте!
+На сайт поступил новый {{feedbackTypeText}}.
+Контактные данные для связи:
+Имя: {{contact.name}}
+{% if contact.timeToCall %}Время звонка: {{contact.timeToCall}}{% endif %}
+{% if contact.phoneNumber %}Контактный телефон: {{contact.phoneNumber}}{% endif %}
+{% if contact.email %}EMail: {{contact.email}}{% endif %}
+{% if contact.question %}Вопрос {{contact.question}}{% endif %}
