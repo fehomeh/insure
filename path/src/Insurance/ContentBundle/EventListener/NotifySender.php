@@ -48,7 +48,7 @@ class NotifySender
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
         $contactPhone = $this->sc->getParameter('contact.phone');
-      if ($entity->getPayStatus() == 0 || $entity->getPayType() == 'cash') {
+      if ($entity->getPayStatus() == 0 && $entity->getPayType() == 'cash') {
           $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
               ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
@@ -70,7 +70,7 @@ class NotifySender
           //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
           ;
           $this->sc->get('mailer')->send($message);
-      } elseif ($entity->getPayType() != 'cash' && ) {
+      } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 0) {
         $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
               ->setSubject(strtoupper($siteDomain) . 'Оплата за Ваш заказ получена!')
