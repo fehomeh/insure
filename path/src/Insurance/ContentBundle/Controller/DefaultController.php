@@ -13,7 +13,7 @@ use Insurance\ContentBundle\Entity\Feedback;
 
 class DefaultController extends Controller
 {
-    
+
     public function indexAction($name = 'Stranger')
     {
       $regions = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll();
@@ -44,7 +44,7 @@ class DefaultController extends Controller
       $response->headers->set('Content-Type', 'application/json');
       return $response;
     }
-    
+
     public function getCarModelsAction()
     {
       $request = $this->getRequest();
@@ -69,10 +69,14 @@ class DefaultController extends Controller
 
     public function stepOneAction()
     {
+        $session = $this->getRequest()->getSession();
       var_dump($this->getRequest()->getSession()->get('carModel'));
-      return new Response();
+      return $this->render('InsuranceContentBundle:Default:step_one.html.twig',array(
+        'carBrand' => $session->get('carBrand')?:0,
+        'carModel' => $session->get('carModel')?:0,
+      ));
     }
-    
+
     /**
      * Creates a new Feedback entity.
      *

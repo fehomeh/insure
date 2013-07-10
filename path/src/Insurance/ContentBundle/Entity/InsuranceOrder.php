@@ -58,6 +58,29 @@ class InsuranceOrder
      */
     private $priceNs;
     /**
+     *
+     * @var float
+     *
+     * @ORM\Column(name="sum_dgo", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $sumDgo;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="sum_ns", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $sumNs;
+
+    /**
+     *
+     * @var integer
+     *
+     * @ORM\Column(name="passenger_count", type="integer", nullable=true)
+     */
+    private $passengerCount;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="active_from", type="date", nullable=false)
@@ -1049,5 +1072,74 @@ class InsuranceOrder
     public function getPayDate()
     {
         return $this->payDate;
+    }
+
+    /**
+     * Set sumDgo
+     *
+     * @param float $sumDgo
+     * @return InsuranceOrder
+     */
+    public function setSumDgo($sumDgo)
+    {
+        $this->sumDgo = $sumDgo;
+
+        return $this;
+    }
+
+    /**
+     * Get sumDgo
+     *
+     * @return float 
+     */
+    public function getSumDgo()
+    {
+        return $this->sumDgo;
+    }
+
+    /**
+     * Set sumNs
+     *
+     * @param float $sumNs
+     * @return InsuranceOrder
+     */
+    public function setSumNs($sumNs)
+    {
+        $this->sumNs = $sumNs;
+
+        return $this;
+    }
+
+    /**
+     * Get sumNs
+     *
+     * @return float 
+     */
+    public function getSumNs()
+    {
+        return $this->sumNs;
+    }
+
+    /**
+     * Set passengerCount
+     *
+     * @param integer $passengerCount
+     * @return InsuranceOrder
+     */
+    public function setPassengerCount($passengerCount)
+    {
+        $this->passengerCount = $passengerCount;
+
+        return $this;
+    }
+
+    /**
+     * Get passengerCount
+     *
+     * @return integer 
+     */
+    public function getPassengerCount()
+    {
+        return $this->passengerCount;
     }
 }

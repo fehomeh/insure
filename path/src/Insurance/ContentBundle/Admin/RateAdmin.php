@@ -17,7 +17,7 @@ class RateAdmin extends Admin {
       ->add('type', 'choice',
         array(
           'choices' => array(
-            'base' => 'Основоной расчет',
+            'base' => 'Основной расчет',
             'ns' => 'Несчастный случай',
             'dgo' => 'Доп. гражданская ответственность',
             ),
