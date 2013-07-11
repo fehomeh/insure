@@ -19,6 +19,10 @@ class DefaultController extends Controller
       $regions = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll();
       $carBrands = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findAll();
       $feedbackForm = $this->createForm(new FeedbackType());
+      $session = $this->getRequest()->getSession();
+      if ($carBrand = $session->get('carBrand')) {
+          $carModels = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findByBrand($carBrand);
+      } else $carModels = array();
       //$region->setValue('Киевская');
       //$em->persist($region);
       //$em->flush();
@@ -27,6 +31,9 @@ class DefaultController extends Controller
         return $this->render('InsuranceContentBundle:Default:index.html.twig', array(
           'regions' => $regions,
           'brands' => $carBrands,
+          'savedBrand' => $carBrand,
+          'models' => $carModels,
+          'savedModel' => $session->get('carModel'),
           'feedback_form' => $feedbackForm->createView(),
           'callback_form' => $feedbackForm->createView(),
           ));

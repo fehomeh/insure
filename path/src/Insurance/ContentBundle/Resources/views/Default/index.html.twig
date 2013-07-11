@@ -17,12 +17,21 @@
   <select name="carBrand" id="carBrand" >
     <option value="0">Выберите марку</option>
     {% for brand in brands %}
-      <option value="{{brand.id}}">{{brand.value}}</option>
+      <option value="{{brand.id}}" {% if brand.id == savedBrand %}selected=""{% endif %}>{{brand.value}}</option>
     {% endfor %}
   </select>
-  <select disabled="" name="carModel" id="carModel">
-    <option>Выберите модель</option>
-  </select>
+  {% if models %}
+        <select name="carModel" id="carModel">
+            <option>Выберите модель</option>
+        {% for model in models %}
+            <option value="{{model.id}}" {% if model.id == savedModel %}selected=""{% endif %}>{{model.value}}</option>
+        {% endfor %}
+    </select>
+  {% else %}
+        <select disabled="" name="carModel" id="carModel">
+            <option>Выберите модель</option>
+        </select>
+  {% endif %}
     <button type="submit">Расчитать</button>
 </form>
 {% include 'InsuranceContentBundle:Form:feedback_form.html.twig' %}
