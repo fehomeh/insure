@@ -31,9 +31,9 @@ class DefaultController extends Controller
         return $this->render('InsuranceContentBundle:Default:index.html.twig', array(
           'regions' => $regions,
           'brands' => $carBrands,
-          'savedBrand' => $carBrand,
+          'carBrand' => $carBrand,
           'models' => $carModels,
-          'savedModel' => $session->get('carModel'),
+          'carModel' => $session->get('carModel'),
           'feedback_form' => $feedbackForm->createView(),
           'callback_form' => $feedbackForm->createView(),
           ));
@@ -41,28 +41,31 @@ class DefaultController extends Controller
 
     public function getCitiesAction()
     {
-      $request = $this->getRequest();
-      $region_id = $request->get('region_id');
-      $cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findBy(
-        array('region' => $region_id), array('value' => 'ASC'));
-      foreach ($cities as $city)
-      $city_list[$city->getId()] = $city->getValue();
-      $response = new Response(json_encode($city_list));
-      $response->headers->set('Content-Type', 'application/json');
-      return $response;
+        $request = $this->getRequest();
+        $region_id = $request->get('region_id');
+        if ($cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findBy(
+            array('region' => $region_id), array('value' => 'ASC'))) {
+        foreach ($cities as $city)
+            $city_list[$city->getId()] = $city->getValue();
+        } else $city_list = array();
+        $response = new Response(json_encode($city_list));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     public function getCarModelsAction()
     {
-      $request = $this->getRequest();
-      $brand_id = $request->get('brand_id');
-      $models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findBy(
-        array('brand' => $brand_id), array('value' => 'ASC'));
-      foreach ($models as $model)
-      $models_list[$model->getId()] = $model->getValue();
-      $response = new Response(json_encode($models_list));
-      $response->headers->set('Content-Type', 'application/json');
-      return $response;
+        $request = $this->getRequest();
+        $brand_id = $request->get('brand_id');
+        if ($models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findBy(
+            array('brand' => $brand_id), array('value' => 'ASC'))) {
+        foreach ($models as $model)
+            $models_list[$model->getId()] = $model->getValue();
+        } else $models_list = array();
+            
+        $response = new Response(json_encode($models_list));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     public function goToStepOneAction()
@@ -77,10 +80,21 @@ class DefaultController extends Controller
     public function stepOneAction()
     {
         $session = $this->getRequest()->getSession();
-      var_dump($this->getRequest()->getSession()->get('carModel'));
+      var_dump($this->container->getParameter('displacement'));
+      if ($carBrand = $session->get('carBrand')) {
+        $models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')
+            ->findByBrand($carBrand);
+      } else $models = null;
+      
       return $this->render('InsuranceContentBundle:Default:step_one.html.twig',array(
-        'carBrand' => $session->get('carBrand')?:0,
-        'carModel' => $session->get('carModel')?:0,
+        'carBrand' => $session->get('carBrand'),
+        'carModel' => $session->get('carModel'),
+        'brands' => $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findAll(),
+        'models' => $models,
+        'carAgeFrom' => $this->container->getParameter('car.age.from'),
+        'carAgeTo' => (int)date('Y'),
+        'displacement' => $this->container->getParameter('displacement'),
+        'insureTerm' => $this->container->getParameter('insure.period'),
       ));
     }
 
@@ -109,5 +123,14 @@ class DefaultController extends Controller
             'feedback_form'   => $form->createView(),
             'callback_form'   => $form->createView(),
         ));
+    }
+    
+    /**
+     * Process calculator data and redirect to next step - filling personal data
+     * 
+     */
+    public function processCalculatorAction()
+    {
+        
     }
 }

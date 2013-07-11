@@ -17,14 +17,14 @@
   <select name="carBrand" id="carBrand" >
     <option value="0">Выберите марку</option>
     {% for brand in brands %}
-      <option value="{{brand.id}}" {% if brand.id == savedBrand %}selected=""{% endif %}>{{brand.value}}</option>
+      <option value="{{brand.id}}" {% if brand.id == carBrand %}selected=""{% endif %}>{{brand.value}}</option>
     {% endfor %}
   </select>
   {% if models %}
         <select name="carModel" id="carModel">
             <option>Выберите модель</option>
         {% for model in models %}
-            <option value="{{model.id}}" {% if model.id == savedModel %}selected=""{% endif %}>{{model.value}}</option>
+            <option value="{{model.id}}" {% if model.id == carModel %}selected=""{% endif %}>{{model.value}}</option>
         {% endfor %}
     </select>
   {% else %}

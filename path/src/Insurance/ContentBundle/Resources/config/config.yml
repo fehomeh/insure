@@ -5,3 +5,13 @@ parameters:
     site.domain: 'polismarket.com.ua'
     contact.email: 'sales@polismarket.com.ua'
     contact.phone: '(050) 001-01-01'
+    savings: #show user fake money savings
+        date.start: '30.07.2013' #initial date to start count
+        initial.sum: 12345 #initial money amount
+        increment: 23
+    car.age.from: 1990
+    displacement:
+        min: 1.0
+        max: 6.0
+        step: 0.1
+    insure.period: [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]

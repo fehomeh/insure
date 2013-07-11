@@ -1,2 +1,46 @@
-{# empty Twig template #}
+{% extends 'InsuranceContentBundle::base.html.twig'%}
+{# calculator #}
+{% block content %}
 {{carBrand}}
+<form action="{{path('calculate_process')}}" method="POST" id="calculator-form">
+    <select name="carBrand" id="carBrand" >
+        <option value="0">Выберите марку</option>
+        {% for brand in brands %}
+            <option value="{{brand.id}}" {% if brand.id == carBrand %}selected=""{% endif %}>{{brand.value}}</option>
+        {% endfor %}
+    </select>
+    {% if models %}
+        <div id="carModel">
+            {% for model in models %}
+                <a data="{{model.id}}" {% if model.id == carModel %}class="selected"{% endif %}>{{model.value}}</a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div id="carModel"></div>
+    {% endif %}
+    <input type="hidden" id="hCarModel">
+</form>
+    
+<script type="text/javascript">
+    function selectCar()
+    {
+        $('#carModel a').on('click', function (){
+            $('#hCarModel').val($(this).attr('data')));
+        });
+    }
+    $(document).ready(function(){
+        $('#carBrand').on('change', function () {
+            if ($(this).val()>0) $.get('{{path('get_car_models')}}', {brand_id: $(this).val()}).done(function (data) {
+                var opts = '';
+                for (k in data) opts += '<a data="' + k + '">' + data[k] + '</a>';
+                $('#carModel').html(opts);
+                $('#carModel').toggle({duration: 800, done: selectCar});
+                });
+            else {
+                $('#carModel').toggle({duration: 800});
+            }
+        })//Change action end
+        selectCar();
+    });
+</script>
+{% endblock %}
