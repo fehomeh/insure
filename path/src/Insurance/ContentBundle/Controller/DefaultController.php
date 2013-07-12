@@ -62,7 +62,7 @@ class DefaultController extends Controller
         foreach ($models as $model)
             $models_list[$model->getId()] = $model->getValue();
         } else $models_list = array();
-            
+
         $response = new Response(json_encode($models_list));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
@@ -80,21 +80,29 @@ class DefaultController extends Controller
     public function stepOneAction()
     {
         $session = $this->getRequest()->getSession();
-      var_dump($this->container->getParameter('displacement'));
       if ($carBrand = $session->get('carBrand')) {
         $models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')
             ->findByBrand($carBrand);
       } else $models = null;
-      
+      if ($region = $session->get('region')) {
+          $cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findByRegion($region);
+      } else $cities = null;
       return $this->render('InsuranceContentBundle:Default:step_one.html.twig',array(
         'carBrand' => $session->get('carBrand'),
         'carModel' => $session->get('carModel'),
         'brands' => $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findAll(),
         'models' => $models,
+        'regions' => $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll(),
+        'cities' => $cities,
+        'region' => $region,
+        'city' => $session->get('city'),
         'carAgeFrom' => $this->container->getParameter('car.age.from'),
         'carAgeTo' => (int)date('Y'),
         'displacement' => $this->container->getParameter('displacement'),
         'insureTerm' => $this->container->getParameter('insure.period'),
+        'dgoSum' => $this->container->getParameter('dgo.sum'),
+        'nsSum' => $this->container->getParameter('ns.sum'),
+        'passengers' => $this->container->getParameter('passengers'),
       ));
     }
 
@@ -124,13 +132,13 @@ class DefaultController extends Controller
             'callback_form'   => $form->createView(),
         ));
     }
-    
+
     /**
      * Process calculator data and redirect to next step - filling personal data
-     * 
+     *
      */
     public function processCalculatorAction()
     {
-        
+
     }
 }

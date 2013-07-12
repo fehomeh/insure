@@ -6,41 +6,140 @@
     <select name="carBrand" id="carBrand" >
         <option value="0">Выберите марку</option>
         {% for brand in brands %}
-            <option value="{{brand.id}}" {% if brand.id == carBrand %}selected=""{% endif %}>{{brand.value}}</option>
+        <option value="{{brand.id}}" {% if brand.id == carBrand %}selected=""{% endif %}>{{brand.value}}</option>
         {% endfor %}
     </select>
-    {% if models %}
-        <div id="carModel">
-            {% for model in models %}
-                <a data="{{model.id}}" {% if model.id == carModel %}class="selected"{% endif %}>{{model.value}}</a>
+    {% if carAgeFrom and carAgeTo%}
+        <select name="carAge" id="carAge">
+            {% for year in range (carAgeFrom,carAgeTo) %}
+            <option value="{{year}}">{{year}}</option>
             {% endfor %}
-        </div>
-    {% else %}
-        <div id="carModel"></div>
+        </select>
     {% endif %}
-    <input type="hidden" id="hCarModel">
+    {% if models %}
+    <div id="carModel">
+        {% for model in models %}
+        <a data="{{model.id}}" {% if model.id == carModel %}class="selected"{% endif %}>{{model.value}}</a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div id="carModel"></div>
+    {% endif %}
+    <br>
+    <div id="slider-displacement"></div><br>
+    <div id="displacement">0</div>
+    <br>
+    <input type="hidden" id="hCarModel"{% if carModel %} value="{{carModel}}"{% endif %}>
+
+    <select name="registerRegion" id="registerRegion" >
+        <option value="0">Выберите область</option>
+        {% for region in regions %}
+            <option value="{{region.id}}" {% if region.id == city %}selected=""{% endif %}>{{region.value}}</option>
+        {% endfor %}
+    </select>
+    <select name="registerCity" {% if cities == false %}disabled=""{% endif %} id="registerCity">
+        <option>Выберите город</option>
+        {% if cities %}
+        {% for cityL in cities %}
+        <option value="{{cityL.id}}" {% if cityL == city %}selected=""{% endif %}>{{cityL.value}}</option>
+        {% endfor %}
+        {% endif %}
+    </select>
+    {% if insureTerm %}
+    <select name="insuranceTerm" id="insuranceTerm">
+        {% for term in insureTerm %}
+        {%if term < 1%} <option value="{{term}}">{{term*30}} дней</option>
+        {% elseif term == 1 %}
+        <option value="{{term}}">{{ term }} месяц</option>
+        {% elseif term > 1 and term < 5 %}
+        <option value="{{term}}">{{ term }} месяца</option>
+        {% elseif term >= 5 and term < 12 %}
+        <option value="{{term}}">{{ term }} месяцев</option>
+        {% elseif term >= 12 and term < 24 %}
+        <option value="{{term}}">{{ '%d'|format(term/12) }} год</option>
+        {% elseif term >= 24 and term < 60 %}
+        <option value="{{term}}">{{ '%d'|format(term/12) }} года</option>
+        {% elseif term >= 60 %}
+        <option value="{{term}}">{{ '%d'|format(term/12) }} лет</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    {% endif %}<br style="float:none;"><br>
+    <div id="slider-dgo-sum"></div><br>
+    <div id="dgo-sum"></div><br>
+    <br>
+    <div id="slider-ns-sum"></div><br>
+    <div id="ns-sum"></div>
+    <br>
+    <input type="checkbox" name="taxiUse" value="1"> Авто используется в качестве такси<br>
+    <button type="submit">Оформить!</button>
 </form>
-    
+
 <script type="text/javascript">
     function selectCar()
     {
         $('#carModel a').on('click', function (){
-            $('#hCarModel').val($(this).attr('data')));
+            $('#hCarModel').val($(this).attr('data'));
+            $(this).addClass('selected');
         });
     }
     $(document).ready(function(){
         $('#carBrand').on('change', function () {
             if ($(this).val()>0) $.get('{{path('get_car_models')}}', {brand_id: $(this).val()}).done(function (data) {
+                $('#carModel').hide(200);
                 var opts = '';
                 for (k in data) opts += '<a data="' + k + '">' + data[k] + '</a>';
                 $('#carModel').html(opts);
-                $('#carModel').toggle({duration: 800, done: selectCar});
-                });
+                    $('#carModel').toggle({duration: 800, done: selectCar});
+            });
             else {
                 $('#carModel').toggle({duration: 800});
             }
         })//Change action end
         selectCar();
+        $('#registerRegion').on('change', function (e){
+            if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {
+                var opts = '<option>Выберите город</option>';
+                for (k in data) opts += '<option value="' + k + '">' + data[k] + '</option>';
+                $('#registerCity').html(opts);
+                $('#registerCity').removeAttr('disabled');
+            });
+            else {
+                $('#registerCity').html('<option>Выберите город</option>');
+                $('#registerCity').attr('disabled', '');
+            }
+        });
+        var displacement = [{% for val in range(low=displacement.min, high=displacement.max, step=displacement.step) %} {{val}},{% endfor %}];
+        $('#slider-displacement').slider({
+            min: 0,
+            max: displacement.length - 1,
+            //values: [0, 1],
+            slide: function(event, ui) {
+                $("#displacement").text('Displacement: ' + displacement[ui.value]);
+            }
+        });
+
+        var dgoValues = [{% for val in dgoSum %} {{val}},{% endfor %}];
+        $('#slider-dgo-sum').slider({
+            min: 0,
+            max: dgoValues.length - 1,
+            //values: [0, 1],
+            slide: function(event, ui) {
+                $("#dgo-sum").text('DGO: ' + dgoValues[ui.value]);
+            }
+        });
+
+        var nsValues = [{% for val in nsSum %} {{val}},{% endfor %}];
+        $('#slider-ns-sum').slider({
+            min: 0,
+            max: nsValues.length - 1,
+            //values: [0, 1],
+            slide: function(event, ui) {
+                $("#ns-sum").text('DGO: ' + nsValues[ui.value]);
+            }
+        });
+
+//END READY
     });
 </script>
 {% endblock %}
