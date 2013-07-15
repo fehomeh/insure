@@ -16,7 +16,11 @@
     <link rel="stylesheet" href="{{asset('bundles/insurancecontent/css/timepicker.css')}}"/>
     {% endblock %}
   </head>
-  <body>
+  <body>{% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
+      <div>{{app.user.username}}</div>
+      {% else %}
+      <div id="login-button"><a id="">Войти</a></div>
+      {% endif %}
     <div>{% block content %}{% endblock %}
     </div>
       <input type="text" id="phone_no" placeholder="+(xxxxx)xxx-xx-xx">

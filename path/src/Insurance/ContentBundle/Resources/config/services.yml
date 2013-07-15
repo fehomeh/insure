@@ -48,3 +48,12 @@ services:
        arguments: ['sonata.block.service.policy', '@templating']
        tags:
            - { name: sonata.block }
+    insurance.user_provider.email:
+        class: Insurance\ContentBundle\Security\EmailProvider
+        public: false
+        arguments: ['@fos_user.user_manager']
+    insurance.authentication_handler:
+        class: Insurance\ContentBundle\Handler\AuthenticationHandler
+        arguments: ['@router']
+        tags:
+            - { name: 'monolog.logger', namechannel: 'security' }
