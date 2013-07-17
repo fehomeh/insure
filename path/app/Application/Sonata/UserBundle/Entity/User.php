@@ -32,7 +32,7 @@ class User extends BaseUser
     /**
      *
      * @var Doctrine\Common\Collections\ArrayCollection
-     * 
+     *
      * @ORM\OneToMany(targetEntity="\Insurance\ContentBundle\Entity\InsuranceOrder", mappedBy="user")
      */
     protected $insuranceOrder;
@@ -41,7 +41,7 @@ class User extends BaseUser
      * @var \Doctrine\Common\Collections\Collection
      */
     protected $groups;
-    
+
     public function __construct()
     {
       $this->insuranceOrder = new \Doctrine\Common\Collections\ArrayCollection();
@@ -72,5 +72,15 @@ class User extends BaseUser
     public function getInsuranceOrder()
     {
       return $this->insuranceOrder;
+    }
+
+    public function setEmail($email){
+        $this->email = $email;
+        $this->username = $email;
+    }
+
+    public function setEmailCanonical($emailCanonical){
+        $this->emailCanonical = $emailCanonical;
+        $this->usernameCanonical = $emailCanonical;
     }
 }

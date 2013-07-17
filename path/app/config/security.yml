@@ -19,7 +19,7 @@ security:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
         fos_userbundle:
-            id: fos_user.user_manager
+            id: insurance.user_provider.email
 
     firewalls:
         dev:
@@ -32,12 +32,24 @@ security:
 
         secured_area:
             pattern:    ^/demo/secured/
-            form_login:
-                check_path: _security_check
-                login_path: _demo_login
+            #form_login:
+            #    check_path: _security_check
+            #    login_path: _demo_login
             logout:
                 path:   _demo_logout
                 target: _demo
+            pattern:    ^/
+            anonymous: ~
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                login_path: /login
+                check_path: /login_check
+                success_handler: insurance.authentication_handler
+                failure_handler: insurance.authentication_handler
+            logout:
+                path: fos_user_security_logout
+                #target: index
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
