@@ -20,13 +20,21 @@
       <div>{{app.user.username}}</div>
       {% else %}
       <div id="login-button"><a id="">Войти</a></div>
+      <div id="login"></div>
       {% endif %}
     <div>{% block content %}{% endblock %}
     </div>
       <input type="text" id="phone_no" placeholder="+(xxxxx)xxx-xx-xx">
       {% block footer_scripts %}
 
-
+        <script type="text/javascript">
+            $('#login-button').on('click', function(e) {
+                $.ajax('{{path('fos_user_security_login')}}', {
+                    type: 'GET'}).done(function (data){
+                    $('#login').html(data);
+                })//End of ajax
+            });//End of click
+      </script>
       {% endblock %}
   </body>
 </html>

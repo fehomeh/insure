@@ -31,8 +31,8 @@ implements AuthenticationSuccessHandlerInterface,
                 $url = $targetPath;
             } else {
                 // Otherwise, redirect him to wherever you want
-                $url = $this->router->generate('user_view', array(
-                    'nickname' => $token->getUser()->getNickname()
+                $url = $this->router->generate('homepage', array(
+                    //'nickname' => $token->getUser()->getNickname()
                 ));
             }
 
@@ -47,7 +47,9 @@ implements AuthenticationSuccessHandlerInterface,
         } else {
             // Create a flash message with the authentication error message
             $request->getSession()->setFlash('error', $exception->getMessage());
-            $url = $this->router->generate('user_login');
+            var_dump($exception->getMessage());
+            exit;
+            $url = $this->router->generate('login');
 
             return new RedirectResponse($url);
         }
