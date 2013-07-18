@@ -17,7 +17,7 @@
     {% endblock %}
   </head>
   <body>{% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
-      <div>{{app.user.username}}</div>
+      <div>Здравствуйте, {{app.user.username}}! <a href="{{path('fos_user_security_logout')}}">Выйти</a></div>
       {% else %}
       <div id="login-button"><a id="">Войти</a></div>
       <div id="login"></div>
@@ -32,6 +32,26 @@
                 $.ajax('{{path('fos_user_security_login')}}', {
                     type: 'GET'}).done(function (data){
                     $('#login').html(data);
+                    $('#login-form').submit(function (e) {
+                        e.preventDefault();
+                        $.ajax('{{path("fos_user_security_check")}}',
+                            {
+                                type: 'POST',
+                                dataType: 'JSON',
+                                data: $(this).serialize()
+                            }
+                        )
+                        .done(function(data){
+                            if (typeof data.email !== 'undefined') {
+                                $('login-button').html('Здравствуйте, ' + data.email + '! '+ '<a href="{{path('fos_user_security_logout')}}">Выйти</a>');
+                            } else {
+                                if (typeof data.message !==undefined)
+                                    alert(data.message)
+                                else
+                                    alert('Произошла ошибка во время авторизации!');
+                            }
+                        });
+                    });
                 })//End of ajax
             });//End of click
       </script>

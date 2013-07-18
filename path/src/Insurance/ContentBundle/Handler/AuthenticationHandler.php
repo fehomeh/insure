@@ -14,16 +14,21 @@ implements AuthenticationSuccessHandlerInterface,
            AuthenticationFailureHandlerInterface
 {
     private $router;
+    private $container;
 
-    public function __construct(Router $router)
+    public function __construct(Router $router, $container)
     {
         $this->router = $router;
+        $this->container = $container;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         if ($request->isXmlHttpRequest()) {
-            // Handle XHR here
+            $email = $token->getUser()->getEmail();
+            $response = new Response(json_encode(array('email' => $email,)));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
         } else {
             // If the user tried to access a protected resource and was forces to login
             // redirect him back to that resource
@@ -35,7 +40,6 @@ implements AuthenticationSuccessHandlerInterface,
                     //'nickname' => $token->getUser()->getNickname()
                 ));
             }
-
             return new RedirectResponse($url);
         }
     }
@@ -43,13 +47,13 @@ implements AuthenticationSuccessHandlerInterface,
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         if ($request->isXmlHttpRequest()) {
-            // Handle XHR here
+            $response = new Response(json_encode(array('message' => $exception->getMessage(),)));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
         } else {
             // Create a flash message with the authentication error message
             $request->getSession()->setFlash('error', $exception->getMessage());
-            var_dump($exception->getMessage());
-            exit;
-            $url = $this->router->generate('login');
+            $url = $this->router->generate('fos_user_security_login');
 
             return new RedirectResponse($url);
         }

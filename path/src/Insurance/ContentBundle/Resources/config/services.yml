@@ -54,6 +54,6 @@ services:
         arguments: ['@fos_user.user_manager']
     insurance.authentication_handler:
         class: Insurance\ContentBundle\Handler\AuthenticationHandler
-        arguments: ['@router']
+        arguments: ['@router', '@service_container']
         tags:
             - { name: 'monolog.logger', namechannel: 'security' }
