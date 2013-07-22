@@ -138,13 +138,31 @@ class DefaultController extends Controller
     }
 
     /**
-     * Process calculator data and redirect to next step - filling personal data
+     * Process calculator (save data to session) and redirect to next step - filling personal data
      *
      */
     public function processCalculatorAction(Request $request)
     {
         $session = $request->getSession();
         $calculator = $this->get('insurance.service.calculator');
+        $carBrand = $request->request->get('carBrand');
+        $carModel = $request->request->get('carModel');
+        $carAge = $request->request->get('carAge');
+        $displacement = $request->request->get('hDisplacement');
+        $registerRegion = $request->request->get('registerRegion');
+        $registerCity = $request->request->get('registerCity');
+        $insuranceTerm = $request->request->get('insuranceTerm');
+        $dgoSum = $request->request->get('hDGOSum');
+        $nsSum = $request->request->get('hNSSum');
+        if ($carBrand > 0) $session->set('carBrand', $carBrand);
+        if ($carModel > 0) $session->set('carModel', $carModel);
+        if ($displacement > 0) $session->set('displacement', $displacement);
+        if ($carModel > 0) $session->set('carAge', $carModel);
+        if ($registerRegion > 0) $session->set('registerRegion', $registerRegion);
+        if ($registerCity > 0) $session->set('registerCity', $registerCity);
+        if ($insuranceTerm > 0) $session->set('insuranceTerm', $insuranceTerm);
+        if ($request->request->get('cbDGO') == 'yes' && $dgoSum > 0) $session->set('dgoSum', $dgoSum);
+        if ($request->request->get('cbNS') == 'yes' && $nsSum > 0) $session->set('nsSum', $nsSum);
         $calculator->setRateType('base')
             ->setCompany(2);
         $k1 = $calculator->getRate('Киев', 'region');

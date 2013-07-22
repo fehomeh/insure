@@ -2,6 +2,15 @@
 {# calculator #}
 {% block content %}
 {{carBrand}}
+<style>
+    #dgo-container {
+        display: none;
+        padding: 10px;
+    }
+    #ns-container {
+        display: none;
+    }
+</style>
 <form action="{{path('calculate_process')}}" method="POST" id="calculator-form">
     <select name="carBrand" id="carBrand" >
         <option value="0">Выберите марку</option>
@@ -65,13 +74,21 @@
         {% endfor %}
     </select>
     {% endif %}<br style="float:none;"><br>
-    <div id="slider-dgo-sum"></div><br>
-    <div id="dgo-sum"></div><br>
+    <input type="checkbox" name="cbDGO" value="yes"> Оформить Доп. гражданскую ответственность
+    <div id="dgo-container">
+        <div id="slider-dgo-sum"></div><br>
+        <div id="dgo-sum"></div><br>
+    </div>
     <br>
-    <div id="slider-ns-sum"></div><br>
-    <div id="ns-sum"></div>
+    <input type="checkbox" name="cbNS" value="yes"> Оформить НС
+    <div id="ns-container">
+        <div id="slider-ns-sum"></div><br>
+        <div id="ns-sum"></div>
+    </div>
     <br>
     <input type="checkbox" name="taxiUse" value="1"> Авто используется в качестве такси<br>
+    <input type="hidden" name="hDGOSum" id="hDGOSum">
+    <input type="hidden" name="hNSSum" id="hNSSum">
     <button type="submit">Оформить!</button>
 </form>
 
@@ -125,6 +142,7 @@
             max: dgoValues.length - 1,
             //values: [0, 1],
             slide: function(event, ui) {
+                $('#hDGOSum').val(dgoValues[ui.value]);
                 $("#dgo-sum").text('DGO: ' + dgoValues[ui.value]);
             }
         });
@@ -135,10 +153,21 @@
             max: nsValues.length - 1,
             //values: [0, 1],
             slide: function(event, ui) {
-                $("#ns-sum").text('DGO: ' + nsValues[ui.value]);
+                $("#ns-sum").text('NS: ' + nsValues[ui.value]);
+                $('#hNSSum').val(nsValues[ui.value]);
             }
         });
-
+        if ($('input[name="cbDGO"]').is(':checked')) $('#dgo-container').show();
+        if ($('input[name="cbNS"]').is(':checked')) $('#ns-container').show();
+        
+        $('input[name="cbDGO"]').on('click', function (e){
+            if ($(this).is(':checked')) $('#dgo-container').show(800);
+            else $('#dgo-container').hide(800);
+        });
+        $('input[name="cbNS"]').on('click', function (e){
+            if ($(this).is(':checked')) $('#ns-container').show(800);
+            else $('#ns-container').hide(800);
+        })
 //END READY
     });
 </script>
