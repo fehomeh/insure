@@ -57,3 +57,6 @@ services:
         arguments: ['@router', '@service_container']
         tags:
             - { name: 'monolog.logger', namechannel: 'security' }
+    insurance.service.calculator:
+      class: Insurance\ContentBundle\Service\Calculator
+      arguments: [ '@service_container' ]

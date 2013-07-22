@@ -70,40 +70,44 @@ class DefaultController extends Controller
 
     public function goToStepOneAction()
     {
-      $session = $this->getRequest()->getSession();
-      $request = $this->getRequest();
-      $session->set('carBrand', $request->request->get('carBrand'));
-      $session->set('carModel', $request->request->get('carModel'));
-      return $this->redirect($this->generateUrl('step1'));
+        $session = $this->getRequest()->getSession();
+        $request = $this->getRequest();
+        $securityContext = $this->container->get('security.context');
+        if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+    // authenticated REMEMBERED, FULLY will imply REMEMBERED (NON anonymous)
+        }
+        $session->set('carBrand', $request->request->get('carBrand'));
+        $session->set('carModel', $request->request->get('carModel'));
+        return $this->redirect($this->generateUrl('step1'));
     }
 
     public function stepOneAction()
     {
         $session = $this->getRequest()->getSession();
-      if ($carBrand = $session->get('carBrand')) {
-        $models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')
-            ->findByBrand($carBrand);
-      } else $models = null;
-      if ($region = $session->get('region')) {
-          $cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findByRegion($region);
-      } else $cities = null;
-      return $this->render('InsuranceContentBundle:Default:step_one.html.twig',array(
-        'carBrand' => $session->get('carBrand'),
-        'carModel' => $session->get('carModel'),
-        'brands' => $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findAll(),
-        'models' => $models,
-        'regions' => $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll(),
-        'cities' => $cities,
-        'region' => $region,
-        'city' => $session->get('city'),
-        'carAgeFrom' => $this->container->getParameter('car.age.from'),
-        'carAgeTo' => (int)date('Y'),
-        'displacement' => $this->container->getParameter('displacement'),
-        'insureTerm' => $this->container->getParameter('insure.period'),
-        'dgoSum' => $this->container->getParameter('dgo.sum'),
-        'nsSum' => $this->container->getParameter('ns.sum'),
-        'passengers' => $this->container->getParameter('passengers'),
-      ));
+        if ($carBrand = $session->get('carBrand')) {
+          $models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')
+              ->findByBrand($carBrand);
+        } else $models = null;
+        if ($region = $session->get('region')) {
+            $cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findByRegion($region);
+        } else $cities = null;
+        return $this->render('InsuranceContentBundle:Default:step_one.html.twig',array(
+            'carBrand' => $session->get('carBrand'),
+            'carModel' => $session->get('carModel'),
+            'brands' => $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findAll(),
+            'models' => $models,
+            'regions' => $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll(),
+            'cities' => $cities,
+            'region' => $region,
+            'city' => $session->get('city'),
+            'carAgeFrom' => $this->container->getParameter('car.age.from'),
+            'carAgeTo' => (int)date('Y'),
+            'displacement' => $this->container->getParameter('displacement'),
+            'insureTerm' => $this->container->getParameter('insure.period'),
+            'dgoSum' => $this->container->getParameter('dgo.sum'),
+            'nsSum' => $this->container->getParameter('ns.sum'),
+            'passengers' => $this->container->getParameter('passengers'),
+        ));
     }
 
     /**
@@ -137,8 +141,15 @@ class DefaultController extends Controller
      * Process calculator data and redirect to next step - filling personal data
      *
      */
-    public function processCalculatorAction()
+    public function processCalculatorAction(Request $request)
     {
-
+        $session = $request->getSession();
+        $calculator = $this->get('insurance.service.calculator');
+        $calculator->setRateType('base')
+            ->setCompany(2);
+        $k1 = $calculator->getRate('Киев', 'region');
+        $k2 = $calculator->getRate('1.7', 'displacement');
+        var_dump($k1->getValue(), $k2->getValue());
+        return new Response();
     }
 }
