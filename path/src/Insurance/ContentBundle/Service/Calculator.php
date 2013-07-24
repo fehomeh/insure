@@ -79,5 +79,22 @@ class Calculator {
         }
         return $result;
     }
+
+    /**
+     * Calcalates common civil insurance for company
+     */
+    public function calculateCommon($fields)
+    {
+        $this->setCompany($fields['company'])
+          ->setRateType('base');
+        $k1 = $this->getRate($fields['region'], 'region')->getValue();
+        var_dump($k1);
+        $k2 = $this->getRate($fields['displacement'], 'displacement')->getValue();
+        $k3 = $this->getRate($fields['experience'], 'experience')->getValue();
+        $k4 = $this->getRate($fields['term'], 'term')->getValue();
+        //$k5 = $this->getRate($fields['year'], 'year')->getValue();
+        $base = $this->sc->getParameter('base.rate');
+        return $base * $k1 * $k2 * $k3 * $k4 / 2;
+    }
 }
 ?>

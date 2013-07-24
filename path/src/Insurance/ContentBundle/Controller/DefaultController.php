@@ -145,11 +145,18 @@ class DefaultController extends Controller
     {
         $session = $request->getSession();
         $calculator = $this->get('insurance.service.calculator');
-        $calculator->setRateType('base')
-            ->setCompany(2);
-        $k1 = $calculator->getRate('Киев', 'region');
-        $k2 = $calculator->getRate('1.7', 'displacement');
-        var_dump($k1->getValue(), $k2->getValue());
+        //$calculator->setRateType('base')
+        //    ->setCompany(2);
+        //$k1 = $calculator->getRate('Киев', 'region');
+        //$k2 = $calculator->getRate('1.7', 'displacement');
+        var_dump($calculator->calculateCommon(array(
+          'region' => 'Киев',
+          'displacement' => '1.7',
+          'experience' => '2',
+          'term' => '12',
+          'year' => '2005',
+          'company' => '2',
+        )));
         return new Response();
     }
 }
