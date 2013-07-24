@@ -145,7 +145,6 @@ class DefaultController extends Controller
     {
         $session = $request->getSession();
         $calculator = $this->get('insurance.service.calculator');
-<<<<<<< HEAD
         $carBrand = $request->request->get('carBrand');
         $carModel = $request->request->get('carModel');
         $carAge = $request->request->get('carAge');
