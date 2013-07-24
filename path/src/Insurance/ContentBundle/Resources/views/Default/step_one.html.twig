@@ -10,6 +10,9 @@
     #ns-container {
         display: none;
     }
+    #discount-container {
+        display: none;
+    }
 </style>
 <form action="{{path('calculate_process')}}" method="POST" id="calculator-form">
     <select name="carBrand" id="carBrand" >
@@ -19,11 +22,17 @@
         {% endfor %}
     </select>
     {% if carAgeFrom and carAgeTo%}
+    <div>
         <select name="carAge" id="carAge">
             {% for year in range (carAgeFrom,carAgeTo) %}
             <option value="{{year}}">{{year}}</option>
             {% endfor %}
         </select>
+        <div id="discount-container">
+            <div>Ваша скидка:</div>
+            <div id="discount"></div>
+        </div>
+    </div>
     {% endif %}
     {% if models %}
     <div id="carModel">
@@ -38,8 +47,9 @@
     <div id="slider-displacement"></div><br>
     <div id="displacement">0</div>
     <br>
-    <input type="hidden" id="hCarModel"{% if carModel %} value="{{carModel}}"{% endif %}>
-
+    <div id="slider-experience"></div><br>
+    <div id="experience">0</div>
+    <br>
     <select name="registerRegion" id="registerRegion" >
         <option value="0">Выберите область</option>
         {% for region in regions %}
@@ -89,6 +99,9 @@
     <input type="checkbox" name="taxiUse" value="1"> Авто используется в качестве такси<br>
     <input type="hidden" name="hDGOSum" id="hDGOSum">
     <input type="hidden" name="hNSSum" id="hNSSum">
+    <input type="hidden" name="hExperience" id="hExperience">
+    <input type="hidden" id="hCarModel"{% if carModel %} value="{{carModel}}"{% endif %}>
+    <button name="calculate" id="calculate">Расчитать!</button>
     <button type="submit">Оформить!</button>
 </form>
 
@@ -157,6 +170,17 @@
                 $('#hNSSum').val(nsValues[ui.value]);
             }
         });
+        $('#slider-experience').slider({
+            min: 0,
+            max: 10,
+            step: 1,
+            //values: [0, 1],
+            slide: function(event, ui) {
+                $("#experience").text('Experience: ' + ui.value);
+                $('#hExperience').val(ui.value);
+            }
+        });
+        
         if ($('input[name="cbDGO"]').is(':checked')) $('#dgo-container').show();
         if ($('input[name="cbNS"]').is(':checked')) $('#ns-container').show();
         
@@ -167,6 +191,22 @@
         $('input[name="cbNS"]').on('click', function (e){
             if ($(this).is(':checked')) $('#ns-container').show(800);
             else $('#ns-container').hide(800);
+        })
+        $('#carAge').on('change', function (e){
+                $.ajax('{{url('get_discount')}}', {
+                    dataType: 'JSON',
+                    type: 'POST',
+                    data: { carAge: $(this).val() }
+                }).done(function (data){
+                    if (data.discount > 0) {
+                        $('#discount').text(data.discount)
+                        $('#discount-container').show();
+                        }
+                    else $('#discount-container').hide();
+                });
+            });
+        $('#calculate').on('click', function(e){
+            
         })
 //END READY
     });

@@ -58,14 +58,17 @@ class Calculator {
     public function getRate($value, $code)
     {
         $query = $this->manager->createQuery(
-          'SELECT cr FROM InsuranceContentBundle:CompanyRate cr
-          JOIN cr.rate r
-          JOIN cr.rateValue rv
-          WHERE cr.company = :companyRate
-          AND r.code = :rateCode
-          AND r.type = :rateType
-          AND (rv.valueEqual = :value OR (rv.valueFrom <= :value AND rv.valueTo >= :value AND rv.valueEqual is null))'
-          )
+            'SELECT cr FROM InsuranceContentBundle:CompanyRate cr
+            JOIN cr.rate r
+            JOIN cr.rateValue rv
+            WHERE cr.company = :companyRate
+            AND r.code = :rateCode
+            AND r.type = :rateType
+            AND (rv.valueEqual = :value OR 
+            (rv.valueFrom <= :value AND rv.valueTo >= :value AND rv.valueEqual is null) OR
+            (rv.valueFrom <= :value AND rv.valueTo IS NULL AND rv.valueEqual IS NULL) OR 
+            (rv.valueFrom IS NULL AND rv.valueTo >= :value AND rv.valueEqual is null))'
+            )
           ->setParameter('companyRate', $this->insuranceCompany)
           ->setParameter('rateCode', $code)
           ->setParameter('rateType', $this->rateType)
@@ -87,14 +90,56 @@ class Calculator {
     {
         $this->setCompany($fields['company'])
           ->setRateType('base');
-        $k1 = $this->getRate($fields['region'], 'region')->getValue();
-        var_dump($k1);
-        $k2 = $this->getRate($fields['displacement'], 'displacement')->getValue();
-        $k3 = $this->getRate($fields['experience'], 'experience')->getValue();
-        $k4 = $this->getRate($fields['term'], 'term')->getValue();
+        $k1Obj = $this->getRate($fields['region'], 'region');
+        if ($k1Obj === null) $k1 = 1;
+            else $k1 = $k1Obj->getValue()
+        $k2Obj = $this->getRate($fields['displacement'], 'displacement');
+        if ($k2Obj === null) $k2 = 1;
+            else $k2 = $k2Obj->getValue();
+        $k3Obj = $this->getRate($fields['experience'], 'experience');
+        if ($k3Obj === null) $k3 = 1;
+            else $k3 = $k3Obj->getValue();
+        $k4Obj = $this->getRate($fields['term'], 'term');
+        if ($k4Obj === null) $k4 = 1;
+            else $k4 = $k4Obj->getValue();
         //$k5 = $this->getRate($fields['year'], 'year')->getValue();
         $base = $this->sc->getParameter('base.rate');
         return $base * $k1 * $k2 * $k3 * $k4 / 2;
+    }
+    
+    public function calculateDgo($fields)
+    {
+        $this->setCompany($fields['company'])
+            ->setRate('dgo');
+        $k1Obj = $this->getRate($fields['sum'], 'dgo_summ');
+        if ($k1Obj === null) $k1 = 1;
+            else $k1 = $k1Obj->getValue();
+        $k2Obj = $this->getRate($fields['displacement'], 'dgo_displacement');
+        if ($k2Obj === null) $k2 = 1;
+            else $k2 = $k2Obj->getValue();
+        $k3Obj = $this->getRate($fields['experience'], 'dgo_experience');
+        if ($k3Obj === null) $k3 = 1;
+            else $k3 = $k3Obj->getValue();
+        $k4Obj = $this->getRate($fields['term'], 'dgo_term');
+        if ($k4Obj === null) $k4 = 1;
+            else $k4 = $k4Obj->getValue();
+        $k5Obj = $this->getRate($fields['taxi'], 'dgo_taxi'); //Here we must put 0 if car used as taxi
+        if ($k5Obj === null) $k5 = 1;
+            else $k5 = $k5Obj->getValue();
+        return $fields['sum'] * $k1 * $k2 * $k3 * $k4;
+    }
+    
+    public function calculateNs($fields)
+    {
+        $this->setCompany($fields['company'])
+            ->setRate('ns');
+        $k1Obj = $this->getRate($fields['sum'], 'ns_driver');
+        if ($k1Obj === null) $k1 = 1;
+            else $k1 = $k1Obj->getValue();
+        $k2Obj = $this->getRate($fields['sum'], 'ns_passenger');
+        if ($k2Obj === null) $k2 = 1;
+            else $k2 = $k2Obj->getValue();
+        return $fields['sum'] * $k1 * $k2;
     }
 }
 ?>

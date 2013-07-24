@@ -24,14 +24,23 @@ get_car_models:
     defaults: { _controller: InsuranceContentBundle:Default:getCarModels }
 calculate_go:
     pattern: /calculate.htm
-    defaults: { _controller: InsuranceContentBundle:Default:goToStepOne, method: POST }
+    defaults: { _controller: InsuranceContentBundle:Default:goToStepOne }
+    methods: [ 'POST' ]
 feedback_create:
     pattern:  /create
     defaults: { _controller: "InsuranceContentBundle:Default:createFeedback" }
     requirements: { _method: POST }
 step1:
     pattern: /step1.htm
-    defaults: { _controller: InsuranceContentBundle:Default:stepOne }
+    defaults: { _controller: InsuranceContentBundle:Default:calculator }
 calculate_process:
     pattern: /save-calculator.htm
-    defaults: { _controller: "InsuranceContentBundle:Default:processCalculator", method: POST }
+    defaults: { _controller: "InsuranceContentBundle:Default:processCalculator" }
+    #methods: [ 'POST' ]
+get_discount:
+    pattern: /get-discount.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:getDiscount" }
+    methods: [ 'POST' ]
+step2:
+    pattern: /step2.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:formalization"}

@@ -13,7 +13,7 @@ use Insurance\ContentBundle\Entity\Feedback;
 
 class DefaultController extends Controller
 {
-
+    const DEFAULT_COMPANY_ID = 2;
     public function indexAction($name = 'Stranger')
     {
       $regions = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll();
@@ -39,35 +39,46 @@ class DefaultController extends Controller
           ));
     }
 
+    /**
+     * AJAX action to get cities list after select some region on page
+     * @return JSON encoded list of cities
+     */
     public function getCitiesAction()
     {
-        $request = $this->getRequest();
-        $region_id = $request->get('region_id');
-        if ($cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findBy(
-            array('region' => $region_id), array('value' => 'ASC'))) {
-        foreach ($cities as $city)
-            $city_list[$city->getId()] = $city->getValue();
-        } else $city_list = array();
-        $response = new Response(json_encode($city_list));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        if ($request->isXmlHttpRequest()) {
+            $request = $this->getRequest();
+            $region_id = $request->get('region_id');
+            if ($cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findBy(
+                array('region' => $region_id), array('value' => 'ASC'))) {
+            foreach ($cities as $city)
+                $city_list[$city->getId()] = $city->getValue();
+            } else $city_list = array();
+            $response = new Response(json_encode($city_list));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } else throw $this->createNotFoundException('Wrong request!');
     }
 
     public function getCarModelsAction()
     {
-        $request = $this->getRequest();
-        $brand_id = $request->get('brand_id');
-        if ($models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findBy(
-            array('brand' => $brand_id), array('value' => 'ASC'))) {
-        foreach ($models as $model)
-            $models_list[$model->getId()] = $model->getValue();
-        } else $models_list = array();
+        if ($request->isXmlHttpRequest()) {
+            $request = $this->getRequest();
+            $brand_id = $request->get('brand_id');
+            if ($models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findBy(
+                array('brand' => $brand_id), array('value' => 'ASC'))) {
+            foreach ($models as $model)
+                $models_list[$model->getId()] = $model->getValue();
+            } else $models_list = array();
 
-        $response = new Response(json_encode($models_list));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+            $response = new Response(json_encode($models_list));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } else throw $this->createNotFoundException('Wrong request!');
     }
-
+    
+    /**
+     * Action to save car model and brand into session and redirect user to calculator
+     */
     public function goToStepOneAction()
     {
         $session = $this->getRequest()->getSession();
@@ -80,10 +91,15 @@ class DefaultController extends Controller
         $session->set('carModel', $request->request->get('carModel'));
         return $this->redirect($this->generateUrl('step1'));
     }
-
-    public function stepOneAction()
+    
+    /**
+     * Action renders calculator template and processes it data: saves to session
+     * check for errors, calculates prices and redirects user to next page - formalization
+     */
+    public function calculatorAction(Request $request)
     {
         $session = $this->getRequest()->getSession();
+        $calculator = $this->get('insurance.service.calculator');
         if ($carBrand = $session->get('carBrand')) {
           $models = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')
               ->findByBrand($carBrand);
@@ -91,6 +107,57 @@ class DefaultController extends Controller
         if ($region = $session->get('region')) {
             $cities = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findByRegion($region);
         } else $cities = null;
+        if ($request->getMethod() == 'POST') {
+            $session = $request->getSession();
+            $calculator = $this->get('insurance.service.calculator');
+            $carBrand = $request->request->get('carBrand');
+            $carModel = $request->request->get('carModel');
+            $carAge = $request->request->get('carAge');
+            $experience = $request->request->get('hExperience');
+            $displacement = $request->request->get('hDisplacement');
+            $registerRegion = $request->request->get('registerRegion');
+            $registerCity = $request->request->get('registerCity');
+            $insuranceTerm = $request->request->get('insuranceTerm');
+            $dgoSum = $request->request->get('hDGOSum');
+            $nsSum = $request->request->get('hNSSum');
+            if ($carBrand > 0) $session->set('carBrand', $carBrand);
+            if ($carModel > 0) $session->set('carModel', $carModel);
+            if ($displacement > 0) $session->set('displacement', $displacement);
+            if ($carModel > 0) $session->set('carAge', $carModel);
+            if ($registerRegion > 0) $session->set('registerRegion', $registerRegion);
+            if ($registerCity > 0) $session->set('registerCity', $registerCity);
+            if ($insuranceTerm > 0) $session->set('insuranceTerm', $insuranceTerm);
+            if ($request->request->get('cbDGO') == 'yes' && $dgoSum > 0) 
+            {
+                $session->set('dgoSum', $dgoSum);
+                $session->set('priceDGO', $calculator->calculateDgo(array(
+                    'sum' => $dgoSum,
+                    'displacement' => $displacement,
+                    'experience' => $experience,
+                    'term' => $insuranceTerm,
+                    'taxi' => $request->request->get('taxiUse')? 1 : -1,
+                    'company' => static::DEFAULT_COMPANY_ID,
+                    )
+                ));
+            }
+            if ($request->request->get('cbNS') == 'yes' && $nsSum > 0) {
+                $session->set('nsSum', $nsSum);
+                $session->set('priceNs', $calculator->calculateNs(array(
+                    'sum' => $nsSum,
+                    'company' => static::DEFAULT_COMPANY_ID,
+                    )
+                ));
+            }
+            $session->set('price', $calculator->calculateCommon(array(
+                'region' => $registerCity,
+                'displacement' => $displacement,
+                'experience' => $experience,
+                'term' => $insuranceTerm,
+                'year' => $carAge,
+                'company' => static::DEFAULT_COMPANY_ID,
+            )));
+            $this->redirect($this->generateUrl('form'));
+        }
         return $this->render('InsuranceContentBundle:Default:step_one.html.twig',array(
             'carBrand' => $session->get('carBrand'),
             'carModel' => $session->get('carModel'),
@@ -139,30 +206,12 @@ class DefaultController extends Controller
 
     /**
      * Process calculator (save data to session) and redirect to next step - filling personal data
-     *
+     * 
      */
+     //TODO Kill this method - it is useless
     public function processCalculatorAction(Request $request)
     {
-        $session = $request->getSession();
         $calculator = $this->get('insurance.service.calculator');
-        $carBrand = $request->request->get('carBrand');
-        $carModel = $request->request->get('carModel');
-        $carAge = $request->request->get('carAge');
-        $displacement = $request->request->get('hDisplacement');
-        $registerRegion = $request->request->get('registerRegion');
-        $registerCity = $request->request->get('registerCity');
-        $insuranceTerm = $request->request->get('insuranceTerm');
-        $dgoSum = $request->request->get('hDGOSum');
-        $nsSum = $request->request->get('hNSSum');
-        if ($carBrand > 0) $session->set('carBrand', $carBrand);
-        if ($carModel > 0) $session->set('carModel', $carModel);
-        if ($displacement > 0) $session->set('displacement', $displacement);
-        if ($carModel > 0) $session->set('carAge', $carModel);
-        if ($registerRegion > 0) $session->set('registerRegion', $registerRegion);
-        if ($registerCity > 0) $session->set('registerCity', $registerCity);
-        if ($insuranceTerm > 0) $session->set('insuranceTerm', $insuranceTerm);
-        if ($request->request->get('cbDGO') == 'yes' && $dgoSum > 0) $session->set('dgoSum', $dgoSum);
-        if ($request->request->get('cbNS') == 'yes' && $nsSum > 0) $session->set('nsSum', $nsSum);
         $calculator->setRateType('base')
             ->setCompany(2);
         $k1 = $calculator->getRate('Киев', 'region');
@@ -178,8 +227,120 @@ class DefaultController extends Controller
           'experience' => '2',
           'term' => '12',
           'year' => '2005',
-          'company' => '2',
+          'company' => static::DEFAULT_COMPANY_ID,
         )));
         return new Response();
+    }
+    
+    /**
+     * Function processes discount using user input data (car age)
+     * @return JSON object with "discount" param
+     */
+    public function getDiscountAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $carAge = $request->request->get('carAge');
+            $calculator = $this->get('insurance.service.calculator');
+            $calculator->setCompany(static::DEFAULT_COMPANY_ID)
+                ->setRateType('base');
+            $discount = $calculator->getRate($carAge, 'year');
+            if ($discount !== null) {
+                $respString = json_encode(array('discount' => $discount->getValue()));
+            } else $respString = json_encode(array('discount' => 0));
+            $response = new Response($respString);
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } else throw $this->createNotFoundException('Wrong request!');
+    }
+    
+    /**
+     * Calculate general insurance price
+     * @return JSON object with "price" key
+     */
+    public function calculateInsurance(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $calculator = $this->get('insurance.service.calculator');
+            $registerCity = $request->request->get('registerCity');
+            $displacement = $request->request->get('hDisplacement');
+            $experience = $request->request->get('hExperience');
+            $insuranceTerm = $request->request->get('insuranceTerm');
+            $carAge = $request->request->get('carAge');
+            if ($registerCity > 0 && $displacement > 0 && $experience > 0 &&
+            $insuranceTerm > 0 && $carAge > 0)
+                $price = $calculator->calculateCommon(array(
+                    'region' => $registerCity,
+                    'displacement' => $displacement,
+                    'experience' => $experience,
+                    'term' => $insuranceTerm,
+                    'year' => $carAge,
+                    'company' => static::DEFAULT_COMPANY_ID,
+                    )
+                );
+            else $price = 0;
+            $response = new Response(json_encode(array('price' => $price)));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } else throw $this->createNotFoundException('Wrong request!');
+    }
+    
+    /**
+     * Calculate price of additional civil responsibility
+     * @return JSON object with "priceDgo" key
+     */
+    public function calculateDgo(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $calculator = $this->get('insurance.service.calculator');
+            $dgoSum = $request->request->get('hDgoSum');
+            $displacement = $request->request->get('hDisplacement');
+            $experience = $request->request->get('hExperience');
+            $insuranceTerm = $request->request->get('insuranceTerm');
+            if ($dgoSum > 0 && $displacement > 0 && $insuranceTerm > 0 && $experience > 0)
+                $priceDgo = $calculator->calculateCommon(array(
+                    'sum' => $dgoSum,
+                    'displacement' => $displacement,
+                    'experience' => $experience,
+                    'term' => $insuranceTerm,
+                    'taxi' => $request->request->get('taxiUse')? 1 : -1,
+                    'company' => static::DEFAULT_COMPANY_ID,
+                    )
+                );
+            else $priceDgo = 0;
+            $response = new Response(json_encode(array('priceDgo' => $priceDgo)));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } else throw $this->createNotFoundException('Wrong request!');
+    }
+    
+    /**
+     * Calculate casualty insurance
+     * @return JSON object with "priceNs" key
+     */
+    public function calculateNs(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $calculator = $this->get('insurance.service.calculator');
+            $nsSum = $request->request->get('hNSSum');
+            if ($nsSum > 0)
+                $priceNs = $calculator->calculateCommon(array(
+                    'sum' => $nsSum,
+                    'company' => static::DEFAULT_COMPANY_ID,
+                    )
+                );
+            else $priceNs = 0;
+            $response = new Response(json_encode(array('priceNs' => $priceNs)));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        } else throw $this->createNotFoundException('Wrong request!');
+    }
+    
+    /**
+     * Output registration and policy formalization form also process data from this form
+     * 
+     */
+    public function formalizationAction()
+    {
+        
     }
 }
