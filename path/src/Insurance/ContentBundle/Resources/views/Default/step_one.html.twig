@@ -94,6 +94,15 @@
     <div id="ns-container">
         <div id="slider-ns-sum"></div><br>
         <div id="ns-sum"></div>
+        <select name="passengersCount" id="passengersCount">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select>
     </div>
     <br>
     <input type="checkbox" name="taxiUse" value="1"> Авто используется в качестве такси<br>
@@ -180,10 +189,10 @@
                 $('#hExperience').val(ui.value);
             }
         });
-        
+
         if ($('input[name="cbDGO"]').is(':checked')) $('#dgo-container').show();
         if ($('input[name="cbNS"]').is(':checked')) $('#ns-container').show();
-        
+
         $('input[name="cbDGO"]').on('click', function (e){
             if ($(this).is(':checked')) $('#dgo-container').show(800);
             else $('#dgo-container').hide(800);
@@ -206,7 +215,7 @@
                 });
             });
         $('#calculate').on('click', function(e){
-            
+
         })
 //END READY
     });

@@ -75,7 +75,7 @@ class DefaultController extends Controller
             return $response;
         } else throw $this->createNotFoundException('Wrong request!');
     }
-    
+
     /**
      * Action to save car model and brand into session and redirect user to calculator
      */
@@ -91,7 +91,7 @@ class DefaultController extends Controller
         $session->set('carModel', $request->request->get('carModel'));
         return $this->redirect($this->generateUrl('step1'));
     }
-    
+
     /**
      * Action renders calculator template and processes it data: saves to session
      * check for errors, calculates prices and redirects user to next page - formalization
@@ -118,6 +118,7 @@ class DefaultController extends Controller
             $registerRegion = $request->request->get('registerRegion');
             $registerCity = $request->request->get('registerCity');
             $insuranceTerm = $request->request->get('insuranceTerm');
+            $passengersCount = $request->request->get('passengersCount');
             $dgoSum = $request->request->get('hDGOSum');
             $nsSum = $request->request->get('hNSSum');
             if ($carBrand > 0) $session->set('carBrand', $carBrand);
@@ -127,7 +128,7 @@ class DefaultController extends Controller
             if ($registerRegion > 0) $session->set('registerRegion', $registerRegion);
             if ($registerCity > 0) $session->set('registerCity', $registerCity);
             if ($insuranceTerm > 0) $session->set('insuranceTerm', $insuranceTerm);
-            if ($request->request->get('cbDGO') == 'yes' && $dgoSum > 0) 
+            if ($request->request->get('cbDGO') == 'yes' && $dgoSum > 0)
             {
                 $session->set('dgoSum', $dgoSum);
                 $session->set('priceDGO', $calculator->calculateDgo(array(
@@ -144,6 +145,7 @@ class DefaultController extends Controller
                 $session->set('nsSum', $nsSum);
                 $session->set('priceNs', $calculator->calculateNs(array(
                     'sum' => $nsSum,
+                    'passenger_count' => $passengersCount,
                     'company' => static::DEFAULT_COMPANY_ID,
                     )
                 ));
@@ -206,7 +208,7 @@ class DefaultController extends Controller
 
     /**
      * Process calculator (save data to session) and redirect to next step - filling personal data
-     * 
+     *
      */
      //TODO Kill this method - it is useless
     public function processCalculatorAction(Request $request)
@@ -231,7 +233,7 @@ class DefaultController extends Controller
         )));
         return new Response();
     }
-    
+
     /**
      * Function processes discount using user input data (car age)
      * @return JSON object with "discount" param
@@ -252,7 +254,7 @@ class DefaultController extends Controller
             return $response;
         } else throw $this->createNotFoundException('Wrong request!');
     }
-    
+
     /**
      * Calculate general insurance price
      * @return JSON object with "price" key
@@ -283,7 +285,7 @@ class DefaultController extends Controller
             return $response;
         } else throw $this->createNotFoundException('Wrong request!');
     }
-    
+
     /**
      * Calculate price of additional civil responsibility
      * @return JSON object with "priceDgo" key
@@ -312,7 +314,7 @@ class DefaultController extends Controller
             return $response;
         } else throw $this->createNotFoundException('Wrong request!');
     }
-    
+
     /**
      * Calculate casualty insurance
      * @return JSON object with "priceNs" key
@@ -322,9 +324,11 @@ class DefaultController extends Controller
         if ($request->isXmlHttpRequest()) {
             $calculator = $this->get('insurance.service.calculator');
             $nsSum = $request->request->get('hNSSum');
+            $passengersCount = $request->request->get('passengersCount');
             if ($nsSum > 0)
                 $priceNs = $calculator->calculateCommon(array(
                     'sum' => $nsSum,
+                    'passenger_count' => $passengersCount,
                     'company' => static::DEFAULT_COMPANY_ID,
                     )
                 );
@@ -334,13 +338,13 @@ class DefaultController extends Controller
             return $response;
         } else throw $this->createNotFoundException('Wrong request!');
     }
-    
+
     /**
      * Output registration and policy formalization form also process data from this form
-     * 
+     *
      */
     public function formalizationAction()
     {
-        
+
     }
 }

@@ -64,9 +64,9 @@ class Calculator {
             WHERE cr.company = :companyRate
             AND r.code = :rateCode
             AND r.type = :rateType
-            AND (rv.valueEqual = :value OR 
+            AND (rv.valueEqual = :value OR
             (rv.valueFrom <= :value AND rv.valueTo >= :value AND rv.valueEqual is null) OR
-            (rv.valueFrom <= :value AND rv.valueTo IS NULL AND rv.valueEqual IS NULL) OR 
+            (rv.valueFrom <= :value AND rv.valueTo IS NULL AND rv.valueEqual IS NULL) OR
             (rv.valueFrom IS NULL AND rv.valueTo >= :value AND rv.valueEqual is null))'
             )
           ->setParameter('companyRate', $this->insuranceCompany)
@@ -92,7 +92,7 @@ class Calculator {
           ->setRateType('base');
         $k1Obj = $this->getRate($fields['region'], 'region');
         if ($k1Obj === null) $k1 = 1;
-            else $k1 = $k1Obj->getValue()
+            else $k1 = $k1Obj->getValue();
         $k2Obj = $this->getRate($fields['displacement'], 'displacement');
         if ($k2Obj === null) $k2 = 1;
             else $k2 = $k2Obj->getValue();
@@ -106,7 +106,7 @@ class Calculator {
         $base = $this->sc->getParameter('base.rate');
         return $base * $k1 * $k2 * $k3 * $k4 / 2;
     }
-    
+
     public function calculateDgo($fields)
     {
         $this->setCompany($fields['company'])
@@ -126,9 +126,10 @@ class Calculator {
         $k5Obj = $this->getRate($fields['taxi'], 'dgo_taxi'); //Here we must put 0 if car used as taxi
         if ($k5Obj === null) $k5 = 1;
             else $k5 = $k5Obj->getValue();
-        return $fields['sum'] * $k1 * $k2 * $k3 * $k4;
+        $ageRate = $this->sc->getParameter('dgo.rate');
+        return $ageRate * $fields['sum'] * $k1 * $k2 * $k3 * $k4;
     }
-    
+
     public function calculateNs($fields)
     {
         $this->setCompany($fields['company'])
@@ -139,7 +140,7 @@ class Calculator {
         $k2Obj = $this->getRate($fields['sum'], 'ns_passenger');
         if ($k2Obj === null) $k2 = 1;
             else $k2 = $k2Obj->getValue();
-        return $fields['sum'] * $k1 * $k2;
+        return $fields['sum'] * $k1 + ($fields['sum'] * $k2 * $fields['passenger_count']);
     }
 }
 ?>

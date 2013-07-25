@@ -20,4 +20,5 @@ parameters:
     passengers:
         min: 0
         max: 4
-    base.rate: 180
+    base.rate: 180 #Base rate for insurance calculation
+    dgo.rate: 1.2 #Age rate
