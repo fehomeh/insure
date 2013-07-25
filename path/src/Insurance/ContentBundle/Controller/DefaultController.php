@@ -43,7 +43,7 @@ class DefaultController extends Controller
      * AJAX action to get cities list after select some region on page
      * @return JSON encoded list of cities
      */
-    public function getCitiesAction()
+    public function getCitiesAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
             $request = $this->getRequest();
@@ -59,7 +59,7 @@ class DefaultController extends Controller
         } else throw $this->createNotFoundException('Wrong request!');
     }
 
-    public function getCarModelsAction()
+    public function getCarModelsAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
             $request = $this->getRequest();
@@ -69,7 +69,6 @@ class DefaultController extends Controller
             foreach ($models as $model)
                 $models_list[$model->getId()] = $model->getValue();
             } else $models_list = array();
-
             $response = new Response(json_encode($models_list));
             $response->headers->set('Content-Type', 'application/json');
             return $response;
@@ -150,6 +149,10 @@ class DefaultController extends Controller
                     )
                 ));
             }
+            
+            $discountObj = $calculator->getRate($carAge, 'discount');
+            $discount = (100 - $discountObj->getValue()) / 100;
+            $session->set('discount', $discount);
             $session->set('price', $calculator->calculateCommon(array(
                 'region' => $registerCity,
                 'displacement' => $displacement,
@@ -157,7 +160,7 @@ class DefaultController extends Controller
                 'term' => $insuranceTerm,
                 'year' => $carAge,
                 'company' => static::DEFAULT_COMPANY_ID,
-            )));
+            )) * $discount);
             $this->redirect($this->generateUrl('form'));
         }
         return $this->render('InsuranceContentBundle:Default:step_one.html.twig',array(
@@ -218,17 +221,18 @@ class DefaultController extends Controller
             ->setCompany(2);
         $k1 = $calculator->getRate('Киев', 'region');
         $k2 = $calculator->getRate('1.7', 'displacement');
-        var_dump($k1->getValue(), $k2->getValue());
+        $discount = $calculator->getRate(date('Y') - 2005, 'discount');
+        $city = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findOneById(78);
+        var_dump($k1->getValue(), $k2->getValue(), $discount->getValue(), $city->getValue());
         //$calculator->setRateType('base')
         //    ->setCompany(2);
         //$k1 = $calculator->getRate('Киев', 'region');
         //$k2 = $calculator->getRate('1.7', 'displacement');
         var_dump($calculator->calculateCommon(array(
-          'region' => 'Киев',
+          'region' => 'Бар',
           'displacement' => '1.7',
           'experience' => '2',
-          'term' => '12',
-          'year' => '2005',
+          'term' => '0.5',
           'company' => static::DEFAULT_COMPANY_ID,
         )));
         return new Response();
@@ -245,7 +249,7 @@ class DefaultController extends Controller
             $calculator = $this->get('insurance.service.calculator');
             $calculator->setCompany(static::DEFAULT_COMPANY_ID)
                 ->setRateType('base');
-            $discount = $calculator->getRate($carAge, 'year');
+            $discount = $calculator->getRate(date('Y') - $carAge, 'year');
             if ($discount !== null) {
                 $respString = json_encode(array('discount' => $discount->getValue()));
             } else $respString = json_encode(array('discount' => 0));
@@ -259,7 +263,7 @@ class DefaultController extends Controller
      * Calculate general insurance price
      * @return JSON object with "price" key
      */
-    public function calculateInsurance(Request $request)
+    public function calculateInsuranceAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
             $calculator = $this->get('insurance.service.calculator');
@@ -267,18 +271,18 @@ class DefaultController extends Controller
             $displacement = $request->request->get('hDisplacement');
             $experience = $request->request->get('hExperience');
             $insuranceTerm = $request->request->get('insuranceTerm');
-            $carAge = $request->request->get('carAge');
             if ($registerCity > 0 && $displacement > 0 && $experience > 0 &&
-            $insuranceTerm > 0 && $carAge > 0)
+            $insuranceTerm > 0) {
+                $city = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findOneById($registerCity);
                 $price = $calculator->calculateCommon(array(
-                    'region' => $registerCity,
+                    'region' => $city->getValue(),
                     'displacement' => $displacement,
                     'experience' => $experience,
                     'term' => $insuranceTerm,
-                    'year' => $carAge,
                     'company' => static::DEFAULT_COMPANY_ID,
                     )
                 );
+            }
             else $price = 0;
             $response = new Response(json_encode(array('price' => $price)));
             $response->headers->set('Content-Type', 'application/json');
@@ -290,7 +294,7 @@ class DefaultController extends Controller
      * Calculate price of additional civil responsibility
      * @return JSON object with "priceDgo" key
      */
-    public function calculateDgo(Request $request)
+    public function calculateDgoAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
             $calculator = $this->get('insurance.service.calculator');
@@ -319,7 +323,7 @@ class DefaultController extends Controller
      * Calculate casualty insurance
      * @return JSON object with "priceNs" key
      */
-    public function calculateNs(Request $request)
+    public function calculateNsAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
             $calculator = $this->get('insurance.service.calculator');

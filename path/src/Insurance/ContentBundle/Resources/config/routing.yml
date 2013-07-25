@@ -44,3 +44,15 @@ get_discount:
 step2:
     pattern: /step2.htm
     defaults: { _controller: "InsuranceContentBundle:Default:formalization"}
+get_price:
+    pattern: /get-price.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:calculateInsurance"}
+    methods: [ 'POST' ]
+get_dgo_price:
+    pattern: /get-dgo-price.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:calculateDgo" }
+    methods: [ 'POST' ]
+get_ns_price:
+    pattern: /get-bs-price.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:calculateNs" }
+    methods: [ 'POST' ]

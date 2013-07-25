@@ -109,8 +109,10 @@
     <input type="hidden" name="hDGOSum" id="hDGOSum">
     <input type="hidden" name="hNSSum" id="hNSSum">
     <input type="hidden" name="hExperience" id="hExperience">
+    <input type="hidden" name="hDisplacement" id="hDisplacement">
     <input type="hidden" id="hCarModel"{% if carModel %} value="{{carModel}}"{% endif %}>
     <button name="calculate" id="calculate">Расчитать!</button>
+    <button name="get-discount" id="get-discount">Узнать скидку!</button>
     <button type="submit">Оформить!</button>
 </form>
 
@@ -154,6 +156,7 @@
             max: displacement.length - 1,
             //values: [0, 1],
             slide: function(event, ui) {
+                $('#hDisplacement').val(displacement[ui.value]);
                 $("#displacement").text('Displacement: ' + displacement[ui.value]);
             }
         });
@@ -215,8 +218,30 @@
                 });
             });
         $('#calculate').on('click', function(e){
-
+            $.ajax('{{ url('get_price') }}', {
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    registerCity: $('#registerCity').val(), 
+                    hDisplacement: $('#hDisplacement').val(),
+                    hExperience: $('#hExperience').val(),
+                    insuranceTerm: $('#insuranceTerm').val()
+                }
+            }
+            );
+            e.preventDefault();
         })
+        
+        $('#get-discount').on('click', function (e) {
+            $.ajax('{{ url('get_discount') }}', {
+                type: 'POST',
+                dataType: 'JSON',
+                data: { carAge: $('#carAge').val() }
+            }).done(function (data) {
+                alert(data.discount);
+            });
+            e.preventDefault();
+        });
 //END READY
     });
 </script>
