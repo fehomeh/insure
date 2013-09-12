@@ -22,6 +22,34 @@ security:
             id: insurance.user_provider.email
 
     firewalls:
+      # -> custom firewall for the admin area of the URL
+        admin:
+            pattern:      /admin(.*)
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login_check
+                failure_path:   null
+            logout:
+                path:           /admin/logout
+            anonymous:    true
+        # -> end custom configuration
+
+        # defaut login area for standard users
+        main:
+            pattern:      .*
+            form_login:
+                provider:       fos_userbundle
+                csrf_provider: form.csrf_provider
+                login_path:     /login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+                success_handler: insurance.authentication_handler
+                failure_handler: insurance.authentication_handler
+            logout:       true
+            anonymous:    true
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -40,44 +68,48 @@ security:
                 target: _demo
             pattern:    ^/
             anonymous: ~
-            form_login:
-                provider: fos_userbundle
-                csrf_provider: form.csrf_provider
-                login_path: /login
-                check_path: /login_check
-                success_handler: insurance.authentication_handler
-                failure_handler: insurance.authentication_handler
-            logout:
-                path: fos_user_security_logout
+            #form_login:
+            #    provider: fos_userbundle
+            #    csrf_provider: form.csrf_provider
+            #    login_path: /login
+            #    check_path: /login_check
+            #    success_handler: insurance.authentication_handler
+            #    failure_handler: insurance.authentication_handler
+            #logout:
+            #    path: fos_user_security_logout
                 #target: index
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
 
         # -> custom firewall for the admin area of the URL
-        admin:
-            pattern:      /admin(.*)
-            form_login:
-                provider:       fos_userbundle
-                login_path:     /admin/login
-                use_forward:    false
-                check_path:     /admin/login_check
-                failure_path:   null
-            logout:
-                path:           /admin/logout
-            anonymous:    true
+        #admin:
+        #    pattern:      /admin(.*)
+        #    form_login:
+        #        provider:       fos_userbundle
+        #        csrf_provider: form.csrf_provider
+        #        login_path:     /admin/login
+        #        use_forward:    true
+        #        check_path:     /admin/login_check
+        #        failure_path:   null
+        #    logout:
+        #        path: fos_user_security_logout
+        #        target: /admin/login
+        #    anonymous:    true
         # -> end custom configuration
          # defaut login area for standard users
-        main:
-            pattern:      .*
-            form_login:
-                provider:       fos_userbundle
-                login_path:     /login
-                use_forward:    false
-                check_path:     /login_check
-                failure_path:   null
-            logout:       true
-            anonymous:    true
+        #main:
+        #    pattern:      .*
+        #    form_login:
+        #        provider:       fos_userbundle
+        #        csrf_provider: form.csrf_provider
+        #        login_path:     /login
+        #        use_forward:    false
+        #        check_path:     /login_check
+        #        failure_path:   null
+        #    logout:
+        #        path: /logout
+        #    anonymous:    true
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         # URL of FOSUserBundle which need to be available to anonymous users

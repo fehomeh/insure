@@ -1,0 +1,42 @@
+{% form_theme form 'InsuranceContentBundle::form_errors.html.twig' %}
+<form class="fos_user_registration_register modal_form" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" >
+    <div class="control_point{% if form.firstname.vars.errors|length > 0%} error{% endif %}">
+        {{ form_label(form.firstname) }}
+        {{ form_widget(form.firstname, { 'attr': { 'placeholder': "Введите Ваше имя"} }) }}
+        <div class="success ico"></div>
+        <div class="error ico"></div>
+        <div class="error_text">{{form_errors(form.firstname)}}</div>
+    </div>
+    <div class="control_point{% if form.email.vars.errors|length > 0%} error{% endif %}">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email, { 'attr': { 'placeholder': "Введите Ваш e-mail"} }) }}
+        <div class="success ico"></div>
+        <div class="error ico"></div>
+        <div class="error_text">{{form_errors(form.email)}}</div>
+    </div>
+    <div class="control_point{% if form.plainPassword.first.vars.errors|length > 0%} error{% endif %}">
+        {{ form_label(form.plainPassword.first) }}
+        {{ form_widget(form.plainPassword.first) }}
+        <div class="success ico"></div>
+        <div class="error ico"></div>
+        <div class="error_text">{{ form_errors(form.plainPassword.first) }}</div>
+    </div>
+    <div class="control_point{% if form.plainPassword.second.vars.errors|length > 0%} error{% endif %}">
+        {{ form_label(form.plainPassword.second) }}
+        {{ form_widget(form.plainPassword.second) }}
+        <div class="success ico"></div>
+        <div class="error ico"></div>
+        <div class="error_text">{{ form_errors(form.plainPassword.second) }}</div>
+    </div>
+    <div class="control_point">
+        <input type="checkbox" class="styled" id="subscribe" checked="checked"/>
+        <label for="subscribe" class="check_label">Согласен получать рассылку о новостях и акциях сервиса</label>
+    </div>
+    <div class="control_point">
+        <input type="checkbox" class="styled" id="accept" />
+        <label for="accept" class="check_label">Согласен с <a href="">пользовательским соглашением</a></label>
+        <div class="error_text">Текст ошибки</div>
+    </div>
+    <div class="green_button register">Продолжить</div>
+    <div style="clear: both;"></div>
+</form>

@@ -14,6 +14,10 @@
               <source>Invalid CSRF token.</source>
               <target>Недействительный токен CSRF.</target>
             </trans-unit>
+            <trans-unit id="4">
+              <source>Firstname</source>
+              <target>Имя:</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

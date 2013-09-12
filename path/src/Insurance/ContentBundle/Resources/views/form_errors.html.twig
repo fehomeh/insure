@@ -1,0 +1,12 @@
+{# empty Twig template #}
+{% block field_errors %}
+    {% if form is defined %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% for error in errors %}
+                {{ error.message }},
+            {% endfor %}>
+        {% endif %}
+    {% endspaceless %}
+    {% endif %}
+{% endblock field_errors %}

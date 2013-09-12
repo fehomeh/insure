@@ -14,11 +14,15 @@ parameters:
         min: 1.0
         max: 6.0
         step: 0.1
-    insure.period: [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    dgo.sum: [ 25000, 50000, 100000, 150000, 200000, 250000]
-    ns.sum: [ 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 15000, 17000, 20000, 22000, 23000, 25000, 30000, 35000, 40000, 45000, 50000]
+    insure.period: [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 48, 96, 192, 384, 768]
+    dgo.sum: [ 50000, 100000, 150000, 200000, 250000]
+    ns.sum: [ 5000, 10000, 25000, 50000]
     passengers:
         min: 0
         max: 4
     base.rate: 180 #Base rate for insurance calculation
     dgo.rate: 1.2 #Age rate
+    timer: 10800 # in secs
+    economy.sum: 103752 # initial sum for timer
+    economy.step: 21 # step to increase once per 24 hours
+    economy.startdate: 21.08.2013

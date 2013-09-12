@@ -60,3 +60,8 @@ services:
     insurance.service.calculator:
       class: Insurance\ContentBundle\Service\Calculator
       arguments: [ '@service_container' ]
+    sonata.registration.form.type:
+        class: Application\Sonata\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: sonata_user_registration }

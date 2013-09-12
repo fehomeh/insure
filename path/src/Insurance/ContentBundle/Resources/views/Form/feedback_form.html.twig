@@ -1,7 +1,30 @@
-<form action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
-  {{form_widget(feedback_form.name)}}
-  {{form_widget(feedback_form.email)}}
-  {{form_widget(feedback_form.question)}}
-  {{form_widget(feedback_form.connectionType, {type: 'hidden', value: 'F'})}}
-    <button type="submit">Send</button>
-</form>
+<!-- QUESTION MODAL -->
+<div class="modal" id="question_modal" style="display: none;">
+    <div class="close"></div>
+    <div class="title">Задать вопрос</div>
+    <img src="{{asset('bundles/insurancecontent/images/question_img.png')}}" alt="img" class="modal_img" />
+    <form class="modal_form" action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
+        <div class="control_point">
+            {{form_row(feedback_form.name)}}
+            <div class="success ico"></div>
+            <div class="error ico"></div>
+            <div class="error_text">Текст ошибки</div>
+        </div>
+        <div class="control_point">
+            {{form_row(feedback_form.email)}}
+            <div class="success ico"></div>
+            <div class="error ico"></div>
+            <div class="error_text">Текст ошибки</div>
+        </div>
+        <div class="control_point">
+            <label>Ваш вопрос:</label>
+            {{form_widget(feedback_form.question)}}
+            <div class="success ico"></div>
+            <div class="error ico"></div>
+            <div class="error_text">Текст ошибки</div>
+        </div>
+        {{form_widget(feedback_form.connectionType, {type: 'hidden', value: 'F'})}}
+        <div class="green_button">Отправить вопрос</div>
+        <div style="clear: both;"></div>
+    </form>
+</div>

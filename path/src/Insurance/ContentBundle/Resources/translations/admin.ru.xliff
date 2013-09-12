@@ -38,6 +38,10 @@
               <source>Additional</source>
               <target>Дополнительные данные</target>
             </trans-unit>
+            <trans-unit id="10">
+              <source>General</source>
+              <target>Основные</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

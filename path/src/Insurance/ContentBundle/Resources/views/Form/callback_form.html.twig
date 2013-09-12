@@ -1,20 +1,39 @@
-<br>
-<form action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
-  {{form_row(callback_form.name)}}aaa
-  {{form_row(callback_form.timeToCall, {date_widget: 'string'})}}
-  {{form_row(callback_form.phoneNumber)}}
-  {{form_row(callback_form.connectionType, {type: 'hidden', value: 'C'})}}
-    <button type="submit">Send</button>
-</form>
-<script>
-$.datepicker.setDefaults($.datepicker.regional[ "ru" ]);
-$('.callback-time').datetimepicker({timeOnlyTitle: 'Выберите время',
-	timeText: 'Время',
-	hourText: 'Часы',
-	minuteText: 'Минуты',
-	secondText: 'Секунды',
-	currentText: 'Теперь',
-	closeText: 'Закрыть',
-    dateFormat: 'dd.mm.yy',
-    timeFormat: 'HH:mm:ss'});
-</script>
+<!-- CALL MODAL -->
+<div class="modal" id="call_modal" style="display: none;">
+    <div class="close"></div>
+    <div class="title">Перезвонить мне</div>
+    <img src="{{asset('bundles/insurancecontent/images/call_img.png')}}" alt="img" class="modal_img" />
+    <form id="callback-form" class="modal_form" action="{{path('feedback_create')}}" method="POST" enctype="{{form_enctype(feedback_form)}}">
+        <div class="control_point">
+            {{form_row(callback_form.name)}}
+            <div class="success ico"></div>
+            <div class="error ico"></div>
+            <div class="error_text">Заполните поле</div>
+        </div>
+        <div class="control_point">
+            {{form_row(callback_form.phoneNumber)}}
+            <div class="success ico"></div>
+            <div class="error ico"></div>
+            <div class="error_text">Заполните поле</div>
+        </div>
+        <div class="control_point">
+            {{form_row(callback_form.email)}}
+            <div class="success ico"></div>
+            <div class="error ico"></div>
+            <div class="error_text">Заполните поле</div>
+        </div>
+        <div class="control_point">
+            {{form_row(callback_form.timeToCall, {date_widget: 'string'})}}
+            <div class="success ico"></div>
+            <div class="error ico"></div>
+            <div class="error_text">Заполните поле</div>
+        </div>
+        <div class="control_point">
+            <label>Комментарий:</label>
+            {{form_widget(callback_form.question)}}
+        </div>
+        <div type="submit" class="green_button">Заказать звонок</div>
+        <div style="clear: both;"></div>
+        {{form_widget(callback_form.connectionType, {type: 'hidden', value: 'C'})}}
+    </form>
+</div>

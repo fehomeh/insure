@@ -1,0 +1,222 @@
+@charset "UTF-8";
+/* CSS Document */
+
+header .center_part {
+width:315px;
+float:left;
+margin-right:0;
+margin-left:75px;
+}
+
+header .center_part .grey_button span{
+    top:-1px;
+}
+
+header .center_part .phone_number span.hours24 {
+    right:40px;
+}
+
+header .personal_office {
+    width:135px;
+}
+
+header .personal_office span{
+    top:0;
+}
+
+header .main_menu li span.home {
+    position: relative;
+    top:15px;
+    left:3px;
+}
+
+header .main_menu li a span.arrow {
+    top:-5px;
+    position: relative;
+    left:6px;
+}
+
+.text_content {
+    width:960px;
+}
+
+.layout { 
+    margin: 0px 0px -285px;
+}
+
+.footer-push { 
+    height: 285px;
+}
+
+footer { 
+    height: 255px;
+}
+
+footer .column.first { 
+    width: 210px;
+}
+
+footer .column.second {
+    width: 240px;
+}
+
+footer .column .subscribe_form input[type="text"] {
+    width: 255px;
+}
+
+footer .column .subscribe_form input[type="submit"] {
+    bottom:8px;
+}
+
+.combo ul li {
+    width:306px;
+}
+
+.advantages .adv_point,
+.question .question_point { 
+    width: 205px;
+}
+
+.partner { 
+    width:890px;
+}
+
+.min_cost .limit {
+    width:570px;
+}
+
+.question { 
+    width:950px;
+}
+
+.preloader{
+    background-color: #e9e9e9;
+}
+
+form.modal_form .control_point input[type="text"], 
+form.modal_form .control_point input[type="password"],
+form.modal_form .control_point textarea  {
+    width:415px;
+}
+
+#login_modal input[type="text"] { 
+    width:370px;
+}
+
+#login_modal .shadow_box {
+   height:39px;
+   bottom:4px; 
+}
+
+#login_modal .right_part .forget_pass{
+    position: relative;
+    top:-10px;
+}
+
+.polis_date .date input {
+    top:10px;
+}
+
+form.personal_data .line {
+    clear: both;
+}
+
+form.personal_data .person_info .control_point{
+   float:left;
+}
+
+form.personal_data .control_point.size1 input {
+    width: 102px;
+}
+
+form.personal_data .control_point.size2 input {
+    width: 227px;
+}
+
+form.personal_data .control_point.size3 input {
+    width: 294px;
+}
+
+form.personal_data .control_point.size4 input {
+    width: 372px;
+}
+
+.person_info .line .combo{
+    margin:0 0 0 20px;
+    float:left;
+}
+
+.scroll_box{
+    display:none!important;
+}
+
+.green_box {
+    width:960px;
+}
+
+.white_strip {
+    width:940px;
+    position: relative;
+}
+
+.white_strip .price {
+    position: absolute;
+    top:0;
+    right:0;
+    height:35px;
+}
+
+.white_strip.total_sum .price {
+    top:2px;
+}
+
+.change.for_adres {
+    width:55px;
+    position: absolute;
+    top:10px;
+    right:20px;
+}
+
+.payment_container .payment_point{
+    width:153px;
+}
+
+.payment_container {
+    margin-bottom:30px;
+}
+
+.calculator_content aside {
+    width:290px;
+}
+
+.calculator_content aside .white_box span {
+  top:1px;  
+}
+
+.box_line ul.list{
+    width:390px;
+}
+
+.slider_container {
+    height:9px;
+}
+
+.volume .description span { 
+    width: 27%;
+}
+
+.place .combo{
+    float:left;
+}
+
+.recomend_box .box_line .description span { 
+    width: 19%;
+}
+
+.white_strip.sub {
+    width:900px;
+}
+
+#success_modal, #error_modal { 
+    width: 455px;
+}

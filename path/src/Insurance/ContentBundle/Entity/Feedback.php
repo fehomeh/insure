@@ -32,7 +32,7 @@ class Feedback
   /**
    *
    * @var \DateTime
-   * @ORM\Column(name="time_to_call", type="datetime", options={ "default"=null }, nullable=true)
+   * @ORM\Column(name="time_to_call", length=20, type="string", options={ "default"=null }, nullable=true)
    */
   private $timeToCall;
 

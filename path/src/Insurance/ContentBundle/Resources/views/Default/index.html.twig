@@ -1,47 +1,230 @@
 {% extends 'InsuranceContentBundle::base.html.twig' %}
+{% block head_scripts%}
+<script>
+var end_time = '{{timerEnd}}';
+</script>
+{% endblock %}
 {% block content %}
-<h1>Hello world!</h1>
-{% if (regions)%}
-<select name="region" id="region" >
-  <option value="0">Выберите область</option>
-  {% for region in regions %}
-    <option value="{{region.id}}">{{region.value}}</option>
-  {% endfor %}
-</select>
-<select disabled="" name="city" id="city">
-  <option>Выберите город</option>
-</select>
-{% endif %}
-{% if (brands)%}
-<form name="calculate-go" id="calculate-go" action="{{path('calculate_go')}}" method="POST">
-  <select name="carBrand" id="carBrand" >
-    <option value="0">Выберите марку</option>
-    {% for brand in brands %}
-      <option value="{{brand.id}}" {% if brand.id == carBrand %}selected=""{% endif %}>{{brand.value}}</option>
-    {% endfor %}
-  </select>
-  {% if models %}
-        <select name="carModel" id="carModel">
-            <option>Выберите модель</option>
-        {% for model in models %}
-            <option value="{{model.id}}" {% if model.id == carModel %}selected=""{% endif %}>{{model.value}}</option>
-        {% endfor %}
-    </select>
-  {% else %}
-        <select disabled="" name="carModel" id="carModel">
-            <option>Выберите модель</option>
-        </select>
-  {% endif %}
-    <button type="submit">Расчитать</button>
-</form>
-{% include 'InsuranceContentBundle:Form:feedback_form.html.twig' %}
-{% include 'InsuranceContentBundle:Form:callback_form.html.twig' %}
-{% endif %}
+        <section class="content">
+                <div class="limit">
+                    <div class="calculator_box">
+                        <!-- counter -->
+                        <div class="count_down_container">
+                            <div class="label">До конца акции осталось</div>
+                            <div class="counter">
+                                <div class="hours">
+                                    <span class="tdigit">00</span>
+                                    <span class="delimiter"></span>
+                                    <span class="desc">часов</span>
+                                </div>
+                                <div class="minutes">
+                                    <span class="tdigit">00</span>
+                                    <span class="delimiter"></span>
+                                    <span class="desc">минут</span>
+                                </div>
+                                <div class="seconds">
+                                    <span class="tdigit">00</span>
+                                    <span class="delimiter"></span>
+                                    <span class="desc">секунд</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- calculator -->
+                        <div class="calculator">
+                            <div class="title">Калькулятор ОСАГО онлайн</div>
+                            <div class="label">Укажите свой автомобиль</div>
+                            <form method="POST" action="{{path('calculate_go')}}">
+                                <hidden>
+                                <div class="combo mark">
+                                    <div class="current">
+                                    {% if (carBrand) %}
+                                        {% for brand in brands %}
+                                            {% if (brand.id == carBrand) %}
+                                                {{brand.value}}
+                                            {%endif%}
+                                        {% endfor %}
+                                    {% else %}Выбрать марку:
+                                    {% endif %}
+                                    </div>
+                                    <div class="arrow"></div>
+                                    <div id="scrollbar1"  class="scroll_box">
+                                		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+                                		<div class="viewport">
+                                			 <div class="overview">
+                                				<ul form-input-id="carBrand" id="brandList">
+                                                    {%if (brands)%}
+                                                        {% for brand in brands %}
+                                                    <li{% if (brand.id == carBrand) %} class="active"{% endif %} data-value="{{brand.id}}">{{brand.value}}</li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </ul>
+                                			</div>
+                                		</div>
+                                	</div>
+                                    <input name="carBrand" id="carBrand" type="hidden" value="{% if (carBrand)%}{{carBrand}}{% endif %}" />
+                                </div>
+                                <div class="combo">
+                                    <div class="current">
+                                    {% if (carModel) %}
+                                        {% for model in models %}
+                                            {% if (model.id == carModel) %}
+                                                {{model.value|raw}}
+                                            {%endif%}
+                                        {% endfor %}
+                                    {% else %}Выбрать модель:
+                                    {% endif %}
+                                    </div>
+                                    <div class="arrow"></div>
+                                    <div id="scrollbar2" class="scroll_box">
+                                		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+                                		<div class="viewport">
+                                			 <div class="overview">
+                                				<ul form-input-id="carModel" id="modelList">
+                                                    {%if (models)%}
+                                                        {% for model in models %}
+                                                    <li{% if (model.id == carModel)%} class="active"{% endif %} data-value="{{model.id}}">{{model.value|raw}}</li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </ul>
+                                			</div>
+                                		</div>
+                                	</div>
+                                    <input type="hidden" value="{% if (carModel)%}{{carModel}}{% endif %}" id="carModel" name="carModel" />
+                                </div>
+                                        <div class="calculate">рассчитать</div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- econom -->
+                    <div class="econom_box">
+                        <div class="text">Мы уже сэкономили нашим клиентам в 2013 году:</div>
+                        <span>{{savedSum[:1]}}</span>
+                        <span>{{savedSum[1:1]}}</span>
+                        <span>{{savedSum[2:1]}}</span>
+                        <span class="delim"></span>
+                        <span>{{savedSum[3:1]}}</span>
+                        <span>{{savedSum[4:1]}}</span>
+                        <span>{{savedSum[5:1]}}</span>
+                        <div class="text">грн.</div>
+                        <div style="clear: both;"></div>
+                        <div class="shadow"></div>
+                    </div>
+                    <!-- how it work -->
+                    <div class="how_it_work">
+                        <h2>Как это работает:</h2>
+                        <div class="step_point">
+                            <div class="img first"></div>
+                            <div class="text">Укажите страхуемый автомобиль</div>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="step_point">
+                            <div class="img second"></div>
+                            <div class="text">Расчитайте стоимость полиса со скидкой</div>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="step_point">
+                            <div class="img third"></div>
+                            <div class="text">Введите персональные данные</div>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="step_point last">
+                            <div class="img fourth"></div>
+                            <div class="text">Оформите<br /> полис<br /> ONLINE</div>
+                            <div class="arrow"></div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <!-- advantages -->
+                <div class="advantages">
+                    <div class="limit">
+                        <div class="shadow"></div>
+                        <h2>Почему мы?</h2>
+                        <div class="adv_point">
+                            <div class="ico clock"></div>
+                            <div class="title">Моментальный расчет</div>
+                            <div class="text">Наш сервис позволяет рассчитать стоимость полиса страхования в реальном времени</div>
+                        </div>
+                        <div class="adv_point">
+                            <div class="ico smile"></div>
+                            <div class="title">Простота и удобство</div>
+                            <div class="text">Осторожно! Даже ребенок сможет оформить и оплатить полис на нашем сайте</div>
+                        </div>
+                        <div class="adv_point">
+                            <div class="ico dollar"></div>
+                            <div class="title">Честная цена</div>
+                            <div class="text">Наш сервис показывает только реальную стоимость полиса, без всяких обманов и уловок.</div>
+                        </div>
+                        <div class="adv_point">
+                            <div class="ico protect"></div>
+                            <div class="title">Надежность</div>
+                            <div class="text">Мы работаем только с самыми надежными страховыми компаниями, лидерами рынка</div>
+                        </div>
+                        <div class="adv_point">
+                            <div class="ico delivery"></div>
+                            <div class="title">Бесплатная доставка</div>
+                            <div class="text">Мы доставим заказаный Вами полис в любую точку Украины совершенно бесплатно</div>
+                        </div>
+                        <div class="adv_point">
+                            <div class="ico kee"></div>
+                            <div class="title">Личный офис</div>
+                            <div class="text">Вы сможете просматривать и продлевать свои договора в любой момент в личном офисе на сайте</div>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <!-- partner -->
+                <div class="limit partner">
+                    <h2>Наш страховой партнер:</h2>
+                    <div class="text_box">
+                        <img src="{{asset('bundles/insurancecontent/images/partner_logo.png')}}" alt="img" class="logo" />
+                        <div class="short_text">Страховая компания «БРОКБИЗНЕС» работает на рынке страхования с 1993 года и за время работы приобрела большой опыт, заняв устойчивые позиции среди наиболее динамичных компаний на рынке страхования. Сегодня Страховая компания «БРОКБИЗНЕС» входит в ведущие страховые компании Украины, имеет членство и входит в Президиум Моторного </div>
+                        <div class="drop_text">(транспортного) страхового бюро Украины, является членом Ядерного Страхового Пула Украины и Федерации Страховых Посредников Украины, входит в Совет Строительного Страхового Пула. В 2009 году в результате реструктуризации Лиги страховых организаций Украины, вышла из Правления и вошла в состав Координационного Совета Лиги, членами которого являются крупнейшие страховые компании Украины. </div>
+                        <div class="dotted_box hide">
+                            <span class="arrow"></span>
+                            <span class="text show">Показать информацию</span>
+                            <span class="text hide">Скрыть информацию</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- min_cost -->
+                <div class="min_cost">
+                    <div class="limit">
+                        <div class="shadow"></div>
+                        Рассчитайте самую минимальную стоимость для вашего полиса ОСАГО
+                        <a href=""><span></span>Узнать цену</a>
+                    </div>
+                </div>
+                <!-- any question -->
+                <div class="limit question">
+                    <h2>Хотите что то спросить?</h2>
+                    <div class="question_point phone">
+                        <div class="ico"></div>
+                        <div class="title"><span>(050)</span> 345 2415</div>
+                        <div class="text">Перезвоните нам и мы постараемся вам помоч</div>
+                    </div>
+                    <div class="question_point call">
+                        <div class="ico call_link"></div>
+                        <div class="title call_link">Закажите звонок</div>
+                        <div class="text">Наш менеджер свяжется с вами в удобное для вас время</div>
+                    </div>
+                    <div class="question_point ask">
+                        <div class="ico question_link"></div>
+                        <div class="title question_link">Задайте вопрос</div>
+                        <div class="text">Вы можете задать вопрос прямо на сайте</div>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            <!-- footer-push -->
+            <div class="footer-push"></div>
+        </section>
+    </section>
 <script type="text/javascript">
 $('#region').on('change', function (e){
   if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {
       var opts = '<option>Выберите город</option>';
-      for (k in data) opts += '<option value="' + k + '">' + data[k] + '</option>';
+      for (k in data) opts += '<li value="' + k + '">' + data[k] + '</li>';
       $('#city').html(opts);
       $('#city').removeAttr('disabled');
   });
@@ -51,18 +234,21 @@ $('#region').on('change', function (e){
 
   }
 });
-$('#carBrand').on('change', function (e){
+$('#carBrand').on('dataavailable', function (e){
   if ($(this).val()>0) $.get('{{path('get_car_models')}}', {brand_id: $(this).val()}).done(function (data) {
-      var opts = '<option>Выберите модель</option>';
-      for (k in data) opts += '<option value="' + k + '">' + data[k] + '</option>';
-      $('#carModel').html(opts);
-      $('#carModel').removeAttr('disabled');
+      var opts = '';
+      for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
+      $('#modelList').html(opts);
+      //Reinit plugins, events, etc cause of ajax load
+      $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
+      $(".combo ul li").on('click', comboClick);
   });
   else {
-    $('#carModel').html('<option>Выберите модель</option>');
-    $('#carModel').attr('disabled', '');
-
+    $('#carModel').html('<li>Выбрать модель:</li>');
   }
+});
+$('.calculate').on('click', function (e) {
+    $(this).parents('form').submit();
 });
 </script>
 {% endblock %}

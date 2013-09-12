@@ -104,13 +104,13 @@ class Calculator {
             else $k4 = $k4Obj->getValue();
         //$k5 = $this->getRate($fields['year'], 'year')->getValue();
         $base = $this->sc->getParameter('base.rate');
-        return $base * $k1 * $k2 * $k3 * $k4 / 2;
+        return $base * $k1 * $k2 * $k3 * $k4;
     }
 
     public function calculateDgo($fields)
     {
         $this->setCompany($fields['company'])
-            ->setRate('dgo');
+            ->setRateType('dgo');
         $k1Obj = $this->getRate($fields['sum'], 'dgo_summ');
         if ($k1Obj === null) $k1 = 1;
             else $k1 = $k1Obj->getValue();
@@ -126,21 +126,21 @@ class Calculator {
         $k5Obj = $this->getRate($fields['taxi'], 'dgo_taxi'); //Here we must put 0 if car used as taxi
         if ($k5Obj === null) $k5 = 1;
             else $k5 = $k5Obj->getValue();
-        $ageRate = $this->sc->getParameter('dgo.rate');
-        return $ageRate * $fields['sum'] * $k1 * $k2 * $k3 * $k4;
+        //$ageRate = $this->sc->getParameter('dgo.rate');
+        return $fields['sum'] * $k1 * $k2 * $k3 * $k4 * $k5;
     }
 
     public function calculateNs($fields)
     {
         $this->setCompany($fields['company'])
-            ->setRate('ns');
+            ->setRateType('ns');
         $k1Obj = $this->getRate($fields['sum'], 'ns_driver');
         if ($k1Obj === null) $k1 = 1;
             else $k1 = $k1Obj->getValue();
         $k2Obj = $this->getRate($fields['sum'], 'ns_passenger');
         if ($k2Obj === null) $k2 = 1;
             else $k2 = $k2Obj->getValue();
-        return $fields['sum'] * $k1 + ($fields['sum'] * $k2 * $fields['passenger_count']);
+        return $fields['sum'] * $k1 / 100 + ($fields['sum'] * $k2 / 100 * $fields['passenger_count']);
     }
 }
 ?>

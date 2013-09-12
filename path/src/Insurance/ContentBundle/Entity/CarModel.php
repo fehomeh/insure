@@ -31,7 +31,7 @@ class CarModel
     /**
      * @var \CarBrand
      *
-     * @ORM\ManyToOne(targetEntity="CarBrand", inversedBy="model")
+     * @ORM\ManyToOne(targetEntity="CarBrand", inversedBy="model", cascade={"persist", "remove", "refresh"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
      * })

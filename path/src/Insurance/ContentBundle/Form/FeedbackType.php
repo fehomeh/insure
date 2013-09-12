@@ -11,15 +11,38 @@ class FeedbackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('timeToCall', 'datetime', array('attr' => 
-                array('class' => 'callback-time'), 
-                'widget' => 'single_text',
+            ->add('name', null, array('label' => 'Ваше имя:',
+                'attr' => array(
+                    'placeholder' => 'Введите Ваше имя',
+                ),
             ))
-            ->add('phoneNumber')
-            ->add('email')
-            ->add('question')
-            ->add('connectionType')
+            ->add('timeToCall', 'text', array('attr' =>
+                array(
+                  'class' => 'callback-time',
+                  'placeholder' => 'Введите желаемое время звонка',
+                  ),
+                'label' => 'Желаемое время звонка:'
+            ))
+            ->add('phoneNumber', null, array('label' => 'Номер телефона:',
+                'attr' => array(
+                    'placeholder' => 'Введите Ваш номер телефона',
+                ),
+            ))
+            ->add('email', null, array('label' => 'Ваш e-mail:',
+                'attr' => array(
+                    'placeholder' => 'Введите e-mail адрес',
+                ),
+            ))
+            ->add('question', null, array('label' => 'Вопрос:',
+                'attr' => array(
+                    'placeholder' => '',
+                ),
+            ))
+            ->add('connectionType', null, array('label' => 'Тип связи',
+                'attr' => array(
+                    'placeholder' => '',
+                ),
+            ))
         ;
     }
 

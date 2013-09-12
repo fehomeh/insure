@@ -1,60 +1,349 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    {% block head %}{% endblock %}
-    <title>{% block title %}Hello!{% endblock %}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    {% block scripts %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script src="{{asset('bundles/insurancecontent/js/jquery.ui.date-picker.ru.js')}}"></script>
-    <script src="{{asset('bundles/insurancecontent/js/jquery-ui-timepicker-addon.js')}}"></script>
-    {% endblock %}
-    {% block styles%}
-    <link rel="stylesheet" href="{{asset('bundles/insurancecontent/css/dark-hive/jquery-ui.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('bundles/insurancecontent/css/dark-hive/jquery.ui.theme.css')}}"/>
-    <link rel="stylesheet" href="{{asset('bundles/insurancecontent/css/timepicker.css')}}"/>
-    {% endblock %}
-  </head>
-  <body>{% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
-      <div>Здравствуйте, {{app.user.username}}! <a href="{{path('fos_user_security_logout')}}">Выйти</a></div>
-      {% else %}
-      <div id="login-button"><a id="">Войти</a></div>
-      <div id="login"></div>
-      {% endif %}
-    <div>{% block content %}{% endblock %}
-    </div>
-      <input type="text" id="phone_no" placeholder="+(xxxxx)xxx-xx-xx">
-      {% block footer_scripts %}
+<head>
+<meta charset="UTF-8" />
+<title>Project name</title>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link href="{{asset('bundles/insurancecontent/css/reset.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('bundles/insurancecontent/css/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('bundles/insurancecontent/css/modals.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{asset('bundles/insurancecontent/css/style.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('bundles/insurancecontent/css/fixes.css')}}" rel="stylesheet" type="text/css" />
+<!--[if IE 7]><link href="{{asset('bundles/insurancecontent/css/ie7_style.css')}}" rel="stylesheet" type="text/css" /><![endif]-->
+<!--[if IE 8]><link href="{{asset('bundles/insurancecontent/css/ie8_style.css')}}" rel="stylesheet" type="text/css" /><![endif]-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript" src="{{asset('bundles/insurancecontent/js/modals.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/insurancecontent/js/jquery.tinyscrollbar.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/insurancecontent/js/styled.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/insurancecontent/js/main.js')}}"></script>
+{%block head_scripts%}
+{% endblock %}
+<script type="text/javascript">
+	jQuery(function($){
+		// bind event handlers to modal triggers
+		$('body').on('click', '.registration_link', function(e){
+			e.preventDefault();
+			$('#registration_modal').modal().open();
+		});
 
-        <script type="text/javascript">
-            $('#login-button').on('click', function(e) {
-                $.ajax('{{path('fos_user_security_login')}}', {
-                    type: 'GET'}).done(function (data){
-                    $('#login').html(data);
-                    $('#login-form').submit(function (e) {
-                        e.preventDefault();
-                        $.ajax('{{path("fos_user_security_check")}}',
-                            {
-                                type: 'POST',
-                                dataType: 'JSON',
-                                data: $(this).serialize()
-                            }
-                        )
-                        .done(function(data){
-                            if (typeof data.email !== 'undefined') {
-                                $('login-button').html('Здравствуйте, ' + data.email + '! '+ '<a href="{{path('fos_user_security_logout')}}">Выйти</a>');
-                            } else {
-                                if (typeof data.message !==undefined)
-                                    alert(data.message)
-                                else
-                                    alert('Произошла ошибка во время авторизации!');
-                            }
+        // bind event handlers to modal triggers
+		/*$('body').on('click', '.login_link', function(e){
+			e.preventDefault();
+			$('#login_modal').modal().open();
+		});*/
+
+        // bind event handlers to modal triggers
+		/*$('body').on('click', '.pass_link', function(e){
+			e.preventDefault();
+			$('#pass_modal').modal().open();
+		});*/
+
+        // bind event handlers to modal triggers
+		$('body').on('click', '.call_link', function(e){
+			e.preventDefault();
+			$('#call_modal').modal().open();
+		});
+
+        // bind event handlers to modal triggers
+		$('body').on('click', '.question_link', function(e){
+			e.preventDefault();
+			$('#question_modal').modal().open();
+		});
+
+		// attach modal close handler
+		$('.modal .close').on('click', function(e){
+			e.preventDefault();
+			$.modal().close();
+		});
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#scrollbar1').tinyscrollbar({ sizethumb: 50 });
+        $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
+        $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
+        $('#scrollbar4').tinyscrollbar({ sizethumb: 47 });
+        //Handle modal windows button clicks
+        $('#success_modal .form_grey_button, #error_modal .form_grey_button').on('click', function(){
+            window.location = '{{path('homepage')}}';
+            $.modal().close();
+        });
+        $('#success_modal .form_green_button, #error_modal .form_green_button').on('click', function(){
+            window.location = '{{path('step1')}}#clear';
+            if ('{{path('step1')}}' == window.location.pathname) window.location.reload();
+            $.modal().close();
+        });
+	});
+</script>
+</head>
+
+
+<body{% if (path(app.request.attributes.get('_route')) == path('homepage'))%} class="index"{% endif %}> <!-- .index for index-page only -->
+	<section class="layout">
+
+    	<header>
+        	<div class="limit">
+            	<a href="" class="logo"></a>
+                <div class="center_part">
+                    <span class="phone_ico registration_link"></span>
+                    <div class="phone_number"><span class="code">(050)</span>345 2415<span class="hours24 pass_link"></span></div>
+                    <div class="grey_button call_me call_link"><span></span>Перезвоните мне</div>
+                    <div class="grey_button write_in_skype"><span></span>Написать в Skype</div>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="login-area">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
+                <div>Здравствуйте!{#app.user.firstname#} <a href="{{path('fos_user_security_logout')}}">Выйти</a></div>
+                {% else %}
+                <div class="personal_office login_link"><span></span>Личный офис</div>
+                {% endif %}
+                </div>
+                <div style="clear: both;"></div>
+                <ul class="main_menu">
+                    <li{% if (path(app.request.attributes.get('_route')) == path('homepage'))%} class="current"{% endif %}>
+                        <a href="">
+                            <span class="home"></span>
+                            <span class="delim"></span>
+                        </a>
+                        {% if (path(app.request.attributes.get('_route')) == path('homepage'))%}<div class="shadow"></div>{% endif %}
+                    </li>
+                    <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
+                        <a href="">Калькулятор осаго<span class="delim"></span></a>
+                        {% if (path(app.request.attributes.get('_route')) == path('step1'))%}<div class="shadow"></div>{% endif %}
+                    </li>
+                    <!--<li>
+                        <a href="">
+                            Автозаполнение полиса
+                            <span class="arrow"></span>
+                            <span class="delim"></span>
+                        </a>
+                        <ul class="inner_menu">
+                            <li>
+                                <a href="">Бесплатное заполнение<span class="delimiter"></span></a>
+                                <div class="shadow"></div>
+                            </li>
+                            <li><a href="">Платное заполнение<span class="delimiter"></span></a></li>
+                            <li><a href="">Бланки<span class="delimiter"></span></a></li>
+                            <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
+                        </ul>
+                    </li>-->
+                    <li><a href="">О нас<span class="delim"></span></a></li>
+                    <li><a href="">Контакты<span class="delim"></span></a></li>
+                </ul>
+        	</div>
+        </header>
+{%block content%}
+        {% endblock %}
+    <footer>
+    	<div class="limit">
+            <div class="column first">
+                <div class="title">О нас</div>
+                <a href=""><span></span>О сервисе</a>
+                <a href=""><span></span>Контакты</a>
+                <a href=""><span></span>Обратный звонок</a>
+            </div>
+            <div class="column second">
+                <div class="title">Меню</div>
+                <a href=""><span></span>Главная</a>
+                <a href=""><span></span>Расчет полиса ОСАГО</a>
+                <a href=""><span></span>Автозаполнение полиса</a>
+                <a href=""><span></span>Все о страховании ОСАГО</a>
+            </div>
+            <div class="column third">
+                <div class="title">Будьте с нами</div>
+                <form class="subscribe_form">
+                    <label>Подпишитесь на нашу рассылку</label>
+                    <input type="text" placeholder="Введите Ваш e-mail:" />
+                    <input type="submit" value="Подписаться" />
+                </form>
+                <div class="social_buttons">
+                    <a href="" class="vk"></a>
+                    <a href="" class="fb"></a>
+                    <a href="" class="tw"></a>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+         </div>
+         <div class="bottom_part">
+            <div class="limit">
+                <a href="" class="footer_logo"></a>
+                <div class="copyright">© 2013 ПолисМаркет<br />Все права защищены законом</div>
+                <div class="counter_container"><img src="{{asset('bundles/insurancecontent/images/counter_example.png')}}" alt="img" /></div>
+                <div style="clear: both;"></div>
+            </div>
+         </div>
+    </footer>
+
+
+<!-- REGISTRATION MODAL -->
+<div class="modal" id="registration_modal" style="display: none;">
+    <div class="close"></div>
+    <div class="sub_text">Для оформления полиса Вы будете вводить персональные данные. Для защищенного хранения этих данных, а также безопасного доступа к ним, пройдите пожалуйста простейшую регистрацию.</div>
+    <div class="login_link_box">Если вы уже регистрировались, <span class="login_link">войдите под своим именем</span></div>
+    <!--<div class="social">
+        <a href="" class="vk">Регистрация через VK</a>
+        <a href="" class="fb">Регистрация через FB</a>
+    </div>-->
+    <div id="register-form-container"></div>
+</div>
+
+<!-- PASS MODAL -->
+<div class="modal" id="pass_modal" style="display: none;">
+    <div class="close"></div>
+    <div class="title">Восстановление пароля</div>
+    <div class="sub_text">Введите e-mail адрес, указанный при регистрации, на него будет выслана информация по восстановлению пароля.</div>
+    <div class="form-container"></div>
+</div>
+
+{% include 'InsuranceContentBundle:Form:feedback_form.html.twig' %}
+{% include 'InsuranceContentBundle:Form:callback_form.html.twig' %}
+<!-- SUCCESS MODAL -->
+<div class="modal" id="success_modal" style="display: none;">
+    <div class="information_box">
+        <div class="ico"></div>
+        <div class="inform_title">Спасибо, Ваш заказ принят.</div>
+        <!--Наш менеджер свяжется с Вами в ближайшее время.-->
+    </div>
+    <div class="form_grey_button">На главную</div>
+    <div class="form_green_button">Новый расчет</div>
+    <div style="clear: both;"></div>
+</div>
+
+
+<!-- ERROR MODAL -->
+<div class="modal" id="error_modal" style="display: none;">
+    <div class="information_box">
+        <div class="ico"></div>
+        <div class="inform_title">Извините, что-то пошло не так...</div>
+        Попробуйте начать расчет заново.
+    </div>
+    <div class="form_grey_button">На главную</div>
+    <div class="form_green_button">Новый расчет</div>
+    <div style="clear: both;"></div>
+</div>
+<!-- PRELOADER -->
+<div class="preloader" style="display: none;">
+    <div class="img_box">
+        <img src="{{asset('bundles/insurancecontent/images/331.gif')}}" alt="img" />
+    </div>
+    <div class="text"><span>Загрузка... </span>пожалуйста, подождите</div>
+</div>
+{% block footer_scripts %}
+{% endblock %}
+    <script type="text/javascript">
+        $('.login_link').on('click', function(e) {
+            $.ajax('{{path('fos_user_security_login')}}', {
+                type: 'GET'}).done(function (data){
+                $('body').append(data);
+                $('#login_modal').css('display', 'none');
+                $('#login_modal').modal().open();
+                Custom.init();
+                //Reset password
+                $('.forget_pass').on('click', function (){
+                    $.ajax('{{path('fos_user_resetting_request')}}')
+                    .done(function (data){
+                        $('#pass_modal .form-container').html(data);
+                        $('.green_button').on('click', function (){
+                            var form = $(this).parents('form');
+                            $.ajax($(form).attr('action'), {
+                                data: form.serialize(),
+                                type: 'POST'
+                            })
+                            .done(function(data){
+                                $('.sub_text').hide();
+                                $('.form-container').html(data);
+                            });
                         });
+                        $('#pass_modal').modal().open();
                     });
-                })//End of ajax
-            });//End of click
-      </script>
-      {% endblock %}
-  </body>
+                });
+                $('.modal .close').on('click', function(e){
+                    e.preventDefault();
+                    $.modal().close();
+                    });
+                $('#login-form').submit(function (e) {
+                    e.preventDefault();
+                    $.ajax('{{path("fos_user_security_check")}}',
+                        {
+                            type: 'POST',
+                            dataType: 'JSON',
+                            data: $(this).serialize()
+                        }
+                    )
+                    .done(function(data){
+                        if (typeof data.email !== 'undefined') {
+                            $('.login-area').html('Здравствуйте! '+ '<a href="{{path('fos_user_security_logout')}}">Выйти</a>');
+                            $.modal().close();
+                            //If we on calculator page than change order button behaviour
+                            $('.form_now').unbind('click');
+                            $('.form_now').on('click', function(){
+                                $.ajax('{{path('step1')}}', {
+                                type: 'POST',
+                                data: $('#calculator-form').serialize()
+                                }).done(function(data){
+                                if (data.message != 'error') window.location = '{{path('step2')}}';
+                                });
+                            });
+                        } else {
+                            if (typeof data.message !== undefined)
+                                alert(data.message)
+                            else
+                                alert('Произошла ошибка во время авторизации!');
+                        }
+                    });
+                });
+            })//End of ajax
+        });//End of click
+        $('.green_button').on('click', function (){
+        var errors = 0;
+            $(this).parents('form').find('input').each(function(k, val){
+                if (val.value.length == 0) {
+                    errors++;
+                    $(val).parent().nextAll('.error').show();
+                    $(val).parent().nextAll('.error_text').show();
+                } else {
+                    if (val.id.indexOf('email')!=-1 && val.value.match(/[a-zA-Z]+[a-zA-Z0-9.]*@[a-zA-Z]+\..*[a-zA-Z]{2,4}/)) {
+                        $(val).parent().nextAll('.success').show();
+                        $(val).parent().nextAll('.error').hide();
+                        $(val).parent().nextAll('.error_text').hide();
+                    }
+                    else if (val.id.indexOf('email')!=-1) {
+                        errors++;
+                        $(val).parent().nextAll('.error').show();
+                        $(val).parent().nextAll('.error_text').text('Неправильный email').show();
+                    } else {
+                        $(val).parent().nextAll('.success').show();
+                        $(val).parent().nextAll('.error').hide();
+                        $(val).parent().nextAll('.error_text').hide();
+                    }
+                }
+            });
+            if (errors === 0) {
+                var form = $(this).parents('form');
+                $.ajax($(form).attr('action'),{
+                data: form.serialize(),
+                type: 'POST'
+                })
+                .done(function(data){
+                    if (data.message == 'success') {
+                        $('#success_modal .inform_title').text('Спасибо, Ваш запрос принят.');
+                        $('#success_modal .form_grey_button').hide();
+                        $('#success_modal .form_green_button').text('Закрыть');
+                        $('#success_modal .form_green_button').on('click', function () {
+                            $.modal().close();
+                        })
+                        $('#success_modal').modal().open();
+                    } else if(data.message == 'error') {
+                        console.log(data.error);
+                        $('#error_modal').show();
+                    }
+                });
+            }
+        });
+        Custom.init();
+    </script>
+</body>
 </html>

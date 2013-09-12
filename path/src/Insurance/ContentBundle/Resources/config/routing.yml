@@ -53,6 +53,12 @@ get_dgo_price:
     defaults: { _controller: "InsuranceContentBundle:Default:calculateDgo" }
     methods: [ 'POST' ]
 get_ns_price:
-    pattern: /get-bs-price.htm
+    pattern: /get-ns-price.htm
     defaults: { _controller: "InsuranceContentBundle:Default:calculateNs" }
     methods: [ 'POST' ]
+step3:
+    pattern: /step3.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:delivery" }
+save_calculation:
+    pattern: /save-calculation.htm
+    defaults: {_controller: "InsuranceContentBundle:Default:saveCalculation"}

@@ -1,0 +1,50 @@
+{# empty Twig template #}
+{% extends 'InsuranceContentBundle::base.html.twig'%}
+{% block content %}
+<div class="errors">
+{% for error in errors%}
+{% endfor %}
+</div>
+<div id="delivery-address">г. {{ city }}, {{ region }}, {{ app.session.get('registerAddress') }}, {{ app.session.get('registerBuilding') }} <a href="#change-delivery" id="change-delivery">Изменить</a></div>
+<div id="form-container" style="display: none;">
+    <form action="{{path('step3')}}" method="POST">
+        <select name="deliveryRegion" id="deliveryRegion" >
+        <option value="0">Выберите область</option>
+        {% for region in regions %}
+            <option value="{{region.id}}" {% if region.id == app.session.get('region') %}selected=""{% endif %}>{{region.value}}</option>
+        {% endfor %}
+    </select>
+    <select name="deliveryCity" {% if cities == false %}disabled=""{% endif %} id="deliveryCity">
+        <option>Выберите город</option>
+        {% if cities %}
+        {% for cityL in cities %}
+        <option value="{{cityL.id}}" {% if cityL.id == app.session.get('city') %}selected=""{% endif %}>{{cityL.value}}</option>
+        {% endfor %}
+        {% endif %}
+    </select><br>
+    <input type="text" name="deliveryAddress" id="deliveryAddress" placeholder="Адрес доставки" value="{{ deliveryAddress }}">
+    <input type="text" name="deliveryBuilding" id="deliveryBuilding" placeholder="Корпус, квартира, дом" value="{{ deliveryBuilding }}"><br>
+    <label for="phone">Телефон:</label><input type="text" name="phone" id="phone" placeholder="+38(xxxxx)xxx-xx-xx" value="{{ app.session.get('phone')}}">
+    <button type="submit" name="order" value="cash">Оплатить наличными</button>
+    </form>
+</div>
+
+<script>
+    $('#deliveryRegion').on('change', function (e){
+            if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {
+                var opts = '<option value="0">Выберите город</option>';
+                for (k in data) opts += '<option value="' + k + '">' + data[k] + '</option>';
+                $('#deliverCity').html(opts);
+                $('#deliverCity').removeAttr('disabled');
+            });
+            else {
+                $('#deliverCity').html('<option>Выберите город</option>');
+                $('#deliverCity').attr('disabled', '');
+            }
+        });
+    $('#change-delivery').on('click', function(e){
+        $('#delivery-address').toggle();
+        $('#form-container').toggle();
+    });
+</script>
+{% endblock %}

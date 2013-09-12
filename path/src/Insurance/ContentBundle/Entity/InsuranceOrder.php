@@ -47,14 +47,14 @@ class InsuranceOrder
     /**
      *
      * @var float
-     * @ORM\Column(name="price_dgo", type="decimal", precision=8, scale=2)
+     * @ORM\Column(name="price_dgo", type="decimal", precision=8, scale=2, nullable = true)
      */
     private $priceDgo;
 
     /**
      *
      * @var float
-     * @ORM\Column(name="price_ns", type="decimal", precision=8, scale=2)
+     * @ORM\Column(name="price_ns", type="decimal", precision=8, scale=2, nullable = true)
      */
     private $priceNs;
     /**
@@ -76,7 +76,7 @@ class InsuranceOrder
      *
      * @var integer
      *
-     * @ORM\Column(name="passenger_count", type="integer", nullable=true)
+     * @ORM\Column(name="passengers_count", type="integer", nullable=true)
      */
     private $passengerCount;
 
@@ -86,6 +86,34 @@ class InsuranceOrder
      * @ORM\Column(name="active_from", type="date", nullable=false)
      */
     private $activeFrom;
+
+    /**
+     *
+     * @var float
+     * @ORM\Column(name="displacement", type="decimal", precision=4, scale=2)
+     */
+    private $displacement;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="car_age", type="integer")
+     */
+    private $carAge;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="insurance_term", type="decimal", precision=6, scale=2)
+     */
+    private $insuranceTerm;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="discount", type="decimal", precision=6, scale=4)
+     */
+    private $discount;
 
     /**
      * @var string
@@ -174,7 +202,7 @@ class InsuranceOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="register_building", type="string", length=5, nullable=false)
+     * @ORM\Column(name="register_building", type="string", length=50, nullable=false)
      */
     private $registerBuilding;
 
@@ -188,7 +216,7 @@ class InsuranceOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="delivery_building", type="string", length=5, nullable=false)
+     * @ORM\Column(name="delivery_building", type="string", length=50, nullable=false)
      */
     private $deliveryBuilding;
 
@@ -237,7 +265,7 @@ class InsuranceOrder
     private $company;
 
     /**
-     * @var \City
+     * @var \City Means passport register city
      *
      * @ORM\ManyToOne(targetEntity="City", inversedBy="insuranceCity")
      * @ORM\JoinColumns({
@@ -247,7 +275,7 @@ class InsuranceOrder
     private $city;
 
     /**
-     * @var \City
+     * @var \City means car register city
      *
      * @ORM\ManyToOne(targetEntity="City", inversedBy="insuranceRegisterCity")
      * @ORM\JoinColumns({
@@ -1090,7 +1118,7 @@ class InsuranceOrder
     /**
      * Get sumDgo
      *
-     * @return float 
+     * @return float
      */
     public function getSumDgo()
     {
@@ -1113,7 +1141,7 @@ class InsuranceOrder
     /**
      * Get sumNs
      *
-     * @return float 
+     * @return float
      */
     public function getSumNs()
     {
@@ -1136,10 +1164,102 @@ class InsuranceOrder
     /**
      * Get passengerCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getPassengerCount()
     {
         return $this->passengerCount;
+    }
+
+    /**
+     * Set displacement
+     *
+     * @param float $displacement
+     * @return InsuranceOrder
+     */
+    public function setDisplacement($displacement)
+    {
+        $this->displacement = $displacement;
+
+        return $this;
+    }
+
+    /**
+     * Get displacement
+     *
+     * @return float
+     */
+    public function getDisplacement()
+    {
+        return $this->displacement;
+    }
+
+    /**
+     * Set carAge
+     *
+     * @param integer $carAge
+     * @return InsuranceOrder
+     */
+    public function setCarAge($carAge)
+    {
+        $this->carAge = $carAge;
+
+        return $this;
+    }
+
+    /**
+     * Get carAge
+     *
+     * @return integer
+     */
+    public function getCarAge()
+    {
+        return $this->carAge;
+    }
+
+    /**
+     * Set insuranceTerm
+     *
+     * @param float $insuranceTerm
+     * @return InsuranceOrder
+     */
+    public function setInsuranceTerm($insuranceTerm)
+    {
+        $this->insuranceTerm = $insuranceTerm;
+
+        return $this;
+    }
+
+    /**
+     * Get insuranceTerm
+     *
+     * @return float
+     */
+    public function getInsuranceTerm()
+    {
+        return $this->insuranceTerm;
+    }
+
+    /**
+     * Set discount
+     *
+     * @param float $discount
+     * @return InsuranceOrder
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return float
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
     }
 }

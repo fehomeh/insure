@@ -1,0 +1,361 @@
+@charset "UTF-8";
+/* CSS Document */
+#login_modal input[type="password"] {
+    padding-left: 55px;
+}
+form.modal_form .control_point input[type="email"] {
+    border: 1px solid #CFCFCF;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.13) inset;
+    color: #666666;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    height: 41px;
+    line-height: 41px;
+    padding: 0 10px;
+    width: 100%;
+}
+.login-area {
+    display:inline-block;
+    float:right;
+    height:33px;
+    line-height:33px;
+    padding:0;
+    text-transform: uppercase;
+}
+.login-area a{
+    text-decoration: underline;
+}
+.login-area a:hover {
+    color: #FFA600;
+    text-decoration: none;
+}
+.calculator_box .count_down_container .counter div .tdigit {
+    color: #FFFFFF;
+    font-family: "roboroBlack",Arial black,Helvetica,sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 18px;
+    line-height: 47px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.95);
+}
+/*.discount {
+    display: none;
+}*/
+.fixed_pop_up {
+    display: none;
+}
+/* CSS Document */
+.options {
+    display: none;
+}
+.hidden {
+    display:none;
+}
+/*------------------------------------------------------------------------------------------- */
+/*--------------------------------------- HEADER -------------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+
+
+
+/*------------------------------------------------------------------------------------------- */
+/*--------------------------------------- INDEX --------------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+.calculator_box .calculator .calculate {
+      line-height: 47px;
+	  }
+
+.calculator_box .count_down_container .counter div {
+      line-height: 45px;
+	  letter-spacing: 17px;
+	  }
+
+.calculator_box .calculator .title {
+      line-height: 52px;}
+
+/*------------------------------------------------------------------------------------------- */
+/*--------------------------------------- COMBO --------------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+.combo {
+  position: relative;
+  width: 329px;
+  }
+
+
+/*------------------------------------------------------------------------------------------- */
+/*--------------------------------------- SCROLL -------------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+.scroll_box {
+  width: 327px;
+  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); }
+
+/*------------------------------------------------------------------------------------------- */
+/*-----------------------------------  MODAL GENERAL ---------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+
+form.modal_form .control_point input[type="text"], form.modal_form .control_point input[type="password"],
+form.modal_form .control_point input[type="email"] {
+    border-radius: 5px 5px 5px 5px;
+    border: 1px solid #cfcfcf;
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
+
+
+/*------------------------------------------------------------------------------------------- */
+/*---------------------------------------- TOTAL -------------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+
+
+.orange_button {
+  line-height: 29px;
+  text-shadow: 1px 1px 1px rgba(56, 39, 9, 0.5);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.16), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.16), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.16), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+  }
+
+.orange_button:hover {
+  background-image: none;
+  background-color: #ffbc01;
+  text-shadow: 1px 1px 0 rgba(56, 39, 9, 0.5);
+  -moz-box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.4) inset;
+  -webkit-box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.4) inset;
+  box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.4) inset;
+}
+
+.pop_up {
+  background-color: #f4fae6;
+}
+
+.fixed_pop_up {
+  bottom: auto;
+  font-size: 12px;
+  font-weight: 700;
+   left: 680px;
+   background-color: #fceacc;
+  }
+.fixed_pop_up:before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 15px;
+  }
+  .fixed_pop_up:after {
+    content: "";
+    position: absolute;
+    left: -9px;
+    top: 15px;
+ }
+
+/*------------------------------------------------------------------------------------------- */
+/*-------------------------------------- PERSONAL_INFO FORM --------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+form.personal_data .line {
+    margin-bottom: 40px;
+    }
+
+form.personal_data .control_point {
+    display: inline-block;
+    margin-left: 10px;
+	margin-top: 3px;
+    margin-bottom: 0px;
+}
+
+form.personal_data .control_point input:focus {
+      -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
+      -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41); }
+
+
+
+
+/*------------------------------------------------------------------------------------------- */
+/*----------------------------------------- AUTO INFO --------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+.change {
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.26), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.26), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.26), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+ }
+
+.change:hover {
+    background-image: none;
+    background-color: #adadad;
+	 -moz-box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+    -webkit-box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.5) inset; }
+
+
+/*------------------------------------------------------------------------------------------- */
+/*----------------------------------------- PERSON INFO ------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+.person_info .line .combo {
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset;
+}
+
+.person_info .new_insurer {
+line-height: 28px;
+-moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.16), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.16), 0 0 1px rgba(0, 0, 0, 0.47) inset;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.16), 0 0 1px rgba(0, 0, 0, 0.47) inset; }
+
+.person_info .new_insurer:hover {
+    background-image: none;
+      background-color: #70b737;
+    -moz-box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+    -webkit-box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 1px 0 white, 0 1px 2px rgba(0, 0, 0, 0.5) inset; }
+
+.person_info .control_point.radio_control label {
+    margin-top: 0px;
+	margin-left: 3px;
+}
+
+.form_green_button:hover  {
+      background-image: none;
+      background-color: #70b737;
+}
+
+.form_grey_button:hover {
+    background-image: none;
+    background-color: #adadad;
+}
+
+/*------------------------------------------------------------------------------------------- */
+/*----------------------------------------- CALCULATOR PAGE --------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+.orange_button.clear_all {
+  position: absolute;
+  top: 2px;
+  text-transform: uppercase!important;
+  font-size: 12px; }
+
+.before_calc {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  border: 1px dotted black;
+  padding: 20px;
+  text-align: center;
+  display:none;
+}
+
+.before_calc.show {
+  display:block;
+}
+
+.calc {
+  display:none;
+}
+.calc.show {
+  display:block;
+}
+
+.calculator_content aside .sub_text {
+      margin: 20px 0 0 0; }
+.calculator_content aside .sub_text.center {
+        text-align: center;
+        margin: 3px 0 10px 0; }
+
+
+.form_now {
+  margin: 0 0 0 -5px;
+}
+
+.category .category_title .ico {
+      margin-right: 12px;
+       }
+.category .category_title .arrow {
+      top: 9px;
+      right: 12px;
+}
+
+.combo.wide {
+  width: 100%;
+  border-color: #CFCFCF;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset;
+  }
+
+.combo.wide .scroll_box {
+    width: 100%;
+    height: 315px;
+	background-color: #fff;
+	}
+.combo.wide .scroll_box .viewport {
+      height: 310px; }
+.combo.wide .scroll_box .track {
+      height: 305px!important;
+	  }
+
+
+.combo.wide ul li {
+    width: 19%;
+	margin-left: 6px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -khtml-border-radius: 6px;
+	}
+
+.combo.wide ul li.active {
+      background-image: url(../images/bg.png);
+      background-position: 0px -1101px;
+      background-repeat: repeat-x;
+      background-color: transparent;
+      color: #fff; }
+
+.combo.wide .close_scroll {
+    bottom: 5px;
+    right: 5px;
+    }
+
+.box_line .combo {
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset; }
+
+.slider_container .description span {
+      font-weight: normal;}
+
+      .slider_container .description span.first {
+        text-align: left;
+        padding-left: 0px; }
+      .slider_container .description span.last {
+        text-align: right;
+        padding-right: 0px; }
+
+
+	.volume .description span {
+    width: 31%; }
+    .volume .description span.first, .volume .description span.last {
+      width: 19%; }
+
+
+	.recomend_box .box_line .description span {
+      width: 23%; }
+	.recomend_box .box_line .description span.first {
+      width: 16%; }
+	.recomend_box .box_line .description span.last {
+      width: 15%; }
+
+
+.passengers .description span {
+  width: 31%!important; }
+.passengers .description span.first {
+    width: 20%!important; }
+.passengers .description span.last {
+    width: 18%!important; }
+.passengers .slider_container {
+  margin-left: 10px; }
+.passengers .points_box .point.one {
+  left: 15px!important; }
+.passengers .points_box .point.two {
+  left: 167px!important; }
+.passengers .points_box .point.three {
+  left: 320px!important; }
+.passengers .points_box .point.four {
+  left: 473px!important; }
+
+.passenger_counter .arrow.minus {
+      background-position: -361px -481px;
+      margin-left: 5px; }
