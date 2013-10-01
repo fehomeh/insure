@@ -26,7 +26,7 @@
                     <div class="total">
                         <div class="green_label">Сумма заказа:</div>
                         <div class="sum">
-                            678, 00 грн.
+                            {{(app.session.get('price') + app.session.get('priceDGO') + app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.
                             <div class="question_ico">
                                 <div class="pop_up">
                                     <div class="popup_title">Lorem ipsum dolor sit amet</div>
@@ -34,28 +34,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="orange_button">Пересчитать заново</div>
+                        <div class="orange_button"><a href="{{path('step1')}}#clear">Пересчитать заново</a></div>
                         <div style="clear: both;"></div>
                     </div>
                     <!-- begin form -->
-                    <form class="modal_form personal_data">
+                    <form class="modal_form personal_data" action="{{path('step2')}}" id="identity-form" method="POST">
                         <!-- polis_date -->
                         <div class="grey_area polis_date">
                             <div class="label">Полис начнет действовать:</div>
-                            <div class="date"><input type="text" value="15 июля 2013 год" id="datepicker" /><span></span></div>
+                            <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ 'now'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
                         </div>
                         <!-- auto_info -->
                         <div class="grey_area auto_info">
                             <div class="title">
                                 <div class="label">Автомобиль:</div>
-                                <div class="auto">Audi A5, 1.8л, 2008 года выпуска</div>
-                                <div class="change">Изменить</div>
+                                <div class="auto">{{carBrand}} {{carModel}}, {{app.session.get('displacement')}}л, {{app.session.get('carAge')}} года выпуска</div>
+                                <div class="change"><a href="{{path('step1')}}">Изменить</a></div>
                                 <div style="clear: both;"></div>
                             </div>
                             <div class="line">
                                 <div class="param">VIN-код:<sup>*</sup></div>
-                                <div class="control_point success size3">
-                                    <input type="text" />
+                                <div class="control_point size3">
+                                    <input type="text" name="vinCode" id="vinCode" value="{{ app.session.get('vinCode')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
@@ -63,11 +63,11 @@
                             </div>
                             <div class="line">
                                 <div class="param">Номерной знак:</div>
-                                <div class="control_point error size3">
-                                    <input type="text" />
+                                <div class="control_point size3">
+                                    <input type="text" name="carNumber" id="carNumber" value="{{ app.session.get('carNumber')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text">В номерном знаке должно быть 6 символов!</div>
+                                    <div class="error_text">В номерном знаке должно <br>быть минимум 7 символов!</div>
                                 </div>
                             </div>
                         </div>
@@ -77,25 +77,18 @@
                                 <div class="label">Страхователь:</div>
                                 <div class="right_part">
                                     <div class="combo person">
-                                        <div class="current">Красно Вадим Васильевич</div>
+                                        <div class="current">{% if registerPersons%}{{registerPersons[0].surname}} {{registerPersons[0].firstname}} {{registerPersons[0].middlename}} {% endif %}</div>
                                         <div class="arrow"></div>
                                         <div id="scrollbar1"  class="scroll_box">
                                     		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                     		<div class="viewport">
                                     			 <div class="overview">
                                     				<ul>
-                                                        <li>Иваненко Петр Сергеевич</li>
-                                                        <li>Петренко Иван Сидорович</li>
-                                                        <li>Катрюк Висилий Степанович</li>
-                                                        <li>Алексеева Марина Ивановна</li>
-                                                        <li>Третяк Мария Александровна</li>
-                                                        <li>Петренко Павел Игоревич</li>
-                                                        <li class="active">Красно Вадим Васильевич</li>
-                                                        <li>Василенко Любовь Виталиевна</li>
-                                                        <li>Костровский Олександр Олександрович</li>
-                                                        <li>Петренко Иван Сидорович</li>
-                                                        <li>Катрюк Висилий Степанович</li>
-                                                        <li>Алексеева Марина Ивановна</li>
+                                                        {% if registerPersons %}
+                                                            {% for person in registerPersons%}
+                                                            <li {%if registerPersons[0].id == person.id%}class="active" {% endif %}data-value="{{person.id}}">{{person.surname}} {{person.firstname}} {{person.middlename}}</li>
+                                                            {% endfor%}
+                                                        {% endif %}
                                                     </ul>
                                     			</div>
                                     		</div>
@@ -110,19 +103,19 @@
                             <div class="line">
                                 <div class="param">ФИО:</div>
                                 <div class="control_point size2">
-                                    <input type="text" placeholder="Фамилия" />
+                                    <input type="text" name="surname" id="surname" placeholder="Фамилия" value="{{ app.session.get('surname')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
                                 </div>
                                 <div class="control_point size2">
-                                    <input type="text" placeholder="Имя"  />
+                                    <input type="text" name="firstname" id="firstname" placeholder="Имя" value="{{ app.session.get('firstname')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
                                 </div>
-                                <div class="control_point size2 error">
-                                    <input type="text" placeholder="Отчество"  />
+                                <div class="control_point size2">
+                                    <input type="text" name="middlename" id="middlename" placeholder="Отчество" value="{{ app.session.get('middlename')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
@@ -133,34 +126,34 @@
                             <div class="line">
                                 <div class="param">Документ:</div>
                                 <div class="control_point radio_control">
-                                    <input type="radio" class="styled" checked="checked" name="document" id="pass" />
-                                    <label for="pass">Паспорт</label>
+                                    <input type="radio" class="styled" name="documentType" value="P" {% if app.session.get('documentType') == 'P' or app.session.get('documentType') == null %} checked="" {% endif %}id="documentTypePassport" />
+                                    <label for="documentTypePassport">Паспорт</label>
                                 </div>
                                 <div class="control_point radio_control">
-                                    <input type="radio" class="styled" name="document" id="driver" />
-                                    <label for="driver">Водительское удостоверение</label>
+                                    <input type="radio" class="styled" name="documentType" value="D" {% if app.session.get('documentType') == 'D'%} checked="" {% endif %}id="documentTypeDriver"/>
+                                    <label for="documentTypeDriver">Водительское удостоверение</label>
                                 </div>
                                 <div style="clear: both;"></div>
-                                <div class="control_point size1 error">
-                                    <input type="text" placeholder="Серия" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text">Текст ошибки</div>
-                                </div>
-                                <div class="control_point size1 success">
-                                    <input type="text" placeholder="Номер"  />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text">Текст ошибки</div>
-                                </div>
-                                <div class="control_point size4 error">
-                                    <input type="text" placeholder="Кем выдан"  />
+                                <div class="control_point size1">
+                                    <input type="text" name="documentSerie" id="documentSerie" placeholder="Серия" value="{{ app.session.get('documentSerie')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
                                 </div>
                                 <div class="control_point size1">
-                                    <input type="text" placeholder="Когда"  />
+                                    <input type="text" name="documentNumber" id="documentNumber" placeholder="Номер" value="{{ app.session.get('documentNumber')}}" />
+                                    <div class="success ico"></div>
+                                    <div class="error ico"></div>
+                                    <div class="error_text">Текст ошибки</div>
+                                </div>
+                                <div class="control_point size4">
+                                    <input type="text" name="documentAuthority" id="documentAuthority" placeholder="Кем выдан" value="{{ app.session.get('documentAuthority')}}" />
+                                    <div class="success ico"></div>
+                                    <div class="error ico"></div>
+                                    <div class="error_text">Текст ошибки</div>
+                                </div>
+                                <div class="control_point size1">
+                                    <input type="text" name="documentDate" id="documentDate" placeholder="Когда" value="{{ app.session.get('documentDate')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
@@ -171,7 +164,7 @@
                             <div class="line">
                                 <div class="param">Телефон:</div>
                                 <div class="control_point size3">
-                                    <input type="text" placeholder="38(...)... .. .." />
+                                    <input type="text" placeholder="38(...)... .. .." name="phone" id="phone" value="{{ app.session.get('phone')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
@@ -182,82 +175,51 @@
                             <div class="line">
                                 <div class="param">Адрес:</div>
                                 <div class="combo one_column">
-                                    <div class="current">Выбрать область</div>
+                                    <div class="current">
+                                    {% if app.session.get('region') %}
+                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif %}
+                                    </div>
                                     <div class="arrow"></div>
                                     <div id="scrollbar2"  class="scroll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
-                                				<ul>
-                                                    <li>Киевская</li>
-                                                    <li>Черниговская</li>
-                                                    <li>Житомирская</li>
-                                                    <li>Черкасская</li>
-                                                    <li>Харьковская</li>
-                                                    <li>Одесская</li>
-                                                    <li>Херсонская</li>
-                                                    <li>Полтавская</li>
-                                                    <li>Донецкая</li>
-                                                    <li>Днепропетровская</li>
-                                                    <li>Киевская</li>
-                                                    <li>Черниговская</li>
-                                                    <li>Житомирская</li>
-                                                    <li>Черкасская</li>
-                                                    <li>Харьковская</li>
-                                                    <li>Одесская</li>
-                                                    <li>Херсонская</li>
-                                                    <li>Полтавская</li>
-                                                    <li>Донецкая</li>
-                                                    <li>Днепропетровская</li>
+                                				<ul form-input-id="region" id="regionList">
+                                                    {% for region in regions %}
+            <li data-value="{{region.id}}" {% if region.id == app.session.get('region') %}class="active"{% endif %}>{{region.value}}</li>
+        {% endfor %}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="text" value=" " />
+                                    <input type="hidden" name="region" id="region" />
                                 </div>
                                 <div class="combo one_column">
-                                    <div class="current">Выбрать город</div>
+                                    <div class="current">{% if app.session.get('city') %}
+                                        {% for city in cities %} {% if city.id == app.session.get('city')%}{{city.value}}{% endif %}{% endfor %}{% else %}Выбрать город{% endif %}</div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar3"  class="scroll_box">
+                                    <div id="scrollbar3" class="scroll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
-                                				<ul>
-                                                    <li>Киев</li>
-                                                    <li>Чернигов</li>
-                                                    <li>Житомир</li>
-                                                    <li>Черкассы</li>
-                                                    <li>Харьков</li>
-                                                    <li>Одесса</li>
-                                                    <li>Херсон</li>
-                                                    <li>Полтава</li>
-                                                    <li>Донецк</li>
-                                                    <li>Днепропетровск</li>
-                                                    <li>Киев</li>
-                                                    <li>Чернигов</li>
-                                                    <li>Житомир</li>
-                                                    <li>Черкассы</li>
-                                                    <li>Харьков</li>
-                                                    <li>Одесса</li>
-                                                    <li>Херсон</li>
-                                                    <li>Полтава</li>
-                                                    <li>Донецк</li>
-                                                    <li>Днепропетровск</li>
+                                				<ul form-input-id="city" id="cityList">
+                                                    {% if app.session.get('registerCity') %}
+                                        {% for city in cities %} <li data-value="{{city.id}}"{% if city.id == app.session.get('city') %} class="active"{% endif %}>{{city.value}}</li>{% endfor %}{% endif %}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="text" value=" " />
+                                    <input type="hidden" id="city" name="city" value="{{app.session.get('city')}}" />
                                 </div>
                                 <div style="clear: both;"></div>
                                 <div class="control_point size4">
-                                    <input type="text" placeholder="Улица" />
+                                    <input type="text" name="registerAddress" id="registerAddress" placeholder="Улица" value="{{ app.session.get('registerAddress')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
                                 </div>
                                 <div class="control_point size2">
-                                    <input type="text" placeholder="Дом, корпус, квартира" />
+                                    <input type="text" name="registerBuilding" id="registerBuilding" value="{{ app.session.get('registerBuilding')}}" placeholder="Дом, корпус, квартира" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
                                     <div class="error_text">Текст ошибки</div>
@@ -266,8 +228,8 @@
                             <!-- -->
                             <div class="line">
                                 <div class="control_point accept_control">
-                                    <input type="checkbox" class="styled" id="accept" />
-                                    <label for="accept">
+                                    <input type="checkbox" class="styled" id="processPersonalData" value="Y" name="processPersonalData" />
+                                    <label for="processPersonalData">
                                         Согласие на обработку персональных данных
                                         <div class="question_ico">
                                             <div class="pop_up">
@@ -292,6 +254,212 @@
         </section>
 
     </section>
+{% endblock %}
+{% block footer_scripts %}
+<script type="text/javascript">
+    function checkForm(e) {
+        var errors = {};
+        if ($('#activeFrom').val().match(/[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}/) == null) {
+            errors.activeFrom = true;
+        } else
+            errors.activeFrom = false;
+        if ($('#vinCode').val().length == 0) {
+            errors.vinCode = true;
+        } else
+            errors.vinCode = false;
+        if ($('#carNumber').val().length < 7) {
+            errors.carNumber = true;
+        } else
+            errors.carNumber = false;
+        if ($('#surname').val().length == 0) {
+            errors.surname = true;
+        } else
+            errors.surname = false;
+        if ($('#firstname').val().length == 0) {
+            errors.firstname = true;
+        } else
+            errors.firstname = false;
+        if ($('#middlename').val().length == 0) {
+            errors.middlename = true;
+        } else
+            errors.middlename = false;
+        if ($('#documentTypePassport').val() != 'P' || $('#documentTypeDriver').val() != 'D') {
+            errors.documentTypePassport = true;
+        } else
+            errors.documentTypePassport = false;
+        if ($('#documentSerie').val().length == 0) {
+            errors.documentSerie = true;
+        } else
+            errors.documentSerie = false;
+        if ($('#documentNumber').val().length == 0) {
+            errors.documentNumber = true;
+        } else
+            errors.documentNumber = false;
+        if ($('#documentAuthority').val().length == 0) {
+            errors.documentAuthority = true;
+        } else
+            errors.documentAuthority = false;
+        if ($('#documentDate').val().length == 0) {
+            errors.documentDate = true;
+        } else
+            errors.documentDate = false;
+        if ($('#phone').val().length == 0) {
+            errors.phone = true;
+        } else
+            errors.phone = false;
+        if ($('#region').val().length == 0) {
+            errors.region = true;
+        } else
+            errors.region = false;
+        if ($('#city').val().length == 0) {
+            errors.city = true;
+        } else
+            errors.city = false;
+        if ($('#registerAddress').val().length == 0) {
+            errors.registerAddress = true;
+        } else
+            errors.registerAddress = false;
+        if ($('#registerBuilding').val().length == 0) {
+            errors.registerBuilding = true;
+        } else
+            errors.registerBuilding = false;
+        if (!$('#processPersonalData').is(':checked')) {
+            errors.processPersonalData = true;
+        } else
+            errors.processPersonalData = false;
+        for (v in errors) {
+            if (errors[v] == true) {
+                $('#' + v).parents('.control_point').addClass('error');
+                $('#' + v).parents('.control_point').removeClass('success');
+                e.preventDefault();
+            }
+            else {
+                $('#' + v).parents('.control_point').removeClass('error');
+                $('#' + v).parents('.control_point').addClass('success');
+            }
+        }
+    }
+
+    function clearData() {
+        $('.person .current').text('');
+        $('#scrollbar2 li').removeClass('active');
+        $('#activeFrom').val(null);
+        $('#vinCode').val(null);
+        $('#carNumber').val(null);
+        $('#surname').val(null);
+        $('#firstname').val(null);
+        $('#middlename').val(null);
+        $('#documentTypePassport').removeAttr('checked');
+        $('#documentTypeDriver').removeAttr('checked');
+        $('#documentTypePassport').trigger('click');
+        $('#documentSerie').val(null);
+        $('#documentNumber').val(null);
+        $('#documentAuthority').val(null);
+        $('#documentDate').val(null);
+        $('#phone').val(null);
+        $('#region').val(null);
+        $('#region').parents('.combo').find('.current').text('Выбрать область');
+        $('#region').parents('.combo').find('li').removeClass('active');
+        $('#city').val(null);
+        $('#city').parents('.combo').find('.current').text('Выбрать город');
+        $('#city').parents('.combo').find('ul').text('');
+        $('#registerAddress').val(null);
+        $('#registerBuilding').val(null);
+        $('#processPersonalData').removeAttr('checked');
+        $('.person li').removeClass('active');
+    }
+
+    $('#identity-form').on('submit', checkForm);
+    $('.form_green_button').on('click', function () {
+        $('#identity-form').trigger('submit');
+    });
+    $('.form_grey_button').on('click', function () {
+        location = '{{path('step1')}}';
+    });
+    $('.new_insurer').on('click', clearData);
+    $.datepicker.setDefaults($.datepicker.regional[ "ru" ]);
+    $('#activeFrom').datepicker({
+    closeText: 'Закрыть',
+    dateFormat: 'dd.mm.yy',
+    inline: true
+    });
+    $('#documentDate').datepicker({
+    closeText: 'Закрыть',
+    dateFormat: 'dd.mm.yy',
+    inline: true
+    });
+    function selectCity() {
+        var inputEl = $(this).parents('ul').attr('form-input-id');
+        $('#'+inputEl).val($(this).attr('data-value'));
+        $(this).parents('.your_auto').find('.box_line').removeClass('focus');
+        $(this).parents('.box_line').next('.box_line').addClass('focus');
+    }
+    function loadCities() {
+        if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {
+            var opts = '';
+            for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
+            $('#cityList').html(opts);
+            $(".combo ul li").on('click', comboClick);
+            $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
+            $('#cityList li').on('click', selectCity);
+            //$('#registerCity').removeAttr('disabled');
+        });
+    }
+    $('#region').on('dataavailable', loadCities);
+    $('#cityList li').on('click', selectCity);
+    $(document).ready(function(){
+        $(":input").attr('autocomplete', 'off');
+    });
+    {% if (registerPersons) %}
+        function switchUserData(dataId) {
+            var userData = {
+                {% for personData in registerPersons %}
+                {{personData.id}}:{
+                    activeFrom: '{{personData.activeFrom|date('d.m.Y')}}',
+                    vinCode: '{{personData.vinCode}}',
+                    carNumber: '{{personData.carNumber}}',
+                    surname: '{{personData.surname}}',
+                    firstname: '{{personData.firstname}}',
+                    middlename: '{{personData.middlename}}',
+                    documentType: '{{personData.documentType}}',
+                    documentSerie: '{{personData.documentSerie}}',
+                    documentNumber: '{{personData.documentNumber}}',
+                    documentAuthority: '{{personData.documentAuthority}}',
+                    documentDate: '{{personData.documentDate|date('d.m.Y')}}',
+                    phone: '{{personData.phone}}',
+                    region: '{{personData.city.region.id}}',
+                    city: '{{personData.city.id}}',
+                    regionName: '{{personData.city.region}}',
+                    cityName: '{{personData.city}}',
+                    registerAddress: '{{personData.registerAddress}}',
+                    registerBuilding: '{{personData.registerBuilding}}',
+                }{% if loop.last != true %},{% endif %}
+
+                {% endfor %}
+            };
+            for (k in userData[dataId]) {
+                if ($('#' + k).is(':input:not(:checkbox)'))
+                    $('#' + k).val(userData[dataId][k]);
+            }
+            if (userData[dataId].documentType == 'P') $('#documentTypePassport').trigger('click');
+                else $('#documentTypeDriver').trigger('click');
+            $('#region').parents('.combo').find('.current').text(userData[dataId].regionName);
+            $('#city').parents('.combo').find('.current').text(userData[dataId].cityName);
+            $('#regionList li[data-value="'+ userData[dataId].region +'"]').addClass('active');
+            $('#region').trigger('dataavailable');
+            setTimeout(function() {
+                $('#cityList li[data-value="'+ userData[dataId].city +'"]').addClass('active');
+            }, 4000);
+        }
+        $('.person li').on('click', function (){
+            switchUserData($(this).attr('data-value'));
+        })
+        if(window.location.hash == '#clear')
+            clearData();
+        else
+            switchUserData({{registerPersons[0].id}});
+    {% endif%}
+</script>
 {% endblock %}
 {# register user data template
 {% extends 'InsuranceContentBundle::base.html.twig'%}

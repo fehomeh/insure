@@ -83,6 +83,7 @@ $(document).ready(
     function() {
         function toggleTimer()
         {
+            if (window.timerEnd) return;
             if (!window.endTime) {
                 var now = new Date(); //получаем текущую дату
                 var finish = new Date(end_time); //дата до которой ведется отсчет
@@ -95,7 +96,6 @@ $(document).ready(
                 var seconds = finish.getSeconds() - now.getSeconds();
                 window.endTime = years + months + days + hours + minutes + seconds;
             }
-
             //var years = finish.getFullYear() - now.getFullYear();
             //var days = years*365 + finish.getDay() - now.getDay();
             //var hours = now.getHours()*3600; //разница часов
@@ -109,7 +109,7 @@ $(document).ready(
             var txtMinutes = Math.floor((window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600)/ 60);
             var txtSeconds = window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600 - txtMinutes*60;
             //console.log(end_time, seconds);
-            if (window.endTime == 0) {
+            if (window.endTime <= 0) {
                 $('.hours .tdigit').text('00');
                 $('.minutes .tdigit').text('00');
                 $('.seconds .tdigit').text('00');

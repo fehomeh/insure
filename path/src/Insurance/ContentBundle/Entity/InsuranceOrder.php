@@ -73,6 +73,12 @@ class InsuranceOrder
     private $sumNs;
 
     /**
+     * @var float
+     * @ORM\Column(name="total_price", type="decimal", precision=8, scale=2)
+     */
+    private $totalPrice;
+
+    /**
      *
      * @var integer
      *
@@ -1261,5 +1267,28 @@ class InsuranceOrder
     public function getDiscount()
     {
         return $this->discount;
+    }
+
+    /**
+     * Set totalPrice
+     *
+     * @param string $totalPrice
+     * @return InsuranceOrder
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
+
+        return $this;
+    }
+
+    /**
+     * Get totalPrice
+     *
+     * @return string 
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
     }
 }

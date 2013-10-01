@@ -70,7 +70,7 @@ class NotifySender
           //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
           ;
           $this->sc->get('mailer')->send($message);
-      } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 0) {
+      } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
         $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
               ->setSubject(strtoupper($siteDomain) . 'Оплата за Ваш заказ получена!')

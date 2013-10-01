@@ -1,6 +1,321 @@
 {# empty Twig template #}
 {% extends 'InsuranceContentBundle::base.html.twig'%}
-{% block content %}
+
+{% block content%}
+<section class="content">
+                <div class="limit">
+                    <!-- navigation -->
+                    <div class="navigation">
+                        <div class="shadow"></div>
+                        <div class="step_point complete"> <!-- .complete -->
+                            <span class="ico"></span>
+                            Расчет цены
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="step_point middle complete"> <!-- .complete -->
+                            <span class="ico"></span>
+                            Оформление полиса
+                            <span class="arrow"></span>
+                        </div>
+                        <div class="step_point last active"> <!-- .active -->
+                            <span class="ico"></span>
+                            Доставка и оплата
+                            <span class="arrow"></span>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <!-- green_box -->
+                    <div class="green_box">
+                        <div class="title">
+                            <div class="label">Вы оформили:</div>
+                            {#<div class="add_polis">Добавить полис</div>#}
+                            <div style="clear: both;"></div>
+                        </div>
+                        <div class="white_strip">
+                            Полис ОСАГО №94392 На имя: {{app.session.get('surname')}} {{app.session.get('firstname')}} {{app.session.get('middlename')}} от {{app.session.get('activeFrom')}}
+                            <div class="price">{{app.session.get('price')|number_format(2, ',', ' ')}} грн.</div>
+                        </div>
+                            {% if app.session.get('priceDGO') %}
+                        <div class="white_strip sub">
+                            <span class="arrow"></span>
+                            Добровольная гражданская ответственность
+                            <div class="price">{{app.session.get('priceDGO')|number_format(2, ',', ' ')}} грн.</div>
+                        </div>
+                            {% endif %}
+                            {% if app.session.get('priceNs') %}
+                        <div class="white_strip sub">
+                            <span class="arrow"></span>
+                            Здоровье водителя и пассажиров
+                            <div class="price">{{app.session.get('priceNs')|number_format(2, ',', ' ')}} грн.</div>
+                        </div>
+                            {% endif %}
+                        <div class="white_strip total_sum">
+                            Общая сумма:
+                            <div class="price">{{(app.session.get('price') + app.session.get('priceDGO')+ app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.</div>
+                        </div>
+                    </div>
+                    <!-- begin form -->
+                    <form class="modal_form personal_data" id="payment-form" action="{{path('step3')}}" method="POST">
+                        <!-- person_info -->
+                        <div class="grey_area person_info">
+                            <div class="title">
+                                <div class="label">Доставка:</div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <!-- -->
+                            <div class="text_block">
+                                <div class="text_title">Мы готовы доставить Ваш полис в любую точку Украины.</div>
+                                <p class="bold"><span></span>По Киеву у нас работают курьеры-консультанты, которые доставят Ваш полис в удобное для вас время.</p>
+                                <p class="bold"><span></span>По Украине мы отправим Вам полис с помощью службы “Новая почта” за свой счет.</p>
+                                <p>Стоимость доставки для Вас - <b>БЕСПЛАТНО!</b></p>
+                            </div>
+                            <!-- -->
+                            <div class="line">
+                                <div class="param bold">Адрес:</div>
+                                <div class="adres_text">г. {{ city }}, {{ region }}, {{ app.session.get('registerAddress') }}, {{ app.session.get('registerBuilding') }}</div>
+                                <div class="change for_adres">Изменить</div>
+                            </div>
+                            <!-- -->
+                            <div class="line adres_fields" style="display: none;">
+                                <div class="combo one_column">
+                                    <div class="current">{% if app.session.get('region') %}
+                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif %}</div>
+                                    <div class="arrow"></div>
+                                    <div id="scrollbar2" class="scroll_box">
+                                		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+                                		<div class="viewport">
+                                			 <div class="overview">
+                                				<ul form-input-id="deliveryRegion" id="regionList">
+                                                    {% for region in regions %}
+                                                    <li data-value="{{region.id}}" {% if region.id == app.session.get('region') %}class="active"{% endif %}>{{region.value}}</li>
+        {% endfor %}
+                                                </ul>
+                                			</div>
+                                		</div>
+                                	</div>
+                                    <input type="text" value="{{app.session.get('region')}}" name="deliveryRegion" id="deliveryRegion"/>
+                                </div>
+                                <div class="combo one_column">
+                                    <div class="current">{% if app.session.get('city') %}
+                                        {% for city in cities %} {% if city.id == app.session.get('city')%}{{city.value}}{% endif %}{% endfor %}{% else %}Выбрать город{% endif %}</div>
+                                    <div class="arrow"></div>
+                                    <div id="scrollbar3"  class="scroll_box">
+                                		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+                                		<div class="viewport">
+                                			 <div class="overview">
+                                				<ul form-input-id="deliveryCity" id="cityList">
+                                                    {% if cities %}
+                                                    {% for city in cities %}
+                                                    <li data-value="{{city.id}}" {% if city.id == app.session.get('city') %}class="active"{% endif %}>{{city.value}}</li>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </ul>
+                                			</div>
+                                		</div>
+                                	</div>
+                                    <input type="text" value="{{app.session.get('city')}}" name="deliveryCity" id="deliveryCity"/>
+                                </div>
+                                <div style="clear: both;"></div>
+                                <div class="control_point size4">
+                                    <input type="text" placeholder="Улица" name="deliveryAddress" id="deliveryAddress" value="{{ deliveryAddress }}"/>
+                                    <div class="success ico"></div>
+                                    <div class="error ico"></div>
+                                    <div class="error_text">Текст ошибки</div>
+                                </div>
+                                <div class="control_point size2">
+                                    <input type="text" name="deliveryBuilding" id="deliveryBuilding" placeholder="Дом, корпус, квартира" value="{{ deliveryBuilding }}" />
+                                    <div class="success ico"></div>
+                                    <div class="error ico"></div>
+                                    <div class="error_text">Текст ошибки</div>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <!-- -->
+                            <div class="line">
+                                <div class="param bold">Телефон:</div>
+                                <div class="control_point size3">
+                                    <input type="text" name="phone" id="phone" placeholder="38(...)... .. .." value="{{ app.session.get('phone')}}"/>
+                                    <div class="success ico"></div>
+                                    <div class="error ico"></div>
+                                    <div class="error_text">Текст ошибки</div>
+                                </div>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <!-- -->
+                        </div>
+                        <!-- payment way -->
+                        <div class="grey_area person_info" >
+                            <div class="title">
+                                <div class="label">Выберите способ оплаты:</div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <!-- payment_container -->
+                            <div class="payment_container">
+                                <div class="payment_point{% if app.session.get('payType') == 'cash'%} current{%endif%}">
+                                    <div id="cash" class="ico cash"></div>
+                                    <div class="text"><b>Наличными</b> курьеру</div>
+                                </div>
+                                <div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%}">
+                                    <div id="plastic" class="ico plastic"></div>
+                                    <div class="text"><b>Пластиковая</b> карта</div>
+                                </div>
+                                <div class="payment_point{% if app.session.get('payType') == 'privat_card'%} current{%endif%}">
+                                    <div id="privat_card" class="ico privat_card"></div>
+                                    <div class="text"><b>Карта</b> Приват Банка</div>
+                                </div>
+                                <div class="payment_point{% if app.session.get('payType') == 'terminal' or app.session.get('payType') is null%} current{%endif%}">
+                                    <div id="terminal" class="ico terminal"></div>
+                                    <div class="text"><b>Терминалы</b> оплаты</div>
+                                </div>
+                                <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%}">
+                                    <div id="webmoney" class="ico webmoney"></div>
+                                    <div class="text"><b>Webmoney</b></div>
+                                </div>
+                                <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%}">
+                                    <div id="privat24" class="ico privat24"></div>
+                                    <div class="text"><b>Приват 24</b></div>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                            <input type="hidden" id="payType" name="payType" value="{% if app.session.get('payType') is null %}terminal{% else %}{{app.session.get('payType')}}{% endif %}"/>
+                            <!-- total sum -->
+                            <div class="white_strip total_sum bottom_delim">
+                                Общая сумма:
+                                <div class="price">{{(app.session.get('price') + app.session.get('priceDGO')+ app.session.get('priceNs'))|number_format(2, '.', ' ')}} грн.</div>
+                            </div>
+                            <!-- buttons -->
+                            <div class="pay_now">
+                                <div class="form_green_button success_link">Оплатить сейчас</div>
+                                <div class="form_grey_button error_link">Оплатить позже</div>
+                            </div>
+                            <div style="display: none;" class="pay_later">
+                                <div class="form_green_button">Подтвердить заказ</div>
+                                <div class="form_grey_button">Отложить решение</div>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                        <input type="hidden" id="activity" name="activity" value="{% if app.session.get('activity') is null %}1{% else %}{{app.session.get('activity')}}{% endif %}"/>
+                    </form>
+                    <!-- end form -->
+                </div>
+            <!-- footer-push -->
+            <div class="footer-push"></div>
+        </section>
+
+    </section>
+
+{% endblock %}
+{% block footer_scripts %}
+<script type="text/javascript">
+    function selectCity() {
+        var inputEl = $(this).parents('ul').attr('form-input-id');
+        $('#'+inputEl).val($(this).attr('data-value'));
+        $(this).parents('.your_auto').find('.box_line').removeClass('focus');
+        $(this).parents('.box_line').next('.box_line').addClass('focus');
+    }
+    function loadCities() {
+        if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {
+            var opts = '';
+            for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
+            $('#cityList').html(opts);
+            $(".combo ul li").on('click', comboClick);
+            $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
+            $('#cityList li').on('click', selectCity);
+            //$('#registerCity').removeAttr('disabled');
+        });
+    }
+    $('#region').on('dataavailable', loadCities);
+    $('#regionList li').on('click', selectCity);
+    $('.payment_point').on('click', function (){
+        $('#payType').val($(this).find('.ico').attr('id'));
+        if ($(this).find('.ico').attr('id') == 'cash') {
+            $('.pay_now').hide();
+            $('.pay_later').show();
+        } else {
+            $('.pay_now').show();
+            $('.pay_later').hide();
+        }
+    });
+
+    function checkForm(e) {
+        var errors = {};
+        if ($('#deliveryRegion').val().length == 0) {
+            errors.deliveryRegion = true;
+        } else
+            errors.deliveryRegion = false;
+        if ($('#deliveryCity').val().length == 0) {
+            errors.deliveryCity = true;
+        } else
+            errors.deliveryCity = false;
+        if ($('#deliveryAddress').val().length == 0) {
+            errors.deliveryAddress = true;
+        } else
+            errors.deliveryAddress = false;
+        if ($('#deliveryBuilding').val().length == 0) {
+            errors.deliveryBuilding = true;
+        } else
+            errors.deliveryBuilding = false;
+        if ($('#phone').val().length == 0) {
+            errors.phone = true;
+        } else
+            errors.phone = false;
+        if ($('#payType').val().length == 0) {
+            errors.payType = true;
+        } else
+            errors.payType = false;
+
+        for (v in errors) {
+            if (errors[v] == true) {
+                $('#' + v).parents('.control_point').addClass('error');
+                $('#' + v).parents('.control_point').removeClass('success');
+                e.preventDefault();
+            }
+            else {
+                $('#' + v).parents('.control_point').removeClass('error');
+                $('#' + v).parents('.control_point').addClass('success');
+            }
+        }
+    }
+    $('#payment-form').on('submit', checkForm);
+    $('.pay_now .form_green_button').on('click', function(){
+        $('#activity').val('1');
+        $.ajax($('#payment-form').attr('href'), {
+            data: $('#payment-form').serialize(),
+            type: 'POST',
+        })
+        .done(function(data){
+            alert(JSON.stringify(data));
+        });
+    });
+    $('.form_grey_button').on('click', function(){
+        $('#activity').val('0');
+        $.ajax($('#payment-form').attr('href'), {
+            data: $('#payment-form').serialize(),
+            type: 'POST',
+        })
+        .done(function(data){
+            alert(JSON.stringify(data));
+        });
+    });
+    $('.pay_later .form_green_button').on('click', function(){
+        $('#activity').val('0');
+        $.ajax($('#payment-form').attr('href'), {
+            data: $('#payment-form').serialize(),
+            type: 'POST',
+        })
+        .done(function(data){
+            alert(JSON.stringify(data));
+        });
+    });
+
+    $('.change.for_adres').on('click', function () {
+        $('.adres_fields').show();
+        $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
+        $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
+    });
+</script>
+{% endblock%}
+{# block content %}
 <div class="errors">
 {% for error in errors%}
 {% endfor %}
@@ -47,4 +362,4 @@
         $('#form-container').toggle();
     });
 </script>
-{% endblock %}
+{% endblock #}

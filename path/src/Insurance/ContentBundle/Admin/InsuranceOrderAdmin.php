@@ -14,11 +14,12 @@ class InsuranceOrderAdmin extends Admin {
   {
     $form->with('General')
       ->add('active', null, array('label' => 'Активность', 'required'=>false))
-      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',
-          'label' => 'Статус платежа')))
+      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',
+          'label' => 'Статус заказа')))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
-      ->add('carModel', null, array('label' => 'Модель авто', 'property' => 'brandCar', ))
+      //->add('carBrand', null, array('label' => 'Марка авто', 'property' => 'brandCar', ))
+      ->add('carModel', null, array('label' => 'Модель авто', 'by_reference' => true/*'property' => 'brandCar',*/ ))
       ->add('activeFrom', null, array('label' => 'Активен с', 'years' => range(date('Y')-10, date('Y')+10)))
       ->add('displacement', null, array('label' => 'Объем двигателя'))
       ->add('carAge', null, array('label' => 'Год выпуска автомобиля'))
@@ -56,19 +57,23 @@ class InsuranceOrderAdmin extends Admin {
       ->add('deliveryCity', null, array('label' => 'Город доставки', 'property' => 'cityRegion'))
       ->add('deliveryAddress', null, array('label' => 'Адрес доставки'))
       ->add('deliveryBuilding', 'text', array('label' => 'Дом доставки'))
-      ->add('pdfUrl', null, array('label' => 'Файл договора (PDF)'))      ->end();
+      ->add('pdfUrl', null, array('label' => 'Файл договора (PDF)'))
+       ->end();
+
   }
 
   public function configureListFields(ListMapper $list)
   {
     //$policy = $this->getConfigurationPool()->getContainer()->get('translation');
     $list->addIdentifier('id')
-      ->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),
-        'label' => 'Статус платежа',
+      ->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),
+        'label' => 'Статус заказа',
           'template' => 'InsuranceContentBundle:Helper:enum_field_list.html.twig',
             ))
-      ->add('company', null, array('label' => 'Страховая'))
+      //->add('company', null, array('label' => 'Страховая'))
       ->add('policy', null, array('label' => 'Номер полиса'))
+      ->add('orderDate', null, array('input_type' => 'date', 'format' => 'd.m.Y', 'label' => 'Дата заказа'))
+      ->add('price', null, array('label' => 'Цена'))
       ->add('priceDgo', null, array('label' => 'Цена ДГО'))
       ->add('priceNs', null, array('label' => 'Цена НС'))
       ->add('city', null, array('label' => 'Город'))
@@ -84,28 +89,28 @@ class InsuranceOrderAdmin extends Admin {
   public function configureDatagridFilters(DatagridMapper $filter)
   {
     $filter->add('id')
-      ->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),'label'
-        => 'Статус платежа'))
-      ->add('user', null, array('label' => 'Пользователь'))
-      ->add('company', null, array('label' => 'Страховая'))
-      ->add('city', null, array('label' => 'Город'))
-      ->add('carModel', null, array('label' => 'Модель авто',), null, array('property' => 'value'))
-      ->add('surname', null, array('label' => 'Фамилия'))
-      ->add('firstname', null, array('label' => 'Имя'))
-      ->add('middlename', null, array('label' => 'Отчество'))
-      ->add('phone', null, array('label' => 'Телефон'))
-      ->add('price', null, array('label' => 'Цена'))
-      ->add('priceDgo', null, array('label' => 'Цена ДГО'))
-      ->add('priceNs', null, array('label' => 'Цена НС'))
-      ->add('payStatus', null, array('label' => 'Состояние оплаты'))
-      ->add('orderDate', null, array('label' => 'Дата заказа'))
-      ->add('payDate', null, array('label' => 'Дата оплаты'))
-      ->add('payType', null, array('label' => 'Тип оплаты'));
+        ->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),'label'
+          => 'Статус заказа'))
+        ->add('payStatus', null, array('label' => 'Состояние оплаты'))
+        ->add('payType', null, array('label' => 'Тип оплаты'))
+        ->add('orderDate', 'doctrine_orm_datetime_range', array('input_type' => 'date', 'date_format' => 'yyyy-MM-dd', 'label' => 'Дата заказа', 'format' => 'yMMMMd'))
+        ->add('user', null, array('label' => 'Пользователь'))
+        ->add('company', null, array('label' => 'Страховая'))
+        ->add('city', null, array('label' => 'Город'))
+        ->add('carModel', null, array('label' => 'Модель авто',), null, array('property' => 'value'))
+        ->add('surname', null, array('label' => 'Фамилия'))
+        ->add('firstname', null, array('label' => 'Имя'))
+        ->add('middlename', null, array('label' => 'Отчество'))
+        ->add('phone', null, array('label' => 'Телефон'))
+        ->add('price', null, array('label' => 'Цена'))
+        ->add('priceDgo', null, array('label' => 'Цена ДГО'))
+        ->add('priceNs', null, array('label' => 'Цена НС'))
+        ->add('payDate', null, array('label' => 'Дата оплаты'));
   }
   public function configureShowFields(ShowMapper $filter)
   {
     $filter->add('id')
-      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Оплачен', 'C'=> 'Подтвержден',),'label' => 'Статус',))
+      ->add('status', 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),'label' => 'Статус заказа',))
       ->add('user', null, array('label' => 'Пользователь'))
       ->add('company', null, array('label' => 'Страховая'))
       ->add('city', null, array('label' => 'Город'))

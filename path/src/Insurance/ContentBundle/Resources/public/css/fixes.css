@@ -149,7 +149,6 @@ form.modal_form .control_point input[type="email"] {
     left: -9px;
     top: 15px;
  }
-
 /*------------------------------------------------------------------------------------------- */
 /*-------------------------------------- PERSONAL_INFO FORM --------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -359,3 +358,39 @@ line-height: 28px;
 .passenger_counter .arrow.minus {
       background-position: -361px -481px;
       margin-left: 5px; }
+
+.for_adres a {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
+}
+.total .orange_button a {
+      color: #FFFFFF;
+      font-size: 14px;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 1px rgba(56, 39, 9, 0.5);
+      font-family: "robotoBlack",Arial black,Helvetica,sans-serif;
+  }
+  .auto_info .change a {
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    font-family: Arial,Helvetica,sans-serif;
+  }
+  .login_link a {
+    color: #FFFFFF;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+    text-decoration: none;
+  }
+  .login_link a:hover {
+      color: #FFFFFF;
+  }
+  form.modal_form .control_point.error input {
+    border-color: #e73636;
+  }
+  form.modal_form .control_point.success input {
+    border-color: #79a837;
+  }

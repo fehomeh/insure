@@ -21,9 +21,9 @@ class DefaultController extends Controller
     {
       //$regions = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll();
         //Check for stored calculation and if any redirect to calculator
-        if ($this->getStoredCalculation($this->getRequest())) {
-            return $this->redirect($this->generateUrl('step1'));
-        }
+//        if ($this->getStoredCalculation($this->getRequest())) {
+//            return $this->redirect($this->generateUrl('step1'));
+//        }
         $carBrands = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findAll();
         $feedbackForm = $this->createForm(new FeedbackType());
         $session = $this->getRequest()->getSession();
@@ -248,145 +248,160 @@ class DefaultController extends Controller
      */
     public function formalizationAction(Request $request)
     {
-        $session = $this->getRequest()->getSession();
-        $feedbackForm = $this->createForm(new FeedbackType());
-        if ($request->getMethod() == 'POST') {
-            //init error container
-            $error = array();
-            $activeFrom = $request->request->get('activeFrom');
-            $vinCode = $request->request->get('vinCode');
-            $carNumber = $request->request->get('carNumber');
-            $surname = $request->request->get('surname');
-            $firstname = $request->request->get('firstname');
-            $middlename = $request->request->get('middlename');
-            $documentType = $request->request->get('documentType');
-            $documentSerie = $request->request->get('documentSerie');
-            $documentNumber = $request->request->get('documentNumber');
-            $documentAuthority = $request->request->get('documentAuthority');
-            $documentDate = $request->request->get('documentDate');
-            $phone = $request->request->get('phone');
-            $region = $request->request->get('region');
-            $city = $request->request->get('city');
-            $registerAddress = $request->request->get('registerAddress');
-            $registerBuilding = $request->request->get('registerBuilding');            //Lets make custom validation for form variables
-            if (strlen($activeFrom) === 0) {
-                $error['activeFrom'] = 'Не заполнено поле';
-            } elseif (!preg_match('#[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}#', $activeFrom)) {
-                $error['activeFrom'] = 'Неправильный формат даты';
-            } else {
-                $session->set('activeFrom', $activeFrom);
-            }
+        $securityContext = $this->container->get('security.context');
+        if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
+            $session = $this->getRequest()->getSession();
+            $feedbackForm = $this->createForm(new FeedbackType());
+            if ($request->getMethod() == 'POST') {
+                //init error container
+                $error = array();
+                $activeFrom = $request->request->get('activeFrom');
+                $vinCode = $request->request->get('vinCode');
+                $carNumber = $request->request->get('carNumber');
+                $surname = $request->request->get('surname');
+                $firstname = $request->request->get('firstname');
+                $middlename = $request->request->get('middlename');
+                $documentType = $request->request->get('documentType');
+                $documentSerie = $request->request->get('documentSerie');
+                $documentNumber = $request->request->get('documentNumber');
+                $documentAuthority = $request->request->get('documentAuthority');
+                $documentDate = $request->request->get('documentDate');
+                $phone = $request->request->get('phone');
+                $region = $request->request->get('region');
+                $city = $request->request->get('city');
+                $registerAddress = $request->request->get('registerAddress');
+                $registerBuilding = $request->request->get('registerBuilding');            //Lets make custom validation for form variables
+                $processPersonalData = $request->request->get('processPersonalData');
+                if (strlen($activeFrom) === 0) {
+                    $error['activeFrom'] = 'Не заполнено поле';
+                } elseif (!preg_match('#[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}#', $activeFrom)) {
+                    $error['activeFrom'] = 'Неправильный формат даты';
+                } else {
+                    $session->set('activeFrom', $activeFrom);
+                }
 
-            if (strlen($vinCode) === 0) {
-                $error['vinCode'] = 'Не заполнено поле';
-            } else {
-                $session->set('vinCode', $vinCode);
-            }
+                if (strlen($vinCode) === 0) {
+                    $error['vinCode'] = 'Не заполнено поле';
+                } else {
+                    $session->set('vinCode', $vinCode);
+                }
 
-            if (strlen($carNumber) === 0) {
-                $error['carNumber'] = 'Не заполнено поле';
-            } else {
-                $session->set('carNumber', $carNumber);
-            }
+                if (strlen($carNumber) === 0) {
+                    $error['carNumber'] = 'Не заполнено поле';
+                } else {
+                    $session->set('carNumber', $carNumber);
+                }
 
-            if (strlen($surname) === 0) {
-                $error['surname'] = 'Не заполнено поле';
-            } else {
-                $session->set('surname', $surname);
-            }
+                if (strlen($surname) === 0) {
+                    $error['surname'] = 'Не заполнено поле';
+                } else {
+                    $session->set('surname', $surname);
+                }
 
-            if (strlen($firstname) === 0) {
-                $error['firstname'] = 'Не заполнено поле';
-            } else {
-                $session->set('firstname', $firstname);
-            }
+                if (strlen($firstname) === 0) {
+                    $error['firstname'] = 'Не заполнено поле';
+                } else {
+                    $session->set('firstname', $firstname);
+                }
 
-            if (strlen($middlename) === 0) {
-                $error['middlename'] = 'Не заполнено поле';
-            } else {
-                $session->set('middlename', $middlename);
-            }
+                if (strlen($middlename) === 0) {
+                    $error['middlename'] = 'Не заполнено поле';
+                } else {
+                    $session->set('middlename', $middlename);
+                }
 
-            if (strlen($documentType) === 0) {
-                $error['documentType'] = 'Не заполнено поле';
-            } elseif ($documentType == 'P' && $documentType == 'D') {
-                $error['documentType'] = 'Неверный тип документа';
-            } else {
-                $session->set('documentType', $documentType);
-            }
+                if (strlen($documentType) === 0) {
+                    $error['documentType'] = 'Не заполнено поле';
+                } elseif ($documentType == 'P' && $documentType == 'D') {
+                    $error['documentType'] = 'Неверный тип документа';
+                } else {
+                    $session->set('documentType', $documentType);
+                }
 
-            if (strlen($documentSerie) === 0) {
-                $error['documentSerie'] = 'Не заполнено поле';
-            } else {
-                $session->set('documentSerie', $documentSerie);
-            }
+                if (strlen($documentSerie) === 0) {
+                    $error['documentSerie'] = 'Не заполнено поле';
+                } else {
+                    $session->set('documentSerie', $documentSerie);
+                }
 
-            if (strlen($documentNumber) === 0) {
-                $error['documentNumber'] = 'Не заполнено поле';
-            } else {
-                $session->set('documentNumber', $documentNumber);
-            }
+                if (strlen($documentNumber) === 0) {
+                    $error['documentNumber'] = 'Не заполнено поле';
+                } else {
+                    $session->set('documentNumber', $documentNumber);
+                }
 
-            if (strlen($documentAuthority) === 0) {
-                $error['documentAuthority'] = 'Не заполнено поле';
-            } else {
-                $session->set('documentAuthority', $documentAuthority);
-            }
+                if (strlen($documentAuthority) === 0) {
+                    $error['documentAuthority'] = 'Не заполнено поле';
+                } else {
+                    $session->set('documentAuthority', $documentAuthority);
+                }
 
-            if (strlen($documentDate) === 0) {
-                $error['documentDate'] = 'Не заполнено поле';
-            } elseif (!preg_match('#[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}#', $documentDate)) {
-                $error['documentDate'] = 'Неправильный формат даты';
-            } else {
-                $session->set('documentDate', $documentDate);
-            }
+                if (strlen($documentDate) === 0) {
+                    $error['documentDate'] = 'Не заполнено поле';
+                } elseif (!preg_match('#[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}#', $documentDate)) {
+                    $error['documentDate'] = 'Неправильный формат даты';
+                } else {
+                    $session->set('documentDate', $documentDate);
+                }
 
-            if ($region > 0) {
-                $session->set('phone', $phone);
-            } else {
-                $error['phone'] = 'Не заполнено поле';
-            }
+                if ($region > 0) {
+                    $session->set('phone', $phone);
+                } else {
+                    $error['phone'] = 'Не заполнено поле';
+                }
 
-            if ($region > 0) {
-                $session->set('region', $region);
-            } else {
-                $error['region'] = 'Не заполнено поле';
-            }
+                if ($region > 0) {
+                    $session->set('region', $region);
+                } else {
+                    $error['region'] = 'Не заполнено поле';
+                }
 
-            if ($city > 0) {
-                $session->set('city', $city);
-            } else {
-                $error['city'] = 'Не заполнено поле';
-            }
+                if ($city > 0) {
+                    $session->set('city', $city);
+                } else {
+                    $error['city'] = 'Не заполнено поле';
+                }
 
-            if (strlen($registerAddress) === 0) {
-                $error['registerAddress'] = 'Не заполнено поле';
-            } else {
-                $session->set('registerAddress', $registerAddress);
-            }
+                if (strlen($registerAddress) === 0) {
+                    $error['registerAddress'] = 'Не заполнено поле';
+                } else {
+                    $session->set('registerAddress', $registerAddress);
+                }
 
-            if (strlen($registerBuilding) === 0) {
-                $error['registerBuilding'] = 'Не заполнено поле';
-            } else {
-                $session->set('registerBuilding', $registerBuilding);
+                if (strlen($registerBuilding) === 0) {
+                    $error['registerBuilding'] = 'Не заполнено поле';
+                } else {
+                    $session->set('registerBuilding', $registerBuilding);
+                }
+                if ($processPersonalData == 'Y')
+                if (count($error) == 0) return $this->redirect($this->generateUrl('step3'));
+                else var_dump($error);
             }
-            if (count($error) == 0) return $this->redirect($this->generateUrl('step3'));
-        }
-        $carBrand = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findOneById($session->get('carBrand'));
-        $carModel = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findOneById($session->get('carModel'));
-        if (is_null($carBrand) || is_null($carModel)) {
-            return $this->redirect($this->generateUrl('step1'));
-        }
-        return $this->render('InsuranceContentBundle:Default:step_two.html.twig', array(
-            'carModel' => $carModel->getValue(),
-            'carBrand' => $carBrand->getValue(),
-            'regions' => $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll(),
-            'cities' => (isset($region))?$this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findByRegion($region):null,
-            'errors' => isset($error)?$error:null,
-            'feedback_form' => $feedbackForm->createView(),
-            'callback_form' => $feedbackForm->createView(),
-            )
-        );
+            $carBrand = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findOneById($session->get('carBrand'));
+            $carModel = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findOneById($session->get('carModel'));
+            $usr = $this->get('security.context')->getToken()->getUser();
+            $registerPersons = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findBy(
+                array(
+                    'user' => $usr->getId(),
+                ),
+                array(
+                    'id' => 'desc',
+                ));
+            if (is_null($carBrand) || is_null($carModel)) {
+                return $this->redirect($this->generateUrl('step1'));
+            }
+            return $this->render('InsuranceContentBundle:Default:step_two.html.twig', array(
+                'carModel' => $carModel->getValue(),
+                'carBrand' => $carBrand->getValue(),
+                'regions' => $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll(),
+                'cities' => (isset($region))?$this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findByRegion($region):null,
+                'errors' => isset($error) ? $error : null,
+                'registerPersons' => $registerPersons,
+                'feedback_form' => $feedbackForm->createView(),
+                'callback_form' => $feedbackForm->createView(),
+                )
+            );
+        } else return $this->redirect($this->generateUrl('step1'));
     }
 
 
@@ -407,17 +422,20 @@ class DefaultController extends Controller
             $deliveryAddress = $request->request->get('deliveryAddress');
             $deliveryBuilding = $request->request->get('deliveryBuilding');
             $phone = $request->request->get('phone');
-            $orderButton = $request->request->get('order');
-            if ($deliveryRegion > 0 && $deliveryCity > 0 && strlen($deliveryAddress) > 0 && strlen($deliveryBuilding) && strlen($phone) > 0 && strlen($orderButton) > 0) {
+            $payType = $request->request->get('payType');
+            $activity = $request->request->get('activity');
+            if ($deliveryRegion > 0 && $deliveryCity > 0 && strlen($deliveryAddress) > 0 && strlen($deliveryBuilding) && strlen($phone) > 0 && strlen($payType) > 0 && strlen($payType) > 0 && ($activity === '1' || $activity === '0')) {
                 $session->set('deliveryRegion', $deliveryRegion);
                 $session->set('deliveryCity', $deliveryCity);
                 $session->set('deliveryAddress', $deliveryAddress);
                 $session->set('deliveryBuilding', $deliveryBuilding);
                 $session->set('phone', $phone);
+                $session->set('payType', $payType);
+                $session->set('activity', $activity);
                 $user = $this->getUser();
                 //Here we store all data to database
                 $order = new InsuranceOrder();
-                $order->setActive(1);
+                if ($activity === '1') $order->setActive(1);
                 $order->setStatus('W'); //W - waiting, P  - paid, C - confirmed
                 $order->setPayStatus(0);
                 $order->setOrderDate(new \DateTime('now'));
@@ -516,7 +534,7 @@ class DefaultController extends Controller
 
                 $order->setDeliveryBuilding($session->get('deliveryBuilding'));
 
-                $order->setPayType($orderButton);
+                $order->setPayType($payType);
 //$order->
                 $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneBy(
                     array(
@@ -531,14 +549,27 @@ class DefaultController extends Controller
                     $order->setPolicy($policy);
                 }
                 if (count($errors) == 0) {
+                    try {
                     $em = $this->getDoctrine()->getEntityManager();
-                    $em->persist($order);
-                    $em->flush();
+                    //$em->persist($order);
+                    //$em->flush();
+                    } catch (\Exception $e) {
+                        $errors['message'] = $e->getMessage();
+                    }
                 }
-                switch($orderButton) {
-                    case 'cash':
-                        return $this->redirect($this->generateUrl('success'));
-                        break;
+//                switch($payType) {
+//                    case 'cash':
+//                        return $this->redirect($this->generateUrl('success'));
+//                        break;
+//                }
+                $resp = new Response();
+                $resp->headers->set('Content-Type', 'application/json');
+                if ($activity === '1') {
+                    $resp->setContent(json_encode(array('href' => 'go.to.payment')));
+                    return $resp;
+                } elseif ($activity === '0') {
+                    $resp->setContent(json_encode(array('message' => 'success')));
+                    return $resp;
                 }
             } else $errors['message'] = 'Все поля обязательны к заполнению';
             if (count($errors) > 0) return $this->redirect($this->generateUrl('step3'));

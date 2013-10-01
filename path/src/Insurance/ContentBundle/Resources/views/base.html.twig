@@ -13,11 +13,13 @@
 <link href="{{asset('bundles/insurancecontent/css/fixes.css')}}" rel="stylesheet" type="text/css" />
 <!--[if IE 7]><link href="{{asset('bundles/insurancecontent/css/ie7_style.css')}}" rel="stylesheet" type="text/css" /><![endif]-->
 <!--[if IE 8]><link href="{{asset('bundles/insurancecontent/css/ie8_style.css')}}" rel="stylesheet" type="text/css" /><![endif]-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{asset('bundles/insurancecontent/js/modals.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/insurancecontent/js/jquery.tinyscrollbar.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/insurancecontent/js/styled.js')}}"></script>
 <script type="text/javascript" src="{{asset('bundles/insurancecontent/js/main.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/insurancecontent/js/jquery.ui.datepicker-ru.js')}}"></script>
+<script type="text/javascript" src="{{asset('bundles/insurancecontent/js/jquery-ui-1.10.3.custom.min.js')}}"></script>
 {%block head_scripts%}
 {% endblock %}
 <script type="text/javascript">
@@ -87,7 +89,7 @@
         	<div class="limit">
             	<a href="" class="logo"></a>
                 <div class="center_part">
-                    <span class="phone_ico registration_link"></span>
+                    <span class="phone_ico"></span>
                     <div class="phone_number"><span class="code">(050)</span>345 2415<span class="hours24 pass_link"></span></div>
                     <div class="grey_button call_me call_link"><span></span>Перезвоните мне</div>
                     <div class="grey_button write_in_skype"><span></span>Написать в Skype</div>
@@ -95,7 +97,7 @@
                 </div>
                 <div class="login-area">
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
-                <div>Здравствуйте!{#app.user.firstname#} <a href="{{path('fos_user_security_logout')}}">Выйти</a></div>
+                        {#Здравствуйте {{app.user.firstname}}!#} <div class="personal_office login_link"><span></span><a href="{{path('fos_user_security_logout')}}">Выйти</a></div>
                 {% else %}
                 <div class="personal_office login_link"><span></span>Личный офис</div>
                 {% endif %}
@@ -234,6 +236,7 @@
 {% block footer_scripts %}
 {% endblock %}
     <script type="text/javascript">
+        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
         $('.login_link').on('click', function(e) {
             $.ajax('{{path('fos_user_security_login')}}', {
                 type: 'GET'}).done(function (data){
@@ -275,7 +278,7 @@
                     )
                     .done(function(data){
                         if (typeof data.email !== 'undefined') {
-                            $('.login-area').html('Здравствуйте! '+ '<a href="{{path('fos_user_security_logout')}}">Выйти</a>');
+                            $('.login-area').html('<div class="personal_office login_link"><span></span><a href="{{path('fos_user_security_logout')}}">Выйти</a></div>');
                             $.modal().close();
                             //If we on calculator page than change order button behaviour
                             $('.form_now').unbind('click');
@@ -297,6 +300,7 @@
                 });
             })//End of ajax
         });//End of click
+        {% endif %}
         $('.green_button').on('click', function (){
         var errors = 0;
             $(this).parents('form').find('input').each(function(k, val){
@@ -344,6 +348,8 @@
             }
         });
         Custom.init();
+        //Register button init
+
     </script>
 </body>
 </html>
