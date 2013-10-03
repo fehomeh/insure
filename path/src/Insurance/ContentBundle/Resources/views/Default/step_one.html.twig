@@ -456,20 +456,22 @@ $(function() {
     <script type="text/javascript">
     function selectModel() {
         $('#modelList li').on('click', function() {
-        var inputEl = $(this).parents('ul').attr('form-input-id');
-        $('#'+inputEl).val($(this).attr('data-value'));
-        $(this).addClass('current');
-        $(this).parents('ul').find('li').not('.current, .chg').remove();
-        $('.box_line').removeClass('focus');
-        $(this).parents('.box_line').next('.box_line').addClass('focus');
-        $(this).parents('.box_line').next('.box_line').show();
+            if($('#modelList .current').length == 0 ) {
+                var inputEl = $(this).parents('ul').attr('form-input-id');
+                $('#'+inputEl).val($(this).attr('data-value'));
+                $(this).addClass('current');
+                $(this).parents('ul').find('li').not('.current, .chg').remove();
+                $('.box_line').removeClass('focus');
+                $(this).parents('.box_line').next('.box_line').addClass('focus');
+                $(this).parents('.box_line').next('.box_line').show();
+            }
         });
     }
 
     function selectCity() {
         var inputEl = $(this).parents('ul').attr('form-input-id');
         $('#'+inputEl).val($(this).attr('data-value'));
-        $(this).addClass('current');
+        $(this).addClass('active');
         $('.box_line').removeClass('focus');
         $(this).parents('.box_line').next('.box_line').addClass('focus');
     }
@@ -495,22 +497,24 @@ $(function() {
     }
 
     function selectCarAge() {
-        var inputEl = $(this).parents('ul').attr('form-input-id');
-        $('#'+inputEl).val($(this).attr('data-value'));
-        $(this).parents('ul').find('li').removeClass('current');
-        $(this).addClass('current');
-        $('.box_line').removeClass('focus');
-        $(this).parents('.box_line').next('.box_line').addClass('focus');
-        $(this).parents('.box_line').nextAll('.box_line').show();
-        var date = new Date();
-        var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
-        if (discount > 25) discount = 25;
-        if (discount > 0)
-            $('.discount span').text('-' + discount + '%');
-        else
-            $('.discount span').text(discount + '%');
-        //if (discount > 0) $('.discount').show();
-        //    else $('.discount').hide();
+        if (!$(this).hasClass('current')) {
+            var inputEl = $(this).parents('ul').attr('form-input-id');
+            $('#'+inputEl).val($(this).attr('data-value'));
+            $(this).parents('ul').find('li').removeClass('current');
+            $(this).addClass('current');
+            $('.box_line').removeClass('focus');
+            $(this).parents('.box_line').next('.box_line').addClass('focus');
+            $(this).parents('.box_line').nextAll('.box_line').show();
+            var date = new Date();
+            var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
+            if (discount > 25) discount = 25;
+            if (discount > 0)
+                $('.discount span').text('-' + discount + '%');
+            else
+                $('.discount span').text(discount + '%');
+            //if (discount > 0) $('.discount').show();
+            //    else $('.discount').hide();
+        }
     }
 
     function loadCities() {
@@ -575,6 +579,7 @@ $(function() {
                     $('.calc .discount').show();
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
                 } else {
+                    $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
                     $('.calc .discount').addClass('hidden');
                     $('.calc .discount').hide();
                 }
@@ -691,19 +696,23 @@ $(function() {
         $('#carBrand').parents('.combo').find('.current').text('Выбрать марку');
         $('#scrollbar1').find('li.active').removeClass('active');
         $('#hCarModel').val(null);
+        $('.box_line.model').hide();
         $('#modelList').html('<li class="chg"><a class="change_link">изменить</a></li>');
         $('#carAge').val(null);
         $('.discount').hide();
         $('#carAgeList').find('.current').removeClass('current');
+        $('.box_line.year').hide();
         $('#hDisplacement').val('1.7');
         $('#slider1').slider('value', 1);
+        $('.box_line.volume').hide();
         $('#registerRegion').val(null);
         $('.place .combo .current').html('Выбрать область');
         $('#scrollbar2').find('.active').removeClass('active');
         $('#registerCity').val(null);
         $('.town .combo .current').html('Выбрать город');
         $('#scrollbar3').find('ul').html('');
-        $('#insuranceTerm').val(12);
+        $('#insuranceTerm').val(null);
+        $('.box_line.place').hide();
         $('.term .combo .current').html('1 год');
         $('#scrollbar4').find('li[data-value="12"]').addClass('active');
         $('#taxiUse').removeAttr('checked');
