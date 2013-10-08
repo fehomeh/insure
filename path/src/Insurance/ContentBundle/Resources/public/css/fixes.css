@@ -21,15 +21,15 @@ form.modal_form .control_point input[type="email"] {
     height:33px;
     line-height:33px;
     padding:0;
-    text-transform: uppercase;
 }
-.login-area a{
-    text-decoration: underline;
-}
-.login-area a:hover {
-    color: #FFA600;
-    text-decoration: none;
-}
+
+  header .personal_office a {
+   font-size: 11px;
+    color: white;
+	text-transform: uppercase;
+    font-family: Arial black, Helvetica, sans-serif;
+	}
+
 .calculator_box .count_down_container .counter div .tdigit {
     color: #FFFFFF;
     font-family: "roboroBlack",Arial black,Helvetica,sans-serif;
@@ -103,7 +103,29 @@ form.modal_form .control_point input[type="email"] {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
 
-
+form.personal_data .control_point .error_text_box_quest {
+      border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -khtml-border-radius: 3px;
+      padding: 0 4px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      color: white;
+      position: absolute;
+      top: 33px;
+      right: 0;
+      background-color: #e73636;
+      z-index: 3;
+      display: none; }
+      form.personal_data .control_point .error_text_box_quest:before {
+        content: "";
+        border-bottom: 8px solid #e73636;
+        border-left: 8px solid rgba(0, 0, 0, 0);
+        border-right: 8px solid rgba(0, 0, 0, 0);
+        position: absolute;
+        top: -8px;
+        right: 10px; }
 /*------------------------------------------------------------------------------------------- */
 /*---------------------------------------- TOTAL -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -131,23 +153,25 @@ form.modal_form .control_point input[type="email"] {
 }
 
 .fixed_pop_up {
-  bottom: auto;
   font-size: 12px;
   font-weight: 700;
-   left: 680px;
-   background-color: #fceacc;
+  left: 680px;
+  background-color: #fceacc;
   }
+
 .fixed_pop_up:before {
     content: "";
     position: absolute;
     left: -10px;
-    top: 15px;
+top:50%;
+margin-top: -10px;
   }
   .fixed_pop_up:after {
     content: "";
     position: absolute;
     left: -9px;
-    top: 15px;
+top:50%;
+margin-top: -10px;
  }
 /*------------------------------------------------------------------------------------------- */
 /*-------------------------------------- PERSONAL_INFO FORM --------------------------------- */
@@ -235,10 +259,14 @@ line-height: 28px;
 .before_calc {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 17px;
-  border: 1px dotted black;
+  background-color: #fff;
   padding: 20px;
   text-align: center;
   display:none;
+  border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -khtml-border-radius: 6px;
 }
 
 .before_calc.show {
@@ -310,9 +338,17 @@ line-height: 28px;
     right: 5px;
     }
 
-.box_line .combo {
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset; }
 
+
+  .box_line.model {
+    padding-right: 95px; 
+	}
+	
+.box_line .combo {
+    margin-top:5px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset; 
+	} 
+	
 .slider_container .description span {
       font-weight: normal;}
 
@@ -328,6 +364,7 @@ line-height: 28px;
     width: 31%; }
     .volume .description span.first, .volume .description span.last {
       width: 19%; }
+
 
 
 	.recomend_box .box_line .description span {

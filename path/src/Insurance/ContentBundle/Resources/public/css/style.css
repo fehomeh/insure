@@ -528,7 +528,6 @@ footer {
       text-transform: uppercase;
       text-align: center;
       line-height: 50px;
-      padding-left: 15px;
       position: relative;
       cursor: pointer;
       font-size: 20px;
@@ -541,6 +540,17 @@ footer {
       background-color: transparent; }
       .calculator_box .calculator .calculate:hover {
         background-position: 0 -196px; }
+      .calculator_box .calculator .calculate span {
+        width: 26px;
+        height: 28px;
+        display: inline-block;
+        position: relative;
+        top: 7px;
+        margin-right: 6px;
+        background-image: url(../images/sprite.png);
+        background-position: -112px -464px;
+        background-repeat: no-repeat;
+        background-color: transparent; }
 
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- COMBO --------------------------------------------- */
@@ -744,7 +754,7 @@ footer {
 .econom_box {
   position: relative;
   height: 96px;
-  padding: 0 48px;
+  padding: 0 47px;
   margin-bottom: 30px; }
   .econom_box .shadow {
     position: absolute;
@@ -1222,7 +1232,7 @@ form.modal_form {
       border-color: #e73636; }
     form.modal_form .control_point.error .ico.error {
       display: block; }
-    form.modal_form .control_point.error .error_text {
+    form.modal_form .control_point.error .error_text, form.modal_form .control_point.error .error_text_box {
       display: block; }
     form.modal_form .control_point.radio_control label {
       display: inline-block; }
@@ -1634,7 +1644,6 @@ form.modal_form {
 .fixed_pop_up {
   position: absolute;
   z-index: 3;
-  bottom: -44px;
   left: 655px;
   width: 240px;
   border-radius: 6px;
@@ -1870,6 +1879,29 @@ form.personal_data {
       -moz-box-shadow: 0 4px 7px rgba(0, 0, 0, 0.51), 0 1px 1px rgba(0, 0, 0, 0.13) inset;
       -webkit-box-shadow: 0 4px 7px rgba(0, 0, 0, 0.51), 0 1px 1px rgba(0, 0, 0, 0.13) inset;
       box-shadow: 0 4px 7px rgba(0, 0, 0, 0.51), 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
+    form.personal_data .control_point .error_text_box {
+      border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -khtml-border-radius: 3px;
+      padding: 0 4px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      color: white;
+      position: absolute;
+      top: 43px;
+      right: 0;
+      background-color: #e73636;
+      z-index: 3;
+      display: none; }
+      form.personal_data .control_point .error_text_box:before {
+        content: "";
+        border-bottom: 8px solid #e73636;
+        border-left: 8px solid rgba(0, 0, 0, 0);
+        border-right: 8px solid rgba(0, 0, 0, 0);
+        position: absolute;
+        top: -8px;
+        right: 10px; }
   form.personal_data .combo.one_column ul li {
     display: block;
     width: 100%;
