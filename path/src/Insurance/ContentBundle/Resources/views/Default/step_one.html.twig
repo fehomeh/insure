@@ -505,11 +505,11 @@ $(function() {
             $('#'+inputEl).val($(this).attr('data-value'));
             $(this).parents('ul').find('li').removeClass('current');
             $(this).addClass('current');
-            $('.box_line').removeClass('focus');
-            $(this).parents('.box_line').next('.box_line').addClass('focus');
-            $(this).parents('.box_line').nextAll('.box_line').show();
             var date = new Date();
             if (typeof $(this).attr('data-value') !== 'undefined') {
+                $('.box_line').removeClass('focus');
+                $(this).parents('.box_line').next('.box_line').addClass('focus');
+                $(this).parents('.box_line').nextAll('.box_line').show();
                 var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
                 if (discount > 25) discount = 25;
                 if ($('#insuranceTerm').val() <=7) discount = 0;
