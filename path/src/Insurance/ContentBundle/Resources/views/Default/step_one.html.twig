@@ -167,23 +167,23 @@ $(function() {
                                             {% endif %}
                                         {% endfor %}
                                     {% endif %}
-									<li class="chg"><a class="change_link">изменить</a></li>
+									<a class="change_link">изменить</a>
                                 </ul>
                                 <div style="clear: both;"></div>
 <input name="hCarModel" id="hCarModel" type="hidden" value="{% if (carModel)%}{{carModel}}{% endif %}" />
                             </div>
                             <!-- -->
-                            <div class="box_line year"{%if (app.session.get('carAge')) is null %} style="display:none;"{% endif %}>
+                            <div class="box_line year{%if (app.session.get('carAge')) or app.session.get('carModel') %} focus{% endif %}"{%if (app.session.get('carAge')) is null and app.session.get('carModel') is null %} style="display:none;"{% endif %}>
                                 <div class="fixed_pop_up">
                                     Выберите год выпуска автомобиля
                                 </div>
                                 <div class="param_name">Год выпуска:</div>
                                 <ul form-input-id="carAge" class="list" id="carAgeList">
                                     {% for year in range (carAgeFrom,carAgeTo)|reverse %}
-                                    {% if year == carAgeTo -10 %}
+                                    {% if year == carAgeTo -14 %}
                                     <li class="last_visible">{{year}} и старше</li>
                                     <li class="hidden" data-value="{{year}}" {% if year == app.session.get('carAge') %}class="current"{% endif %}>{{year}}</li>
-                                    {% elseif year < carAgeTo - 10%}
+                                    {% elseif year < carAgeTo - 14%}
                                     <li class="hidden" data-value="{{year}}" {% if year == app.session.get('carAge') %}class="current"{% endif %}>{{year}}</li>
                                     {% else %}
                                         <li data-value="{{year}}" {% if year == app.session.get('carAge') %}class="current"{% endif %}>{{year}}</li>
@@ -480,7 +480,7 @@ $(function() {
         if ($('#carBrand').val()>0) $.get('{{path('get_car_models')}}', {brand_id: $('#carBrand').val()}).done(function (data) {
                 var opts = '';
                 for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
-                opts += '<li class="chg"><a class="change_link">изменить</a></li>';
+                opts += '<a class="change_link">изменить</a>';
                 $('#modelList').html(opts);
                 //Reinit plugins, events, etc cause of ajax load
                 $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
@@ -492,7 +492,7 @@ $(function() {
                 $('#modelList').parents('.box_line').show();
             });
         else {
-            $('#carModel').html('<li class="chg"><a class="change_link">изменить</a></li>');
+            $('#carModel').html('<a class="change_link">изменить</a>');
         }
     }
 
@@ -506,14 +506,19 @@ $(function() {
             $(this).parents('.box_line').next('.box_line').addClass('focus');
             $(this).parents('.box_line').nextAll('.box_line').show();
             var date = new Date();
-            var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
-            if (discount > 25) discount = 25;
-            if (discount > 0)
-                $('.discount span').text('-' + discount + '%');
-            else
-                $('.discount span').text(discount + '%');
-            //if (discount > 0) $('.discount').show();
-            //    else $('.discount').hide();
+            if (typeof $(this).attr('data-value') !== 'undefined') {
+                var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
+                if (discount > 25) discount = 25;
+                if ($('#insuranceTerm').val() <=7) discount = 0;
+                if (discount > 0)
+                    $('.discount span').text('-' + discount + '%');
+                else
+                    $('.discount span').text(parseInt(discount) + '%');
+                //if (discount > 0) $('.discount').show();
+                //    else $('.discount').hide();
+                if ($(this).parents('.box_line').find('.discount').is(':hidden'))
+                    $(this).parents('.box_line').find('.discount').show();
+            }
         }
     }
 
@@ -532,7 +537,7 @@ $(function() {
     function validateCommon() {
         if ($('#carBrand').val() > 0 &&
             $('#hCarModel').val() >0 &&
-            //$('#carAge').val() < {{carAgeTo}} &&
+            $('#carAge').val() > 0 &&
             //$('#carAge').val() > {{carAgeFrom}} &&
             $('#carAgeList li.current').length == 1 &&
             $('#hDisplacement').val() > 0 &&
@@ -562,11 +567,11 @@ $(function() {
         ).done(function(data) {
             window.commonPrice = data.price;
             $('.before_calc').removeClass('show');
-            $('.calc .price.common').text(String(data.price).replace('.', ','));
+            $('.calc .price.common').text(String(Number(data.price).toFixed(2)).replace('.', ','));
             $.ajax('{{ url('get_discount') }}', {
             type: 'POST',
             dataType: 'JSON',
-            data: { carAge: $('#carAge').val() }
+            data: { carAge: $('#carAge').val(), insuranceTerm: $('#insuranceTerm').val() }
             }).done(function (data) {
                 window.discountSum = (1 - data.discount)*commonPrice;
                 var pD = 0;
@@ -582,6 +587,7 @@ $(function() {
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
                     $('.calc .discount').addClass('hidden');
                     $('.calc .discount').hide();
+                    $('.discount span').text(parseInt(window.discountSum) + '%');
                 }
                 $('.calc').addClass('show');
             });
@@ -620,7 +626,7 @@ $(function() {
                     var pN = 0;
                     if (window.commonPrice) cP = window.commonPrice;
                     if (window.discountSum) dS = window.discountSum;
-                    if (window.discountSum) pN = window.priceNs;
+                    if (window.priceNs) pN = window.priceNs;
                     $('.calc .dgo').text(String((data.priceDgo.toFixed(2))).replace('.', ','));
                     $('.calc .dgo').parents('.white_box').removeClass('hidden');
                     $('.itog').text(String(((cP - dS) + data.priceDgo + pN).toFixed(2)).replace('.', ',') + ' грн.');
@@ -629,9 +635,11 @@ $(function() {
     }
 
     function removeDGO() {
-        if ($('#respons').is(':checked')) $('#respons').trigger('click');
-        $('.calc .dgo').text('');
-        $('.calc .dgo').parents('.white_box').addClass('hidden');
+        //if ($('#respons').is(':checked')) $('#respons').trigger('click');
+        if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
+        $('.price.dgo').text('');
+        $('.price.dgo').parents('.white_box').addClass('hidden');
+        $('.box_line.responsibility').removeClass('focus');
         var pN = 0;
         if (window.priceNs) pN = window.priceNs;
         $('.itog').text(((window.commonPrice - window.discountSum) + pN).toFixed(2) + ' грн.');
@@ -674,9 +682,11 @@ $(function() {
     }
 
     function removeNS() {
-        if ($('#passenger').is(':checked')) $('#passenger').trigger('click');
-        $('.calc .ns').text('');
-        $('.calc .ns').parents('.white_box').addClass('hidden');
+        //if ($('#passenger').is(':checked')) $('#passenger').trigger('click');
+        if ($('#passenger').is(':checked')) $('#passenger').removeAttr('checked');
+        $('.price.ns').text('');
+        $('.box_line.passengers').removeClass('focus');
+        $('.price.ns').parents('.white_box').addClass('hidden');
         var pD = 0;
         if (window.priceDgo) pD = window.priceDgo;
         $('.itog').text(((window.commonPrice - window.discountSum) + pD).toFixed(2) + ' грн.');
@@ -697,9 +707,9 @@ $(function() {
         $('#scrollbar1').find('li.active').removeClass('active');
         $('#hCarModel').val(null);
         $('.box_line.model').hide();
-        $('#modelList').html('<li class="chg"><a class="change_link">изменить</a></li>');
+        $('#modelList').html('<a class="change_link">изменить</a>');
         $('#carAge').val(null);
-        $('.discount').hide();
+        $('.box_line .discount').hide();
         $('#carAgeList').find('.current').removeClass('current');
         $('.box_line.year').hide();
         $('#hDisplacement').val('1.7');
@@ -711,7 +721,7 @@ $(function() {
         $('#registerCity').val(null);
         $('.town .combo .current').html('Выбрать город');
         $('#scrollbar3').find('ul').html('');
-        $('#insuranceTerm').val(null);
+        $('#insuranceTerm').val(12);
         $('.box_line.place').hide();
         $('.term .combo .current').html('1 год');
         $('#scrollbar4').find('li[data-value="12"]').addClass('active');
@@ -720,15 +730,13 @@ $(function() {
         $('#respons').removeAttr('checked');
         $('.responsibility .disabled_shadow').addClass('show');
         $('#hDGOSum').val(100000);
-        $('.price.dgo').parents('.white_box').hide();
         $('.price.dgo').text('');
         $('#slider2').slider('value', 1);
         $('#passenger').removeAttr('checked');
         $('.passenger_line .disabled_shadow').addClass('show');
         $('#passengersCount').val(0);
         $('#slider2').slider('value', 1);
-        $('#hNSSum').val(5000);
-        $('.price.ns').parents('.white_box').hide();
+        $('#hNSSum').val(10000);
         $('.price.ns').text('');
         window.commonPrice = null;
         window.discountSum = null;
@@ -755,36 +763,23 @@ $(function() {
         }
     );
     //!!!!!!!!!!!!!!!!!!Validate data and process prices
-    $('.box_line, a.ui-slider-handle').on('click', function() {
-        if ($(this).parents('.your_auto').length == 1 && validateCommon()) {
-            calculateCommon();
-        }//End of common validation
-
-        if ($(this).parents('.options').length == 1 && validateDGO()) {
-            calculateDGO();
-        }
-
-        if ($(this).parents('.options').length == 1 && validateNS()) {
-            calculateNS();
-        }
-    });
     $(document).ready(function(){
         //FIRST OF ALL CHECK HASH AND if #clear exists clear all calculations
         if(window.location.hash == '#clear') clearForm();
     //handle checkboxes events to add/remove additional insurance
-    $('#respons').change(function(){
+    $('#respons').on('click', function(e){
         if ($(this).is(':checked')) {
             $(this).parents('.responsibility').find('.disabled_shadow').removeClass('show');
             $('.your_auto').find('.box_line').removeClass('focus');
             $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
             $(this).parents('.box_line').addClass('focus');
-        }
-        else {
-            $(this).parents('.responsibility').find('.disabled_shadow').addClass('show');
-            $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
+
+        } else {
+            e.stopPropagation();
+            removeDGO();
         }
     });
-    $('#passenger').change(function(){
+    $('#passenger').on('click', function(e){
         if ($(this).is(':checked')) {
             $(this).parents('.passengers').find('.disabled_shadow').removeClass('show');
             $('.your_auto').find('.box_line').removeClass('focus');
@@ -792,8 +787,8 @@ $(function() {
             $(this).parents('.box_line').addClass('focus');
         }
         else {
-            $(this).parents('.passengers').find('.disabled_shadow').addClass('show');
-            $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
+            e.stopPropagation();
+            removeNS();
         }
     });
     $(":input").attr('autocomplete', 'off');
@@ -806,8 +801,7 @@ $(function() {
             $(this).parents('.box_line').addClass('focus');
         }
         else {
-            $('#respons').parents('.responsibility').find('.disabled_shadow').addClass('show');
-            $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
+            removeDGO();
         }
     });
     $('#inputpassenger').on('click', function(){
@@ -818,8 +812,7 @@ $(function() {
             $(this).parents('.box_line').addClass('focus');
         }
         else {
-            $('#passenger').parents('.passengers').find('.disabled_shadow').addClass('show');
-            $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
+            removeNS();
         }
     });
     //Handle remove additional insurance events
@@ -830,6 +823,21 @@ $(function() {
     $('.remove_ns').on('click', function (){
         removeNS();
     });
+    //Validate data and process values if any
+        $('.box_line').on('click', function() {
+            if (($(this).parents('.your_auto').length == 1 || $(this).hasClass('term')) && validateCommon()) {
+                calculateCommon();
+            }//End of common validation
+
+            if ($(this).parents('.options').length == 1 && validateDGO()) {
+               calculateDGO();
+            }
+
+            if ($(this).parents('.options').length == 1 && validateNS()) {
+                calculateNS();
+            }
+        });
+
     {# If user authenticated already than process calculated form otherwhise show register form#}
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
         $('.form_now').on('click', function(){

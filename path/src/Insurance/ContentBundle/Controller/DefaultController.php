@@ -198,10 +198,13 @@ class DefaultController extends Controller
             }
             $calculator->setCompany(static::DEFAULT_COMPANY_ID)
                 ->setRateType('base');
-            $discountObj = $calculator->getRate(date('Y') - $carAge, 'year');
-            if ($discountObj)
-                $discount = $discountObj->getValue();
-            else
+            if ($insuranceTerm > 7) {
+                $discountObj = $calculator->getRate(date('Y') - $carAge, 'year');
+                if ($discountObj)
+                    $discount = $discountObj->getValue();
+                else
+                    $discount = 1;
+            } else
                 $discount = 1;
             $session->set('discount', $discount);
             $session->set('price', $calculator->calculateCommon(array(
@@ -644,13 +647,17 @@ class DefaultController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             $carAge = $request->request->get('carAge');
-            $calculator = $this->get('insurance.service.calculator');
-            $calculator->setCompany(static::DEFAULT_COMPANY_ID)
-                ->setRateType('base');
-            $discount = $calculator->getRate(date('Y') - $carAge, 'year');
-            if ($discount !== null) {
-                $respString = json_encode(array('discount' => $discount->getValue()));
-            } else $respString = json_encode(array('discount' => 0));
+            $insuranceTerm = $request->request->get('insuranceTerm', 0);
+            if ($insuranceTerm > 7) {
+                $calculator = $this->get('insurance.service.calculator');
+                $calculator->setCompany(static::DEFAULT_COMPANY_ID)
+                    ->setRateType('base');
+                $discount = $calculator->getRate(date('Y') - $carAge, 'year');
+                if ($discount !== null) {
+                    $respString = json_encode(array('discount' => $discount->getValue()));
+                } else $respString = json_encode(array('discount' => 1));
+            } else
+                $respString = json_encode(array('discount' => 1));
             $response = new Response($respString);
             $response->headers->set('Content-Type', 'application/json');
             return $response;
