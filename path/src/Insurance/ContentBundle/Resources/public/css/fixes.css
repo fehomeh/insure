@@ -341,14 +341,14 @@ line-height: 28px;
 
 
   .box_line.model {
-    padding-right: 95px; 
+    padding-right: 95px;
 	}
-	
+
 .box_line .combo {
     margin-top:5px;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset; 
-	} 
-	
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset;
+	}
+
 .slider_container .description span {
       font-weight: normal;}
 
@@ -431,3 +431,6 @@ line-height: 28px;
   form.modal_form .control_point.success input {
     border-color: #79a837;
   }
+  form.modal_form .control_point.error .error_text_box_quest, form.modal_form .control_point.error .error_text_box {
+    display: block;
+}

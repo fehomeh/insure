@@ -18,7 +18,7 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hDisplacement').val(displacement[ui.value]);
-        $(this).parents('.box_line').trigger('click');
+        //$(this).parents('.box_line').trigger('click');
         $(this).parents('.box_line').removeClass('focus');
         $(this).parents('.box_line').next('.box_line').addClass('focus');
       }
@@ -41,7 +41,7 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hDGOSum').val(dgoValues[ui.value]);
-        $(this).parents('.box_line').trigger('click');
+        //$(this).parents('.box_line').trigger('click');
         $(this).parents('.box_line').removeClass('focus');
         $(this).parents('.box_line').next('.box_line').addClass('focus');
       }
@@ -64,7 +64,7 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hNSSum').val(nsValues[ui.value]);
-        $(this).parents('.box_line').trigger('click');
+        //$(this).parents('.box_line').trigger('click');
         $(this).parents('.box_line').removeClass('focus');
         $(this).parents('.box_line').next('.box_line').addClass('focus');
       }
@@ -576,13 +576,13 @@ $(function() {
             dataType: 'JSON',
             data: { carAge: $('#carAge').val(), insuranceTerm: $('#insuranceTerm').val() }
             }).done(function (data) {
-                window.discountSum = (1 - data.discount)*commonPrice;
+                window.discountSum = ((1 - data.discount)*commonPrice).toFixed(2);
                 var pD = 0;
                 var pN = 0;
                 if (window.priceDgo) pD = window.priceDgo;
                 if (window.priceNs) pN = window.priceNs;
                 if (data.discount > 0 && data.discount < 1) {
-                    $('.calc .discount .discount').text('- ' + (String(discountSum.toFixed(2)).replace('.', ',')) + '');
+                    $('.calc .discount .discount').text('- ' + (String(Number(discountSum).toFixed(2)).replace('.', ',')) + '');
                     $('.calc .discount').removeClass('hidden');
                     $('.calc .discount').show();
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
@@ -602,7 +602,8 @@ $(function() {
             $('#respons').is(':checked') &&
             $('#hDisplacement').val() > 0 &&
             $('#insuranceTerm').val() > 0 &&
-            $('#hDGOSum').val() > 0
+            $('#hDGOSum').val() > 0 &&
+            window.calcDGO == true
         )
             return true;
         else
@@ -643,6 +644,7 @@ $(function() {
         $('.price.dgo').text('');
         $('.price.dgo').parents('.white_box').addClass('hidden');
         $('.box_line.responsibility').removeClass('focus');
+        $('.responsibility').find('.disabled_shadow').addClass('show');
         var pN = 0;
         if (window.priceNs) pN = window.priceNs;
         $('.itog').text(((window.commonPrice - window.discountSum) + pN).toFixed(2) + ' грн.');
@@ -652,7 +654,8 @@ $(function() {
     function validateNS() {
         if ($('#passenger').is(':checked') &&
             $('#hNSSum').val() > 0 &&
-            $('#passengersCount').val() >= 0
+            $('#passengersCount').val() >= 0 &&
+            window.calcNS == true
         )
             return true;
         else
@@ -690,9 +693,10 @@ $(function() {
         $('.price.ns').text('');
         $('.box_line.passengers').removeClass('focus');
         $('.price.ns').parents('.white_box').addClass('hidden');
+        $('.passengers').find('.disabled_shadow').addClass('show');
         var pD = 0;
         if (window.priceDgo) pD = window.priceDgo;
-        $('.itog').text(((window.commonPrice - window.discountSum) + pD).toFixed(2) + ' грн.');
+        $('.itog').text(((window.commonPrice - window.discountSum.toFixed(2)) + pD).toFixed(2) + ' грн.');
         window.priceNs = null;
     }
 
@@ -747,6 +751,7 @@ $(function() {
         window.priceNs = null;
         $('#taxiUseNot').trigger('click');
         $('#brandList').parents('.combo').find('.arrow').trigger('click');
+        $.ajax('{{path('clear_calculation')}}', { type: 'POST' });
     }
 {% if carBrand is null %}
     $(document).ready(function () {
@@ -776,27 +781,32 @@ $(function() {
             $('.your_auto').find('.box_line').removeClass('focus');
             $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
             $(this).parents('.box_line').addClass('focus');
-
+            window.calcDGO = true;
         } else {
-            e.stopPropagation();
             removeDGO();
         }
     });
+    $('#respons').next('label').on('click', function (e) {
+        if ($(this).parent().find('#respons').is(':checked')) window.calcDGO = false
+    });
     $('#passenger').on('click', function(e){
         if ($(this).is(':checked')) {
+            window.calcNS = true;
             $(this).parents('.passengers').find('.disabled_shadow').removeClass('show');
             $('.your_auto').find('.box_line').removeClass('focus');
             $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
             $(this).parents('.box_line').addClass('focus');
         }
         else {
-            e.stopPropagation();
             removeNS();
         }
     });
+    $('#passenger').next('label').on('click', function (e) {
+        if ($(this).parent().find('#passenger').is(':checked')) window.calcNS = false
+    })
     $(":input").attr('autocomplete', 'off');
     //Accident checkbox handling
-    $('#inputrespons').on('click', function(){
+    $('#inputrespons').on('click', function(e){
         if ($('#respons').is(':checked')) {
             $('#respons').parents('.responsibility').find('.disabled_shadow').removeClass('show');
             $('.your_auto').find('.box_line').removeClass('focus');

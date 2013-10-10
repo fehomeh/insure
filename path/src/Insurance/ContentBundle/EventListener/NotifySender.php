@@ -70,13 +70,13 @@ class NotifySender
           //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
           ;
           $this->sc->get('mailer')->send($message);
-      } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
-        $to = $entity->getUser()->getEmail();
-          $message = \Swift_Message::newInstance()
-              ->setSubject(strtoupper($siteDomain) . 'Оплата за Ваш заказ получена!')
-              ->setFrom($from)
-              ->setTo($to)
-              ->setBody(
+        } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
+            $to = $entity->getUser()->getEmail();
+            $message = \Swift_Message::newInstance()
+                ->setSubject(strtoupper($siteDomain) . 'Оплата за Ваш заказ получена!')
+                ->setFrom($from)
+                ->setTo($to)
+                ->setBody(
                     $this->sc->get('templating')->render(
                         'InsuranceContentBundle:Notifications:payedOrderNotification.html.twig',
                         array(
@@ -92,6 +92,26 @@ class NotifySender
           //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
           ;
           $this->sc->get('mailer')->send($message);
+        } elseif ($entity->getActive() == 0 && strlen($entity->getHash()) == 20) {
+            //Send notification to user that he has stored order without confirmation
+            $to = $entity->getUser()->getEmail();
+            $message = \Swift_Message::newInstance()
+                ->setSubject(strtoupper($siteDomain) . 'Вы отложили решение по покупке полиса.')
+                ->setFrom($from)
+                ->setTo($to)
+                ->setBody(
+                    $this->sc->get('templating')->render(
+                        'InsuranceContentBundle:Notifications:delayedOrderNotification.html.twig',
+                        array(
+                        'order' => $entity,
+                        'siteName' => $siteName,
+                        'siteDomain' => $siteDomain,
+                        'contactEmail' => $contactEmail,
+                        'contactPhone' => $contactPhone,
+                        )
+                ),
+                'text/html'
+          );
         }
       $to = $this->sc->getParameter('admin.emails');
       $messageToAdmin = \Swift_Message::newInstance()

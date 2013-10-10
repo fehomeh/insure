@@ -32,7 +32,7 @@
                             <div style="clear: both;"></div>
                         </div>
                         <div class="white_strip">
-                            Полис ОСАГО №94392 На имя: {{app.session.get('surname')}} {{app.session.get('firstname')}} {{app.session.get('middlename')}} от {{app.session.get('activeFrom')}}
+                            Полис ОСАГО № {{policy.serie}} {{policy.value}} На имя: {{app.session.get('surname')}} {{app.session.get('firstname')}} {{app.session.get('middlename')}} от {{app.session.get('activeFrom')}}
                             <div class="price">{{app.session.get('price')|number_format(2, ',', ' ')}} грн.</div>
                         </div>
                             {% if app.session.get('priceDGO') %}
@@ -181,14 +181,14 @@
                             <!-- total sum -->
                             <div class="white_strip total_sum bottom_delim">
                                 Общая сумма:
-                                <div class="price">{{(app.session.get('price') + app.session.get('priceDGO')+ app.session.get('priceNs'))|number_format(2, '.', ' ')}} грн.</div>
+                                <div class="price">{{(app.session.get('price') + app.session.get('priceDGO')+ app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.</div>
                             </div>
                             <!-- buttons -->
-                            <div class="pay_now">
+                            <div class="pay_now"{% if app.session.get('payType') == 'terminal' or app.session.get('payType') == 'cash' or app.session.get('payType') is null %} style="display: none;"{% endif %}>
                                 <div class="form_green_button success_link">Оплатить сейчас</div>
                                 <div class="form_grey_button error_link">Оплатить позже</div>
                             </div>
-                            <div style="display: none;" class="pay_later">
+                            <div class="pay_later"{% if app.session.get('payType') != 'terminal' and app.session.get('payType') != 'cash' and app.session.get('payType') is not null %} style="display: none;"{% endif %}>
                                 <div class="form_green_button">Подтвердить заказ</div>
                                 <div class="form_grey_button">Отложить решение</div>
                             </div>
@@ -228,7 +228,7 @@
     $('#regionList li').on('click', selectCity);
     $('.payment_point').on('click', function (){
         $('#payType').val($(this).find('.ico').attr('id'));
-        if ($(this).find('.ico').attr('id') == 'cash') {
+        if ($(this).find('.ico').attr('id') == 'cash' || $(this).find('.ico').attr('id') == 'terminal') {
             $('.pay_now').hide();
             $('.pay_later').show();
         } else {
@@ -279,33 +279,15 @@
     $('#payment-form').on('submit', checkForm);
     $('.pay_now .form_green_button').on('click', function(){
         $('#activity').val('1');
-        $.ajax($('#payment-form').attr('href'), {
-            data: $('#payment-form').serialize(),
-            type: 'POST',
-        })
-        .done(function(data){
-            alert(JSON.stringify(data));
-        });
+        $('#payment-form').trigger('submit');
     });
     $('.form_grey_button').on('click', function(){
         $('#activity').val('0');
-        $.ajax($('#payment-form').attr('href'), {
-            data: $('#payment-form').serialize(),
-            type: 'POST',
-        })
-        .done(function(data){
-            alert(JSON.stringify(data));
-        });
+        $('#payment-form').trigger('submit');
     });
     $('.pay_later .form_green_button').on('click', function(){
         $('#activity').val('0');
-        $.ajax($('#payment-form').attr('href'), {
-            data: $('#payment-form').serialize(),
-            type: 'POST',
-        })
-        .done(function(data){
-            alert(JSON.stringify(data));
-        });
+        $('#payment-form').trigger('submit');
     });
 
     $('.change.for_adres').on('click', function () {
