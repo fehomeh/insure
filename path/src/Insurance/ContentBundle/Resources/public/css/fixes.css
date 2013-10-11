@@ -307,13 +307,13 @@ line-height: 28px;
 
 .combo.wide .scroll_box {
     width: 100%;
-    height: 315px;
+    height: 415px;
 	background-color: #fff;
 	}
 .combo.wide .scroll_box .viewport {
-      height: 310px; }
+      height: 410px; }
 .combo.wide .scroll_box .track {
-      height: 305px!important;
+      height: 405px!important;
 	  }
 
 
