@@ -115,6 +115,13 @@ class InsuranceOrder
     private $insuranceTerm;
 
     /**
+     * @var boolean
+     * 
+     * @ORM\Column(name="taxi_use", type="boolean", nullable=false, options={"default" = 0})
+     */
+    private $taxiUse;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="discount", type="decimal", precision=6, scale=4)
@@ -1319,5 +1326,28 @@ class InsuranceOrder
     public function getHash()
     {
         return $this->hash;
+    }
+
+    /**
+     * Set taxiUse
+     *
+     * @param boolean $taxiUse
+     * @return InsuranceOrder
+     */
+    public function setTaxiUse($taxiUse)
+    {
+        $this->taxiUse = $taxiUse;
+
+        return $this;
+    }
+
+    /**
+     * Get taxiUse
+     *
+     * @return boolean 
+     */
+    public function getTaxiUse()
+    {
+        return $this->taxiUse;
     }
 }

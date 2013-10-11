@@ -1520,12 +1520,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "2abcf77d1a92f0518a18b38fc92781e6d115320c"
+                "reference": "013456608134c704edb01ff9487d8a664200af11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/2abcf77d1a92f0518a18b38fc92781e6d115320c",
-                "reference": "2abcf77d1a92f0518a18b38fc92781e6d115320c",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/013456608134c704edb01ff9487d8a664200af11",
+                "reference": "013456608134c704edb01ff9487d8a664200af11",
                 "shasum": ""
             },
             "require": {
@@ -1590,7 +1590,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2013-09-27 16:37:30"
+            "time": "2013-10-04 10:31:12"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -1709,12 +1709,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "9d94acef7faa71d5a4efbfe8a901b60fa626a950"
+                "reference": "6f0312984965d0edc029e437486715a2687749e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/9d94acef7faa71d5a4efbfe8a901b60fa626a950",
-                "reference": "9d94acef7faa71d5a4efbfe8a901b60fa626a950",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/6f0312984965d0edc029e437486715a2687749e6",
+                "reference": "6f0312984965d0edc029e437486715a2687749e6",
                 "shasum": ""
             },
             "require": {
@@ -1757,7 +1757,7 @@
                 "generator",
                 "sonata"
             ],
-            "time": "2013-09-25 14:30:58"
+            "time": "2013-10-01 10:26:22"
         },
         {
             "name": "sonata-project/easy-extends-bundle",
@@ -1972,12 +1972,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "673cc3e7c9457f71d7b30b5ef7c22784847a091a"
+                "reference": "6724a406648dcc235256b9332ba4daf059b91b71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/673cc3e7c9457f71d7b30b5ef7c22784847a091a",
-                "reference": "673cc3e7c9457f71d7b30b5ef7c22784847a091a",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/6724a406648dcc235256b9332ba4daf059b91b71",
+                "reference": "6724a406648dcc235256b9332ba4daf059b91b71",
                 "shasum": ""
             },
             "require": {
@@ -2029,7 +2029,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2013-09-23 13:22:14"
+            "time": "2013-10-03 15:33:46"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2357,11 +2357,11 @@
         },
         {
             "name": "tecnick.com/tcpdf",
-            "version": "6.0.035",
+            "version": "6.0.037",
             "source": {
                 "type": "git",
                 "url": "http://git.code.sf.net/p/tcpdf/code",
-                "reference": "6640bd863d05dae86e597513c43bd007a22ba091"
+                "reference": "df410b084d63a23acf694365bf8ff0c8ccb2fc2b"
             },
             "require": {
                 "php": ">=5.3.0"
@@ -2410,7 +2410,7 @@
                 "pdf417",
                 "qrcode"
             ],
-            "time": "2013-09-25 14:24:06"
+            "time": "2013-09-30 20:58:11"
         },
         {
             "name": "twig/extensions",
@@ -2461,16 +2461,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.13.2",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "6d6a1009427d1f398c9d40904147bf9f723d5755"
+                "reference": "224fc55635d544a2ec8edb3592be18db5a093f59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/6d6a1009427d1f398c9d40904147bf9f723d5755",
-                "reference": "6d6a1009427d1f398c9d40904147bf9f723d5755",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/224fc55635d544a2ec8edb3592be18db5a093f59",
+                "reference": "224fc55635d544a2ec8edb3592be18db5a093f59",
                 "shasum": ""
             },
             "require": {
@@ -2479,7 +2479,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -2506,7 +2506,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-08-03 15:35:31"
+            "time": "2013-10-03 06:41:20"
         }
     ],
     "packages-dev": [

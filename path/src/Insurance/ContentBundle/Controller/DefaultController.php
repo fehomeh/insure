@@ -30,11 +30,6 @@ class DefaultController extends Controller
         if ($carBrand = $session->get('carBrand')) {
             $carModels = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findByBrand($carBrand);
         } else $carModels = array();
-        //$region->setValue('Киевская');
-        //$em->persist($region);
-        //$em->flush();
-        //$productRep = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region');
-        //$reg = $productRep->find('1');
         if (!$session->get('timerEnd')) {
             $session->set('timerEnd', date('d M Y H:i:s', time() + $this->container->getParameter('timer')));
         }
@@ -42,12 +37,10 @@ class DefaultController extends Controller
             ($this->container->getParameter('economy.step') * floor(((time() - strtotime($this->container->getParameter('economy.startdate')))/86400)));
         if (strlen($savedSum) > 6) {
             $tmpTime = (int)(((1000000 - $this->container->getParameter('economy.sum'))/$this->container->getParameter('economy.step')) * 86400);
-            echo (floor(((time() - $tmpTime - strtotime($this->container->getParameter('economy.startdate')))/86400)));
             $savedSum = $this->container->getParameter('economy.sum') +
             ($this->container->getParameter('economy.step') * floor(((time() - $tmpTime - strtotime($this->container->getParameter('economy.startdate')))/86400)));
         }
         return $this->render('InsuranceContentBundle:Default:index.html.twig', array(
-          //'regions' => $regions,
           'brands' => $carBrands,
           'carBrand' => $carBrand,
           'models' => $carModels,
@@ -166,6 +159,8 @@ class DefaultController extends Controller
                 $session->set('dgoSum', $dgoSum);
                 if ($request->request->get('taxiUse') == 1)
                     $session->set('taxiUse', 1);
+                else 
+                    $session->set('taxiUse', 0);
                 $session->set('priceDGO', $calculator->calculateDgo(array(
                     'sum' => $dgoSum,
                     'displacement' => $displacement,
@@ -186,7 +181,7 @@ class DefaultController extends Controller
                     'company' => static::DEFAULT_COMPANY_ID,
                     )
                 ));
-                if ($passengersCount > 0) $session->set('passengersCount', $passengersCount);
+                if ($passengersCount >= 0) $session->set('passengersCount', $passengersCount);
                 else $error['passengersCount'] = 'Не заполнено поле';
             } else if ($request->request->get('cbNS') == 'yes')
             {
@@ -215,8 +210,12 @@ class DefaultController extends Controller
                 'year' => $carAge,
                 'company' => static::DEFAULT_COMPANY_ID,
             )) * $discount);
-            if (count($error) == 0)
-                return $this->redirect($this->generateUrl('step2'));
+            if (count($error) == 0) {
+                //return $this->redirect($this->generateUrl('step2'));
+                $response = new Response(json_encode(array('message' => 'success')));
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
+            }
             else {
                 $response = new Response(json_encode(array('error' => $error, 'message' => 'error')));
                 $response->headers->set('Content-Type', 'application/json');
@@ -252,7 +251,7 @@ class DefaultController extends Controller
     public function formalizationAction(Request $request)
     {
         $securityContext = $this->container->get('security.context');
-        if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ) {
+        if($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $session = $this->getRequest()->getSession();
             $feedbackForm = $this->createForm(new FeedbackType());
             if ($request->getMethod() == 'POST') {
@@ -378,7 +377,6 @@ class DefaultController extends Controller
                 }
                 if ($processPersonalData == 'Y')
                 if (count($error) == 0) return $this->redirect($this->generateUrl('step3'));
-                else var_dump($error);
             }
             $carBrand = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarBrand')->findOneById($session->get('carBrand'));
             $carModel = $this->getDoctrine()->getRepository('InsuranceContentBundle:CarModel')->findOneById($session->get('carModel'));
@@ -411,6 +409,53 @@ class DefaultController extends Controller
     public function deliveryAction(Request $request)
     {
         $feedbackForm = $this->createForm(new FeedbackType());
+        //If user is authorized and URL has hash than get data from database and push it to session
+        $securityContext = $this->container->get('security.context');
+        $hash = $request->query->get('hash', null);
+        if($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') && !is_null($hash)) {
+            $savedOrder = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneByHash($hash);
+            $session->set('carBrand', $savedOrder->getCarModel()->getBrand());
+            $session->set('carModel', $savedOrder->getCarModel());
+            $session->set('displacement', $savedOrder->getDisplacement());
+            $session->set('carAge', $savedOrder->getCarAge());
+            $session->set('registerRegion', $savedOrder->getRegisterCity()->getRegion());
+            $session->set('registerCity', $savedOrder->getRegisterCity());
+            $session->set('insuranceTerm', $savedOrder->getInsuranceTerm());
+            $session->set('dgoSum', $savedOrder->getSumDgo());
+            $session->set('priceDGO', $savedOrder->getPriceDgo());
+            $session->set('taxiUse', $savedOrder->getTaxiUse());
+            $session->set('nsSum', $savedOrder->getSumNs());
+            $session->set('passengersCount', $savedOrder->getPassengerCount());
+            $session->set('priceNs', $savedOrder->getPriceNs());
+            $session->set('discount', $savedOrder->getDiscount());
+            $session->set('price', $savedOrder->getPrice());
+
+            $session->set('activeFrom', $savedOrder->getActiveFrom());
+            $session->set('vinCode', $savedOrder->getVinCode());
+            $session->set('carNumber', $savedOrder->getCarNumber());
+            $session->set('surname', $savedOrder->getSurname());
+            $session->set('firstname', $savedOrder->getFirstname());
+            $session->set('middlename', $savedOrder->getMiddlename());
+            $session->set('documentType', $savedOrder->getDocumentType());
+            $session->set('documentSerie', $savedOrder->getDocumentSerie());
+            $session->set('documentNumber', $savedOrder->getDocumentNumber());
+            $session->set('documentAuthority', $savedOrder->getDocumentAuthority());
+            $session->set('documentDate', $savedOrder->getDocumentDate());
+            $session->set('phone', $savedOrder->getPhone());
+            $session->set('region', $savedOrder->getCity()->getRegion());
+            $session->set('city', $savedOrder->getCity());
+            $session->set('registerAddress', $savedOrder->getRegisterAddress());
+            $session->set('registerBuilding', $savedOrder->getRegisterBuilding());
+            
+            $session->set('deliveryRegion', $savedOrder->getDeliveryCity()->getRegion());
+            $session->set('deliveryCity', $savedOrder->getDeliveryCity());
+            $session->set('deliveryAddress', $savedOrder->getDeliveryAddress());
+            $session->set('deliveryBuilding', $savedOrder->getDeliveryBuilding());
+            $session->set('phone', $savedOrder->getPhone());
+            $session->set('payType', $savedOrder->getPayType());
+            $session->set('activity', $savedOrder->getActivity());
+        }
+        
         $session = $request->getSession();
         $region = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findOneById($session->get('region'));
         $regionId = $session->get('region');
@@ -447,9 +492,9 @@ class DefaultController extends Controller
                 $order->setStatus('W'); //W - waiting, P  - paid, C - confirmed
                 $order->setPayStatus(0);
                 $order->setOrderDate(new \DateTime('now'));
-                //TODO add next free policy number!!!!!!!
                 try {
-                    if (is_null($user)) $user = $this->getDoctrine()->getRepository('ApplicationSonataUserBundle:User')->findOneById(1);
+                    $user = $this->get('security.context')->getToken()->getUser();
+                    //if (is_null($user)) $user = $this->getDoctrine()->getRepository('ApplicationSonataUserBundle:User')->findOneById($user->getId());
                     $order->setUser($user);
                 } catch (\Doctrine\ORM\EntityNotFoundException $e) {
                     $errors['user'] = "Не найден пользователь";
@@ -481,7 +526,9 @@ class DefaultController extends Controller
                 }
 
                 $order->setInsuranceTerm($session->get('insuranceTerm'));
-
+                
+                $order->setTaxiUse(($session->get('taxiUse') == '1' ? 1 : 0));
+                
                 $order->setSumDgo($session->get('dgoSum'));
 
                 $order->setPriceDgo($session->get('priceDGO'));
@@ -545,10 +592,9 @@ class DefaultController extends Controller
                 $order->setDeliveryBuilding($session->get('deliveryBuilding'));
 
                 $order->setPayType($payType);
-//$order->
+                
                 $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneById($session->get('policy'));
                 if ($policy) {
-                    //$orderPolicy = array_shift($policy);
                     $policy->setStatus(1);
                     $order->setPolicy($policy);
                 }
@@ -572,9 +618,7 @@ class DefaultController extends Controller
                     } catch (\Exception $e) {
                         $errors['message'] = $e->getMessage();
                     }
-                }var_dump($errors);
-                die();
-
+                }
             } else $errors['message'] = 'Все поля обязательны к заполнению';
             if (count($errors) > 0) return $this->redirect($this->generateUrl('step3'));
             }
@@ -593,14 +637,14 @@ class DefaultController extends Controller
                 $policy->setStatus(2);
                 try {
                     $em = $this->getDoctrine()->getManager();
-                    $em->persist($order);
+                    $em->persist($policy);
                     $em->flush();
                 } catch (\Exception $e) {
                     $errors['message'] = $e->getMessage();
                 }
             }
         }
-        if (is_null($region) || is_null($city)) return $this->redirect($this->generateUrl('step2'));
+        if ((is_null($region) || is_null($city)) && is_null($hash)) return $this->redirect($this->generateUrl('step2'));
         return $this->render('InsuranceContentBundle:Default:step_three.html.twig', array(
             'regions' => $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll(),
             'cities' => (!is_null($regionId)?$this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findByRegion($regionId):null),
@@ -836,7 +880,9 @@ class DefaultController extends Controller
     public function cleanStoredDataAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
+            $timerEnd = $request->getSession()->get('timerEnd');
             $request->getSession()->clear();
+            $request->getSession()->set('timerEnd', $timerEnd);
             $response = new Response();
             $response->headers->clearCookie('sc');
             return $response;
@@ -861,6 +907,24 @@ class DefaultController extends Controller
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
             'message' => $message,
+        ));
+    }
+    
+    public function aboutAction()
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        return $this->render('InsuranceContentBundle:Default:about.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+        ));
+    }
+    
+    public function contactsAction()
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        return $this->render('InsuranceContentBundle:Default:contacts.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
         ));
     }
 }

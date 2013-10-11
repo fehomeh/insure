@@ -44,7 +44,7 @@ class Policy
     /**
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean", nullable=false)
+     * @ORM\Column(name="status", type="smallint", nullable=false)
      * @Assert\NotBlank()
      */
     private $status;

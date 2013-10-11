@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<title>Project name</title>
+<title>{% block title %}Project name{% endblock %}</title>
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -105,17 +105,17 @@
                 <div style="clear: both;"></div>
                 <ul class="main_menu">
                     <li{% if (path(app.request.attributes.get('_route')) == path('homepage'))%} class="current"{% endif %}>
-                        <a href="">
+                        <a href="{{path('homepage')}}">
                             <span class="home"></span>
                             <span class="delim"></span>
                         </a>
                         {% if (path(app.request.attributes.get('_route')) == path('homepage'))%}<div class="shadow"></div>{% endif %}
                     </li>
                     <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
-                        <a href="">Калькулятор осаго<span class="delim"></span></a>
+                        <a href="{{path('step1')}}">Калькулятор осаго<span class="delim"></span></a>
                         {% if (path(app.request.attributes.get('_route')) == path('step1'))%}<div class="shadow"></div>{% endif %}
                     </li>
-                    <!--<li>
+                    {#<li>
                         <a href="">
                             Автозаполнение полиса
                             <span class="arrow"></span>
@@ -130,9 +130,15 @@
                             <li><a href="">Бланки<span class="delimiter"></span></a></li>
                             <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
                         </ul>
-                    </li>-->
-                    <li><a href="">О нас<span class="delim"></span></a></li>
-                    <li><a href="">Контакты<span class="delim"></span></a></li>
+                    </li>#}
+                    <li{% if (path(app.request.attributes.get('_route')) == path('about'))%} class="current"{% endif %}>
+                        <a href="{{path('about')}}">О нас<span class="delim"></span></a>
+                    {% if (path(app.request.attributes.get('_route')) == path('about'))%}<div class="shadow"></div>{% endif %}
+                    </li>
+                    <li{% if (path(app.request.attributes.get('_route')) == path('contacts'))%} class="current"{% endif %}>
+                        <a href="{{path('contacts')}}">Контакты<span class="delim"></span></a>
+                    {% if (path(app.request.attributes.get('_route')) == path('contacts'))%}<div class="shadow"></div>{% endif %}
+                    </li>
                 </ul>
         	</div>
         </header>
@@ -260,7 +266,10 @@
                                 $('.form-container').html(data);
                             });
                         });
-                        $('#pass_modal').modal().open();
+                        $('#pass_modal').modal().open({
+                            closeOnEsc: false,
+                            closeOnOverlayClick: false,
+                        });
                     });
                 });
                 $('.modal .close').on('click', function(e){
@@ -287,7 +296,7 @@
                                 type: 'POST',
                                 data: $('#calculator-form').serialize()
                                 }).done(function(data){
-                                if (data.message != 'error') window.location = '{{path('step2')}}';
+                                if (data.message == 'success') window.location = '{{path('step2')}}';
                                 });
                             });
                         } else {

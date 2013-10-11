@@ -140,11 +140,17 @@ $(function() {
                             		<div class="viewport">
                             			 <div class="overview">
                             				<ul form-input-id="carBrand" id="brandList">
-                                                {%if (brands)%}
-                                                        {% for brand in brands %}
+                                            {%- if (brands) -%}
+                                                {%- for brand in brands -%}
+                                                {%- if (loop.index0 % 24 == 0) -%}
+                                            <ul>
+                                                {% endif -%}
                                                     <li{% if (brand.id == carBrand) %} class="active"{% endif %} data-value="{{brand.id}}">{{brand.value}}</li>
-                                                        {% endfor %}
-                                                    {% endif %}
+                                                {% if ((loop.index0 + 1) % 24 == 0) -%}
+                                            </ul>
+                                                {% endif %}
+                                                {%- endfor -%}
+                                            {%- endif -%}
                                             </ul>
                             			</div>
                             		</div>
@@ -347,11 +353,11 @@ $(function() {
                             <div class="box_line taxi">
                                 <div class="param_name">Сфера использования автомобиля:</div>
                                 <div class="control_point">
-                                    <input type="radio" value="1" class="styled" name="taxiUse" id="taxiUse" {% if app.session.get('taxiUse') %}checked="checked"{% endif %} />
+                                    <input type="radio" value="1" class="styled" name="taxiUse" id="taxiUse" {% if app.session.get('taxiUse') == 1 %}checked="checked"{% endif %} />
                                     <label for="taxiUse">Такси</label>
                                 </div>
                                 <div class="control_point">
-                                    <input type="radio" value="0" class="styled" name="taxiUse" id="taxiUseNot" {% if app.session.get('taxiUse') is null %}checked="checked"{% endif %} />
+                                    <input type="radio" value="0" class="styled" name="taxiUse" id="taxiUseNot" {% if app.session.get('taxiUse') is null or app.session.get('taxiUse') == 0 %}checked="checked"{% endif %} />
                                     <label for="taxiUseNot">Не такси</label>
                                 </div>
                                 <div style="clear: both;"></div>
@@ -402,7 +408,7 @@ $(function() {
                                     <div class="fixed_pop_up">
                                         Lorem ipsum dolor sit amet
                                     </div>
-                                    <input type="checkbox" class="styled" id="passenger" name="cbNS" value="yes" {% if app.session.get('dgoSum')%} checked="checked"{% endif %}/>
+                                    <input type="checkbox" class="styled" id="passenger" name="cbNS" value="yes" {% if app.session.get('nsSum')%} checked="checked"{% endif %}/>
                                     <label for="passenger">
                                         Страхование здоровья водителя и пассажиров
                                         <div class="question_ico">
@@ -851,18 +857,19 @@ $(function() {
             }
         });
 
-    {# If user authenticated already than process calculated form otherwhise show register form#}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
+    {# If user authenticated already than process calculated form otherwhise show register form #}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         $('.form_now').on('click', function(){
                 $.ajax('{{path('step1')}}', {
                 type: 'POST',
                 data: $('#calculator-form').serialize()
                 }).done(function(data){
-                if (data.message != 'error') window.location = '{{path('step2')}}';
+                if (data.message == 'success') window.location = '{{path('step2')}}';
                 });
                 });
         {% else %}
         function registerFormShow(){
+            $('#login_modal').modal().open();
             $.ajax('{{path('fos_user_registration_register')}}', {
             type: 'GET'
             }).done(function(data){
@@ -877,7 +884,7 @@ $(function() {
                         type: 'POST'
                     }).done(function(data){
                         //On success we will get JSON object with message, on failure we must pull html to form container again and reinit Custom
-                        if (typeof data == 'object' && data.message == 'success') {alert('ayl');
+                        if (data.message != 'error') {
                             //Process form data
                             $.ajax('{{path('step1')}}', {
                             type: 'POST',
@@ -902,6 +909,12 @@ $(function() {
 
         //Initialize model selection on error and reload
         selectModel();
+        {% if app.session.get('dgoSum')%}
+        window.calcDGO = true;
+        {% endif %}
+        {% if app.session.get('nsSum')%}
+        window.calcNS = true;
+        {% endif %}
         //Check fields and get prices
         if (validateCommon()) calculateCommon();
         if (validateDGO()) calculateDGO();

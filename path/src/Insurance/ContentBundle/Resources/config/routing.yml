@@ -43,10 +43,10 @@ get_discount:
     methods: [ 'POST' ]
 step2:
     pattern: /step2.htm
-    defaults: { _controller: "InsuranceContentBundle:Default:formalization"}
+    defaults: { _controller: "InsuranceContentBundle:Default:formalization" }
 get_price:
     pattern: /get-price.htm
-    defaults: { _controller: "InsuranceContentBundle:Default:calculateInsurance"}
+    defaults: { _controller: "InsuranceContentBundle:Default:calculateInsurance" }
     methods: [ 'POST' ]
 get_dgo_price:
     pattern: /get-dgo-price.htm
@@ -61,10 +61,16 @@ step3:
     defaults: { _controller: "InsuranceContentBundle:Default:delivery" }
 save_calculation:
     pattern: /save-calculation.htm
-    defaults: {_controller: "InsuranceContentBundle:Default:saveCalculation"}
+    defaults: { _controller: "InsuranceContentBundle:Default:saveCalculation" }
 clear_calculation:
     pattern: /clear-calculation.htm
-    defaults: {_controller: "InsuranceContentBundle:Default:clearStoredData"}
+    defaults: { _controller: "InsuranceContentBundle:Default:clearStoredData" }
 finish:
     pattern: /finish.htm
-    defaults: {_controller: "InsuranceContentBundle:Default:finish"}
+    defaults: { _controller: "InsuranceContentBundle:Default:finish" }
+about:
+    pattern: /about.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:about" }
+contacts:
+    pattern: /contacts.htm
+    defaults: { _controller: "InsuranceContentBundle:Default:contacts" }

@@ -32,7 +32,7 @@
                             <div style="clear: both;"></div>
                         </div>
                         <div class="white_strip">
-                            Полис ОСАГО № {{policy.serie}} {{policy.value}} На имя: {{app.session.get('surname')}} {{app.session.get('firstname')}} {{app.session.get('middlename')}} от {{app.session.get('activeFrom')}}
+                            Полис ОСАГО № {% if policy %}{{policy.serie}} {{policy.value}}{% endif %} На имя: {{app.session.get('surname')}} {{app.session.get('firstname')}} {{app.session.get('middlename')}} от {{app.session.get('activeFrom')}}
                             <div class="price">{{app.session.get('price')|number_format(2, ',', ' ')}} грн.</div>
                         </div>
                             {% if app.session.get('priceDGO') %}
@@ -295,6 +295,10 @@
         $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
         $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
     });
+    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
+    $('.login_link').trigger('click');
+    {% endif %}
+    
 </script>
 {% endblock%}
 {# block content %}
