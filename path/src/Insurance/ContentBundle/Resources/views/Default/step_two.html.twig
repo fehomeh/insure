@@ -382,12 +382,8 @@
     $('#activeFrom').datepicker({
     closeText: 'Закрыть',
     dateFormat: 'dd.mm.yy',
-    inline: true
-    });
-    $('#documentDate').datepicker({
-    closeText: 'Закрыть',
-    dateFormat: 'dd.mm.yy',
-    inline: true
+    inline: true,
+    minDate: +2
     });
     function selectCity() {
         var inputEl = $(this).parents('ul').attr('form-input-id');

@@ -198,10 +198,13 @@ class DefaultController extends Controller
             }
             $calculator->setCompany(static::DEFAULT_COMPANY_ID)
                 ->setRateType('base');
-            $discountObj = $calculator->getRate(date('Y') - $carAge, 'year');
-            if ($discountObj)
-                $discount = $discountObj->getValue();
-            else
+            if ($insuranceTerm > 7) {
+                $discountObj = $calculator->getRate(date('Y') - $carAge, 'year');
+                if ($discountObj)
+                    $discount = $discountObj->getValue();
+                else
+                    $discount = 1;
+            } else
                 $discount = 1;
             $session->set('discount', $discount);
             $session->set('price', $calculator->calculateCommon(array(
@@ -436,6 +439,11 @@ class DefaultController extends Controller
                 //Here we store all data to database
                 $order = new InsuranceOrder();
                 if ($activity === '1') $order->setActive(1);
+                elseif ($activity === '0') {
+                    //Means that user decided to hold order for a while
+                    $order->setActive(0);
+                    $order->setHash(sha1(microtime()));
+                }
                 $order->setStatus('W'); //W - waiting, P  - paid, C - confirmed
                 $order->setPayStatus(0);
                 $order->setOrderDate(new \DateTime('now'));
@@ -488,6 +496,8 @@ class DefaultController extends Controller
 
                 $order->setPrice($session->get('price'));
 
+                $order->setTotalPrice($session->get('price') + $session->get('priceDGO') + $session->get('priceNs'));
+
                 $order->setActiveFrom(new \DateTime($session->get('activeFrom')));
 
                 $order->setVinCode($session->get('vinCode'));
@@ -536,13 +546,7 @@ class DefaultController extends Controller
 
                 $order->setPayType($payType);
 //$order->
-                $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneBy(
-                    array(
-                      'status' => 0,
-                      'company' => static::DEFAULT_COMPANY_ID,
-                  ),
-                    array('id' => 'ASC')
-                    );
+                $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneById($session->get('policy'));
                 if ($policy) {
                     //$orderPolicy = array_shift($policy);
                     $policy->setStatus(1);
@@ -550,32 +554,52 @@ class DefaultController extends Controller
                 }
                 if (count($errors) == 0) {
                     try {
-                    $em = $this->getDoctrine()->getEntityManager();
-                    //$em->persist($order);
-                    //$em->flush();
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($order);
+                        $em->flush();
+                        if ($activity == '1')
+                            $session->set('orderState', 'success');
+                        elseif ($activity == '0')
+                            $session->set('orderState', 'delayed');
+                        switch($payType) {
+                            case 'cash':
+                                return $this->redirect($this->generateUrl('finish'));
+                                break;
+                            case 'terminal':
+                                return $this->redirect($this->generateUrl('finish'));
+                                break;
+                        }
                     } catch (\Exception $e) {
                         $errors['message'] = $e->getMessage();
                     }
-                }
-//                switch($payType) {
-//                    case 'cash':
-//                        return $this->redirect($this->generateUrl('success'));
-//                        break;
-//                }
-                $resp = new Response();
-                $resp->headers->set('Content-Type', 'application/json');
-                if ($activity === '1') {
-                    $resp->setContent(json_encode(array('href' => 'go.to.payment')));
-                    return $resp;
-                } elseif ($activity === '0') {
-                    $resp->setContent(json_encode(array('message' => 'success')));
-                    return $resp;
-                }
+                }var_dump($errors);
+                die();
+
             } else $errors['message'] = 'Все поля обязательны к заполнению';
             if (count($errors) > 0) return $this->redirect($this->generateUrl('step3'));
             }
 
         $city = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findOneById($session->get('city'));
+        if (!isset($policy)) {
+            $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneBy(
+                array(
+                    'status' => 0,
+                    'company' => static::DEFAULT_COMPANY_ID,
+                ),
+                array('id' => 'ASC')
+                );
+            if ($policy) {
+                $session->set('policy', $policy->getId());
+                $policy->setStatus(2);
+                try {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($order);
+                    $em->flush();
+                } catch (\Exception $e) {
+                    $errors['message'] = $e->getMessage();
+                }
+            }
+        }
         if (is_null($region) || is_null($city)) return $this->redirect($this->generateUrl('step2'));
         return $this->render('InsuranceContentBundle:Default:step_three.html.twig', array(
             'regions' => $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findAll(),
@@ -587,6 +611,7 @@ class DefaultController extends Controller
             'errors' => null,
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
+            'policy' => $policy,
         ));
     }
     /**
@@ -644,13 +669,17 @@ class DefaultController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             $carAge = $request->request->get('carAge');
-            $calculator = $this->get('insurance.service.calculator');
-            $calculator->setCompany(static::DEFAULT_COMPANY_ID)
-                ->setRateType('base');
-            $discount = $calculator->getRate(date('Y') - $carAge, 'year');
-            if ($discount !== null) {
-                $respString = json_encode(array('discount' => $discount->getValue()));
-            } else $respString = json_encode(array('discount' => 0));
+            $insuranceTerm = $request->request->get('insuranceTerm', 0);
+            if ($insuranceTerm > 7) {
+                $calculator = $this->get('insurance.service.calculator');
+                $calculator->setCompany(static::DEFAULT_COMPANY_ID)
+                    ->setRateType('base');
+                $discount = $calculator->getRate(date('Y') - $carAge, 'year');
+                if ($discount !== null) {
+                    $respString = json_encode(array('discount' => $discount->getValue()));
+                } else $respString = json_encode(array('discount' => 1));
+            } else
+                $respString = json_encode(array('discount' => 1));
             $response = new Response($respString);
             $response->headers->set('Content-Type', 'application/json');
             return $response;
@@ -802,5 +831,36 @@ class DefaultController extends Controller
             } else return false;
         } else
             return false;
+    }
+
+    public function cleanStoredDataAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $request->getSession()->clear();
+            $response = new Response();
+            $response->headers->clearCookie('sc');
+            return $response;
+        }
+    }
+
+    public function finishAction(Request $request)
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        if ($request->getSession()->get('orderState') == 'success') {
+            $request->getSession()->clear();
+            $response = new Response();
+            $response->headers->clearCookie('sc');
+            $message = 'Ваш заказ принят!<br>Спасибо за то, что воспользовались нашими услугами!';
+        } elseif ($request->getSession()->get('orderState') == 'delayed') {
+            $request->getSession()->clear();
+            $response = new Response();
+            $response->headers->clearCookie('sc');
+            $message = 'Ваш заказ сохранен!<br>На Ваш электронный адрес выслано письмо со ссылкой для завершения заказа.<br>Спасибо за то, что воспользовались нашими услугами!';
+        } else $message = 'Возникла ошибка при оформлении, попробуйте, пожалуйста, позже!';
+        return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+            'message' => $message,
+        ));
     }
 }

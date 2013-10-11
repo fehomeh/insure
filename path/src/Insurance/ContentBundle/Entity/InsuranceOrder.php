@@ -332,6 +332,12 @@ class InsuranceOrder
      */
     private $payDate;
 
+    /**
+     *
+     * @var string
+     * @ORM\Column(type="string", name="hash", length=20, nullable=true)
+     */
+    private $hash;
 
     public function onPrePersistSetOrderDate()
     {
@@ -1285,10 +1291,33 @@ class InsuranceOrder
     /**
      * Get totalPrice
      *
-     * @return string 
+     * @return string
      */
     public function getTotalPrice()
     {
         return $this->totalPrice;
+    }
+
+    /**
+     * Set hash
+     *
+     * @param string $hash
+     * @return InsuranceOrder
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+
+        return $this;
+    }
+
+    /**
+     * Get hash
+     *
+     * @return string 
+     */
+    public function getHash()
+    {
+        return $this->hash;
     }
 }

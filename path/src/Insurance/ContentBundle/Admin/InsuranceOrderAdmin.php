@@ -30,6 +30,7 @@ class InsuranceOrderAdmin extends Admin {
       ->add('middlename', null, array('label' => 'Отчество'))
       ->end()
       ->with('Pay')
+      ->add('totalPrice', null, array('label' => 'Общая цена'))
       ->add('price', null, array('label' => 'Цена'))
       ->add('priceDgo', null, array('label' => 'Цена ДГО', 'required' => false, ))
       ->add('priceNs', null, array('label' => 'Цена НС', 'required' => false, ))
@@ -73,6 +74,7 @@ class InsuranceOrderAdmin extends Admin {
       //->add('company', null, array('label' => 'Страховая'))
       ->add('policy', null, array('label' => 'Номер полиса'))
       ->add('orderDate', null, array('input_type' => 'date', 'format' => 'd.m.Y', 'label' => 'Дата заказа'))
+      ->add('totalPrice', null, array('label' => 'Общая цена'))
       ->add('price', null, array('label' => 'Цена'))
       ->add('priceDgo', null, array('label' => 'Цена ДГО'))
       ->add('priceNs', null, array('label' => 'Цена НС'))
@@ -102,6 +104,7 @@ class InsuranceOrderAdmin extends Admin {
         ->add('firstname', null, array('label' => 'Имя'))
         ->add('middlename', null, array('label' => 'Отчество'))
         ->add('phone', null, array('label' => 'Телефон'))
+        ->add('totalPrice', null, array('label' => 'Цена общая'))
         ->add('price', null, array('label' => 'Цена'))
         ->add('priceDgo', null, array('label' => 'Цена ДГО'))
         ->add('priceNs', null, array('label' => 'Цена НС'))
@@ -126,13 +129,24 @@ class InsuranceOrderAdmin extends Admin {
       ->add('payType', null, array('label' => 'Тип оплаты'));
   }
 
-  public function prePersist($object) {
-
+  public function prePersist($object)
+    {
     $policy = $this->getConfigurationPool()->getContainer()->get('doctrine')
-            ->getRepository('InsuranceContentBundle:Policy')
-            ->findOneBy(array('status' => 0, 'company' => $object->getCompany()), array('id' => 'ASC'));
+        ->getRepository('InsuranceContentBundle:Policy')
+        ->findOneBy(array('status' => 0, 'company' => $object->getCompany()), array('id' => 'ASC'));
     $object->setPolicy($policy);
     $policy->setStatus(1);
     parent::prePersist($object);
   }
+
+  public function preRemove($object)
+  {
+      $object->getPolicy()->setStatus(0);
+      parent::preRemove($object);
+  }
+
+//  public function preBatchRemove($idx)
+//  {
+
+//  }
 }

@@ -62,3 +62,9 @@ step3:
 save_calculation:
     pattern: /save-calculation.htm
     defaults: {_controller: "InsuranceContentBundle:Default:saveCalculation"}
+clear_calculation:
+    pattern: /clear-calculation.htm
+    defaults: {_controller: "InsuranceContentBundle:Default:clearStoredData"}
+finish:
+    pattern: /finish.htm
+    defaults: {_controller: "InsuranceContentBundle:Default:finish"}
