@@ -2,7 +2,10 @@ function comboClick() {
         if($(this).parents('.combo').hasClass('active')){
             $(this).parent().children("li").removeClass("active");
             $(this).addClass("active");
-            var formId =$(this).parent().attr('form-input-id');
+            var formId = $(this).parent().attr('form-input-id');
+            if (typeof formId == 'undefined') {
+                formId = $(this).parents('.combo_list').attr('form-input-id');
+            }
             $('#'+ formId).val($(this).attr('data-value'));
             var event;
             var eventName = 'dataaviable';
@@ -65,6 +68,7 @@ $(document).ready(function(){
         $(this).parents(".combo").addClass("active");
     });
     $(".combo ul li").on('click', comboClick);
+    $(".combo ul ul li").on('click', comboClick);
 
     $('html').click(function(e){
        var currentCombo = $('.combo.active');

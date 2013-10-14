@@ -141,7 +141,7 @@ $(function() {
                             		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                             		<div class="viewport">
                             			 <div class="overview">
-                            				<ul form-input-id="carBrand" id="brandList">
+                            				<ul form-input-id="carBrand" id="brandList" class="combo_list">
                                             {%- if (brands) -%}
                                                 {%- for brand in brands -%}
                                                 {%- if (loop.index0 % 24 == 0) -%}
@@ -587,7 +587,7 @@ $(function() {
             dataType: 'JSON',
             data: { carAge: $('#carAge').val(), insuranceTerm: $('#insuranceTerm').val() }
             }).done(function (data) {
-                window.discountSum = ((1 - data.discount)*commonPrice).toFixed(2);
+                window.discountSum = ((1 - data.discount)*commonPrice);
                 var pD = 0;
                 var pN = 0;
                 if (window.priceDgo) pD = window.priceDgo;
@@ -597,6 +597,7 @@ $(function() {
                     $('.calc .discount').removeClass('hidden');
                     $('.calc .discount').show();
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
+                    $('.discount span').text('-' + Math.round((1 - data.discount)*100) + '%');
                 } else {
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
                     $('.calc .discount').addClass('hidden');
@@ -786,7 +787,7 @@ $(function() {
         //FIRST OF ALL CHECK HASH AND if #clear exists clear all calculations
         if(window.location.hash == '#clear') clearForm();
     //handle checkboxes events to add/remove additional insurance
-    $('#respons').on('click', function(e){
+    $('#respons').on('click', function(e){alert('a');
         if ($(this).is(':checked')) {
             $(this).parents('.responsibility').find('.disabled_shadow').removeClass('show');
             $('.your_auto').find('.box_line').removeClass('focus');
@@ -798,7 +799,7 @@ $(function() {
         }
     });
     $('#respons').next('label').on('click', function (e) {
-        if ($(this).parent().find('#respons').is(':checked')) window.calcDGO = false
+        if ($(this).parent().find('#respons').is(':checked')) window.calcDGO = false;
     });
     $('#passenger').on('click', function(e){
         if ($(this).is(':checked')) {
@@ -813,7 +814,7 @@ $(function() {
         }
     });
     $('#passenger').next('label').on('click', function (e) {
-        if ($(this).parent().find('#passenger').is(':checked')) window.calcNS = false
+        if ($(this).parent().find('#passenger').is(':checked')) window.calcNS = false;
     })
     $(":input").attr('autocomplete', 'off');
     //Accident checkbox handling
@@ -823,6 +824,7 @@ $(function() {
             $('.your_auto').find('.box_line').removeClass('focus');
             $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
             $(this).parents('.box_line').addClass('focus');
+            window.calcDGO = true;
         }
         else {
             removeDGO();
@@ -834,6 +836,7 @@ $(function() {
             $('.your_auto').find('.box_line').removeClass('focus');
             $(this).parents('.recomend_box').find('.box_line').removeClass('focus');
             $(this).parents('.box_line').addClass('focus');
+            window.calcNS = true;
         }
         else {
             removeNS();

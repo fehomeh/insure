@@ -92,7 +92,7 @@ class NotifySender
           //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
           ;
           $this->sc->get('mailer')->send($message);
-        } elseif ($entity->getActive() == 0 && strlen($entity->getHash()) == 20) {
+        } elseif ($entity->getActive() == 0 && strlen($entity->getHash()) == 40) {
             //Send notification to user that he has stored order without confirmation
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
@@ -111,7 +111,8 @@ class NotifySender
                         )
                 ),
                 'text/html'
-          );
+            );
+            $this->sc->get('mailer')->send($message);
         }
       $to = $this->sc->getParameter('admin.emails');
       $messageToAdmin = \Swift_Message::newInstance()

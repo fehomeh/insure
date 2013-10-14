@@ -116,7 +116,7 @@ class InsuranceOrder
 
     /**
      * @var boolean
-     * 
+     *
      * @ORM\Column(name="taxi_use", type="boolean", nullable=false, options={"default" = 0})
      */
     private $taxiUse;
@@ -342,7 +342,7 @@ class InsuranceOrder
     /**
      *
      * @var string
-     * @ORM\Column(type="string", name="hash", length=20, nullable=true)
+     * @ORM\Column(type="string", name="hash", length=40, nullable=true)
      */
     private $hash;
 
@@ -1321,7 +1321,7 @@ class InsuranceOrder
     /**
      * Get hash
      *
-     * @return string 
+     * @return string
      */
     public function getHash()
     {
@@ -1344,7 +1344,7 @@ class InsuranceOrder
     /**
      * Get taxiUse
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getTaxiUse()
     {
