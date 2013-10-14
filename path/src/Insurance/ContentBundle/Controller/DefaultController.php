@@ -159,7 +159,7 @@ class DefaultController extends Controller
                 $session->set('dgoSum', $dgoSum);
                 if ($request->request->get('taxiUse') == 1)
                     $session->set('taxiUse', 1);
-                else 
+                else
                     $session->set('taxiUse', 0);
                 $session->set('priceDGO', $calculator->calculateDgo(array(
                     'sum' => $dgoSum,
@@ -412,14 +412,15 @@ class DefaultController extends Controller
         //If user is authorized and URL has hash than get data from database and push it to session
         $securityContext = $this->container->get('security.context');
         $hash = $request->query->get('hash', null);
+        $session = $request->getSession();
         if($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') && !is_null($hash)) {
             $savedOrder = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneByHash($hash);
-            $session->set('carBrand', $savedOrder->getCarModel()->getBrand());
-            $session->set('carModel', $savedOrder->getCarModel());
+            $session->set('carBrand', $savedOrder->getCarModel()->getBrand()->getId());
+            $session->set('carModel', $savedOrder->getCarModel()->getId());
             $session->set('displacement', $savedOrder->getDisplacement());
             $session->set('carAge', $savedOrder->getCarAge());
-            $session->set('registerRegion', $savedOrder->getRegisterCity()->getRegion());
-            $session->set('registerCity', $savedOrder->getRegisterCity());
+            $session->set('registerRegion', $savedOrder->getRegisterCity()->getRegion()->getId());
+            $session->set('registerCity', $savedOrder->getRegisterCity()->getId());
             $session->set('insuranceTerm', $savedOrder->getInsuranceTerm());
             $session->set('dgoSum', $savedOrder->getSumDgo());
             $session->set('priceDGO', $savedOrder->getPriceDgo());
@@ -430,7 +431,7 @@ class DefaultController extends Controller
             $session->set('discount', $savedOrder->getDiscount());
             $session->set('price', $savedOrder->getPrice());
 
-            $session->set('activeFrom', $savedOrder->getActiveFrom());
+            $session->set('activeFrom', $savedOrder->getActiveFrom()->format('d.m.Y'));
             $session->set('vinCode', $savedOrder->getVinCode());
             $session->set('carNumber', $savedOrder->getCarNumber());
             $session->set('surname', $savedOrder->getSurname());
@@ -440,23 +441,21 @@ class DefaultController extends Controller
             $session->set('documentSerie', $savedOrder->getDocumentSerie());
             $session->set('documentNumber', $savedOrder->getDocumentNumber());
             $session->set('documentAuthority', $savedOrder->getDocumentAuthority());
-            $session->set('documentDate', $savedOrder->getDocumentDate());
+            $session->set('documentDate', $savedOrder->getDocumentDate()->format('d.m.Y'));
             $session->set('phone', $savedOrder->getPhone());
-            $session->set('region', $savedOrder->getCity()->getRegion());
-            $session->set('city', $savedOrder->getCity());
+            $session->set('region', $savedOrder->getCity()->getRegion()->getId());
+            $session->set('city', $savedOrder->getCity()->getId());
             $session->set('registerAddress', $savedOrder->getRegisterAddress());
             $session->set('registerBuilding', $savedOrder->getRegisterBuilding());
-            
-            $session->set('deliveryRegion', $savedOrder->getDeliveryCity()->getRegion());
-            $session->set('deliveryCity', $savedOrder->getDeliveryCity());
+
+            $session->set('deliveryRegion', $savedOrder->getDeliveryCity()->getRegion()->getId());
+            $session->set('deliveryCity', $savedOrder->getDeliveryCity()->getId());
             $session->set('deliveryAddress', $savedOrder->getDeliveryAddress());
             $session->set('deliveryBuilding', $savedOrder->getDeliveryBuilding());
             $session->set('phone', $savedOrder->getPhone());
             $session->set('payType', $savedOrder->getPayType());
-            $session->set('activity', $savedOrder->getActivity());
+            $session->set('activity', $savedOrder->getActive());
         }
-        
-        $session = $request->getSession();
         $region = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findOneById($session->get('region'));
         $regionId = $session->get('region');
         $cityId = $session->get('city');
@@ -526,9 +525,9 @@ class DefaultController extends Controller
                 }
 
                 $order->setInsuranceTerm($session->get('insuranceTerm'));
-                
+
                 $order->setTaxiUse(($session->get('taxiUse') == '1' ? 1 : 0));
-                
+
                 $order->setSumDgo($session->get('dgoSum'));
 
                 $order->setPriceDgo($session->get('priceDGO'));
@@ -592,7 +591,7 @@ class DefaultController extends Controller
                 $order->setDeliveryBuilding($session->get('deliveryBuilding'));
 
                 $order->setPayType($payType);
-                
+
                 $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneById($session->get('policy'));
                 if ($policy) {
                     $policy->setStatus(1);
@@ -624,7 +623,9 @@ class DefaultController extends Controller
             }
 
         $city = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findOneById($session->get('city'));
-        if (!isset($policy)) {
+        if ($session->get('policy') != null) {
+            $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneById($session->get('policy'));
+        } elseif (!isset($policy)) {
             $policy = $this->getDoctrine()->getRepository('InsuranceContentBundle:Policy')->findOneBy(
                 array(
                     'status' => 0,
@@ -877,7 +878,7 @@ class DefaultController extends Controller
             return false;
     }
 
-    public function cleanStoredDataAction(Request $request)
+    public function clearStoredDataAction(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
             $timerEnd = $request->getSession()->get('timerEnd');
@@ -893,12 +894,12 @@ class DefaultController extends Controller
     {
         $feedbackForm = $this->createForm(new FeedbackType());
         if ($request->getSession()->get('orderState') == 'success') {
-            $request->getSession()->clear();
+            //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
             $message = 'Ваш заказ принят!<br>Спасибо за то, что воспользовались нашими услугами!';
         } elseif ($request->getSession()->get('orderState') == 'delayed') {
-            $request->getSession()->clear();
+            //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
             $message = 'Ваш заказ сохранен!<br>На Ваш электронный адрес выслано письмо со ссылкой для завершения заказа.<br>Спасибо за то, что воспользовались нашими услугами!';
@@ -909,7 +910,7 @@ class DefaultController extends Controller
             'message' => $message,
         ));
     }
-    
+
     public function aboutAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());
@@ -918,7 +919,7 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
-    
+
     public function contactsAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());

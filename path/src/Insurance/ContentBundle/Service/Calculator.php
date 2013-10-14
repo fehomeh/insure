@@ -99,6 +99,7 @@ class Calculator {
         $k3Obj = $this->getRate($fields['experience'], 'experience');
         if ($k3Obj === null) $k3 = 1;
             else $k3 = $k3Obj->getValue();
+        if ($fields['term'] < 1 && $fields['term'] > 0) $fields['term'] = str_replace ('.', ',', $fields['term']);
         $k4Obj = $this->getRate($fields['term'], 'term');
         if ($k4Obj === null) $k4 = 1;
             else $k4 = $k4Obj->getValue();
