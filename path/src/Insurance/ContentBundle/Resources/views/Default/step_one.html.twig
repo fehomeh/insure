@@ -72,6 +72,7 @@ $(function() {
     $( "#amount" ).val( "$" + $( "#slider3" ).slider( "value" ) );
   });
 </script>
+
 {% endblock %}
 {% block content %}
 <section class="content">
@@ -79,7 +80,8 @@ $(function() {
                     <h1>Расчет стоимости полиса ОСАГО онлайн</h1>
                     <div class="orange_button clear_all">Очистить все</div>
                     <div class="calculator_content">
-                        <aside>
+					
+                        <aside class="">
                             <div class="sidebar_title">Стоимость полиса:</div>
                             <div class="before_calc show">
 							Здесь будет Ваш расчет.
@@ -114,7 +116,7 @@ $(function() {
                             <div class="orange_button save-calculation">Сохранить расчет</div>
 							</div>
                         </aside>
-                        <form autocomplete="off" action="{{path('step1')}}" method="POST" id="calculator-form">
+                        <form autocomplete="off" action="{{path('step1')}}" method="POST" id="calculator-form" class="">
                         <div class="category your_auto"><!-- .all_verified -->
                             <!-- title -->
                             <div class="category_title">
@@ -161,8 +163,7 @@ $(function() {
                             <div class="box_line model"{%if (carModel) is null %} style="display:none;"{% endif %}>
 
                                 <div class="param_name">Модель:</div>
-								<div class="fixed_pop_up">Выберите модель Вашего автомобиля
-                                </div>
+								
 
                                 <ul form-input-id="hCarModel" id="modelList" class="list">
                                     {% if models %}
@@ -239,9 +240,9 @@ $(function() {
                             <!-- -->
                             <div class="box_line place"{%if (app.session.get('registerRegion')) is null %} style="display:none;"{% endif %}>
                                 <div class="fixed_pop_up">
-                                    Выберите место регистрации транспортного средства
+                                    Выберите место регистрации Вашего автомобиля
                                 </div>
-                                <div class="param_name">Регистрация ТС:</div>
+                                <div class="param_name">Место регистрации:</div>
                                 <div class="combo one_column">
                                     <div class="current">{% if app.session.get('registerRegion') %}
                                         {% for region in regions%} {% if region.id == app.session.get('registerRegion')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif %}</div>
@@ -294,6 +295,9 @@ $(function() {
                             </div>
                             <!-- -->
                             <div class="box_line term">
+							<div class="fixed_pop_up">
+                                        Если Вы страхуетесь меньше чем на 8 месяцев, то скидка Бонус-Малус к сожалению не начисляется
+                                    </div>
                                 <div class="param_name">Срок страхования:</div>
                                 <div class="combo one_column">
                                     <div class="current">
@@ -351,6 +355,7 @@ $(function() {
                             </div>
                             <!-- -->
                             <div class="box_line taxi">
+							
                                 <div class="param_name">Сфера использования автомобиля:</div>
                                 <div class="control_point">
                                     <input type="radio" value="1" class="styled" name="taxiUse" id="taxiUse" {% if app.session.get('taxiUse') == 1 %}checked="checked"{% endif %} />
@@ -406,7 +411,7 @@ $(function() {
                                 <!-- -->
                                 <div class="box_line passengers">
                                     <div class="fixed_pop_up">
-                                        Lorem ipsum dolor sit amet
+                                        Вы можете застраховать водителя и пассажиров от несчастного случая
                                     </div>
                                     <input type="checkbox" class="styled" id="passenger" name="cbNS" value="yes" {% if app.session.get('nsSum')%} checked="checked"{% endif %}/>
                                     <label for="passenger">
