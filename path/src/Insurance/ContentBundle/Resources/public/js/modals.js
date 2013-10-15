@@ -57,7 +57,7 @@
 				overlay.data(pluginNamespace+'.options', options);
 
 				if(el) {
-					$(el).clone(true).appendTo(overlay).show();
+					$(el).clone(true).appendTo(overlay).fadeIn(1500);
 				}
 
 				if(localOptions.closeOnEsc) {
