@@ -45,7 +45,7 @@ $(document).ready(function(){
 	});
 
     $("ul.list li.last_visible").click(function () {
-		$(this).parents('ul.list').children("li.hidden").fadeIn(800);
+		$(this).parents('ul.list').children("li.hidden").fadeIn(500);
         $(this).css("display", "none");
 	});
 

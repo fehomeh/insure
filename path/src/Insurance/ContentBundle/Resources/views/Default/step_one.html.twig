@@ -567,7 +567,7 @@ $(function() {
 
     function calculateCommon() {
         $('.your_auto').addClass('all_verified');
-        $('.options').fadeIn(1000);
+        $('.options').fadeIn(500);
         $('#scrollbar4').tinyscrollbar({ sizethumb: 47 });
         $.ajax('{{ url('get_price') }}', {
             type: 'POST',
@@ -581,7 +581,7 @@ $(function() {
         }
         ).done(function(data) {
             window.commonPrice = data.price;
-            $('.before_calc').fadeOut(500).removeClass('show');
+            $('.before_calc').fadeOut(1000).removeClass('show');
             $('.calc .price.common').text(String(Number(data.price).toFixed(2)).replace('.', ','));
             $.ajax('{{ url('get_discount') }}', {
             type: 'POST',
