@@ -243,7 +243,7 @@
 {% endblock %}
     <script type="text/javascript">
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
-        $('.login_link').on('click', function(e) {alert(e.target.nodeName);
+        $('.login_link').on('click', function(e) {//alert(e.target.nodeName);
             $.ajax('{{path('fos_user_security_login')}}', {
                 type: 'GET'}).done(function (data){
                 $('body').append(data);
