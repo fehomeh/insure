@@ -56,7 +56,81 @@ form.modal_form .control_point input[type="email"] {
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
 
+/*------------------------------------------------------------------------------------------- */
+/*--------------------------------------- FOOTER -------------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+footer { 
+}
 
+footer .column.second {
+      width: 260px;
+      padding-left: 40px; }
+
+footer .column.third {
+      width: 370px;
+	  text-align: right;
+	  margin-right: 40px;
+	  font-size: 14px;
+	  
+	  }
+
+footer .column.third .title {
+}
+
+footer .column .third_down {
+      border-left: 1px solid #cbcbcb;
+	  margin-bottom: 35px;
+	  margin-top:0;
+	  box-shadow: 1px 0px 0px 0px rgba(255, 255, 255, 1.0) inset;
+	  }
+
+footer .column .email {
+      padding-bottom:5px;
+}
+
+footer .column.tel {
+
+}
+
+ footer .column .social_buttons {
+      margin-top: 15px;
+       
+	  }
+ footer .column .social_buttons a {
+        width: 50px;
+        height: 47px;
+        display: inline-block;
+        float: right;
+        margin-left: 3px; }	  
+
+        footer .column .social_buttons a.vk {
+          background-image: url(../images/sprite.png);
+          background-position: -68px -62px;
+          background-repeat: no-repeat;
+          background-color: transparent; }
+          footer .column .social_buttons a.vk:hover {
+            background-position: -18px -62px; }
+        footer .column .social_buttons a.fb {
+          background-image: url(../images/sprite.png);
+          background-position: -168px -62px;
+          background-repeat: no-repeat;
+          background-color: transparent; }
+          footer .column .social_buttons a.fb:hover {
+            background-position: -118px -62px; }
+        footer .column .social_buttons a.tw {
+          background-image: url(../images/sprite.png);
+          background-position: -268px -62px;
+          background-repeat: no-repeat;
+          background-color: transparent; }
+          footer .column .social_buttons a.tw:hover {
+            background-position: -218px -62px; }		
+		
+footer .bottom_part {
+    padding-bottom:15px; }
+		
+footer .bottom_part .counter_container {
+        margin-right: 40px;
+		}
 
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- INDEX --------------------------------------------- */
@@ -153,9 +227,11 @@ form.personal_data .control_point .error_text_box_quest {
 }
 
 .fixed_pop_up {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 17px;
   left: 680px;
+    width: 318px;
   background-color: #fceacc;
   }
 
