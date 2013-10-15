@@ -18,7 +18,8 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hDisplacement').val(displacement[ui.value]);
-        //$(this).parents('.box_line').trigger('click');
+        $(this).parents('.box_line').trigger('click');
+        $('.box_line.responsibility').trigger('click');
         $(this).parents('.box_line').removeClass('focus');
         $(this).parents('.box_line').next('.box_line').addClass('focus');
       }
@@ -41,7 +42,7 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hDGOSum').val(dgoValues[ui.value]);
-        //$(this).parents('.box_line').trigger('click');
+        $(this).parents('.box_line').trigger('click');
         $(this).parents('.box_line').removeClass('focus');
         $(this).parents('.box_line').next('.box_line').addClass('focus');
       }
@@ -64,7 +65,7 @@ $(function() {
       slide: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hNSSum').val(nsValues[ui.value]);
-        //$(this).parents('.box_line').trigger('click');
+        $(this).parents('.box_line').trigger('click');
         $(this).parents('.box_line').removeClass('focus');
         $(this).parents('.box_line').next('.box_line').addClass('focus');
       }
@@ -496,8 +497,6 @@ $(function() {
                 for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
                 opts += '<a class="change_link">изменить</a>';
                 $('#modelList').html(opts);
-                //Reinit plugins, events, etc cause of ajax load
-                $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
                 //$(".combo ul li").on('click', comboClick);
                 $('.change_link').on('click', loadModels);
                 selectModel();
@@ -521,6 +520,8 @@ $(function() {
                 $('.box_line').removeClass('focus');
                 $(this).parents('.box_line').next('.box_line').addClass('focus');
                 $(this).parents('.box_line').nextAll('.box_line').show();
+                //Reinit plugins, events, etc cause of ajax load
+                $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
                 var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
                 if (discount > 25) discount = 25;
                 if ($('#insuranceTerm').val() <=7) discount = 0;
@@ -787,7 +788,7 @@ $(function() {
         //FIRST OF ALL CHECK HASH AND if #clear exists clear all calculations
         if(window.location.hash == '#clear') clearForm();
     //handle checkboxes events to add/remove additional insurance
-    $('#respons').on('click', function(e){alert('a');
+    $('#respons').on('click', function(e){
         if ($(this).is(':checked')) {
             $(this).parents('.responsibility').find('.disabled_shadow').removeClass('show');
             $('.your_auto').find('.box_line').removeClass('focus');
@@ -881,6 +882,7 @@ $(function() {
             $.ajax('{{path('fos_user_registration_register')}}', {
             type: 'GET'
             }).done(function(data){
+                $('#register-form-container').html('');
                 $('#register-form-container').html(data);
                 if (Custom) Custom.init();
                 $('#registration_modal').modal().open();
@@ -931,7 +933,7 @@ $(function() {
     //Passengers count arrows events
     $('.arrow').on('click', function (){
         if ($(this).hasClass('plus')) {
-            $('#passengersCount').val(parseInt($('#passengersCount').val())+1);
+            if ($('#passengersCount').val() <= 7) $('#passengersCount').val(parseInt($('#passengersCount').val())+1);
         }
         else {
             if ($('#passengersCount').val() > 0)

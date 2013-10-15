@@ -243,12 +243,15 @@
 {% endblock %}
     <script type="text/javascript">
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
-        $('.login_link').on('click', function(e) {
+        $('.login_link').on('click', function(e) {//alert(e.target.nodeName);
             $.ajax('{{path('fos_user_security_login')}}', {
                 type: 'GET'}).done(function (data){
                 $('body').append(data);
                 $('#login_modal').css('display', 'none');
-                $('#login_modal').modal().open();
+                $('#login_modal').modal().open({
+                    closeOnEsc: false,
+                    closeOnOverlayClick: false
+                });
                 Custom.init();
                 //Reset password
                 $('.forget_pass').on('click', function (){
@@ -268,7 +271,7 @@
                         });
                         $('#pass_modal').modal().open({
                             closeOnEsc: false,
-                            closeOnOverlayClick: false,
+                            closeOnOverlayClick: false
                         });
                     });
                 });
