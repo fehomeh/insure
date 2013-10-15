@@ -782,7 +782,7 @@ $(function() {
         //FIRST OF ALL CHECK HASH AND if #clear exists clear all calculations
         if(window.location.hash == '#clear') clearForm();
     //handle checkboxes events to add/remove additional insurance
-    $('#respons').on('click', function(e){alert('a');
+    $('#respons').on('click', function(e){
         if ($(this).is(':checked')) {
             $(this).parents('.responsibility').find('.disabled_shadow').removeClass('show');
             $('.your_auto').find('.box_line').removeClass('focus');

@@ -295,10 +295,12 @@
         $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
         $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
     });
-    {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
-    $('.login_link').trigger('click');
+    {% if showLogin == true %}
+    $(document).ready(function () {
+        $('.login_link span').trigger('click');
+    });
     {% endif %}
-    
+
 </script>
 {% endblock%}
 {# block content %}

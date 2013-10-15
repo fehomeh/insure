@@ -657,6 +657,7 @@ class DefaultController extends Controller
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
             'policy' => $policy,
+            'showLogin' => !is_null($hash),
         ));
     }
     /**
