@@ -543,6 +543,7 @@ $(function() {
             var opts = '';
             for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
             $('#registerCityList').html(opts);
+            $(".combo ul li").unbind('click');
             $(".combo ul li").on('click', comboClick);
             $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
             $('#registerCityList li').on('click', selectCity);
