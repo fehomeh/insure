@@ -68,7 +68,7 @@ $(document).ready(function(){
         $(this).parents(".combo").addClass("active");
     });
     $(".combo ul li").on('click', comboClick);
-    $(".combo ul ul li").on('click', comboClick);
+    //$(".combo ul ul li").on('click', comboClick);
 
     $('html').click(function(e){
        var currentCombo = $('.combo.active');
