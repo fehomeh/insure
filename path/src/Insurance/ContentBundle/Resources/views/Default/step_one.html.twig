@@ -475,10 +475,10 @@ $(function() {
                 var inputEl = $(this).parents('ul').attr('form-input-id');
                 $('#'+inputEl).val($(this).attr('data-value'));
                 $(this).addClass('current');
-                $(this).parents('ul').find('li').not('.current, .chg').remove();
+                $(this).parents('ul').find('li').not('.current, .chg').fadeOut(400).remove();
                 $('.box_line').removeClass('focus');
                 $(this).parents('.box_line').next('.box_line').addClass('focus');
-                $(this).parents('.box_line').next('.box_line').show();
+                $(this).parents('.box_line').next('.box_line').fadeIn(400);
             }
         });
     }
@@ -502,7 +502,7 @@ $(function() {
                 selectModel();
                 $('.box_line').removeClass('focus');
                 $('#modelList').parents('.box_line').addClass('focus');
-                $('#modelList').parents('.box_line').show();
+                $('#modelList').parents('.box_line').fadeIn(400);
             });
         else {
             $('#carModel').html('<a class="change_link">изменить</a>');
@@ -519,7 +519,7 @@ $(function() {
             if (typeof $(this).attr('data-value') !== 'undefined') {
                 $('.box_line').removeClass('focus');
                 $(this).parents('.box_line').next('.box_line').addClass('focus');
-                $(this).parents('.box_line').nextAll('.box_line').show();
+                $(this).parents('.box_line').nextAll('.box_line').fadeIn(400);
                 //Reinit plugins, events, etc cause of ajax load
                 $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
                 var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
@@ -567,7 +567,7 @@ $(function() {
 
     function calculateCommon() {
         $('.your_auto').addClass('all_verified');
-        $('.options').fadeIn(500);
+        $('.options').fadeIn(1000);
         $('#scrollbar4').tinyscrollbar({ sizethumb: 47 });
         $.ajax('{{ url('get_price') }}', {
             type: 'POST',
@@ -581,7 +581,7 @@ $(function() {
         }
         ).done(function(data) {
             window.commonPrice = data.price;
-            $('.before_calc').fadeOut(1000).removeClass('show');
+            $('.before_calc').removeClass('show');
             $('.calc .price.common').text(String(Number(data.price).toFixed(2)).replace('.', ','));
             $.ajax('{{ url('get_discount') }}', {
             type: 'POST',
@@ -595,17 +595,17 @@ $(function() {
                 if (window.priceNs) pN = window.priceNs;
                 if (data.discount > 0 && data.discount < 1) {
                     $('.calc .discount .discount').text('- ' + (String(Number(discountSum).toFixed(2)).replace('.', ',')) + '');
-                    $('.calc .discount').fadeIn(400).removeClass('hidden');
+                    $('.calc .discount').fadeIn(300).removeClass('hidden');
                     //$('.calc .discount').show();
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
                     $('.discount span').text('-' + Math.round((1 - data.discount)*100) + '%');
                 } else {
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
-                    $('.calc .discount').fadeOut(400).addClass('hidden');
+                    $('.calc .discount').fadeOut(300).addClass('hidden');
                     //$('.calc .discount').hide();
                     $('.discount span').text(parseInt(window.discountSum) + '%');
                 }
-                $('.calc').fadeIn(500).addClass('show');
+                $('.calc').fadeIn(300).addClass('show');
             });
         });
     }
@@ -645,7 +645,7 @@ $(function() {
                     if (window.discountSum) dS = window.discountSum;
                     if (window.priceNs) pN = window.priceNs;
                     $('.calc .dgo').text(String((data.priceDgo.toFixed(2))).replace('.', ','));
-                    $('.calc .dgo').parents('.white_box').fadeIn(400).removeClass('hidden');
+                    $('.calc .dgo').parents('.white_box').fadeIn(300).removeClass('hidden');
                     $('.itog').text(String(((cP - dS) + data.priceDgo + pN).toFixed(2)).replace('.', ',') + ' грн.');
                 }
             });
@@ -655,7 +655,7 @@ $(function() {
         //if ($('#respons').is(':checked')) $('#respons').trigger('click');
         if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
         $('.price.dgo').text('');
-        $('.price.dgo').parents('.white_box').fadeOut(400).addClass('hidden');
+        $('.price.dgo').parents('.white_box').fadeOut(300).addClass('hidden');
         $('.box_line.responsibility').removeClass('focus');
         $('.responsibility').find('.disabled_shadow').addClass('show');
         var pN = 0;
@@ -694,7 +694,7 @@ $(function() {
                 if (window.discountSum) dS = window.discountSum;
                 if (window.priceDgo) pD = window.priceDgo;
                 $('.calc .ns').text(String((data.priceNs.toFixed(2))).replace('.', ','));
-                $('.calc .ns').parents('.white_box').fadeIn(400).removeClass('hidden');
+                $('.calc .ns').parents('.white_box').fadeIn(300).removeClass('hidden');
                 $('.itog').text(String(((cP - dS + pD) + data.priceNs).toFixed(2)).replace('.', ',') + ' грн.');
             };
         });
@@ -705,7 +705,7 @@ $(function() {
         if ($('#passenger').is(':checked')) $('#passenger').removeAttr('checked');
         $('.price.ns').text('');
         $('.box_line.passengers').removeClass('focus');
-        $('.price.ns').parents('.white_box').fadeOut(400).addClass('hidden');
+        $('.price.ns').parents('.white_box').fadeOut(300).addClass('hidden');
         $('.passengers').find('.disabled_shadow').addClass('show');
         var pD = 0;
         if (window.priceDgo) pD = window.priceDgo;
