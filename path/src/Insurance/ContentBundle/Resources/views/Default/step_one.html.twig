@@ -81,7 +81,7 @@ $(function() {
                     <h1>Расчет стоимости полиса ОСАГО онлайн</h1>
                     <div class="orange_button clear_all">Очистить все</div>
                     <div class="calculator_content">
-					
+
                         <aside class="">
                             <div class="sidebar_title">Стоимость полиса:</div>
                             <div class="before_calc show">
@@ -164,7 +164,7 @@ $(function() {
                             <div class="box_line model"{%if (carModel) is null %} style="display:none;"{% endif %}>
 
                                 <div class="param_name">Модель:</div>
-								
+
 
                                 <ul form-input-id="hCarModel" id="modelList" class="list">
                                     {% if models %}
@@ -356,7 +356,7 @@ $(function() {
                             </div>
                             <!-- -->
                             <div class="box_line taxi">
-							
+
                                 <div class="param_name">Сфера использования автомобиля:</div>
                                 <div class="control_point">
                                     <input type="radio" value="1" class="styled" name="taxiUse" id="taxiUse" {% if app.session.get('taxiUse') == 1 %}checked="checked"{% endif %} />
@@ -491,13 +491,14 @@ $(function() {
         $(this).parents('.box_line').next('.box_line').addClass('focus');
     }
 
-    function loadModels() {
+    function loadModels(e) {
         if ($('#carBrand').val()>0) $.get('{{path('get_car_models')}}', {brand_id: $('#carBrand').val()}).done(function (data) {
                 var opts = '';
                 for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
                 opts += '<a class="change_link">изменить</a>';
                 $('#modelList').html(opts);
                 //$(".combo ul li").on('click', comboClick);
+                $('.change_link').unbind('click');
                 $('.change_link').on('click', loadModels);
                 selectModel();
                 $('.box_line').removeClass('focus');
@@ -542,6 +543,7 @@ $(function() {
             var opts = '';
             for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
             $('#registerCityList').html(opts);
+            $(".combo ul li").unbind('click');
             $(".combo ul li").on('click', comboClick);
             $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
             $('#registerCityList li').on('click', selectCity);
@@ -572,6 +574,10 @@ $(function() {
         $.ajax('{{ url('get_price') }}', {
             type: 'POST',
             dataType: 'JSON',
+            beforeSend: function () {
+                if (window.commonInProgress) return false;
+                window.commonInProgress = true;
+            },
             data: {
                 registerCity: $('#registerCity').val(),
                 hDisplacement: $('#hDisplacement').val(),
@@ -580,14 +586,20 @@ $(function() {
             }
         }
         ).done(function(data) {
+            window.commonInProgress = false;
             window.commonPrice = data.price;
             $('.before_calc').removeClass('show');
             $('.calc .price.common').text(String(Number(data.price).toFixed(2)).replace('.', ','));
             $.ajax('{{ url('get_discount') }}', {
             type: 'POST',
             dataType: 'JSON',
+            beforeSend: function () {
+                if (window.discountInProgress) return false;
+                window.discountInProgress = true;
+            },
             data: { carAge: $('#carAge').val(), insuranceTerm: $('#insuranceTerm').val() }
             }).done(function (data) {
+                window.discountInProgress = false;
                 window.discountSum = ((1 - data.discount)*commonPrice);
                 var pD = 0;
                 var pN = 0;
