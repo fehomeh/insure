@@ -455,7 +455,8 @@ class DefaultController extends Controller
             $session->set('phone', $savedOrder->getPhone());
             $session->set('payType', $savedOrder->getPayType());
             $session->set('activity', $savedOrder->getActive());
-        }
+            $needAuth = false;
+        } else $needAuth = true;
         $region = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findOneById($session->get('region'));
         $regionId = $session->get('region');
         $cityId = $session->get('city');
@@ -657,7 +658,7 @@ class DefaultController extends Controller
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
             'policy' => $policy,
-            'showLogin' => !is_null($hash),
+            'showLogin' => $needAuth,
         ));
     }
     /**

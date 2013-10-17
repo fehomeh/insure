@@ -890,17 +890,17 @@ $(function() {
                 });
         {% else %}
         function registerFormShow(){
-            $('#login_modal').modal().open();
             $.ajax('{{path('fos_user_registration_register')}}', {
             type: 'GET'
             }).done(function(data){
-                $('#register-form-container').html('');
-                $('#register-form-container').html(data);
-                if (Custom) Custom.init();
+                if ($('.fos_user_registration_register').length == 1)
+                    $('.fos_user_registration_register').replaceWith(data);
+                else
+                    $('#register-form-container').append(data);
                 $('#registration_modal').modal().open();
+                if (Custom) Custom.init();
                 $('.green_button.register').on('click', function(){
                     var form = $('.fos_user_registration_register');
-
                     $.ajax($(form).attr('action'), {
                         data: form.serialize(),
                         type: 'POST'
@@ -917,10 +917,7 @@ $(function() {
                         } else {
                             $('#register-form-container').html(data);
                             registerFormShow();
-                            if (Custom) Custom.init();
-                            $('#registration_modal').modal().open();
                         }
-
                     });
                 });
             });
