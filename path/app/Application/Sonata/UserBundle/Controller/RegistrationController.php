@@ -27,9 +27,10 @@ class RegistrationController extends BaseController
             }
 
             $this->setFlash('fos_user_success', 'registration.flash.user_created');
-            $url = $this->container->get('router')->generate($route);
-            $response = new RedirectResponse($url);
-
+            //$url = $this->container->get('router')->generate($route);
+            //$response = new RedirectResponse($url);
+            $response = new Response(json_encode(array('message' => 'success')));
+            $response->headers->set('Content-Type', 'application/json');
             if ($authUser) {
                 $this->authenticateUser($user, $response);
             }
