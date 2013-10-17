@@ -296,8 +296,10 @@
         $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
     });
     {% if showLogin == true %}
-    $(document).ready(function () {
-        $('.login_link span').trigger('click');
+    $(document).ready(function (e) {
+        loginFormShow(e, function () {
+            location.reload();
+        });
     });
     {% endif %}
 

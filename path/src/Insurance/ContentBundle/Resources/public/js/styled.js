@@ -37,6 +37,10 @@ var Custom = {
 	init: function() {
 		var inputs = document.getElementsByTagName("input"), span = Array(), textnode, option, active;
 		for(a = 0; a < inputs.length; a++) {
+            if (inputs[a].previousSibling.tagName == 'SPAN' && (hasClass(inputs[a].previousSibling, 'checkbox') || hasClass(inputs[a].previousSibling, 'radio'))) 
+            {
+                continue;
+            }
 			if((inputs[a].type == "checkbox" && !hasClass(inputs[a].previousSibling, "checkbox")) || (inputs[a].type == "radio" && !hasClass(inputs[a].previousSibling, "radio")) && hasClass(inputs[a], "styled")) {
 				span[a] = document.createElement("span");
 				span[a].className = inputs[a].type;
@@ -62,6 +66,7 @@ var Custom = {
 		}
 		inputs = document.getElementsByTagName("select");
 		for(a = 0; a < inputs.length; a++) {
+            if (inputs[a].previousSibling.tagName == 'SPAN' && hasClass(inputs[a].previousSibling, 'select')) continue;
 			if(hasClass(inputs[a], "styled") && !hasClass(inputs[a].previousSibling, "select")) {
 				option = inputs[a].getElementsByTagName("option");
                 active = option[0].childNodes[0].nodeValue;
@@ -84,9 +89,9 @@ var Custom = {
 
 			}
 		}
-		document.onmouseup = Custom.clear;
+		//document.onmouseup = Custom.clear;
 	},
-	pushed: function() {
+	pushed: function(e) {
 		element = this.nextSibling;
 		if(element.checked == true && element.type == "checkbox") {
 			this.style.backgroundPosition = "0 -" + checkboxHeight*3 + "px";
@@ -98,7 +103,7 @@ var Custom = {
 			this.style.backgroundPosition = "0 -" + radioHeight + "px";
 		}
 	},
-	check: function() {
+	check: function(e) {
 		element = this.nextSibling;
 		if(element.checked == true && element.type == "checkbox") {
 			this.style.backgroundPosition = "0 0";
@@ -140,7 +145,10 @@ var Custom = {
 				document.getElementById("select" + this.id).childNodes[0].nodeValue = option[d].childNodes[0].nodeValue;
 			}
 		}
-	}
+	},
+    reinit: function() {
+        
+    }
 }
 function hasClass(el, cls) {
     if(null == el || el.className == undefined) {

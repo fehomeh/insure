@@ -243,10 +243,13 @@
 {% endblock %}
     <script type="text/javascript">
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
-        $('.login_link').on('click', function(e) {//alert(e.target.nodeName);
+        function loginFormShow(e, callbackF) {
             $.ajax('{{path('fos_user_security_login')}}', {
                 type: 'GET'}).done(function (data){
-                $('body').append(data);
+                if ($('#login_modal').length == 1)
+                    $('#login_modal').replaceWith(data);
+                else 
+                    $('body').append(data);
                 $('#login_modal').css('display', 'none');
                 $('#login_modal').modal().open({
                     closeOnEsc: false,
@@ -292,6 +295,7 @@
                         if (typeof data.email !== 'undefined') {
                             $('.login-area').html('<div class="personal_office login_link"><span></span><a href="{{path('fos_user_security_logout')}}">Выйти</a></div>');
                             $.modal().close();
+                            if (typeof callbackF === 'function') callbackF();
                             //If we on calculator page than change order button behaviour
                             $('.form_now').unbind('click');
                             $('.form_now').on('click', function(){
@@ -311,7 +315,8 @@
                     });
                 });
             })//End of ajax
-        });//End of click
+        }
+     $('.login_link').on('click', loginFormShow);
         {% endif %}
         $('.green_button').on('click', function (){
         var errors = 0;
