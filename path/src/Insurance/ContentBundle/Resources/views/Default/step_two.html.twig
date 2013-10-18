@@ -28,9 +28,8 @@
                         <div class="sum">
                             {{(app.session.get('price') + app.session.get('priceDGO') + app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.
                             <div class="question_ico">
-                                <div class="pop_up">
-                                    <div class="popup_title">Lorem ipsum dolor sit amet</div>
-                                    Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                                <div class="pop_up_total">
+                                    Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
                                 </div>
                             </div>
                         </div>
@@ -43,6 +42,9 @@
                         <div class="grey_area polis_date">
                             <div class="label">Полис начнет действовать:</div>
                             <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ 'now'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
+							<div class="pop_up_date">
+                                    <b>Полис может начать действовать начиная с послезавтра.</b> Если Вам нужен полис уже на "сегодня-завтра", пожалуйста свяжитесь с нами для согласования.
+                                </div>
                         </div>
                         <!-- auto_info -->
                         <div class="grey_area auto_info">
