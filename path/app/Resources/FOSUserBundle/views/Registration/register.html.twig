@@ -58,16 +58,18 @@ $('.green_button.register').on('click', function(){
     var errorsPresent = false;
     if (!$(form).find('#fos_user_registration_form_email').val().match(/[a-zA-Z]+[a-zA-Z0-9.]*@[a-zA-Z]+\..*[a-zA-Z]{2,4}/)) {
         $(form).find('#fos_user_registration_form_email').parents('.control_point').addClass('error');
-        $(form).find('#fos_user_registration_form_email').nextAll('.error_text').text('Неправильный формат e-mail,');
+        $(form).find('#fos_user_registration_form_email').parents('.control_point').removeClass('success');
+        $(form).find('#fos_user_registration_form_email').nextAll('.error_text').text('Неправильный формат e-mail');
         errors.fos_user_registration_form_email = true;
     } else {
         $(form).find('#fos_user_registration_form_email').parents('.control_point').addClass('success');
-        $(form).find('#fos_user_registration_form_email').parents('.control_point').removeClass('success');
+        $(form).find('#fos_user_registration_form_email').parents('.control_point').removeClass('error');
     }
 
     if ($(form).find('#fos_user_registration_form_firstname').val().length == 0) {
         $(form).find('#fos_user_registration_form_firstname').parents('.control_point').addClass('error');
-        $(form).find('#fos_user_registration_form_firstname').nextAll('.error_text').text('Имя не должно быть пустым,');
+        $(form).find('#fos_user_registration_form_firstname').parents('.control_point').removeClass('success');
+        $(form).find('#fos_user_registration_form_firstname').nextAll('.error_text').text('Имя не должно быть пустым');
         errors.fos_user_registration_form_firstname = true;
     } else {
         $(form).find('#fos_user_registration_form_firstname').parents('.control_point').addClass('success');
@@ -76,7 +78,8 @@ $('.green_button.register').on('click', function(){
 
     if ($(form).find('#fos_user_registration_form_plainPassword_first').val().length == 0) {
         $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').addClass('error');
-        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Пароль не должен быть пустым,');
+        $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').removeClass('success');
+        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Пароль не должен быть пустым');
         errors.fos_user_registration_form_plainPassword_first = true;
     } else if (
     $(form).find('#fos_user_registration_form_plainPassword_first').val() != $(form).find('#fos_user_registration_form_plainPassword_second').val()
@@ -87,8 +90,8 @@ $('.green_button.register').on('click', function(){
         $(form).find('#fos_user_registration_form_plainPassword_second').parents('.control_point').addClass('error');
         $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').removeClass('success');
         $(form).find('#fos_user_registration_form_plainPassword_second').parents('.control_point').removeClass('success');
-        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Пароли не совпадают,');
-        $(form).find('#fos_user_registration_form_plainPassword_second').nextAll('.error_text').text('Пароли не совпадают,');
+        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Пароли не совпадают');
+        $(form).find('#fos_user_registration_form_plainPassword_second').nextAll('.error_text').text('Пароли не совпадают');
         errors.fos_user_registration_form_plainPassword_second = true;
     } else {
         $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').addClass('success');
@@ -99,8 +102,10 @@ $('.green_button.register').on('click', function(){
 
     if (!$(form).find('#accept').is(':checked')) {
         $(form).find('#accept').parents('.control_point').addClass('error');
+        $(form).find('#accept').parents('.control_point').removeClass('success');
         errors.accept = true;
     } else {
+        $(form).find('#accept').parents('.control_point').addClass('success');
         $(form).find('#accept').parents('.control_point').removeClass('error');
     }
     for (v in errors) {
@@ -110,7 +115,7 @@ $('.green_button.register').on('click', function(){
         $.ajax($(form).attr('action'), {
             data: form.serialize(),
             type: 'POST'
-        }).done(function(data){ console.log('ajaxdone');
+        }).done(function(data){
             //On success we will get JSON object with message, on failure we must pull html to form container again and reinit Custom
             if (typeof data === 'object' && data.message == 'success') {
                 //Process form data
@@ -132,4 +137,5 @@ $('.modal .close').on('click', function(e){
     e.preventDefault();
     $.modal().close();
 });
+$('.login_link_box .login_link').on('click', loginFormShow);
 </script>
