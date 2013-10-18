@@ -664,8 +664,8 @@ $(function() {
     }
 
     function removeDGO() {
-        //if ($('#respons').is(':checked')) $('#respons').trigger('click');
-        if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
+        if ($('#respons').is(':checked')) $('#respons').trigger('click');
+        //if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
         $('.price.dgo').text('');
         $('.price.dgo').parents('.white_box').fadeOut(400).addClass('hidden');
         $('.box_line.responsibility').removeClass('focus');
@@ -713,8 +713,8 @@ $(function() {
     }
 
     function removeNS() {
-        //if ($('#passenger').is(':checked')) $('#passenger').trigger('click');
-        if ($('#passenger').is(':checked')) $('#passenger').removeAttr('checked');
+        if ($('#passenger').is(':checked')) $('#passenger').trigger('click');
+        //if ($('#passenger').is(':checked')) $('#passenger').removeAttr('checked');
         $('.price.ns').text('');
         $('.box_line.passengers').removeClass('focus');
         $('.price.ns').parents('.white_box').fadeOut(400).addClass('hidden');
