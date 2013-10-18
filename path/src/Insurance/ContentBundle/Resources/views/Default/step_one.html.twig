@@ -664,8 +664,8 @@ $(function() {
     }
 
     function removeDGO() {
-        //if ($('#respons').is(':checked')) $('#respons').trigger('click');
-        if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
+        if ($('#respons').is(':checked')) $('#respons').trigger('click');
+        //if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
         $('.price.dgo').text('');
         $('.price.dgo').parents('.white_box').fadeOut(300).addClass('hidden');
         $('.box_line.responsibility').removeClass('focus');
@@ -713,8 +713,8 @@ $(function() {
     }
 
     function removeNS() {
-        //if ($('#passenger').is(':checked')) $('#passenger').trigger('click');
-        if ($('#passenger').is(':checked')) $('#passenger').removeAttr('checked');
+        if ($('#passenger').is(':checked')) $('#passenger').trigger('click');
+        //if ($('#passenger').is(':checked')) $('#passenger').removeAttr('checked');
         $('.price.ns').text('');
         $('.box_line.passengers').removeClass('focus');
         $('.price.ns').parents('.white_box').fadeOut(300).addClass('hidden');
@@ -893,33 +893,12 @@ $(function() {
             $.ajax('{{path('fos_user_registration_register')}}', {
             type: 'GET'
             }).done(function(data){
-                if ($('.fos_user_registration_register').length == 1)
-                    $('.fos_user_registration_register').replaceWith(data);
+                if ($('#registration_modal').length == 1)
+                    $('#registration_modal').replaceWith(data);
                 else
-                    $('#register-form-container').append(data);
+                    $('body').append(data);
                 $('#registration_modal').modal().open();
                 if (Custom) Custom.init();
-                $('.green_button.register').on('click', function(){
-                    var form = $('.fos_user_registration_register');
-                    $.ajax($(form).attr('action'), {
-                        data: form.serialize(),
-                        type: 'POST'
-                    }).done(function(data){
-                        //On success we will get JSON object with message, on failure we must pull html to form container again and reinit Custom
-                        if (data.message != 'error') {
-                            //Process form data
-                            $.ajax('{{path('step1')}}', {
-                            type: 'POST',
-                            data: $('#calculator-form').serialize()
-                            }).done(function(data){
-                            if (data.message != 'error') window.location = '{{path('step2')}}';
-                            });
-                        } else {
-                            $('#register-form-container').html(data);
-                            registerFormShow();
-                        }
-                    });
-                });
             });
         }
         //Registration form load

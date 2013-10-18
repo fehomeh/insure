@@ -24,37 +24,15 @@
 {% endblock %}
 <script type="text/javascript">
 	jQuery(function($){
-		// bind event handlers to modal triggers
-		$('body').on('click', '.registration_link', function(e){
-			e.preventDefault();
-			$('#registration_modal').modal().open();
-		});
-
-        // bind event handlers to modal triggers
-		/*$('body').on('click', '.login_link', function(e){
-			e.preventDefault();
-			$('#login_modal').modal().open();
-		});*/
-
-        // bind event handlers to modal triggers
-		/*$('body').on('click', '.pass_link', function(e){
-			e.preventDefault();
-			$('#pass_modal').modal().open();
-		});*/
-
-        // bind event handlers to modal triggers
 		$('body').on('click', '.call_link', function(e){
 			e.preventDefault();
 			$('#call_modal').modal().open();
 		});
 
-        // bind event handlers to modal triggers
 		$('body').on('click', '.question_link', function(e){
 			e.preventDefault();
 			$('#question_modal').modal().open();
 		});
-
-		// attach modal close handler
 		$('.modal .close').on('click', function(e){
 			e.preventDefault();
 			$.modal().close();
@@ -172,7 +150,7 @@
                     <div style="clear: both;"></div>
 					</div>
                 </div>
-            
+
             <div style="clear: both;"></div>
          </div>
          <div class="bottom_part">
@@ -184,19 +162,6 @@
             </div>
          </div>
     </footer>
-
-
-<!-- REGISTRATION MODAL -->
-<div class="modal" id="registration_modal" style="display: none;">
-    <div class="close"></div>
-    <div class="sub_text">Для оформления полиса Вы будете вводить персональные данные. Для защищенного хранения этих данных, а также безопасного доступа к ним, пройдите пожалуйста простейшую регистрацию.</div>
-    <div class="login_link_box">Если вы уже регистрировались, <span class="login_link">войдите под своим именем</span></div>
-    <!--<div class="social">
-        <a href="" class="vk">Регистрация через VK</a>
-        <a href="" class="fb">Регистрация через FB</a>
-    </div>-->
-    <div id="register-form-container"></div>
-</div>
 
 <!-- PASS MODAL -->
 <div class="modal" id="pass_modal" style="display: none;">
@@ -248,7 +213,7 @@
                 type: 'GET'}).done(function (data){
                 if ($('#login_modal').length == 1)
                     $('#login_modal').replaceWith(data);
-                else 
+                else
                     $('body').append(data);
                 $('#login_modal').css('display', 'none');
                 $('#login_modal').modal().open({

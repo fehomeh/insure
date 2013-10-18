@@ -59,7 +59,7 @@ form.modal_form .control_point input[type="email"] {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- FOOTER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
-footer { 
+footer {
 }
 
 footer .column.second {
@@ -71,7 +71,7 @@ footer .column.third {
 	  text-align: right;
 	  margin-right: 40px;
 	  font-size: 14px;
-	  
+
 	  }
 
 footer .column.third .title {
@@ -94,14 +94,14 @@ footer .column.tel {
 
  footer .column .social_buttons {
       margin-top: 15px;
-       
+
 	  }
  footer .column .social_buttons a {
         width: 50px;
         height: 47px;
         display: inline-block;
         float: right;
-        margin-left: 3px; }	  
+        margin-left: 3px; }
 
         footer .column .social_buttons a.vk {
           background-image: url(../images/sprite.png);
@@ -123,11 +123,11 @@ footer .column.tel {
           background-repeat: no-repeat;
           background-color: transparent; }
           footer .column .social_buttons a.tw:hover {
-            background-position: -218px -62px; }		
-		
+            background-position: -218px -62px; }
+
 footer .bottom_part {
     padding-bottom:15px; }
-		
+
 footer .bottom_part .counter_container {
         margin-right: 40px;
 		}
@@ -177,7 +177,7 @@ form.modal_form .control_point input[type="email"] {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
 
-form.personal_data .control_point .error_text_box_quest {
+form.personal_data .control_point .error_text_box_quest, .fos_user_registration_register .control_point .error_text_box_quest{
       border-radius: 3px;
       -webkit-border-radius: 3px;
       -moz-border-radius: 3px;
@@ -192,7 +192,7 @@ form.personal_data .control_point .error_text_box_quest {
       background-color: #e73636;
       z-index: 3;
       display: none; }
-      form.personal_data .control_point .error_text_box_quest:before {
+      form.personal_data .control_point .error_text_box_quest:before, .fos_user_registration_register .control_point .error_text_box_quest:before {
         content: "";
         border-bottom: 8px solid #e73636;
         border-left: 8px solid rgba(0, 0, 0, 0);
