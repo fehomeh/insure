@@ -3,6 +3,20 @@
 <script>
 var end_time = '{{timerEnd}}';
 </script>
+<script type="text/javascript">
+jQuery(function(){
+ $("#Go_Top").hide().removeAttr("href");
+ if ($(window).scrollTop()>="550") $("#Go_Top").fadeIn("slow")
+ $(window).scroll(function(){
+  if ($(window).scrollTop()<="550") $("#Go_Top").fadeOut("slow")
+  else $("#Go_Top").fadeIn("slow")
+ });
+
+ $("#Go_Top").click(function(){
+  $("html, body").animate({scrollTop:0},"slow")
+ })
+});
+</script>
 {% endblock %}
 {% block content %}
         <section class="content">
@@ -220,6 +234,9 @@ var end_time = '{{timerEnd}}';
             <div class="footer-push"></div>
         </section>
     </section>
+	<a href='#' id='Go_Top'>
+ <img src="{{asset('bundles/insurancecontent/images/go_up.png')}}" alt="Наверх" title="Наверх"><br/>
+</a>
 <script type="text/javascript">
 $('#region').on('change', function (e){
   if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {

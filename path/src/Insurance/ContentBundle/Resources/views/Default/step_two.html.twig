@@ -52,28 +52,28 @@
                             <div class="title">
                                 <div class="label">Автомобиль:</div>
                                 <div class="auto">{{carBrand}} {{carModel}}, {% if app.session.get('displacement') == '1.4' %}до 1.6 л.,
-                                {%- elseif app.session.get('displacement') == '1.7' -%}1.601 - 2 л.,
-                                {%- elseif app.session.get('displacement') == '2.1' -%}2.01 - 3 л.,
-                                {%- elseif app.session.get('displacement') == '3.1' -%}больше 3 л.{% endif %} {{app.session.get('carAge')}} года выпуска</div>
+                                {%- elseif app.session.get('displacement') == '1.7' -%}1.6 - 2.0 л.,
+                                {%- elseif app.session.get('displacement') == '2.1' -%}2.0 - 3.0 л.,
+                                {%- elseif app.session.get('displacement') == '3.1' -%}больше 3.0 л.{% endif %} {{app.session.get('carAge')}} года выпуска</div>
                                 <div class="change"><a href="{{path('step1')}}">Изменить</a></div>
                                 <div style="clear: both;"></div>
                             </div>
                             <div class="line">
-                                <div class="param">VIN-код:<sup>*</sup></div>
+                                <div class="param">VIN-код:</div>
                                 <div class="control_point size3">
-                                    <input type="text" name="vinCode" id="vinCode" value="{{ app.session.get('vinCode')}}"/>
+                                    <input type="text" name="vinCode" id="vinCode" placeholder="Пример: ZFA22300005556777" value="{{ app.session.get('vinCode')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">VIN-код должен состоять из 17-ти символов</div>
+                                    <div class="error_text_box">Неправильный формат VIN-кода. Должно быть 17 символов.</div>
                                 </div>
                             </div>
                             <div class="line">
                                 <div class="param">Номерной знак:</div>
                                 <div class="control_point size3">
-                                    <input type="text" name="carNumber" id="carNumber" value="{{ app.session.get('carNumber')}}"/>
+                                    <input type="text" name="carNumber" id="carNumber" placeholder="Пример: АА6801КЕ" value="{{ app.session.get('carNumber')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">В номерном знаке должно быть минимум 7 символов</div>
+                                    <div class="error_text_box">Неправильный формат номерного знака. Должно быть минимум 7 символов без пробелов.</div>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                                             </div>
                                         </div>
                                     </label>
-                                    <div class="error_text_box_quest">Вы должны принять условия пользовательского соглашения</div>
+                                    <div class="error_text_box_quest">Пожалуйста, подтвердите согласие на обработку персональных данных.</div>
                                 </div>
                             </div>
                             <!-- -->
