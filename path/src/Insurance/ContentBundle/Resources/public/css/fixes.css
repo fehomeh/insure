@@ -67,9 +67,9 @@ footer .column.second {
       padding-left: 40px; }
 
 footer .column.third {
-      width: 370px;
+      width: 360px;
 	  text-align: right;
-	  margin-right: 50px;
+	  margin-right: 60px;
 	  font-size: 14px;
 
 	  }
@@ -129,7 +129,7 @@ footer .bottom_part {
     padding-bottom:15px; }
 
 footer .bottom_part .counter_container {
-        margin-right: 40px;
+        margin-right: 60px;
 		}
 
 /*------------------------------------------------------------------------------------------- */
@@ -147,6 +147,9 @@ footer .bottom_part .counter_container {
 .calculator_box .calculator .title {
       line-height: 52px;}
 
+ .calculator_box .calculator .calculate span {	  
+	  margin-right: 8px;
+	  }
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- COMBO --------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -165,6 +168,64 @@ footer .bottom_part .counter_container {
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); }
 
+/*------------------------------------------------------------------------------------------- */
+/*--------------------------------------- ECONOM BOX ---------------------------------------- */
+/*------------------------------------------------------------------------------------------- */  
+.advantages .adv_point {
+    padding-left: 85px; 
+	margin: 0 15px 50px 0;}
+
+.adv_point.rightt /*дубль символа из-за повторного класса*/ {
+    margin: 0 0px 50px 15px;
+	width: 285px;
+	}
+
+.question .question_point.phone {
+    width: 300px;
+    margin: 0 0px 10px 0;}
+
+.question .question_point.call {
+    width: 340px;
+    margin: 0 0px 10px 0;
+	}
+
+.question .question_point.ask {
+    display: inline-block;
+    float: left;
+    min-height: 65px;
+    margin: 0 0px 10px 0;
+   
+    position: relative;
+    padding-left: 85px; }  
+.question .question_point.phone .ico {
+      background-position: 0 -314px; }
+    .question .question_point.phone:hover .ico {
+      background-position: -65px -314px; }
+    .question .question_point.call .ico {
+      background-position: -130px -314px; }
+    .question .question_point.call:hover .ico {
+      background-position: -195px -314px; }
+    .question .question_point.ask .ico {
+      background-position: -260px -314px; }
+    .question .question_point.ask:hover .ico {
+      background-position: -325px -314px; }
+    .question .question_point .title {
+      font-family: "robotoBlack", Helvetica, sans-serif;
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 22px;
+      color: #2c2a22; }
+      .question .question_point .title span {
+        font-weight: 400;
+        font-size: 22px;
+        color: #2c2a22; }
+    .question .question_point .text {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: black;
+      width: 185px; }  
+  
+  
 /*------------------------------------------------------------------------------------------- */
 /*-----------------------------------  MODAL GENERAL ---------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
