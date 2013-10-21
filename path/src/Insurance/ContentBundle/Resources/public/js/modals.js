@@ -53,11 +53,11 @@
 				
 				lockContainer();
 
-				var overlay = $('<div/>').fadeIn('slow').addClass(localOptions.overlayClass).prependTo('body');
+				var overlay = $('<div/>').fadeIn(500).addClass(localOptions.overlayClass).prependTo('body');
 				overlay.data(pluginNamespace+'.options', options);
 
 				if(el) {
-					$(el).clone(true).appendTo(overlay).fadeIn(700);
+					$(el).clone(true).appendTo(overlay).fadeIn(500);
 				}
 
 				if(localOptions.closeOnEsc) {
@@ -93,19 +93,19 @@
 				var localOptions = $.extend({}, defaults, options);
 				var overlay = $('.' + localOptions.overlayClass);
 				$.extend(localOptions, overlay.data(pluginNamespace+'.options'));
-                overlay.fadeOut(700, function () {
-				    overlay.remove();
+				  overlay.fadeOut(500, function () {
+					overlay.remove(); 
 				    unlockContainer();
-                
-				    if(localOptions.closeOnEsc) {
+                    
+
+					if(localOptions.closeOnEsc) {
 					$(document).unbind('keyup.'+pluginNamespace);
 				    }
 
 				    if(localOptions.onClose) {
 					localOptions.onClose(overlay, localOptions);
 				    }
-				}
-			    );
+				});
 			}
 		};
 	}

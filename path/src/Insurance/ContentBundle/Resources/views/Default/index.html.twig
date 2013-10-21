@@ -3,6 +3,20 @@
 <script>
 var end_time = '{{timerEnd}}';
 </script>
+<script type="text/javascript">
+jQuery(function(){
+ $("#Go_Top").hide().removeAttr("href");
+ if ($(window).scrollTop()>="550") $("#Go_Top").fadeIn("slow")
+ $(window).scroll(function(){
+  if ($(window).scrollTop()<="550") $("#Go_Top").fadeOut("slow")
+  else $("#Go_Top").fadeIn("slow")
+ });
+
+ $("#Go_Top").click(function(){
+  $("html, body").animate({scrollTop:0},"slow")
+ })
+});
+</script>
 {% endblock %}
 {% block content %}
         <section class="content">
@@ -91,7 +105,7 @@ var end_time = '{{timerEnd}}';
                                 	</div>
                                     <input type="hidden" value="{% if (carModel)%}{{carModel}}{% endif %}" id="carModel" name="carModel" />
                                 </div>
-                                        <div class="calculate">рассчитать</div>
+                                        <div class="calculate"><span></span>рассчитать</div>
                             </form>
                         </div>
                     </div>
@@ -146,10 +160,10 @@ var end_time = '{{timerEnd}}';
                             <div class="title">Моментальный расчет</div>
                             <div class="text">Наш сервис позволяет рассчитать стоимость полиса страхования в реальном времени</div>
                         </div>
-                        <div class="adv_point">
-                            <div class="ico smile"></div>
-                            <div class="title">Простота и удобство</div>
-                            <div class="text">Осторожно! Даже ребенок сможет оформить и оплатить полис на нашем сайте</div>
+						<div class="adv_point rightt">
+                            <div class="ico protect"></div>
+                            <div class="title">Надежность</div>
+                            <div class="text">Мы работаем только с самыми надежными страховыми компаниями, лидерами рынка</div>
                         </div>
                         <div class="adv_point">
                             <div class="ico dollar"></div>
@@ -157,11 +171,11 @@ var end_time = '{{timerEnd}}';
                             <div class="text">Наш сервис показывает только реальную стоимость полиса, без всяких обманов и уловок.</div>
                         </div>
                         <div class="adv_point">
-                            <div class="ico protect"></div>
-                            <div class="title">Надежность</div>
-                            <div class="text">Мы работаем только с самыми надежными страховыми компаниями, лидерами рынка</div>
+                            <div class="ico smile"></div>
+                            <div class="title">Простота и удобство</div>
+                            <div class="text">Осторожно! Даже ребенок сможет оформить и оплатить полис на нашем сайте</div>
                         </div>
-                        <div class="adv_point">
+                        <div class="adv_point rightt">
                             <div class="ico delivery"></div>
                             <div class="title">Бесплатная доставка</div>
                             <div class="text">Мы доставим заказаный Вами полис в любую точку Украины совершенно бесплатно</div>
@@ -220,6 +234,9 @@ var end_time = '{{timerEnd}}';
             <div class="footer-push"></div>
         </section>
     </section>
+	<a href='#' id='Go_Top'>
+ <img src="{{asset('bundles/insurancecontent/images/go_up.png')}}" alt="Наверх" title="Наверх"><br/>
+</a>
 <script type="text/javascript">
 $('#region').on('change', function (e){
   if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {

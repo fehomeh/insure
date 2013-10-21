@@ -28,9 +28,8 @@
                         <div class="sum">
                             {{(app.session.get('price') + app.session.get('priceDGO') + app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.
                             <div class="question_ico">
-                                <div class="pop_up">
-                                    <div class="popup_title">Lorem ipsum dolor sit amet</div>
-                                    Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                                <div class="pop_up_total">
+                                    Это общая сумма Вашего заказа, в том числе скидка если возраст Вашего автомобиля больше 1 года.
                                 </div>
                             </div>
                         </div>
@@ -42,32 +41,39 @@
                         <!-- polis_date -->
                         <div class="grey_area polis_date">
                             <div class="label">Полис начнет действовать:</div>
-                            <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ 'now'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
+                            <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ '+2 days'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
+							<div class="pop_up_date">
+                                    <b>Полис может начать действовать начиная с послезавтра.</b> Если Вам нужен полис уже на "сегодня-завтра", пожалуйста свяжитесь с нами для согласования.
+                                </div>
+
                         </div>
                         <!-- auto_info -->
                         <div class="grey_area auto_info">
                             <div class="title">
                                 <div class="label">Автомобиль:</div>
-                                <div class="auto">{{carBrand}} {{carModel}}, {{app.session.get('displacement')}}л, {{app.session.get('carAge')}} года выпуска</div>
+                                <div class="auto">{{carBrand}} {{carModel}}, {% if app.session.get('displacement') == '1.4' %}до 1.6 л.,
+                                {%- elseif app.session.get('displacement') == '1.7' -%}1.6 - 2.0 л.,
+                                {%- elseif app.session.get('displacement') == '2.1' -%}2.0 - 3.0 л.,
+                                {%- elseif app.session.get('displacement') == '3.1' -%}больше 3.0 л.{% endif %} {{app.session.get('carAge')}} года выпуска</div>
                                 <div class="change"><a href="{{path('step1')}}">Изменить</a></div>
                                 <div style="clear: both;"></div>
                             </div>
                             <div class="line">
-                                <div class="param">VIN-код:<sup>*</sup></div>
+                                <div class="param">VIN-код:</div>
                                 <div class="control_point size3">
-                                    <input type="text" name="vinCode" id="vinCode" value="{{ app.session.get('vinCode')}}"/>
+                                    <input type="text" name="vinCode" id="vinCode" placeholder="Пример: ZFA22300005556777" value="{{ app.session.get('vinCode')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Неправильный формат VIN-кода. Должно быть 17 символов.</div>
                                 </div>
                             </div>
                             <div class="line">
                                 <div class="param">Номерной знак:</div>
                                 <div class="control_point size3">
-                                    <input type="text" name="carNumber" id="carNumber" value="{{ app.session.get('carNumber')}}"/>
+                                    <input type="text" name="carNumber" id="carNumber" placeholder="Пример: АА6801КЕ" value="{{ app.session.get('carNumber')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">В номерном знаке должно быть минимум 7 символов!</div>
+                                    <div class="error_text_box">Неправильный формат номерного знака. Должно быть минимум 7 символов без пробелов.</div>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +234,7 @@
                             <!-- -->
                             <div class="line">
                                 <div class="control_point accept_control">
-                                    <input type="checkbox" class="styled" id="processPersonalData" value="Y" name="processPersonalData" />
+                                    <input type="checkbox" class="styled" id="processPersonalData" checked="checked" value="Y" name="processPersonalData" />
                                     <label for="processPersonalData">
                                         Согласие на обработку персональных данных
                                         <div class="question_ico">
@@ -238,7 +244,7 @@
                                             </div>
                                         </div>
                                     </label>
-                                    <div class="error_text_box_quest">Вы должны принять условия пользовательского соглашения</div>
+                                    <div class="error_text_box_quest">Пожалуйста, подтвердите согласие на обработку персональных данных.</div>
                                 </div>
                             </div>
                             <!-- -->
@@ -264,7 +270,7 @@
             errors.activeFrom = true;
         } else
             errors.activeFrom = false;
-        if ($('#vinCode').val().length == 0) {
+        if ($('#vinCode').val().length < 17) {
             errors.vinCode = true;
         } else
             errors.vinCode = false;
@@ -412,7 +418,6 @@
             var userData = {
                 {% for personData in registerPersons %}
                 {{personData.id}}:{
-                    activeFrom: '{{personData.activeFrom|date('d.m.Y')}}',
                     vinCode: '{{personData.vinCode}}',
                     carNumber: '{{personData.carNumber}}',
                     surname: '{{personData.surname}}',

@@ -37,7 +37,7 @@ var Custom = {
 	init: function() {
 		var inputs = document.getElementsByTagName("input"), span = Array(), textnode, option, active;
 		for(a = 0; a < inputs.length; a++) {
-            if (inputs[a].previousSibling.tagName == 'SPAN' && (hasClass(inputs[a].previousSibling, 'checkbox') || hasClass(inputs[a].previousSibling, 'radio'))) 
+            if (inputs[a].previousSibling && inputs[a].previousSibling.tagName == 'SPAN' && (hasClass(inputs[a].previousSibling, 'checkbox') || hasClass(inputs[a].previousSibling, 'radio'))) 
             {
                 continue;
             }
@@ -45,7 +45,7 @@ var Custom = {
 				span[a] = document.createElement("span");
 				span[a].className = inputs[a].type;
                 span[a].id = "input" + inputs[a].id;
-				if(inputs[a].checked == true) {
+				if(inputs[a].checked == true || inputs[a].defaultChecked) {
 					if(inputs[a].type == "checkbox") {
 						position = "0 -" + (checkboxHeight*2) + "px";
 						span[a].style.backgroundPosition = position;
