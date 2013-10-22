@@ -1,6 +1,6 @@
 function comboClick() {
         if($(this).parents('.combo').hasClass('active')){
-            $(this).parent().children("li").removeClass("active");
+            $(this).parents('.combo').find("li").removeClass("active");
             $(this).addClass("active");
             var formId = $(this).parent().attr('form-input-id');
             if (typeof formId == 'undefined') {
