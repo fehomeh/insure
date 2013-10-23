@@ -134,10 +134,10 @@
                             <div class="line">
                                 <div class="param bold">Телефон:</div>
                                 <div class="control_point size3">
-                                    <input type="text" name="phone" id="phone" placeholder="38(...)... .. .." value="{{ app.session.get('phone')}}"/>
+                                    <input type="text" name="phone" id="phone" placeholder="(ХХХ)ХХХ ХХ ХХ" value="{{ app.session.get('phone')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text">Текст ошибки</div>
+                                    <div class="error_text">Неправильный формат номера</div>
                                 </div>
                             </div>
                             <div style="clear: both;"></div>

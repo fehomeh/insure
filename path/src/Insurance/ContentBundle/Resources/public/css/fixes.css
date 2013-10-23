@@ -67,9 +67,9 @@ footer .column.second {
       padding-left: 40px; }
 
 footer .column.third {
-      width: 370px;
+      width: 360px;
 	  text-align: right;
-	  margin-right: 40px;
+	  margin-right: 60px;
 	  font-size: 14px;
 
 	  }
@@ -129,7 +129,7 @@ footer .bottom_part {
     padding-bottom:15px; }
 
 footer .bottom_part .counter_container {
-        margin-right: 40px;
+        margin-right: 60px;
 		}
 
 /*------------------------------------------------------------------------------------------- */
@@ -147,6 +147,9 @@ footer .bottom_part .counter_container {
 .calculator_box .calculator .title {
       line-height: 52px;}
 
+ .calculator_box .calculator .calculate span {
+	  margin-right: 8px;
+	  }
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- COMBO --------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -164,6 +167,64 @@ footer .bottom_part .counter_container {
   -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.6); }
+
+/*------------------------------------------------------------------------------------------- */
+/*--------------------------------------- ECONOM BOX ---------------------------------------- */
+/*------------------------------------------------------------------------------------------- */
+.advantages .adv_point {
+    padding-left: 85px;
+	margin: 0 15px 50px 0;}
+
+.adv_point.rightt /*дубль символа из-за повторного класса*/ {
+    margin: 0 0px 50px 15px;
+	width: 285px;
+	}
+
+.question .question_point.phone {
+    width: 300px;
+    margin: 0 0px 10px 0;}
+
+.question .question_point.call {
+    width: 340px;
+    margin: 0 0px 10px 0;
+	}
+
+.question .question_point.ask {
+    display: inline-block;
+    float: left;
+    min-height: 65px;
+    margin: 0 0px 10px 0;
+
+    position: relative;
+    padding-left: 85px; }
+.question .question_point.phone .ico {
+      background-position: 0 -314px; }
+    .question .question_point.phone:hover .ico {
+      background-position: -65px -314px; }
+    .question .question_point.call .ico {
+      background-position: -130px -314px; }
+    .question .question_point.call:hover .ico {
+      background-position: -195px -314px; }
+    .question .question_point.ask .ico {
+      background-position: -260px -314px; }
+    .question .question_point.ask:hover .ico {
+      background-position: -325px -314px; }
+    .question .question_point .title {
+      font-family: "robotoBlack", Helvetica, sans-serif;
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 22px;
+      color: #2c2a22; }
+      .question .question_point .title span {
+        font-weight: 400;
+        font-size: 22px;
+        color: #2c2a22; }
+    .question .question_point .text {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      color: black;
+      width: 185px; }
+
 
 /*------------------------------------------------------------------------------------------- */
 /*-----------------------------------  MODAL GENERAL ---------------------------------------- */
@@ -187,8 +248,8 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
       font-size: 11px;
       color: white;
       position: absolute;
-      top: 33px;
-      right: 0;
+      top: 30px;
+      left: -4px;
       background-color: #e73636;
       z-index: 3;
       display: none; }
@@ -199,7 +260,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
         border-right: 8px solid rgba(0, 0, 0, 0);
         position: absolute;
         top: -8px;
-        right: 10px; }
+        left: 5px; }
 /*------------------------------------------------------------------------------------------- */
 /*---------------------------------------- TOTAL -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -261,7 +322,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
   line-height: 15px;
   font-weight: 500;
   display: none; }
-	
+
   .pop_up_total:before {
     content: "";
     position: absolute;
@@ -270,7 +331,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #cccccc;
     border-bottom: 10px solid rgba(0, 0, 0, 0); }
-	
+
   .pop_up_total:after {
     content: "";
     position: absolute;
@@ -304,7 +365,7 @@ margin-top: -10px;
 top:50%;
 margin-top: -10px;
  }
- 
+
 /*------------------------------------------------------------------------------------------- */
 /*---------------------------------------- POLIS DATE --------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -326,11 +387,11 @@ margin-top: -10px;
   border: 1px solid #cfcfcf;
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; } 
- 
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
+
  .polis_date:hover .pop_up_date {
     display: block; }
-	
+
 .pop_up_date {
   position: absolute;
   z-index: 3;
@@ -353,7 +414,7 @@ margin-top: -10px;
   line-height: 15px;
   font-weight: 500;
   display: none; }
-	
+
   .pop_up_date:before {
     content: "";
     position: absolute;
@@ -363,7 +424,7 @@ margin-top: -10px;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #cccccc;
     border-bottom: 10px solid rgba(0, 0, 0, 0); }
-	
+
   .pop_up_date:after {
     content: "";
     position: absolute;
@@ -372,7 +433,7 @@ margin-top: -10px;
 	margin-top: -10px;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #f4fae6;
-    border-bottom: 10px solid rgba(0, 0, 0, 0); }	
+    border-bottom: 10px solid rgba(0, 0, 0, 0); }
 /*------------------------------------------------------------------------------------------- */
 /*-------------------------------------- PERSONAL_INFO FORM --------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -391,9 +452,26 @@ form.personal_data .control_point input:focus {
       -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
       -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41); }
+ 
+ form.modal_form .control_point.error input {
+    border-color: #e73636;
+  }
+  form.modal_form .control_point.success input {
+    border-color: #79a837;
+  }
+  
+ form.modal_form .control_point.error .error_text_box_quest, form.modal_form .control_point.error .error_text_box {
+    display: block;
+}
 
-
-
+form.personal_data .control_point .error_text_box:before {
+        content: "";
+        border-bottom: 8px solid #e73636;
+        border-left: 8px solid rgba(0, 0, 0, 0);
+        border-right: 8px solid rgba(0, 0, 0, 0);
+        position: absolute;
+        top: -8px;
+        right: 11px; }
 
 /*------------------------------------------------------------------------------------------- */
 /*----------------------------------------- AUTO INFO --------------------------------------- */
@@ -456,6 +534,13 @@ line-height: 28px;
   text-transform: uppercase!important;
   font-size: 12px; }
 
+.calculator_content aside .sidebar_title {
+      font-family: "robotoregular", Arial black, Helvetica, sans-serif;
+      font-size: 18px;
+      color: black;
+      margin-bottom: 20px;
+      font-weight: 600;	  } 
+  
 .before_calc {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 17px;
@@ -507,13 +592,13 @@ line-height: 28px;
 
 .combo.wide .scroll_box {
     width: 100%;
-    height: 415px;
+    height: 420px;
 	background-color: #fff;
 	}
 .combo.wide .scroll_box .viewport {
-      height: 410px; }
+      height: 415px; }
 .combo.wide .scroll_box .track {
-      height: 405px!important;
+      height: 410px!important;
 	  }
 
 
@@ -625,12 +710,42 @@ line-height: 28px;
   .login_link a:hover {
       color: #FFFFFF;
   }
-  form.modal_form .control_point.error input {
-    border-color: #e73636;
-  }
-  form.modal_form .control_point.success input {
-    border-color: #79a837;
-  }
-  form.modal_form .control_point.error .error_text_box_quest, form.modal_form .control_point.error .error_text_box {
-    display: block;
+
+
+::-webkit-input-placeholder {
+   font-size: 14px;
+   font-style: italic;
 }
+
+:-moz-placeholder { /* Firefox 18- */
+   font-size: 14px;
+   font-style: italic;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   font-size: 14px;
+   font-style: italic;
+}
+
+:-ms-input-placeholder {
+   font-size: 14px;
+   font-style: italic;
+}
+
+#Go_Top {
+   position: fixed;
+   bottom: 120px;
+   right: 50px;
+   cursor:pointer;
+   display:none;
+   z-index: 1000;
+   padding: 15px;
+   background-color: rgb(113, 184, 56);
+     border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -khtml-border-radius: 6px;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.26), 0px 0px 3px rgba(0, 0, 0, 0.47) inset;
+   }
+
+
