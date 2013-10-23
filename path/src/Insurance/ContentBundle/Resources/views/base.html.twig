@@ -83,7 +83,7 @@
                 </div>
                 <div style="clear: both;"></div>
                 <ul class="main_menu">
-                    <li{% if (path(app.request.attributes.get('_route')) == path('homepage'))%} class="current"{% endif %}>
+                    <li>
                         <a href="{{path('homepage')}}">
                             <span class="home"></span>
                             <span class="delim"></span>
@@ -93,22 +93,6 @@
                     <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
                         <a href="{{path('step1')}}">Калькулятор ОСАГО<span class="delim"></span></a>
                     </li>
-                    {#<li>
-                        <a href="">
-                            Автозаполнение полиса
-                            <span class="arrow"></span>
-                            <span class="delim"></span>
-                        </a>
-                        <ul class="inner_menu">
-                            <li>
-                                <a href="">Бесплатное заполнение<span class="delimiter"></span></a>
-                                <div class="shadow"></div>
-                            </li>
-                            <li><a href="">Платное заполнение<span class="delimiter"></span></a></li>
-                            <li><a href="">Бланки<span class="delimiter"></span></a></li>
-                            <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
-                        </ul>
-                    </li>#}
 
                     <li{% if (path(app.request.attributes.get('_route')) == path('goodtoknow'))%} class="current"{% endif %}>
                         <a href="{{path('goodtoknow')}}">Полезно знать<span class="arrow"></span><span class="delim"></span></a>

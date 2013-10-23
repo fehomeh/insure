@@ -31,7 +31,7 @@ feedback_create:
     defaults: { _controller: "InsuranceContentBundle:Default:createFeedback" }
     requirements: { _method: POST }
 step1:
-    pattern: /step1.htm
+    pattern: /calculate-osago.htm
     defaults: { _controller: InsuranceContentBundle:Default:calculator }
 calculate_process:
     pattern: /save-calculator.htm
@@ -78,8 +78,8 @@ goodtoknow:
     pattern: /goodtoknow
     defaults: { _controller: "InsuranceContentBundle:Default:about" }
 osago-info:
-    pattern: /osago-info
+    pattern: /goodtoknow/osago
     defaults: { _controller: "InsuranceContentBundle:Default:about" }
 event-info:
-    pattern: /event-info
+    pattern: /goodtoknow/event
     defaults: { _controller: "InsuranceContentBundle:Default:about" }

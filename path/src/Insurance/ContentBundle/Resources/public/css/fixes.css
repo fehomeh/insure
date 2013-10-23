@@ -55,24 +55,66 @@ form.modal_form .control_point input[type="email"] {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
-
+ header .main_menu li a {
+        height: 45px;
+		line-height: 46px;
+		font-size: 14px;
+		letter-spacing: 0.02em;
+		padding: 0 20px 0 22px;
+		font-family: "Arial", Helvetica, sans-serif;
+		font-weight: 400;
+		color: #444;
+		}
+		
 header .main_menu li a span.arrow {
-          width: 16px;
-          height: 9px;
-          background-image: url(../images/sprite.png);
-          background-position: -368px -13px;
+          width: 12px;
+          height: 12px;
+          background-image: url(../images/menuarrow.png);
+		  background-position: 0px 0px;
           background-repeat: no-repeat;
           background-color: transparent;
           display: inline-block;
           margin-left: 6px;
           position: relative;
-          top: -1px; }
+          top: 1px; }
+
+header .main_menu li a span.home {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        margin: 13px 0px 0 0;
+        background-image: url(../images/sprite.png);
+        background-position: 0px -62px;
+        background-repeat: no-repeat;
+        background-color: transparent; }
 		  
 header .main_menu li.current > a span.arrow {
-          background-position: -368px -14px !important; }
+          background-position: 0px 0px !important; }
+
+header .main_menu li:hover a {
+        background-image: url(../images/bg.png);
+        background-position: 0px -100px;
+        background-repeat: repeat-x;
+        background-color: transparent;
+        color: #fff; }
 		  
 header .main_menu li:hover a span.arrow {
-          background-position: -368px -22px; }
+          background-image: url(../images/menuarrow-w.png);
+          background-position: 0px 0px; 
+		  background-repeat: no-repeat;
+          background-color: transparent;}
+
+header .inner_menu {
+    bottom: -28px;}		  
+		  
+header .inner_menu li a {
+        height: 33px;
+        line-height: 33px;
+		letter-spacing: 0;
+		font-size: 12px;
+		font-family: "robotoregular", Arial, Helvetica, sans-serif;
+		padding: 0 15px;
+}		
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- FOOTER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
