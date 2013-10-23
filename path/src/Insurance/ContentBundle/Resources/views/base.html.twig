@@ -88,11 +88,11 @@
                             <span class="home"></span>
                             <span class="delim"></span>
                         </a>
-                        {% if (path(app.request.attributes.get('_route')) == path('homepage'))%}<div class="shadow"></div>{% endif %}
+                        <div class="shadow"></div>
                     </li>
                     <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
                         <a href="{{path('step1')}}">Расчет полиса Осаго<span class="delim"></span></a>
-                        {% if (path(app.request.attributes.get('_route')) == path('step1'))%}<div class="shadow"></div>{% endif %}
+                        <div class="shadow"></div>
                     </li>
                     {#<li>
                         <a href="">
@@ -112,7 +112,7 @@
                     </li>#}
                     <li{% if (path(app.request.attributes.get('_route')) == path('about'))%} class="current"{% endif %}>
                         <a href="{{path('about')}}">Ваш помощник<span class="delim"></span><span class="arrow"></span></a>
-                    {% if (path(app.request.attributes.get('_route')) == path('about'))%}<div class="shadow"></div>{% endif %}
+                    <div class="shadow"></div>
                     </li>
                     {#<li{% if (path(app.request.attributes.get('_route')) == path('contacts'))%} class="current"{% endif %}>
                         <a href="{{path('contacts')}}">Контакты<span class="delim"></span></a>
@@ -125,7 +125,7 @@
                             <li><a href="">Бланки<span class="delimiter"></span></a></li>
                             <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
                         </ul>
-                    {% if (path(app.request.attributes.get('_route')) == path('contacts'))%}<div class="shadow"></div>{% endif %}
+                    <div class="shadow"></div>
                     </li>#}
                 </ul>
         	</div>
