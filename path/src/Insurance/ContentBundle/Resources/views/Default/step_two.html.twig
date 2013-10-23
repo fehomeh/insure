@@ -402,6 +402,7 @@
             var opts = '';
             for (k in data) opts += '<li data-value="' + k + '">' + data[k] + '</li>';
             $('#cityList').html(opts);
+            $(".combo ul li").unbind('click');
             $(".combo ul li").on('click', comboClick);
             $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
             $('#cityList li').on('click', selectCity);
@@ -418,8 +419,6 @@
             var userData = {
                 {% for personData in registerPersons %}
                 {{personData.id}}:{
-                    vinCode: '{{personData.vinCode}}',
-                    carNumber: '{{personData.carNumber}}',
                     surname: '{{personData.surname}}',
                     firstname: '{{personData.firstname}}',
                     middlename: '{{personData.middlename}}',

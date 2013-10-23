@@ -147,7 +147,7 @@ footer .bottom_part .counter_container {
 .calculator_box .calculator .title {
       line-height: 52px;}
 
- .calculator_box .calculator .calculate span {	  
+ .calculator_box .calculator .calculate span {
 	  margin-right: 8px;
 	  }
 /*------------------------------------------------------------------------------------------- */
@@ -170,9 +170,9 @@ footer .bottom_part .counter_container {
 
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- ECONOM BOX ---------------------------------------- */
-/*------------------------------------------------------------------------------------------- */  
+/*------------------------------------------------------------------------------------------- */
 .advantages .adv_point {
-    padding-left: 85px; 
+    padding-left: 85px;
 	margin: 0 15px 50px 0;}
 
 .adv_point.rightt /*дубль символа из-за повторного класса*/ {
@@ -194,9 +194,9 @@ footer .bottom_part .counter_container {
     float: left;
     min-height: 65px;
     margin: 0 0px 10px 0;
-   
+
     position: relative;
-    padding-left: 85px; }  
+    padding-left: 85px; }
 .question .question_point.phone .ico {
       background-position: 0 -314px; }
     .question .question_point.phone:hover .ico {
@@ -223,9 +223,9 @@ footer .bottom_part .counter_container {
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
       color: black;
-      width: 185px; }  
-  
-  
+      width: 185px; }
+
+
 /*------------------------------------------------------------------------------------------- */
 /*-----------------------------------  MODAL GENERAL ---------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -322,7 +322,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
   line-height: 15px;
   font-weight: 500;
   display: none; }
-	
+
   .pop_up_total:before {
     content: "";
     position: absolute;
@@ -331,7 +331,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #cccccc;
     border-bottom: 10px solid rgba(0, 0, 0, 0); }
-	
+
   .pop_up_total:after {
     content: "";
     position: absolute;
@@ -365,7 +365,7 @@ margin-top: -10px;
 top:50%;
 margin-top: -10px;
  }
- 
+
 /*------------------------------------------------------------------------------------------- */
 /*---------------------------------------- POLIS DATE --------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -387,11 +387,11 @@ margin-top: -10px;
   border: 1px solid #cfcfcf;
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; } 
- 
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
+
  .polis_date:hover .pop_up_date {
     display: block; }
-	
+
 .pop_up_date {
   position: absolute;
   z-index: 3;
@@ -414,7 +414,7 @@ margin-top: -10px;
   line-height: 15px;
   font-weight: 500;
   display: none; }
-	
+
   .pop_up_date:before {
     content: "";
     position: absolute;
@@ -424,7 +424,7 @@ margin-top: -10px;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #cccccc;
     border-bottom: 10px solid rgba(0, 0, 0, 0); }
-	
+
   .pop_up_date:after {
     content: "";
     position: absolute;
@@ -433,7 +433,7 @@ margin-top: -10px;
 	margin-top: -10px;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #f4fae6;
-    border-bottom: 10px solid rgba(0, 0, 0, 0); }	
+    border-bottom: 10px solid rgba(0, 0, 0, 0); }
 /*------------------------------------------------------------------------------------------- */
 /*-------------------------------------- PERSONAL_INFO FORM --------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -719,24 +719,24 @@ line-height: 28px;
 
 :-moz-placeholder { /* Firefox 18- */
    font-size: 14px;
-   font-style: italic; 
+   font-style: italic;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
    font-size: 14px;
-   font-style: italic;  
+   font-style: italic;
 }
 
-:-ms-input-placeholder {  
+:-ms-input-placeholder {
    font-size: 14px;
-   font-style: italic;  
+   font-style: italic;
 }
 
 #Go_Top {
-   position: fixed; 
-   bottom: 120px; 
-   right: 50px; 
-   cursor:pointer; 
+   position: fixed;
+   bottom: 120px;
+   right: 50px;
+   cursor:pointer;
    display:none;
    z-index: 1000;
    padding: 15px;
@@ -748,4 +748,4 @@ line-height: 28px;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.26), 0px 0px 3px rgba(0, 0, 0, 0.47) inset;
    }
 
- 
+
