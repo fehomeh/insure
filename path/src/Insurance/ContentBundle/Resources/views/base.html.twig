@@ -91,7 +91,7 @@
                         {% if (path(app.request.attributes.get('_route')) == path('homepage'))%}<div class="shadow"></div>{% endif %}
                     </li>
                     <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
-                        <a href="{{path('step1')}}">Расчет полиса Осаго<span class="delim"></span></a>
+                        <a href="{{path('step1')}}">Калькулятор ОСАГО<span class="delim"></span></a>
                         {% if (path(app.request.attributes.get('_route')) == path('step1'))%}<div class="shadow"></div>{% endif %}
                     </li>
                     {#<li>
@@ -110,23 +110,27 @@
                             <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
                         </ul>
                     </li>#}
-                    <li{% if (path(app.request.attributes.get('_route')) == path('about'))%} class="current"{% endif %}>
-                        <a href="{{path('about')}}">Ваш помощник<span class="delim"></span><span class="arrow"></span></a>
-                    {% if (path(app.request.attributes.get('_route')) == path('about'))%}<div class="shadow"></div>{% endif %}
-                    </li>
-                    {#<li{% if (path(app.request.attributes.get('_route')) == path('contacts'))%} class="current"{% endif %}>
-                        <a href="{{path('contacts')}}">Контакты<span class="delim"></span></a>
+                    <li{% if (path(app.request.attributes.get('_route')) == path('goodtoknow'))%} class="current"{% endif %}>
+                        <a href="{{path('goodtoknow')}}">Полезно знать<span class="arrow"></span><span class="delim"></span></a>
 						<ul class="inner_menu">
                             <li>
-                                <a href="">Все об ОСАГО<span class="delimiter"></span></a>
+                                <a href="{{path('osago-info')}}">Что такое ОСАГО?<span class="delimiter"></span></a>
                                 <div class="shadow"></div>
                             </li>
-                            <li><a href="">Платное заполнение<span class="delimiter"></span></a></li>
-                            <li><a href="">Бланки<span class="delimiter"></span></a></li>
-                            <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
+                            <li><a href="{{path('event-info')}}">Страховой случай<span class="delimiter"></span></a></li>
                         </ul>
+                    {% if (path(app.request.attributes.get('_route')) == path('goodtoknow'))%}<div class="shadow"></div>{% endif %}
+                    </li>
+                    <li{% if (path(app.request.attributes.get('_route')) == path('contacts'))%} class="current"{% endif %}>
+                        <a href="{{path('contacts')}}">Кто мы такие?<span class="arrow"><span class="delim"></span></a>
+						<ul class="inner_menu">
+						    <li><a href="">О сервисе<span class="delimiter"></span></a>
+                                <div class="shadow"></div>
+                            </li>
+                            <li><a href="">О нашем страховом партнере<span class="delimiter"></span></a></li>
+							</ul>
                     {% if (path(app.request.attributes.get('_route')) == path('contacts'))%}<div class="shadow"></div>{% endif %}
-                    </li>#}
+                    </li>
                 </ul>
         	</div>
         </header>

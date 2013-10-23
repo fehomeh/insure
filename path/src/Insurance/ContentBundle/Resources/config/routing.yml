@@ -69,8 +69,17 @@ finish:
     pattern: /finish.htm
     defaults: { _controller: "InsuranceContentBundle:Default:finish" }
 about:
-    pattern: /about.htm
+    pattern: /about
     defaults: { _controller: "InsuranceContentBundle:Default:about" }
 contacts:
-    pattern: /contacts.htm
+    pattern: /contacts
     defaults: { _controller: "InsuranceContentBundle:Default:contacts" }
+goodtoknow:
+    pattern: /goodtoknow
+    defaults: { _controller: "InsuranceContentBundle:Default:about" }
+osago-info:
+    pattern: /osago-info
+    defaults: { _controller: "InsuranceContentBundle:Default:about" }
+event-info:
+    pattern: /event-info
+    defaults: { _controller: "InsuranceContentBundle:Default:about" }

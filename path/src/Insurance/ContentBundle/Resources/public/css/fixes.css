@@ -56,6 +56,23 @@ form.modal_form .control_point input[type="email"] {
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
 
+header .main_menu li a span.arrow {
+          width: 16px;
+          height: 9px;
+          background-image: url(../images/sprite.png);
+          background-position: -368px -13px;
+          background-repeat: no-repeat;
+          background-color: transparent;
+          display: inline-block;
+          margin-left: 6px;
+          position: relative;
+          top: -1px; }
+		  
+header .main_menu li.current > a span.arrow {
+          background-position: -368px -14px !important; }
+		  
+header .main_menu li:hover a span.arrow {
+          background-position: -368px -22px; }
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- FOOTER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
