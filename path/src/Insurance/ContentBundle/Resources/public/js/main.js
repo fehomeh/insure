@@ -92,13 +92,8 @@ $(document).ready(
                 var now = new Date(); //получаем текущую дату
                 var finish = new Date(end_time); //дата до которой ведется отсчет
                 //All next varaibles must be in seconds
-                var years = (finish.getFullYear() - now.getFullYear())*360*24*3600;
-                var months = (finish.getMonth() - now.getMonth())*30*24*3600;
-                var days = (finish.getDay() - now.getDay())*24*3600;
-                var hours = (finish.getHours() - now.getHours())*3600;
-                var minutes = (finish.getMinutes() - now.getMinutes())*60;
-                var seconds = finish.getSeconds() - now.getSeconds();
-                window.endTime = years + months + days + hours + minutes + seconds;
+                window.endTime = parseInt((finish.getTime() - now.getTime()) / 1000);
+                console.log(window.endTime);
             }
             //var years = finish.getFullYear() - now.getFullYear();
             //var days = years*365 + finish.getDay() - now.getDay();

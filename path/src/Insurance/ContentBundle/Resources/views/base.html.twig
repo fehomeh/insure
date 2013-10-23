@@ -88,11 +88,10 @@
                             <span class="home"></span>
                             <span class="delim"></span>
                         </a>
-                        {% if (path(app.request.attributes.get('_route')) == path('homepage'))%}<div class="shadow"></div>{% endif %}
+                        <div class="shadow"></div>
                     </li>
                     <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
                         <a href="{{path('step1')}}">Калькулятор ОСАГО<span class="delim"></span></a>
-                        {% if (path(app.request.attributes.get('_route')) == path('step1'))%}<div class="shadow"></div>{% endif %}
                     </li>
                     {#<li>
                         <a href="">
@@ -110,6 +109,7 @@
                             <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
                         </ul>
                     </li>#}
+
                     <li{% if (path(app.request.attributes.get('_route')) == path('goodtoknow'))%} class="current"{% endif %}>
                         <a href="{{path('goodtoknow')}}">Полезно знать<span class="arrow"></span><span class="delim"></span></a>
 						<ul class="inner_menu">
@@ -119,8 +119,7 @@
                             </li>
                             <li><a href="{{path('event-info')}}">Страховой случай<span class="delimiter"></span></a></li>
                         </ul>
-                    {% if (path(app.request.attributes.get('_route')) == path('goodtoknow'))%}<div class="shadow"></div>{% endif %}
-                    </li>
+						</li>
                     <li{% if (path(app.request.attributes.get('_route')) == path('contacts'))%} class="current"{% endif %}>
                         <a href="{{path('contacts')}}">Кто мы такие?<span class="arrow"><span class="delim"></span></a>
 						<ul class="inner_menu">
@@ -129,7 +128,6 @@
                             </li>
                             <li><a href="">О нашем страховом партнере<span class="delimiter"></span></a></li>
 							</ul>
-                    {% if (path(app.request.attributes.get('_route')) == path('contacts'))%}<div class="shadow"></div>{% endif %}
                     </li>
                 </ul>
         	</div>
