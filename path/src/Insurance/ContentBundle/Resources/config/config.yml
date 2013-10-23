@@ -24,5 +24,5 @@ parameters:
     dgo.rate: 1.2 #Age rate
     timer: 10800 # in secs
     economy.sum: 103752 # initial sum for timer
-    economy.step: 21 # step to increase once per 24 hours
+    economy.step: 500 # step to increase once per 24 hours
     economy.startdate: 21.08.2013
