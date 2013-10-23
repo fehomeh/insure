@@ -151,7 +151,7 @@
                             </div>
                             <!-- payment_container -->
                             <div class="payment_container">
-                                <div class="payment_point{% if app.session.get('payType') == 'cash'%} current{%endif%}">
+                                <div class="payment_point{% if app.session.get('payType') == 'cash' or app.session.get('payType') is null %} current{%endif%}">
                                     <div id="cash" class="ico cash"></div>
                                     <div class="text"><b>Наличными</b> курьеру</div>
                                 </div>
@@ -163,7 +163,7 @@
                                     <div id="privat_card" class="ico privat_card"></div>
                                     <div class="text"><b>Карта</b> Приват Банка</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'terminal' or app.session.get('payType') is null%} current{%endif%}">
+                                <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%}">
                                     <div id="terminal" class="ico terminal"></div>
                                     <div class="text"><b>Терминалы</b> оплаты</div>
                                 </div>
@@ -177,7 +177,7 @@
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
-                            <input type="hidden" id="payType" name="payType" value="{% if app.session.get('payType') is null %}terminal{% else %}{{app.session.get('payType')}}{% endif %}"/>
+                            <input type="hidden" id="payType" name="payType" value="{% if app.session.get('payType') is null %}cash{% else %}{{app.session.get('payType')}}{% endif %}"/>
                             <!-- total sum -->
                             <div class="white_strip total_sum bottom_delim">
                                 Общая сумма:
