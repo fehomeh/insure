@@ -55,7 +55,17 @@ form.modal_form .control_point input[type="email"] {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
- header .main_menu li a {
+header .main_menu div.shadow {
+        position: absolute;
+        width: 1016px;
+        height: 17px;
+        left: -8px;
+        bottom: -17px;
+        background-image: url(../images/menu_shadow.png);
+        background-position: top center;
+        background-repeat: no-repeat; }
+
+header .main_menu li a {
         height: 45px;
 		line-height: 46px;
 		font-size: 14px;
@@ -105,7 +115,8 @@ header .main_menu li:hover a span.arrow {
           background-color: transparent;}
 
 header .inner_menu {
-    bottom: -28px;}		  
+    bottom: -28px;
+	z-index:100;}		  
 		  
 header .inner_menu li a {
         height: 33px;

@@ -88,7 +88,7 @@
                             <span class="home"></span>
                             <span class="delim"></span>
                         </a>
-                        <div class="shadow"></div>
+                        
                     </li>
                     <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
                         <a href="{{path('step1')}}">Калькулятор ОСАГО<span class="delim"></span></a>
@@ -113,6 +113,7 @@
                             <li><a href="">О нашем страховом партнере<span class="delimiter"></span></a></li>
 							</ul>
                     </li>
+					<div class="shadow"></div>
                 </ul>
         	</div>
         </header>
