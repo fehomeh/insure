@@ -88,7 +88,7 @@ header .main_menu li a span.arrow {
           position: relative;
           top: 1px; }
 
-header .main_menu li a span.home {
+header .main_menu li span.home {
         width: 18px;
         height: 18px;
         display: inline-block;
@@ -97,6 +97,16 @@ header .main_menu li a span.home {
         background-position: 0px -62px;
         background-repeat: no-repeat;
         background-color: transparent; }
+
+header .main_menu li:hover span.home {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        
+        background-image: url(../images/sprite.png);
+        background-position: -138px -464px;
+        background-repeat: no-repeat;
+        background-color: transparent; }		
 		  
 header .main_menu li.current > a span.arrow {
           background-position: 0px 0px !important; }

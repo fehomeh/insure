@@ -90,11 +90,11 @@
                         </a>
                         
                     </li>
-                    <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
+                    <li>
                         <a href="{{path('step1')}}">Калькулятор ОСАГО<span class="delim"></span></a>
                     </li>
 
-                    <li{% if (path(app.request.attributes.get('_route')) == path('goodtoknow'))%} class="current"{% endif %}>
+                    <li>
                         <a href="{{path('goodtoknow')}}">Полезно знать<span class="arrow"></span><span class="delim"></span></a>
 						<ul class="inner_menu">
                             <li>
@@ -104,7 +104,7 @@
                             <li><a href="{{path('event-info')}}">Страховой случай<span class="delimiter"></span></a></li>
                         </ul>
 						</li>
-                    <li{% if (path(app.request.attributes.get('_route')) == path('contacts'))%} class="current"{% endif %}>
+                    <li>
                         <a href="{{path('contacts')}}">Кто мы такие?<span class="arrow"><span class="delim"></span></a>
 						<ul class="inner_menu">
 						    <li><a href="">О сервисе<span class="delimiter"></span></a>
