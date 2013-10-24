@@ -1,9 +1,9 @@
 parameters:
-    admin.emails: ['test@me.ru', 'test2@him.ua']
-    email.send.from: 'noreply@insurance.com.ua'
+    admin.emails: ['polisvit@gmail.com', 'e.kuguk@gmail.com']
+    email.send.from: 'noreply@polismarket.com.ua'
     site.name: 'Страховое агенство "ПОЛИСМАРКЕТ"'
     site.domain: 'polismarket.com.ua'
-    contact.email: 'sales@polismarket.com.ua'
+    contact.email: 'support@polismarket.com.ua'
     contact.phone: '(050) 001-01-01'
     savings: #show user fake money savings
         date.start: '30.07.2013' #initial date to start count
@@ -14,7 +14,7 @@ parameters:
         min: 1.0
         max: 6.0
         step: 0.1
-    insure.period: [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 24, 36, 48, 60, 72, 84]
+    insure.period: [0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     dgo.sum: [ 50000, 100000, 150000, 200000, 250000]
     ns.sum: [ 5000, 10000, 25000, 50000]
     passengers:

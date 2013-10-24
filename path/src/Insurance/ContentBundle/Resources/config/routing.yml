@@ -31,7 +31,7 @@ feedback_create:
     defaults: { _controller: "InsuranceContentBundle:Default:createFeedback" }
     requirements: { _method: POST }
 step1:
-    pattern: /calculate-osago.htm
+    pattern: /calculate/osago
     defaults: { _controller: InsuranceContentBundle:Default:calculator }
 calculate_process:
     pattern: /save-calculator.htm
@@ -42,7 +42,7 @@ get_discount:
     defaults: { _controller: "InsuranceContentBundle:Default:getDiscount" }
     methods: [ 'POST' ]
 step2:
-    pattern: /step2.htm
+    pattern: /personaldata
     defaults: { _controller: "InsuranceContentBundle:Default:formalization" }
 get_price:
     pattern: /get-price.htm
@@ -57,7 +57,7 @@ get_ns_price:
     defaults: { _controller: "InsuranceContentBundle:Default:calculateNs" }
     methods: [ 'POST' ]
 step3:
-    pattern: /step3.htm
+    pattern: /delivery
     defaults: { _controller: "InsuranceContentBundle:Default:delivery" }
 save_calculation:
     pattern: /save-calculation.htm
@@ -66,7 +66,7 @@ clear_calculation:
     pattern: /clear-calculation.htm
     defaults: { _controller: "InsuranceContentBundle:Default:clearStoredData" }
 finish:
-    pattern: /finish.htm
+    pattern: /finish
     defaults: { _controller: "InsuranceContentBundle:Default:finish" }
 about:
     pattern: /about
