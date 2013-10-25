@@ -66,8 +66,8 @@ class InsuranceOrderAdmin extends Admin {
   public function configureListFields(ListMapper $list)
   {
     //$policy = $this->getConfigurationPool()->getContainer()->get('translation');
-    $list->addIdentifier('id');
-      /*->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),
+    $list->addIdentifier('id')
+      ->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),
         'label' => 'Статус заказа',
           'template' => 'InsuranceContentBundle:Helper:enum_field_list.html.twig',
             ))
@@ -85,13 +85,13 @@ class InsuranceOrderAdmin extends Admin {
       ->add('middlename', null, array('label' => 'Отчество'))
       ->add('phone', null, array('label' => 'Телефон'))
       ->add('payStatus', null, array('label' => 'Состояние оплаты'))
-      ->add('payType', null, array('label' => 'Тип оплаты'));*/
+      ->add('payType', null, array('label' => 'Тип оплаты'));
   }
 
   public function configureDatagridFilters(DatagridMapper $filter)
   {
     $filter->add('id')
-        ->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),'label'
+        /*->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),'label'
           => 'Статус заказа'))
         ->add('payStatus', null, array('label' => 'Состояние оплаты'))
         ->add('payType', null, array('label' => 'Тип оплаты'))
@@ -108,7 +108,7 @@ class InsuranceOrderAdmin extends Admin {
         ->add('price', null, array('label' => 'Цена'))
         ->add('priceDgo', null, array('label' => 'Цена ДГО'))
         ->add('priceNs', null, array('label' => 'Цена НС'))
-        ->add('payDate', null, array('label' => 'Дата оплаты'));
+        ->add('payDate', null, array('label' => 'Дата оплаты'))*/;
   }
   public function configureShowFields(ShowMapper $filter)
   {
