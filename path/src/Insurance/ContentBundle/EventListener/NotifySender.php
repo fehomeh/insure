@@ -32,7 +32,7 @@ class NotifySender
 		->setContentType("text/html")
         ->setBody(
             $this->sc->get('templating')->render(
-                'InsuranceContentBundle:Notifications:feedbackNotification.txt.twig',
+                'InsuranceContentBundle:Notifications:feedbackNotification.html.twig',
                 array(
                 'contact' => $entity,
                 'feedbackTypeText' => $feedbackTypeText,

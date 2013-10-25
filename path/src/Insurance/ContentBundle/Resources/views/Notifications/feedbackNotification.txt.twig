@@ -1,0 +1,9 @@
+Здравствуйте!
+На сайт поступил новый <b>{{feedbackTypeText}}</b>.
+<br/>
+<span style="font-size: 16px; font-style: italic; font-weight: bold;">Контактные данные для связи:</i>
+<b>Имя:</b> {{contact.name}}<br/>
+{% if contact.timeToCall %}<b>Время звонка:</b> {{contact.timeToCall}}{% endif %}<br/>
+{% if contact.phoneNumber %}<b>Контактный телефон:</b> {{contact.phoneNumber}}{% endif %}<br/>
+{% if contact.email %}<b>EMail:</b> {{contact.email}}{% endif %}<br/>
+{% if contact.question %}<b>Вопрос</b> {{contact.question}}{% endif %}
