@@ -36,8 +36,7 @@ class NotifySender
                 'contact' => $entity,
                 'feedbackTypeText' => $feedbackTypeText,
                 )
-            )
-        )
+            ), 'text/html')
         //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
     ;
     $this->sc->get('mailer')->send($message);
