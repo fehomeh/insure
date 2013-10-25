@@ -69,7 +69,7 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
     port:      465
-    encryption: ~
+    encryption: ssl
    
 #FOS User Bundle configuration
 fos_user:
