@@ -82,50 +82,37 @@
                 </div>
                 <div style="clear: both;"></div>
                 <ul class="main_menu">
-                    <li{% if (path(app.request.attributes.get('_route')) == path('homepage'))%} class="current"{% endif %}>
+                    <li>
                         <a href="{{path('homepage')}}">
                             <span class="home"></span>
                             <span class="delim"></span>
                         </a>
-                        <div class="shadow"></div>
+                        
                     </li>
-                    <li{% if (path(app.request.attributes.get('_route')) == path('step1'))%} class="current"{% endif %}>
-                        <a href="{{path('step1')}}">Расчет полиса Осаго<span class="delim"></span></a>
-                        <div class="shadow"></div>
+                    <li>
+                        <a href="{{path('step1')}}">Калькулятор ОСАГО<span class="delim"></span></a>
                     </li>
-                    {#<li>
-                        <a href="">
-                            Автозаполнение полиса
-                            <span class="arrow"></span>
-                            <span class="delim"></span>
-                        </a>
-                        <ul class="inner_menu">
-                            <li>
-                                <a href="">Бесплатное заполнение<span class="delimiter"></span></a>
-                                <div class="shadow"></div>
-                            </li>
-                            <li><a href="">Платное заполнение<span class="delimiter"></span></a></li>
-                            <li><a href="">Бланки<span class="delimiter"></span></a></li>
-                            <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
-                        </ul>
-                    </li>#}
-                    <li{% if (path(app.request.attributes.get('_route')) == path('about'))%} class="current"{% endif %}>
-                        <a href="{{path('about')}}">Ваш помощник<span class="delim"></span><span class="arrow"></span></a>
-                    <div class="shadow"></div>
-                    </li>
-                    {#<li{% if (path(app.request.attributes.get('_route')) == path('contacts'))%} class="current"{% endif %}>
-                        <a href="{{path('contacts')}}">Контакты<span class="delim"></span></a>
+
+                    <li>
+                        <a href="{{path('goodtoknow')}}">Полезно знать<span class="arrow"></span><span class="delim"></span></a>
 						<ul class="inner_menu">
                             <li>
-                                <a href="">Все об ОСАГО<span class="delimiter"></span></a>
+                                <a href="{{path('osago-info')}}">Что такое ОСАГО?<span class="delimiter"></span></a>
                                 <div class="shadow"></div>
                             </li>
-                            <li><a href="">Платное заполнение<span class="delimiter"></span></a></li>
-                            <li><a href="">Бланки<span class="delimiter"></span></a></li>
-                            <li><a href="">Правила заполнения<span class="delimiter"></span></a></li>
+                            <li><a href="{{path('event-info')}}">Страховой случай<span class="delimiter"></span></a></li>
                         </ul>
-                    <div class="shadow"></div>
-                    </li>#}
+						</li>
+                    <li>
+                        <a href="{{path('about')}}">Кто мы такие?<span class="arrow"><span class="delim"></span></a>
+						<ul class="inner_menu">
+						    <li><a href="about">О сервисе<span class="delimiter"></span></a>
+                                <div class="shadow"></div>
+                            </li>
+                            <li><a href="">О нашем страховом партнере<span class="delimiter"></span></a></li>
+							</ul>
+                    </li>
+					<div class="shadow"></div>
                 </ul>
         	</div>
         </header>
@@ -326,20 +313,24 @@
                 }
             });
             if (errors === 0) {
+			    $('.modal_preloader').addClass('on');
                 var form = $(this).parents('form');
                 $.ajax($(form).attr('action'),{
                 data: form.serialize(),
                 type: 'POST'
                 })
                 .done(function(data){
+				    $('.modal_preloader').removeClass('on');
                     if (data.message == 'success') {
                         $('#success_modal .inform_title').text('Спасибо, Ваш запрос принят.');
                         $('#success_modal .form_grey_button').hide();
-                        $('#success_modal .form_green_button').text('Закрыть');
-                        $('#success_modal .form_green_button').on('click', function () {
-                            $.modal().close();
-                        })
+                        $('#success_modal .form_green_button').hide();
                         $('#success_modal').modal().open();
+						setTimeout(function(){
+						$('#success_modal').fadeOut(1000);
+						$.modal().close();
+						}, 2000);
+						
                     } else if(data.message == 'error') {
                         console.log(data.error);
                         $('#error_modal').show();

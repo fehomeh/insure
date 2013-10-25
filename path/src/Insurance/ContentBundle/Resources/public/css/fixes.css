@@ -55,7 +55,87 @@ form.modal_form .control_point input[type="email"] {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
+header .main_menu div.shadow {
+        position: absolute;
+        width: 1016px;
+        height: 17px;
+        left: -8px;
+        bottom: -17px;
+        background-image: url(../images/menu_shadow.png);
+        background-position: top center;
+        background-repeat: no-repeat; }
 
+header .main_menu li a {
+        height: 45px;
+		line-height: 46px;
+		font-size: 15px;
+		letter-spacing: 0.02em;
+		padding: 0 20px 0 22px;
+		font-family: 'RobotoRegular', Arial, Helvetica, sans-serif;
+		font-weight: 400;
+		color: #444;
+		}
+		
+header .main_menu li a span.arrow {
+          width: 12px;
+          height: 12px;
+          background-image: url(../images/menuarrow.png);
+		  background-position: 0px 0px;
+          background-repeat: no-repeat;
+          background-color: transparent;
+          display: inline-block;
+          margin-left: 6px;
+          position: relative;
+          top: 1px; }
+
+header .main_menu li span.home {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        margin: 13px 0px 0 0;
+        background-image: url(../images/sprite.png);
+        background-position: 0px -62px;
+        background-repeat: no-repeat;
+        background-color: transparent; }
+
+header .main_menu li:hover span.home {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        
+        background-image: url(../images/sprite.png);
+        background-position: -138px -464px;
+        background-repeat: no-repeat;
+        background-color: transparent; }		
+		  
+header .main_menu li.current > a span.arrow {
+          background-position: 0px 0px !important; }
+
+header .main_menu li:hover a {
+        background-image: url(../images/bg.png);
+        background-position: 0px -100px;
+        background-repeat: repeat-x;
+        background-color: transparent;
+        color: #fff; }
+		  
+header .main_menu li:hover a span.arrow {
+          background-image: url(../images/menuarrow-w.png);
+          background-position: 0px 0px; 
+		  background-repeat: no-repeat;
+          background-color: transparent;}
+
+header .inner_menu {
+    bottom: -28px;
+	z-index:100;}		  
+		  
+header .inner_menu li a {
+        height: 33px;
+        line-height: 33px;
+		letter-spacing: 0;
+		font-size: 12px;
+		font-family: "robotoregular", Arial, Helvetica, sans-serif;
+		padding: 0 15px;
+}		
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- FOOTER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -261,6 +341,37 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
         position: absolute;
         top: -8px;
         left: 5px; }
+		
+/*------------------------------------------------------------------------------------------- */
+/*------------------------------------- PASS MODAL ------------------------------------------ */
+/*------------------------------------------------------------------------------------------- */
+
+  #pass_modal .sub_text {
+    width: 435px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    margin: 0 auto 15px;
+    text-align: justify;
+    font-size: 14px;
+    color: black; }
+
+
+/*------------------------------------------------------------------------------------------- */
+/*------------------------------------- PRELOADER ------------------------------------------- */
+/*------------------------------------------------------------------------------------------- */	
+		
+.modal_preloader {
+	float: right;
+    display: inline-block;
+	margin-right:10px;
+    display:none;
+    position: relative;
+	margin-top:8px;
+	}
+.modal_preloader.on {
+    display:block;
+}	
+		
 /*------------------------------------------------------------------------------------------- */
 /*---------------------------------------- TOTAL -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -738,7 +849,7 @@ line-height: 28px;
    right: 50px;
    cursor:pointer;
    display:none;
-   z-index: 1000;
+   z-index: 3;
    padding: 15px;
    background-color: rgb(113, 184, 56);
      border-radius: 6px;

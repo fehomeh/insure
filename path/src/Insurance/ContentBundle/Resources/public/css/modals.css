@@ -5,7 +5,7 @@
     -webkit-border-radius:5px;
     -moz-border-radius:5px;
     -khtml-border-radius:5px;
-    margin: 200px auto 0;
+    margin: 100px auto 0;
     padding:20px 0;
     position: relative;
 	-moz-box-shadow:0 0 64px #000;
@@ -19,7 +19,7 @@
     padding: 0 20px;
     color:#000;
     font-size:21px;
-    font-family:"robotoBlack", Arial Black, Arial, Helvetica, sans-serif;
+    font-family:"robotoBold", Arial Black, Arial, Helvetica, sans-serif;
     position: relative;
     margin-bottom:25px;
 }

@@ -920,7 +920,7 @@ $(function() {
     //Passengers count arrows events
     $('.arrow').on('click', function (){
         if ($(this).hasClass('plus')) {
-            if ($('#passengersCount').val() <= 7) $('#passengersCount').val(parseInt($('#passengersCount').val())+1);
+            if ($('#passengersCount').val() < 7) $('#passengersCount').val(parseInt($('#passengersCount').val())+1);
         }
         else {
             if ($('#passengersCount').val() > 0)
