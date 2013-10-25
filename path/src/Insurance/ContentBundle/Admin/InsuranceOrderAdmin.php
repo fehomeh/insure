@@ -67,10 +67,10 @@ class InsuranceOrderAdmin extends Admin {
   {
     //$policy = $this->getConfigurationPool()->getContainer()->get('translation');
     $list->addIdentifier('id')
-      ->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),
+      /*->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),
         'label' => 'Статус заказа',
           'template' => 'InsuranceContentBundle:Helper:enum_field_list.html.twig',
-            ))
+            ))*/
       //->add('company', null, array('label' => 'Страховая'))
       ->add('policy', null, array('label' => 'Номер полиса'))
       ->add('orderDate', null, array('input_type' => 'date', 'format' => 'd.m.Y', 'label' => 'Дата заказа'))
