@@ -328,7 +328,9 @@
                         $('#success_modal .form_green_button').hide();
                         $('#success_modal').modal().open();
 						$('#success_modal').fadeOut(1000);
+						setTimeout(function(){
 						$.modal().close();
+						}, 2000);
 						
                     } else if(data.message == 'error') {
                         console.log(data.error);
