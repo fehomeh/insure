@@ -52,8 +52,7 @@
             $.modal().close();
         });
         $('#success_modal .form_green_button, #error_modal .form_green_button').on('click', function(){
-            window.location = '{{path('step1')}}#clear';
-            if ('{{path('step1')}}' == window.location.pathname) window.location.reload();
+            if ('{{path('step3')}}' == window.location.pathname) window.location = '{{path('step1')}}#clear';
             $.modal().close();
         });
 	});
