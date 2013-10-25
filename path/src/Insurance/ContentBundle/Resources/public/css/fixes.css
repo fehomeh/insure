@@ -318,6 +318,15 @@ form.modal_form .control_point input[type="email"] {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
 
+ form.modal_form .control_point .error_text:before {
+        content: "";
+        border-bottom: 8px solid #e73636;
+        border-left: 8px solid rgba(0, 0, 0, 0);
+        border-right: 8px solid rgba(0, 0, 0, 0);
+        position: absolute;
+        top: -8px;
+        right: 11px; }
+  
 form.personal_data .control_point .error_text_box_quest, .fos_user_registration_register .control_point .error_text_box_quest{
       border-radius: 3px;
       -webkit-border-radius: 3px;
@@ -792,6 +801,26 @@ line-height: 28px;
       background-position: -361px -481px;
       margin-left: 5px; }
 
+/*------------------------------------------------------------------------------------------- */
+/*-------------------------------------- SUCCESS/ERROR PAGE --------------------------------- */
+/*------------------------------------------------------------------------------------------- */	  
+  #success_modal .information_box, #error_modal .information_box {
+    border: 2px solid #82b23d;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    margin-bottom: 25px;
+    padding: 40px 20px 20px 20px;
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    color: black; }
+    #success_modal .information_box .inform_title, #error_modal .information_box .inform_title {
+      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+      font-size: 18px;
+      color: black; }	  
+	  
 .for_adres a {
     font-family: Arial,Helvetica,sans-serif;
     font-size: 12px;

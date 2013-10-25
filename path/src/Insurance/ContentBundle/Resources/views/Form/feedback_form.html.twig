@@ -8,20 +8,20 @@
             {{form_row(feedback_form.name)}}
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">Текст ошибки</div>
+            <div class="error_text">Нужно заполнить</div>
         </div>
         <div class="control_point">
             {{form_row(feedback_form.email)}}
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">Текст ошибки</div>
+            <div class="error_text">Нужно заполнить</div>
         </div>
         <div class="control_point">
             <label>Ваш вопрос:</label>
             {{form_widget(feedback_form.question)}}
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">Текст ошибки</div>
+            <div class="error_text">Нужно заполнить</div>
         </div>
         {{form_widget(feedback_form.connectionType, {type: 'hidden', value: 'F'})}}
         <div class="green_button">Отправить вопрос</div>
