@@ -29,7 +29,6 @@ class NotifySender
         ->setSubject('Поступил новый ' . $feedbackTypeText)
         ->setFrom($conType == Feedback::CALLBACK ? $from : $entity->getEmail())
         ->setTo($to)
-		->setContentType("text/html")
         ->setBody(
             $this->sc->get('templating')->render(
                 'InsuranceContentBundle:Notifications:feedbackNotification.html.twig',
@@ -37,7 +36,7 @@ class NotifySender
                 'contact' => $entity,
                 'feedbackTypeText' => $feedbackTypeText,
                 )
-            )
+            ), 'text/html'
 		)
         //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
     ;
