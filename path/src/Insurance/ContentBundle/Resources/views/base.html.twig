@@ -324,12 +324,11 @@
 				    $('.modal_preloader').removeClass('on');
                     if (data.message == 'success') {
                         $('#success_modal .inform_title').text('Спасибо, Ваш запрос принят.');
-                        $('#success_modal .form_grey_button').hide();
-                        $('#success_modal .form_green_button').text('Закрыть');
-                        $('#success_modal .form_green_button').on('click', function () {
-                            $.modal().close();
-                        })
+                        
+                        $("#success_modal").fadeIn(300);
                         $('#success_modal').modal().open();
+						$("#success_modal").delay(1000).fadeOut(300);
+						$.modal().close();
                     } else if(data.message == 'error') {
                         console.log(data.error);
                         $('#error_modal').show();
