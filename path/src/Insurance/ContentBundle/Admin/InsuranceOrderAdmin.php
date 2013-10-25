@@ -67,10 +67,10 @@ class InsuranceOrderAdmin extends Admin {
   {
     //$policy = $this->getConfigurationPool()->getContainer()->get('translation');
     $list->addIdentifier('id')
-      ->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),
+      /*->add('status', 'string', array('template' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),
         'label' => 'Статус заказа',
           'template' => 'InsuranceContentBundle:Helper:enum_field_list.html.twig',
-            ))
+            ))*/
       //->add('company', null, array('label' => 'Страховая'))
       ->add('policy', null, array('label' => 'Номер полиса'))
       ->add('orderDate', null, array('input_type' => 'date', 'format' => 'd.m.Y', 'label' => 'Дата заказа'))
@@ -91,7 +91,7 @@ class InsuranceOrderAdmin extends Admin {
   public function configureDatagridFilters(DatagridMapper $filter)
   {
     $filter->add('id')
-        /*->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),'label'
+        ->add('status', 'doctrine_orm_string', array('label' => 'Статус'), 'choice', array('choices' => array('W' => 'В ожидании', 'P' => 'Обработан', 'C'=> 'Подтвержден',),'label'
           => 'Статус заказа'))
         ->add('payStatus', null, array('label' => 'Состояние оплаты'))
         ->add('payType', null, array('label' => 'Тип оплаты'))
@@ -108,7 +108,7 @@ class InsuranceOrderAdmin extends Admin {
         ->add('price', null, array('label' => 'Цена'))
         ->add('priceDgo', null, array('label' => 'Цена ДГО'))
         ->add('priceNs', null, array('label' => 'Цена НС'))
-        ->add('payDate', null, array('label' => 'Дата оплаты'))*/;
+        ->add('payDate', null, array('label' => 'Дата оплаты'));
   }
   public function configureShowFields(ShowMapper $filter)
   {
