@@ -33,6 +33,9 @@
             {{form_widget(callback_form.question)}}
         </div>
         <div type="submit" class="green_button">Заказать звонок</div>
+		<div class="modal_preloader">
+        <img src="{{asset('bundles/insurancecontent/images/2.gif')}}" alt="img" />
+        </div>
         <div style="clear: both;"></div>
         {{form_widget(callback_form.connectionType, {type: 'hidden', value: 'C'})}}
     </form>

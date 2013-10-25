@@ -314,12 +314,14 @@
                 }
             });
             if (errors === 0) {
+			    $('.modal_preloader').addClass('on');
                 var form = $(this).parents('form');
                 $.ajax($(form).attr('action'),{
                 data: form.serialize(),
                 type: 'POST'
                 })
                 .done(function(data){
+				    $('.modal_preloader').removeClass('on');
                     if (data.message == 'success') {
                         $('#success_modal .inform_title').text('Спасибо, Ваш запрос принят.');
                         $('#success_modal .form_grey_button').hide();
