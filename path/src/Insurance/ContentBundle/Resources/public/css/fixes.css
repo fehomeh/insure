@@ -849,7 +849,7 @@ line-height: 28px;
    right: 50px;
    cursor:pointer;
    display:none;
-   z-index: 1000;
+   z-index: 3;
    padding: 15px;
    background-color: rgb(113, 184, 56);
      border-radius: 6px;
