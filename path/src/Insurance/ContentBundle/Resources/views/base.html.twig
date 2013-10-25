@@ -323,9 +323,8 @@
                 .done(function(data){
 				    $('.modal_preloader').removeClass('on');
                     if (data.message == 'success') {
-                        $('#success_modal .inform_title').text('Спасибо, Ваш запрос принят.');
-                        $('#success_modal').show();
-						$('#success_modal').delay(1000).fadeOut(700).hide();
+                        $('#success_modal .inform_title').text('Спасибо, Ваш запрос принят.');                        
+                        $('#success_modal').modal().open();
                     } else if(data.message == 'error') {
                         console.log(data.error);
                         $('#error_modal').show();
