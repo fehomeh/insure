@@ -20,14 +20,14 @@ class NotifySender
     $entity = $args->getEntity();
     if ($entity instanceof Feedback) {
       //var_dump($this->sc->getParameter('admin_emails'));exit;
-      $to = $this->sc->getParameter('contact.email');
+      $to = $this->sc->getParameter('admin.emails');
       $from = $this->sc->getParameter('email.send.from');
       $conType = $entity->getConnectionType();
       if($conType == Feedback::CALLBACK) $feedbackTypeText = 'запрос на обратный звонок';
         elseif ($conType == Feedback::FEEDBACK) $feedbackTypeText = 'вопрос';
       $message = \Swift_Message::newInstance()
         ->setSubject('Поступил новый ' . $feedbackTypeText)
-        ->setFrom($conType == Feedback::CALLBACK ? $from : $entity->getEmail())
+        ->setFrom(array($conType == Feedback::CALLBACK ? $from : $entity->getEmail() => 'PolisMarket'))
         ->setTo($to)
         ->setBody(
             $this->sc->get('templating')->render(
