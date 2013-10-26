@@ -1,9 +1,8 @@
 Здравствуйте!
 На сайт поступил новый <b>{{feedbackTypeText}}</b>.
 <br/>
-<span style="font-size: 16px; font-style: italic; font-weight: bold;">Контактные данные для связи</span>
 <p><b>Имя:</b> {{contact.name}}</p>
 {% if contact.timeToCall %}<p><b>Время звонка:</b> {{contact.timeToCall}}</p>{% endif %}
 {% if contact.phoneNumber %}<p><b>Контактный телефон:</b> {{contact.phoneNumber}}</p>{% endif %}
 {% if contact.email %}<p><b>EMail:</b> {{contact.email}}</p>{% endif %}
-{% if contact.question %}<p><b>Вопрос</b> {{contact.question}}</p>{% endif %}
+{% if contact.question %}<p><b>Вопрос:</b> {{contact.question}}</p>{% endif %}
