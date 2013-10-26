@@ -20,7 +20,7 @@ class NotifySender
     $entity = $args->getEntity();
     if ($entity instanceof Feedback) {
       //var_dump($this->sc->getParameter('admin_emails'));exit;
-      $to = $this->sc->getParameter('admin.emails');
+      $to = $this->sc->getParameter(array('admin.emails'));
       $from = $this->sc->getParameter('email.send.from');
       $conType = $entity->getConnectionType();
       if($conType == Feedback::CALLBACK) $feedbackTypeText = 'запрос на обратный звонок';
@@ -28,7 +28,7 @@ class NotifySender
       $message = \Swift_Message::newInstance()
         ->setSubject('Поступил новый ' . $feedbackTypeText)
         ->setFrom(array($conType == Feedback::CALLBACK ? $from : $entity->getEmail() => 'PolisMarket'))
-        ->setTo(array($to))
+        ->setTo($to)
         ->setBody(
             $this->sc->get('templating')->render(
                 'InsuranceContentBundle:Notifications:feedbackNotification.html.twig',
