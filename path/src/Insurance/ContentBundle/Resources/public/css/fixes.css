@@ -560,7 +560,29 @@ margin-top: -10px;
 form.personal_data .line {
     margin-bottom: 40px;
     }
+	
 
+form.personal_data .param_adres {
+    font-size: 18px;
+    color: black;
+    font-weight: 400;    
+    margin-top: 0px;
+    line-height: 21px;
+    width: 150px;
+    position: absolute;
+    top: 0;
+    left: 0; }
+	
+form.personal_data .kiev_info {
+    font-size: 14px;
+    margin-left:23px;
+	line-height: 40px;
+	color: #505050;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: italic;
+	}
+    	
+	
 form.personal_data .control_point {
     display: inline-block;
     margin-left: 10px;

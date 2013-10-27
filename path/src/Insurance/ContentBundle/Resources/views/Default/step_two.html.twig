@@ -185,7 +185,7 @@
                             </div>
                             <!-- -->
                             <div class="line">
-                                <div class="param">Адрес:</div>
+                                <div class="param_adres">Адрес проживания:</div>
                                 <div class="combo one_column">
                                     <div class="current">
                                     {% if app.session.get('region') %}
@@ -228,14 +228,15 @@
                                     <input type="text" name="registerAddress" id="registerAddress" placeholder="Улица" value="{{ app.session.get('registerAddress')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size2">
                                     <input type="text" name="registerBuilding" id="registerBuilding" value="{{ app.session.get('registerBuilding')}}" placeholder="Дом, корпус, квартира" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
+								<div class="kiev_info">На данный момент доставка осуществляется только по Киеву.</div>
                             </div>
                             <!-- -->
                             <div class="line">
@@ -245,8 +246,7 @@
                                         Согласие на обработку персональных данных
                                         <div class="question_ico">
                                             <div class="pop_up">
-                                                <div class="popup_title">Lorem ipsum dolor sit amet</div>
-                                                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                                                Этим вы даете согласие на сбор, обработку, использование и хранение своих персональних данных. Также подтверждаете, что ознакомлены с особенностями использования и защиты персональных данных, которые установлены Законом Украины «О защите персональных данных» и другим действующим законодательством Украины.
                                             </div>
                                         </div>
                                     </label>
@@ -498,7 +498,8 @@
     <input type="text" name="documentSerie" id="documentSerie" placeholder="Серия" value="{{ app.session.get('documentSerie')}}">
     <input type="text" name="documentNumber" id="documentNumber" placeholder="Номер" value="{{ app.session.get('documentNumber')}}">
     <input type="text" name="documentAuthority" id="documentAuthority" placeholder="Кем выдан" value="{{ app.session.get('documentAuthority')}}">
-    <input type="text" name="documentDate" id="documentDate" placeholder="Когда" value="{{ app.session.get('documentDate')}}"><br>
+    <input type="text" name="documentDate" id="documentDate" placeholder="Когда" value="{{ app.session.get('documentDate')}}">
+	<input type="text" name="documentInn" id="documentInn" placeholder="Идентификационный номер" value="{{ app.session.get('documentInn')}}"><br>
     <label for="phone">Телефон:</label><input type="text" name="phone" id="phone" placeholder="+38(xxxxx)xxx-xx-xx" value="{{ app.session.get('phone')}}"><br>
     Адрес: <select name="region" id="region" >
         <option value="0">Выберите область</option>
