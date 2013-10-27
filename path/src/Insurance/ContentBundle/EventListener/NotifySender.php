@@ -28,7 +28,7 @@ class NotifySender
       $message = \Swift_Message::newInstance()
         ->setSubject('Поступил новый ' . $feedbackTypeText)
         ->setFrom(array($conType == Feedback::CALLBACK ? $from : $entity->getEmail() => 'PolisMarket'))
-        ->setTo(array('polisvit@gmail.com', 'mirgoody@mail.ru'))
+        ->setTo($to)
         ->setBody(
             $this->sc->get('templating')->render(
                 'InsuranceContentBundle:Notifications:feedbackNotification.html.twig',

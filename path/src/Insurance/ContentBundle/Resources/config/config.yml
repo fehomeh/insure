@@ -1,9 +1,9 @@
 parameters:
-    admin.emails: ['support@polismarket.com.ua','mirgoody@yandex.ua']
+    admin.emails: ['support@polismarket.com.ua', 'mirgoody@yandex.ua']
     email.send.from: 'noreply@polismarket.com.ua'
     site.name: 'Страховое агенство "ПОЛИСМАРКЕТ"'
     site.domain: 'polismarket.com.ua'
-    contact.email: 'support@polismarket.com.ua'
+    contact.email: ['support@polismarket.com.ua', 'mirgoody@yandex.ua']
     contact.phone: '(050) 001-01-01'
     savings: #show user fake money savings
         date.start: '30.07.2013' #initial date to start count
