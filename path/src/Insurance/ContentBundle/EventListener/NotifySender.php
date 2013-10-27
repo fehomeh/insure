@@ -20,14 +20,15 @@ class NotifySender
     $entity = $args->getEntity();
     if ($entity instanceof Feedback) {
       //var_dump($this->sc->getParameter('admin_emails'));exit;
+	  $from = $this->sc->getParameter('email.send.from');
+	  $emailName = $this->sc->getParameter('email.name');
       $to = $this->sc->getParameter('contact.email');
-      $from = $this->sc->getParameter('email.send.from');
       $conType = $entity->getConnectionType();
       if($conType == Feedback::CALLBACK) $feedbackTypeText = 'запрос на обратный звонок';
         elseif ($conType == Feedback::FEEDBACK) $feedbackTypeText = 'вопрос';
       $message = \Swift_Message::newInstance()
         ->setSubject('Поступил новый ' . $feedbackTypeText)
-        ->setFrom(array($from => 'PolisMarket'))
+        ->setFrom(array($from => $emailName))
         ->setTo($to)
         ->setBody(
             $this->sc->get('templating')->render(
@@ -45,6 +46,7 @@ class NotifySender
     }
     if ($entity instanceof InsuranceOrder) {
         $from = $this->sc->getParameter('email.send.from');
+		$emailName = $this->sc->getParameter('email.name');
         $siteName = $this->sc->getParameter('site.name');
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
@@ -53,7 +55,7 @@ class NotifySender
           $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
               ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
-              ->setFrom($from)
+              ->setFrom(array($from => $emailName))
               ->setTo($to)
               ->setBody(
                     $this->sc->get('templating')->render(
@@ -73,7 +75,7 @@ class NotifySender
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
                 ->setSubject(strtoupper($siteDomain) . 'Оплата за Ваш заказ получена!')
-                ->setFrom($from)
+                ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(
                     $this->sc->get('templating')->render(
@@ -94,7 +96,7 @@ class NotifySender
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
                 ->setSubject(strtoupper($siteDomain) . 'Вы отложили решение по покупке полиса.')
-                ->setFrom($from)
+                ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(
                     $this->sc->get('templating')->render(
@@ -114,7 +116,7 @@ class NotifySender
       $to = $this->sc->getParameter('admin.emails');
       $messageToAdmin = \Swift_Message::newInstance()
             ->setSubject('Поступил новый заказ!')
-            ->setFrom($from)
+            ->setFrom(array($from => $emailName))
             ->setTo($to)
             ->setBody(
             $this->sc->get('templating')->render(
@@ -136,10 +138,11 @@ class NotifySender
             if ($args->hasChangedField('payStatus')) {
                 if ($args->getOldValue('payStatus') == 0 && $args->getNewValue('payStatus') == 1) {
                     $from = $this->sc->getParameter('email.send.from');
+					$emailName = $this->sc->getParameter('email.name');
                     $to = $entity->getUser()->getEmail();
                     $message = \Swift_Message::newInstance()
                         ->setSubject('Ваш полис успешно оплачен. В скоре Вы получите оригинал.')
-                        ->setFrom($from)
+                        ->setFrom(array($from => $emailName))
                         ->setTo($to)
                         ->setBody(
                             $this->sc->get('templating')->render(

@@ -1,6 +1,7 @@
 parameters:
     admin.emails: ['polisvit@gmail.com', 'e.kuguk@gmail.com']
     email.send.from: 'noreply@polismarket.com.ua'
+    email.name: 'PolisMarket'
     site.name: 'Страховое агенство "ПОЛИСМАРКЕТ"'
     site.domain: 'polismarket.com.ua'
     contact.email: 'support@polismarket.com.ua'
