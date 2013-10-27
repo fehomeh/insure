@@ -27,7 +27,7 @@ class NotifySender
         elseif ($conType == Feedback::FEEDBACK) $feedbackTypeText = 'вопрос';
       $message = \Swift_Message::newInstance()
         ->setSubject('Поступил новый ' . $feedbackTypeText)
-        ->setFrom(array($conType == Feedback::CALLBACK ? $from : $entity->getEmail() => 'PolisMarket'))
+        ->setFrom(array($from => 'PolisMarket'))
         ->setTo($to)
         ->setBody(
             $this->sc->get('templating')->render(
