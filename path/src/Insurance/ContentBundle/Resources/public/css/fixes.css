@@ -425,7 +425,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
   position: absolute;
   z-index: 3;
   left: 26px;
-  top: -9px;
+  top: -13px;
   width: 240px;
   border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -446,7 +446,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
   .pop_up_total:before {
     content: "";
     position: absolute;
-    top: 8px;
+    top: 11px;
     left: -10px;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #cccccc;
@@ -455,7 +455,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
   .pop_up_total:after {
     content: "";
     position: absolute;
-    top: 8px;
+    top: 11px;
     left: -9px;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #f4fae6;
@@ -572,6 +572,10 @@ form.personal_data .control_point input:focus {
       -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
       -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41); }
+	  
+form.personal_data .control_point.size5 {
+      width: 257px;
+	  margin-top: 10px;}	  
  
  form.modal_form .control_point.error input {
     border-color: #e73636;
@@ -820,6 +824,11 @@ line-height: 28px;
       font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
       font-size: 18px;
       color: black; }	  
+
+form.personal_data .line.adres {
+  margin-bottom:20px;
+  }
+  
 	  
 .for_adres a {
     font-family: Arial,Helvetica,sans-serif;

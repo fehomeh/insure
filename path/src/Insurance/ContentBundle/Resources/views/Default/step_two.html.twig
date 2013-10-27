@@ -29,7 +29,7 @@
                             {{(app.session.get('price') + app.session.get('priceDGO') + app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.
                             <div class="question_ico">
                                 <div class="pop_up_total">
-                                    Это общая сумма Вашего заказа, в том числе скидка если возраст Вашего автомобиля больше 1 года.
+                                    Это общая сумма Вашего заказа, в т.ч. скидка, если возраст Вашего автомобиля больше 1 года.
                                 </div>
                             </div>
                         </div>
@@ -112,25 +112,25 @@
                                     <input type="text" name="surname" id="surname" placeholder="Фамилия" value="{{ app.session.get('surname')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size2">
                                     <input type="text" name="firstname" id="firstname" placeholder="Имя" value="{{ app.session.get('firstname')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size2">
                                     <input type="text" name="middlename" id="middlename" placeholder="Отчество" value="{{ app.session.get('middlename')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
                             <!-- -->
                             <div class="line">
-                                <div class="param">Документ:</div>
+                                <div class="param">Документы:</div>
                                 <div class="control_point radio_control">
                                     <input type="radio" class="styled" name="documentType" value="P" {% if app.session.get('documentType') == 'P' or app.session.get('documentType') == null %} checked="" {% endif %}id="documentTypePassport" />
                                     <label for="documentTypePassport">Паспорт</label>
@@ -144,25 +144,31 @@
                                     <input type="text" name="documentSerie" id="documentSerie" placeholder="Серия" value="{{ app.session.get('documentSerie')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Это поле не может быть пустым</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size1">
                                     <input type="text" name="documentNumber" id="documentNumber" placeholder="Номер" value="{{ app.session.get('documentNumber')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size4">
                                     <input type="text" name="documentAuthority" id="documentAuthority" placeholder="Кем выдан" value="{{ app.session.get('documentAuthority')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size1">
                                     <input type="text" name="documentDate" id="documentDate" placeholder="Когда" value="{{ app.session.get('documentDate')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
+                                </div>
+								<div class="control_point size5">
+                                    <input type="text" name="documentInn" id="documentInn" placeholder="Идентификационный номер" value="{{ app.session.get('documentInn')}}" />
+                                    <div class="success ico"></div>
+                                    <div class="error ico"></div>
+                                    <div class="error_text_box">В номере должно быть 10 символов</div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
@@ -170,10 +176,10 @@
                             <div class="line">
                                 <div class="param">Телефон:</div>
                                 <div class="control_point size3">
-                                    <input type="text" placeholder="38(...)... .. .." name="phone" id="phone" value="{{ app.session.get('phone')}}" />
+                                    <input type="text" placeholder="(ХХХ)ХХХ-ХХ-ХХ" name="phone" id="phone" value="{{ app.session.get('phone')}}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
@@ -270,7 +276,7 @@
             errors.activeFrom = true;
         } else
             errors.activeFrom = false;
-        if ($('#vinCode').val().length < 17) {
+        if ($('#vinCode').val().length != 17) {
             errors.vinCode = true;
         } else
             errors.vinCode = false;
@@ -310,6 +316,10 @@
             errors.documentDate = true;
         } else
             errors.documentDate = false;
+		if ($('#documentInn').val().length != 10) {
+            errors.documentInn = true;
+        } else
+            errors.documentInn = false;	
         if ($('#phone').val().length == 0) {
             errors.phone = true;
         } else
@@ -363,6 +373,7 @@
         $('#documentNumber').val(null);
         $('#documentAuthority').val(null);
         $('#documentDate').val(null);
+		$('#documentInn').val(null);
         $('#phone').val(null);
         $('#region').val(null);
         $('#region').parents('.combo').find('.current').text('Выбрать область');
