@@ -198,6 +198,14 @@ class InsuranceOrder
      */
     private $documentDate;
 
+     /**
+     *
+     * @var string
+     *
+     * @ORM\Column(name="document_inn", type="string", length=20, nullable=false)
+     */
+    private $documentInn;
+
     /**
      * @var string
      *
@@ -1349,5 +1357,28 @@ class InsuranceOrder
     public function getTaxiUse()
     {
         return $this->taxiUse;
+    }
+
+    /**
+     * Set documentInn
+     *
+     * @param string $documentInn
+     * @return InsuranceOrder
+     */
+    public function setDocumentInn($documentInn)
+    {
+        $this->documentInn = $documentInn;
+
+        return $this;
+    }
+
+    /**
+     * Get documentInn
+     *
+     * @return string 
+     */
+    public function getDocumentInn()
+    {
+        return $this->documentInn;
     }
 }

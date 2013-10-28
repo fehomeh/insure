@@ -268,6 +268,7 @@ class DefaultController extends Controller
                 $documentNumber = $request->request->get('documentNumber');
                 $documentAuthority = $request->request->get('documentAuthority');
                 $documentDate = $request->request->get('documentDate');
+                $documentInn = $request->request->get('documentInn');
                 $phone = $request->request->get('phone');
                 $region = $request->request->get('region');
                 $city = $request->request->get('city');
@@ -344,6 +345,12 @@ class DefaultController extends Controller
                     $error['documentDate'] = 'Неправильный формат даты';
                 } else {
                     $session->set('documentDate', $documentDate);
+                }
+
+                if (strlen($documentInn) === 0) {
+                    $error['documentInn'] = 'Не заполнено поле';
+                } else {
+                    $session->set('documentInn', $documentInn);
                 }
 
                 if ($region > 0) {
@@ -442,6 +449,7 @@ class DefaultController extends Controller
             $session->set('documentNumber', $savedOrder->getDocumentNumber());
             $session->set('documentAuthority', $savedOrder->getDocumentAuthority());
             $session->set('documentDate', $savedOrder->getDocumentDate()->format('d.m.Y'));
+            $session->set('documentInn', $savedOrder->getDocumentInn());
             $session->set('phone', $savedOrder->getPhone());
             $session->set('region', $savedOrder->getCity()->getRegion()->getId());
             $session->set('city', $savedOrder->getCity()->getId());
@@ -566,6 +574,8 @@ class DefaultController extends Controller
                 $order->setDocumentAuthority($session->get('documentAuthority'));
 
                 $order->setDocumentDate(new \DateTime($session->get('documentDate')));
+
+                $order->setDocumentInn($session->get('documentInn'));
 
                 $order->setPhone($session->get('phone'));
 
