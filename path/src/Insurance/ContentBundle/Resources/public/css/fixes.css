@@ -66,8 +66,6 @@ header .main_menu div.shadow {
         background-repeat: no-repeat; }
 
 header .main_menu li a {
-        height: 45px;
-		line-height: 46px;
 		font-size: 15px;
 		letter-spacing: 0.02em;
 		padding: 0 20px 0 22px;
@@ -489,26 +487,27 @@ margin-top: -10px;
 /*------------------------------------------------------------------------------------------- */
 /*---------------------------------------- POLIS DATE --------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
-.polis_date .label {
-  height: 40px;
-  line-height: 40px; }
-.polis_date .date {
-  height: 40px;
-  line-height: 40px;
-  position: relative;
-  width: 245px;
-  display: inline-block;
-  cursor: pointer;
-  background-color: #fff;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border: 1px solid #cfcfcf;
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13) inset; }
 
+
+.control_point.date {
+width: 242px;
+}  
+  
+.control_point.date span {
+    width: 23px;
+    height: 24px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 1;
+    background-image: url(../images/sprite.png);
+    background-position: -367px -219px;
+    background-repeat: no-repeat;
+    background-color: transparent; }  
+.control_point.date input {
+    z-index: 4;
+ }  
+  
  .polis_date:hover .pop_up_date {
     display: block; }
 
@@ -584,10 +583,7 @@ form.personal_data .kiev_info {
     	
 	
 form.personal_data .control_point {
-    display: inline-block;
-    margin-left: 10px;
 	margin-top: 3px;
-    margin-bottom: 0px;
 }
 
 form.personal_data .control_point input:focus {
@@ -610,13 +606,11 @@ form.personal_data .control_point.size5 {
     display: block;
 }
 
+form.personal_data .control_point .error_text_box {
+	z-index:1;
+}
+
 form.personal_data .control_point .error_text_box:before {
-        content: "";
-        border-bottom: 8px solid #e73636;
-        border-left: 8px solid rgba(0, 0, 0, 0);
-        border-right: 8px solid rgba(0, 0, 0, 0);
-        position: absolute;
-        top: -8px;
         right: 11px; }
 
 /*------------------------------------------------------------------------------------------- */

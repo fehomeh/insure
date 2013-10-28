@@ -43,7 +43,7 @@
                             <div class="label">Полис начнет действовать:</div>
                             <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ '+2 days'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
 							<div class="pop_up_date">
-                                    <b>Полис может начать действовать начиная с послезавтра.</b> Если Вам нужен полис уже на "сегодня-завтра", пожалуйста свяжитесь с нами для согласования.
+                                    <b>Не ранее чем с послезавтра.</b> Если Вам нужен полис уже на "сегодня-завтра", пожалуйста свяжитесь с нами для согласования.
                                 </div>
 
                         </div>
@@ -127,6 +127,14 @@
                                     <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div style="clear: both;"></div>
+                            </div>
+                            <!-- -->
+							<div class="line">
+                                <div class="param">Дата рождения:</div>
+                                <div class="control_point date"><input type="text" value="" name="birthDate" id="birthDate"/><span></span>
+								<div class="error_text_box">Введите дату рождения</div>
+								</div>
+                                
                             </div>
                             <!-- -->
                             <div class="line">
@@ -296,6 +304,10 @@
             errors.middlename = true;
         } else
             errors.middlename = false;
+		if ($('#birthDate').val().length == 0) {
+            errors.birthDate = true;
+        } else
+            errors.birthDate = false;
         if ($('#documentTypePassport').val() != 'P' || $('#documentTypeDriver').val() != 'D') {
             errors.documentTypePassport = true;
         } else
@@ -366,6 +378,7 @@
         $('#surname').val(null);
         $('#firstname').val(null);
         $('#middlename').val(null);
+		$('#birthDate').val(null);
         $('#documentTypePassport').removeAttr('checked');
         $('#documentTypeDriver').removeAttr('checked');
         $('#documentTypePassport').trigger('click');
@@ -401,6 +414,14 @@
     dateFormat: 'dd.mm.yy',
     inline: true,
     minDate: +2
+    });
+	$('#birthDate').datepicker({
+    closeText: 'Закрыть',
+    dateFormat: 'dd.mm.yy',
+	yearRange: "1930:c-17",
+	changeMonth: true,
+    changeYear: true,
+    inline: true,
     });
     function selectCity() {
         var inputEl = $(this).parents('ul').attr('form-input-id');
@@ -438,6 +459,7 @@
                     documentNumber: '{{personData.documentNumber}}',
                     documentAuthority: '{{personData.documentAuthority}}',
                     documentDate: '{{personData.documentDate|date('d.m.Y')}}',
+					documentInn: '{{personData.documentInn}}',
                     phone: '{{personData.phone}}',
                     region: '{{personData.city.region.id}}',
                     city: '{{personData.city.id}}',
@@ -493,6 +515,7 @@
     <input type="text" name="surname" id="surname" placeholder="Фамилия" value="{{ app.session.get('surname')}}">
     <input type="text" name="firstname" id="firstname" placeholder="Имя" value="{{ app.session.get('firstname')}}">
     <input type="text" name="middlename" id="middlename" placeholder="Отчество" value="{{ app.session.get('middlename')}}"><br>
+	<label>Дата рождения: </label><input type="text" name="birthDate" id="birthDate" value="{{ app.session.get('birthDate')}}"><br>
     <label>Документ: </label><input type="radio" name="documentType" value="P" {% if app.session.get('documentType') == 'P'%} checked="" {% endif %}>Паспорт
     <input type="radio" name="documentType" value="D" {% if app.session.get('documentType') == 'D'%} checked="" {% endif %}>Водительское удостоверение<br>
     <input type="text" name="documentSerie" id="documentSerie" placeholder="Серия" value="{{ app.session.get('documentSerie')}}">
