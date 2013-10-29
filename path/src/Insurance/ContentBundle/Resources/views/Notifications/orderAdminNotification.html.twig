@@ -1,11 +1,24 @@
-Поступил заказ от клиента.
-
-Серия и номер полиса: {{order.id}}
-Начало действия полиса: {{order.activeFrom}}
-Срок страхования: {{order.id}}
-ФИО: {{order.id}} {{order.id}} {{order.id}}
-Адрес: {{order.city}} {{order.id}} {{order.id}}
-ОСАГО: {{order.id}}
-ДГО: {{order.id}}
-НС: {{order.id}}
-Сумма: {{order.price + order.priceDgo + order.priceNs}} грн
+<p>Поступил заказ от клиента.</p>
+<p></p>
+<p><b>Серия и номер полиса:</b> {{order.policy.serie}}/{{order.policy.value}}</p>
+<p><b>Начало действия полиса:</b> {{order.activeFrom}}</p>
+<p><b>Срок страхования:</b> {{order.insuranceTerm}}</p>
+<p><b>ФИО:</b> {{order.surname}} {{order.firstname}} {{order.middlename}}</p>
+<p><b>Адрес проживания:</b> {{order.city}}, {{order.registerAddress}}, {{order.registerBuilding}}</p>
+<p><b>Адрес доставки:</b> {{order.deliveryAddress}}, {{order.deliveryBuilding}}</p>
+<p><b>Документ:</b> {% if order.documentType == 'D'%}вод. права{% elseif order.documentType == 'P'%}паспорт{%endif%} - {{order.documentSerie}}/{{order.documentNumber}}, {{order.documentAuthority}}, {{order.documentDate}}</p>
+<p><b>ИНН:</b> {{order.documentInn}}</p>
+<p><b>Телефон:</b> {{order.phone}}</p>
+<p>-------</p>
+<p><b>Авто:</b> {{order.carBrand}} {{order.carModel}} {{order.carAge}}, {% if order.displacement == '1.4' %}до 1.6 л.,
+                                {%- elseif order.displacement == '1.7' -%}1.601 - 2.0 л.,
+                                {%- elseif order.displacement == '2.1' -%}2.01 - 3.0 л.,
+                                {%- elseif order.displacement == '3.1' -%}больше 3.0 л.{% endif %}</p>
+<p><b>Место регистрации ТС:</b> {{order.registerRegion}}, {{order.registerCity}}</p>
+<p><b>VIN-код:</b> {{order.vinCode}}</p>
+<p><b>Номерной знак:</b> {{order.carNumber}}</p>
+<p>-------</p>
+<p><b>ОСАГО:</b> {{order.price}}</p>
+<p><b>ДГО:</b> {{order.priceDgo}}</p>
+<p><b>НС:</b> {{order.priceNs}}</p>
+<p><b>Сумма:</b> {{order.price + order.priceDgo + order.priceNs}} грн</p>
