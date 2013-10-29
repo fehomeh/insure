@@ -14,10 +14,11 @@ jQuery(function($){
 		dayNamesShort: ['вск','пнд','втр','срд','чтв','птн','сбт'],
 		dayNamesMin: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'],
 		weekHeader: 'Нед',
-		dateFormat: 'dd.mm.yy',
+		dateFormat: 'dd/mm/yy',
 		firstDay: 1,
 		isRTL: false,
 		showMonthAfterYear: false,
+		inline: true,
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['ru']);
 });

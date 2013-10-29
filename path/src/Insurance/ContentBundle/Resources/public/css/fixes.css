@@ -487,10 +487,12 @@ margin-top: -10px;
 /*------------------------------------------------------------------------------------------- */
 /*---------------------------------------- POLIS DATE --------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
-
-
+.polis_date .date {
+	width: 202px;
+}
+	
 .control_point.date {
-width: 242px;
+	width: 202px;
 }  
   
 .control_point.date span {
@@ -539,20 +541,24 @@ width: 242px;
     position: absolute;
     top: 50%;
     left: -10px;
-	margin-top: -10px;
-    border-top: 10px solid rgba(0, 0, 0, 0);
+	margin-top: -20px;
+    border-top: 20px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #cccccc;
-    border-bottom: 10px solid rgba(0, 0, 0, 0); }
+    border-bottom: 20px solid rgba(0, 0, 0, 0); }
 
   .pop_up_date:after {
     content: "";
     position: absolute;
     top: 50%;
     left: -9px;
-	margin-top: -10px;
-    border-top: 10px solid rgba(0, 0, 0, 0);
+	margin-top: -20px;
+    border-top: 20px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #f4fae6;
-    border-bottom: 10px solid rgba(0, 0, 0, 0); }
+    border-bottom: 20px solid rgba(0, 0, 0, 0); }
+	
+.ui-datepicker {
+	width: 202px;
+}	
 /*------------------------------------------------------------------------------------------- */
 /*-------------------------------------- PERSONAL_INFO FORM --------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -590,10 +596,19 @@ form.personal_data .control_point input:focus {
       -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
       -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41); }
+
+form.personal_data .control_point.size0 {
+      width: 68px; }  
 	  
 form.personal_data .control_point.size5 {
-      width: 257px;
-	  margin-top: 10px;}	  
+      width: 202px;
+	  margin-top: 10px;}	
+
+form.personal_data .control_point.size6 {
+      width: 366px; }		  
+
+form.personal_data .control_point.size7 {
+      width: 202px; }		  
  
  form.modal_form .control_point.error input {
     border-color: #e73636;
