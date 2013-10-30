@@ -164,6 +164,11 @@ class InsuranceOrder
     private $middlename;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="birth_date", type="date", nullable=false)
+     */
+    private $birthDate;
+    /**
      * @var string
      *
      * @ORM\Column(name="document_type", type="string", length=1, nullable=false)
@@ -1375,10 +1380,33 @@ class InsuranceOrder
     /**
      * Get documentInn
      *
-     * @return string 
+     * @return string
      */
     public function getDocumentInn()
     {
         return $this->documentInn;
+    }
+
+    /**
+     * Set birthDate
+     *
+     * @param \DateTime $birthDate
+     * @return InsuranceOrder
+     */
+    public function setBirthDate($birthDate)
+    {
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthDate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthDate()
+    {
+        return $this->birthDate;
     }
 }

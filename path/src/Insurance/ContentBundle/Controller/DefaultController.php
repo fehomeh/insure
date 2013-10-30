@@ -263,6 +263,7 @@ class DefaultController extends Controller
                 $surname = $request->request->get('surname');
                 $firstname = $request->request->get('firstname');
                 $middlename = $request->request->get('middlename');
+                $birthDate = $request->request->get('birthDate');
                 $documentType = $request->request->get('documentType');
                 $documentSerie = $request->request->get('documentSerie');
                 $documentNumber = $request->request->get('documentNumber');
@@ -311,6 +312,14 @@ class DefaultController extends Controller
                     $error['middlename'] = 'Не заполнено поле';
                 } else {
                     $session->set('middlename', $middlename);
+                }
+
+                if (strlen($birthDate) === 0) {
+                    $error['birthDate'] = 'Не заполнено поле';
+                } elseif (!preg_match('#[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}#', $birthDate)) {
+                    $error['birthDate'] = 'Неправильный формат даты';
+                } else {
+                    $session->set('birthDate', $birthDate);
                 }
 
                 if (strlen($documentType) === 0) {
@@ -444,6 +453,7 @@ class DefaultController extends Controller
             $session->set('surname', $savedOrder->getSurname());
             $session->set('firstname', $savedOrder->getFirstname());
             $session->set('middlename', $savedOrder->getMiddlename());
+            $session->set('birthDate', $savedOrder->getBirthDate()->format('d.m.Y'));
             $session->set('documentType', $savedOrder->getDocumentType());
             $session->set('documentSerie', $savedOrder->getDocumentSerie());
             $session->set('documentNumber', $savedOrder->getDocumentNumber());
@@ -464,7 +474,8 @@ class DefaultController extends Controller
             $session->set('payType', $savedOrder->getPayType());
             $session->set('activity', $savedOrder->getActive());
             $needAuth = false;
-        } else $needAuth = true;
+        } elseif (!is_null($hash)) $needAuth = true;
+            else $needAuth = false;
         $region = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findOneById($session->get('region'));
         $regionId = $session->get('region');
         $cityId = $session->get('city');
@@ -564,6 +575,8 @@ class DefaultController extends Controller
                 $order->setFirstname($session->get('firstname'));
 
                 $order->setMiddlename($session->get('middlename'));
+
+                $order->setBirthDate(new \DateTime($session->get('birthDate')));
 
                 $order->setDocumentType($session->get('documentType'));
 
