@@ -70,7 +70,7 @@
                                 <p>Стоимость доставки для Вас - <b>БЕСПЛАТНО!</b></p>
                             </div>
                             <!-- -->
-                            <div class="line">
+                            <div class="line adres">
                                 <div class="param bold">Адрес:</div>
                                 <div class="adres_text">г. {{ city }}, {{ region }}, {{ app.session.get('registerAddress') }}, {{ app.session.get('registerBuilding') }}</div>
                                 <div class="change for_adres">Изменить</div>
@@ -120,13 +120,13 @@
                                     <input type="text" placeholder="Улица" name="deliveryAddress" id="deliveryAddress" value="{{ deliveryAddress }}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text">Текст ошибки</div>
+                                    <div class="error_text">Заполните поле</div>
                                 </div>
                                 <div class="control_point size2">
                                     <input type="text" name="deliveryBuilding" id="deliveryBuilding" placeholder="Дом, корпус, квартира" value="{{ deliveryBuilding }}" />
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text">Текст ошибки</div>
+                                    <div class="error_text">Заполните поле</div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
@@ -137,7 +137,7 @@
                                     <input type="text" name="phone" id="phone" placeholder="(ХХХ)ХХХ ХХ ХХ" value="{{ app.session.get('phone')}}"/>
                                     <div class="success ico"></div>
                                     <div class="error ico"></div>
-                                    <div class="error_text">Неправильный формат номера</div>
+                                    <div class="error_text">Введите номер телефона</div>
                                 </div>
                             </div>
                             <div style="clear: both;"></div>
@@ -163,6 +163,10 @@
                                     <div id="privat_card" class="ico privat_card"></div>
                                     <div class="text"><b>Карта</b> Приват Банка</div>
                                 </div>
+                                <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%}">
+                                    <div id="privat24" class="ico privat24"></div>
+                                    <div class="text"><b>Приват 24</b></div>
+                                </div>								
                                 <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%}">
                                     <div id="terminal" class="ico terminal"></div>
                                     <div class="text"><b>Терминалы</b> оплаты</div>
@@ -170,10 +174,6 @@
                                 <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%}">
                                     <div id="webmoney" class="ico webmoney"></div>
                                     <div class="text"><b>Webmoney</b></div>
-                                </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%}">
-                                    <div id="privat24" class="ico privat24"></div>
-                                    <div class="text"><b>Приват 24</b></div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
@@ -291,7 +291,7 @@
     });
 
     $('.change.for_adres').on('click', function () {
-        $('.adres_fields').fadeToggle(300);
+        $('.adres_fields').slideToggle(500);
         $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
         $('#scrollbar3').tinyscrollbar({ sizethumb: 47 });
     });
@@ -329,7 +329,7 @@
     </select><br>
     <input type="text" name="deliveryAddress" id="deliveryAddress" placeholder="Адрес доставки" value="{{ deliveryAddress }}">
     <input type="text" name="deliveryBuilding" id="deliveryBuilding" placeholder="Корпус, квартира, дом" value="{{ deliveryBuilding }}"><br>
-    <label for="phone">Телефон:</label><input type="text" name="phone" id="phone" placeholder="+38(xxxxx)xxx-xx-xx" value="{{ app.session.get('phone')}}">
+    <label for="phone">Телефон:</label><input type="text" name="phone" id="phone" placeholder="+38(xxx)xxx-xx-xx" value="{{ app.session.get('phone')}}">
     <button type="submit" name="order" value="cash">Оплатить наличными</button>
     </form>
 </div>

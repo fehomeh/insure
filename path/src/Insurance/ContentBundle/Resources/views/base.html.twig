@@ -106,7 +106,7 @@
                     <li>
                         <a href="{{path('about')}}">Кто мы такие?<span class="arrow"><span class="delim"></span></a>
 						<ul class="inner_menu">
-						    <li><a href="about">О сервисе<span class="delimiter"></span></a>
+						    <li><a href="{{path('about')}}">О сервисе<span class="delimiter"></span></a>
                                 <div class="shadow"></div>
                             </li>
                             <li><a href="">О нашем страховом партнере<span class="delimiter"></span></a></li>
@@ -121,10 +121,11 @@
     <footer>
     	<div class="limit">
             <div class="column first">
-                <div class="title">О нас</div>
-                <a href=""><span></span>О сервисе</a>
-                <a href=""><span></span>Контакты</a>
-                <a href=""><span></span>Обратный звонок</a>
+                <div class="title">Сервис</div>
+                <a href="{{path('about')}}"><span></span>О нас</a>
+                <a href="{{path('contacts')}}"><span></span>Контакты</a>
+                <a href="#" class="call_link"><span></span>Обратный звонок</a>
+				<a href="#" class="question_link"><span></span>Задать вопрос</a>
             </div>
             <div class="column second">
                 <div class="title">Меню</div>

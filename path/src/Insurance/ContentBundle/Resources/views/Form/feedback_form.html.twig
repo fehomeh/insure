@@ -23,11 +23,11 @@
             <div class="error ico"></div>
             <div class="error_text">Нужно заполнить</div>
         </div>
-        {{form_widget(feedback_form.connectionType, {type: 'hidden', value: 'F'})}}
         <div class="green_button">Отправить вопрос</div>
 		<div class="modal_preloader">
         <img src="{{asset('bundles/insurancecontent/images/2.gif')}}" alt="img" />
         </div>
         <div style="clear: both;"></div>
+		{{form_widget(feedback_form.connectionType, {type: 'hidden', value: 'F'})}}
     </form>
 </div>

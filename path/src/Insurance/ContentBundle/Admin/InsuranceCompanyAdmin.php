@@ -30,7 +30,7 @@ class InsuranceCompanyAdmin extends Admin {
       ->add('franchise', null, array('label' => 'Франшиза'))
       ->add('logo', null, array('label' => 'Логотип'))
       ->add('defaultRate', null, array('label' => 'Коэффициент по умолчанию'))
-      ->add('companyRate', 'sonata_type_collection', array(
+      /*->add('companyRate', 'sonata_type_collection', array(
         'label' => 'Коэффициенты',
         'by_reference' => false,
       ), array(
@@ -38,7 +38,7 @@ class InsuranceCompanyAdmin extends Admin {
         //'sortable' => 'pos',
         'inline' => 'table',
         'targetEntity' => 'Insurance\ContentBundle\Entity\CompanyRate',
-      ))
+      ))*/
       ->add('policy', null, array('label' => 'Номер полиса', 'required' => false, 'disabled' => true));
   }
 

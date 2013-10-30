@@ -29,7 +29,7 @@
                             {{(app.session.get('price') + app.session.get('priceDGO') + app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.
                             <div class="question_ico">
                                 <div class="pop_up_total">
-                                    Это общая сумма Вашего заказа, в том числе скидка если возраст Вашего автомобиля больше 1 года.
+                                    Это общая сумма Вашего заказа, в т.ч. скидка, если возраст Вашего автомобиля больше 1 года.
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                             <div class="label">Полис начнет действовать:</div>
                             <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ '+2 days'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
 							<div class="pop_up_date">
-                                    <b>Полис может начать действовать начиная с послезавтра.</b> Если Вам нужен полис уже на "сегодня-завтра", пожалуйста свяжитесь с нами для согласования.
+                                    <b>Не ранее чем послезавтра.</b> Если полис Вам нужен срочно, пожалуйста свяжитесь с нами и мы постараемся Вам помочь.
                                 </div>
 
                         </div>
@@ -62,8 +62,6 @@
                                 <div class="param">VIN-код:</div>
                                 <div class="control_point size3">
                                     <input type="text" name="vinCode" id="vinCode" placeholder="Пример: ZFA22300005556777" value="{{ app.session.get('vinCode')}}"/>
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
                                     <div class="error_text_box">Неправильный формат VIN-кода. Должно быть 17 символов.</div>
                                 </div>
                             </div>
@@ -71,8 +69,6 @@
                                 <div class="param">Номерной знак:</div>
                                 <div class="control_point size3">
                                     <input type="text" name="carNumber" id="carNumber" placeholder="Пример: АА6801КЕ" value="{{ app.session.get('carNumber')}}"/>
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
                                     <div class="error_text_box">Неправильный формат номерного знака. Должно быть минимум 7 символов без пробелов.</div>
                                 </div>
                             </div>
@@ -110,27 +106,29 @@
                                 <div class="param">ФИО:</div>
                                 <div class="control_point size2">
                                     <input type="text" name="surname" id="surname" placeholder="Фамилия" value="{{ app.session.get('surname')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size2">
                                     <input type="text" name="firstname" id="firstname" placeholder="Имя" value="{{ app.session.get('firstname')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size2">
                                     <input type="text" name="middlename" id="middlename" placeholder="Отчество" value="{{ app.session.get('middlename')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
                             <!-- -->
+							<div class="line">
+                                <div class="param">Дата рождения:</div>
+                                <div class="control_point date"><input type="text" value="{{ app.session.get('birthDate')}}" name="birthDate" id="birthDate"/><span></span>
+								<div class="error_text_box">Введите дату рождения</div>
+								</div>
+
+                            </div>
+                            <!-- -->
                             <div class="line">
-                                <div class="param">Документ:</div>
+                                <div class="param">Документы:</div>
                                 <div class="control_point radio_control">
                                     <input type="radio" class="styled" name="documentType" value="P" {% if app.session.get('documentType') == 'P' or app.session.get('documentType') == null %} checked="" {% endif %}id="documentTypePassport" />
                                     <label for="documentTypePassport">Паспорт</label>
@@ -140,96 +138,86 @@
                                     <label for="documentTypeDriver">Водительское удостоверение</label>
                                 </div>
                                 <div style="clear: both;"></div>
-                                <div class="control_point size1">
+                                <div class="control_point size0">
                                     <input type="text" name="documentSerie" id="documentSerie" placeholder="Серия" value="{{ app.session.get('documentSerie')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Это поле не может быть пустым</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size1">
                                     <input type="text" name="documentNumber" id="documentNumber" placeholder="Номер" value="{{ app.session.get('documentNumber')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
-                                <div class="control_point size4">
+                                <div class="control_point size6">
                                     <input type="text" name="documentAuthority" id="documentAuthority" placeholder="Кем выдан" value="{{ app.session.get('documentAuthority')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
-                                <div class="control_point size1">
+                                <div class="control_point size7">
                                     <input type="text" name="documentDate" id="documentDate" placeholder="Когда" value="{{ app.session.get('documentDate')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
+                                </div>
+								<div class="control_point size5">
+                                    <input type="text" name="documentInn" id="documentInn" placeholder="Идентификационный код" value="{{ app.session.get('documentInn')}}" />
+                                    <div class="error_text_box">В номере должно быть 10 символов</div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
                             <!-- -->
                             <div class="line">
                                 <div class="param">Телефон:</div>
-                                <div class="control_point size3">
-                                    <input type="text" placeholder="38(...)... .. .." name="phone" id="phone" value="{{ app.session.get('phone')}}" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                <div class="control_point size7">
+                                    <input type="text" placeholder="(ХХХ)ХХХ-ХХ-ХХ" name="phone" id="phone" value="{{ app.session.get('phone')}}" />
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
                             <!-- -->
                             <div class="line">
-                                <div class="param">Адрес:</div>
+                                <div class="param_adres">Адрес проживания:</div>
                                 <div class="combo one_column">
-                                    <div class="current">
-                                    {% if app.session.get('region') %}
-                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif %}
+                                    <div class="current">Киевская обл.
+                                    {# if app.session.get('region') %}
+                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif #}
                                     </div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar2"  class="scroll_box">
+                                    <div id="scrollbar2"  class="scrolll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
                                 				<ul form-input-id="region" id="regionList">
-                                                    {% for region in regions %}
+                                                    {# for region in regions %}
             <li data-value="{{region.id}}" {% if region.id == app.session.get('region') %}class="active"{% endif %}>{{region.value}}</li>
-        {% endfor %}
+        {% endfor #}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="hidden" name="region" id="region" />
+                                    <input type="hidden" name="region" id="region" value="10{#app.session.get('region')#}"/>
                                 </div>
                                 <div class="combo one_column">
-                                    <div class="current">{% if app.session.get('city') %}
-                                        {% for city in cities %} {% if city.id == app.session.get('city')%}{{city.value}}{% endif %}{% endfor %}{% else %}Выбрать город{% endif %}</div>
+                                    <div class="current">Киев</div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar3" class="scroll_box">
+                                    <div id="scrollbar3" class="scrolll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
                                 				<ul form-input-id="city" id="cityList">
-                                                    {% if app.session.get('registerCity') %}
-                                        {% for city in cities %} <li data-value="{{city.id}}"{% if city.id == app.session.get('city') %} class="active"{% endif %}>{{city.value}}</li>{% endfor %}{% endif %}
+                                                    {# if app.session.get('registerCity') %}
+                                        {% for city in cities %} <li data-value="{{city.id}}"{% if city.id == app.session.get('city') %} class="active"{% endif %}>{{city.value}}</li>{% endfor %}{% endif #}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="hidden" id="city" name="city" value="{{app.session.get('city')}}" />
+                                    <input type="hidden" id="city" name="city" value="908{#app.session.get('city')#}" />
                                 </div>
                                 <div style="clear: both;"></div>
                                 <div class="control_point size4">
                                     <input type="text" name="registerAddress" id="registerAddress" placeholder="Улица" value="{{ app.session.get('registerAddress')}}"/>
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
                                 <div class="control_point size2">
                                     <input type="text" name="registerBuilding" id="registerBuilding" value="{{ app.session.get('registerBuilding')}}" placeholder="Дом, корпус, квартира" />
-                                    <div class="success ico"></div>
-                                    <div class="error ico"></div>
-                                    <div class="error_text_box">Текст ошибки</div>
+                                    <div class="error_text_box">Заполните поле</div>
                                 </div>
+								<div class="kiev_info">На данный момент доставка осуществляется только по Киеву.</div>
                             </div>
                             <!-- -->
                             <div class="line">
@@ -239,8 +227,7 @@
                                         Согласие на обработку персональных данных
                                         <div class="question_ico">
                                             <div class="pop_up">
-                                                <div class="popup_title">Lorem ipsum dolor sit amet</div>
-                                                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+                                                Этим вы даете согласие на сбор, обработку, использование и хранение своих персональних данных. Также подтверждаете, что ознакомлены с особенностями использования и защиты персональных данных, которые установлены Законом Украины «О защите персональных данных» и другим действующим законодательством Украины.
                                             </div>
                                         </div>
                                     </label>
@@ -270,7 +257,7 @@
             errors.activeFrom = true;
         } else
             errors.activeFrom = false;
-        if ($('#vinCode').val().length < 17) {
+        if ($('#vinCode').val().length != 17) {
             errors.vinCode = true;
         } else
             errors.vinCode = false;
@@ -290,6 +277,10 @@
             errors.middlename = true;
         } else
             errors.middlename = false;
+		if ($('#birthDate').val().length == 0) {
+            errors.birthDate = true;
+        } else
+            errors.birthDate = false;
         if ($('#documentTypePassport').val() != 'P' || $('#documentTypeDriver').val() != 'D') {
             errors.documentTypePassport = true;
         } else
@@ -310,6 +301,10 @@
             errors.documentDate = true;
         } else
             errors.documentDate = false;
+		if ($('#documentInn').val().length != 10) {
+            errors.documentInn = true;
+        } else
+            errors.documentInn = false;
         if ($('#phone').val().length == 0) {
             errors.phone = true;
         } else
@@ -356,6 +351,7 @@
         $('#surname').val(null);
         $('#firstname').val(null);
         $('#middlename').val(null);
+		$('#birthDate').val(null);
         $('#documentTypePassport').removeAttr('checked');
         $('#documentTypeDriver').removeAttr('checked');
         $('#documentTypePassport').trigger('click');
@@ -363,16 +359,16 @@
         $('#documentNumber').val(null);
         $('#documentAuthority').val(null);
         $('#documentDate').val(null);
+		$('#documentInn').val(null);
         $('#phone').val(null);
-        $('#region').val(null);
-        $('#region').parents('.combo').find('.current').text('Выбрать область');
-        $('#region').parents('.combo').find('li').removeClass('active');
-        $('#city').val(null);
-        $('#city').parents('.combo').find('.current').text('Выбрать город');
-        $('#city').parents('.combo').find('ul').text('');
+        $('#region').val(10);
+        //$('#region').parents('.combo').find('.current').text('Выбрать область');
+        //$('#region').parents('.combo').find('li').removeClass('active');
+        $('#city').val(908);
+        //$('#city').parents('.combo').find('.current').text('Выбрать город');
+        //$('#city').parents('.combo').find('ul').text('');
         $('#registerAddress').val(null);
         $('#registerBuilding').val(null);
-        $('#processPersonalData').removeAttr('checked');
         $('.person li').removeClass('active');
     }
 
@@ -386,12 +382,22 @@
     $('.new_insurer').on('click', clearData);
     $.datepicker.setDefaults($.datepicker.regional[ "ru" ]);
     $('#activeFrom').datepicker({
-    closeText: 'Закрыть',
     dateFormat: 'dd.mm.yy',
-    inline: true,
     minDate: +2
     });
-    function selectCity() {
+	$('#birthDate').datepicker({
+    dateFormat: 'dd.mm.yy',
+	yearRange: "1945:-17",
+	changeMonth: true,
+    changeYear: true,
+    });
+	$('#documentDate').datepicker({
+    dateFormat: 'dd.mm.yy',
+	yearRange: "1960:-1",
+	changeMonth: true,
+    changeYear: true,
+    });
+    {#/*function selectCity() {
         var inputEl = $(this).parents('ul').attr('form-input-id');
         $('#'+inputEl).val($(this).attr('data-value'));
         $(this).parents('.your_auto').find('.box_line').removeClass('focus');
@@ -410,7 +416,7 @@
         });
     }
     $('#region').on('dataavailable', loadCities);
-    $('#cityList li').on('click', selectCity);
+    $('#cityList li').on('click', selectCity);*/#}
     $(document).ready(function(){
         $(":input").attr('autocomplete', 'off');
     });
@@ -427,6 +433,8 @@
                     documentNumber: '{{personData.documentNumber}}',
                     documentAuthority: '{{personData.documentAuthority}}',
                     documentDate: '{{personData.documentDate|date('d.m.Y')}}',
+					documentInn: '{{personData.documentInn}}',
+                    birthDate: '{{personData.birthDate|date('d.m.Y')}}',
                     phone: '{{personData.phone}}',
                     region: '{{personData.city.region.id}}',
                     city: '{{personData.city.id}}',
@@ -482,12 +490,14 @@
     <input type="text" name="surname" id="surname" placeholder="Фамилия" value="{{ app.session.get('surname')}}">
     <input type="text" name="firstname" id="firstname" placeholder="Имя" value="{{ app.session.get('firstname')}}">
     <input type="text" name="middlename" id="middlename" placeholder="Отчество" value="{{ app.session.get('middlename')}}"><br>
+	<label>Дата рождения: </label><input type="text" name="birthDate" id="birthDate" value="{{ app.session.get('birthDate')}}"><br>
     <label>Документ: </label><input type="radio" name="documentType" value="P" {% if app.session.get('documentType') == 'P'%} checked="" {% endif %}>Паспорт
     <input type="radio" name="documentType" value="D" {% if app.session.get('documentType') == 'D'%} checked="" {% endif %}>Водительское удостоверение<br>
     <input type="text" name="documentSerie" id="documentSerie" placeholder="Серия" value="{{ app.session.get('documentSerie')}}">
     <input type="text" name="documentNumber" id="documentNumber" placeholder="Номер" value="{{ app.session.get('documentNumber')}}">
     <input type="text" name="documentAuthority" id="documentAuthority" placeholder="Кем выдан" value="{{ app.session.get('documentAuthority')}}">
-    <input type="text" name="documentDate" id="documentDate" placeholder="Когда" value="{{ app.session.get('documentDate')}}"><br>
+    <input type="text" name="documentDate" id="documentDate" placeholder="Когда" value="{{ app.session.get('documentDate')}}">
+	<input type="text" name="documentInn" id="documentInn" placeholder="Идентификационный номер" value="{{ app.session.get('documentInn')}}"><br>
     <label for="phone">Телефон:</label><input type="text" name="phone" id="phone" placeholder="+38(xxxxx)xxx-xx-xx" value="{{ app.session.get('phone')}}"><br>
     Адрес: <select name="region" id="region" >
         <option value="0">Выберите область</option>
@@ -508,11 +518,6 @@
     <button type="submit">Отправить!</button>
 </form>
 <script type="text/javascript">
-    $.datepicker.setDefaults($.datepicker.regional[ "ru" ]);
-    $('#activeFrom').datepicker({
-    closeText: 'Закрыть',
-    dateFormat: 'dd.mm.yy'
-    });
     $('#region').on('change', function (e){
             if ($(this).val()>0) $.get('{{path('get_cities')}}', {region_id: $(this).val()}).done(function (data) {
                 var opts = '<option value="0">Выберите город</option>';

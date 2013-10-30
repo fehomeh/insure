@@ -263,11 +263,13 @@ class DefaultController extends Controller
                 $surname = $request->request->get('surname');
                 $firstname = $request->request->get('firstname');
                 $middlename = $request->request->get('middlename');
+                $birthDate = $request->request->get('birthDate');
                 $documentType = $request->request->get('documentType');
                 $documentSerie = $request->request->get('documentSerie');
                 $documentNumber = $request->request->get('documentNumber');
                 $documentAuthority = $request->request->get('documentAuthority');
                 $documentDate = $request->request->get('documentDate');
+                $documentInn = $request->request->get('documentInn');
                 $phone = $request->request->get('phone');
                 $region = $request->request->get('region');
                 $city = $request->request->get('city');
@@ -312,6 +314,14 @@ class DefaultController extends Controller
                     $session->set('middlename', $middlename);
                 }
 
+                if (strlen($birthDate) === 0) {
+                    $error['birthDate'] = 'Не заполнено поле';
+                } elseif (!preg_match('#[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}#', $birthDate)) {
+                    $error['birthDate'] = 'Неправильный формат даты';
+                } else {
+                    $session->set('birthDate', $birthDate);
+                }
+
                 if (strlen($documentType) === 0) {
                     $error['documentType'] = 'Не заполнено поле';
                 } elseif ($documentType == 'P' && $documentType == 'D') {
@@ -344,6 +354,12 @@ class DefaultController extends Controller
                     $error['documentDate'] = 'Неправильный формат даты';
                 } else {
                     $session->set('documentDate', $documentDate);
+                }
+
+                if (strlen($documentInn) === 0) {
+                    $error['documentInn'] = 'Не заполнено поле';
+                } else {
+                    $session->set('documentInn', $documentInn);
                 }
 
                 if ($region > 0) {
@@ -437,11 +453,13 @@ class DefaultController extends Controller
             $session->set('surname', $savedOrder->getSurname());
             $session->set('firstname', $savedOrder->getFirstname());
             $session->set('middlename', $savedOrder->getMiddlename());
+            $session->set('birthDate', $savedOrder->getBirthDate()->format('d.m.Y'));
             $session->set('documentType', $savedOrder->getDocumentType());
             $session->set('documentSerie', $savedOrder->getDocumentSerie());
             $session->set('documentNumber', $savedOrder->getDocumentNumber());
             $session->set('documentAuthority', $savedOrder->getDocumentAuthority());
             $session->set('documentDate', $savedOrder->getDocumentDate()->format('d.m.Y'));
+            $session->set('documentInn', $savedOrder->getDocumentInn());
             $session->set('phone', $savedOrder->getPhone());
             $session->set('region', $savedOrder->getCity()->getRegion()->getId());
             $session->set('city', $savedOrder->getCity()->getId());
@@ -456,7 +474,8 @@ class DefaultController extends Controller
             $session->set('payType', $savedOrder->getPayType());
             $session->set('activity', $savedOrder->getActive());
             $needAuth = false;
-        } else $needAuth = true;
+        } elseif (!is_null($hash)) $needAuth = true;
+            else $needAuth = false;
         $region = $this->getDoctrine()->getRepository('InsuranceContentBundle:Region')->findOneById($session->get('region'));
         $regionId = $session->get('region');
         $cityId = $session->get('city');
@@ -557,6 +576,8 @@ class DefaultController extends Controller
 
                 $order->setMiddlename($session->get('middlename'));
 
+                $order->setBirthDate(new \DateTime($session->get('birthDate')));
+
                 $order->setDocumentType($session->get('documentType'));
 
                 $order->setDocumentSerie($session->get('documentSerie'));
@@ -566,6 +587,8 @@ class DefaultController extends Controller
                 $order->setDocumentAuthority($session->get('documentAuthority'));
 
                 $order->setDocumentDate(new \DateTime($session->get('documentDate')));
+
+                $order->setDocumentInn($session->get('documentInn'));
 
                 $order->setPhone($session->get('phone'));
 

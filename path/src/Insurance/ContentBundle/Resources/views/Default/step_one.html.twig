@@ -120,11 +120,11 @@ $(function() {
                         <form autocomplete="off" action="{{path('step1')}}" method="POST" id="calculator-form" class="">
                         <div class="category your_auto"><!-- .all_verified -->
                             <!-- title -->
-                            <div class="category_title">
+                            <h2 class="category_title">
                                 <div class="ico"></div>
                                 Ваш автомобиль:
                                 <div class="arrow"></div>
-                            </div>
+                            </h2>
                             <!-- auto mark -->
                             <div class="combo wide">
 
@@ -185,7 +185,7 @@ $(function() {
                             <!-- -->
                             <div class="box_line year{%if (app.session.get('carAge')) or app.session.get('carModel') %} focus{% endif %}"{%if (app.session.get('carAge')) is null and app.session.get('carModel') is null %} style="display:none;"{% endif %}>
                                 <div class="fixed_pop_up">
-                                    Выберите год выпуска Вашего автомобиля. Вы получаете скидку Бонус-Малус, если Ваше авто старше 1 года.
+                                    Выберите год выпуска Вашего автомобиля. Вы получаете скидку Бонус-Малус, если Ваш автомобиль старше 1 года.
                                 </div>
                                 <div class="param_name">Год выпуска:</div>
                                 <ul form-input-id="carAge" class="list" id="carAgeList">
@@ -288,11 +288,10 @@ $(function() {
                         <!-- OPTIONS -->
                         <div class="category options all_verified">
                             <!-- title -->
-                            <div class="category_title">
+                            <h2 class="category_title">
                                 <div class="ico"></div>
                                 Опции страхования:
-                                <div class="arrow"></div>
-                            </div>
+                            </h2>
                             <!-- -->
                             <div class="box_line term">
 							<div class="fixed_pop_up">
@@ -474,10 +473,10 @@ $(function() {
                 var inputEl = $(this).parents('ul').attr('form-input-id');
                 $('#'+inputEl).val($(this).attr('data-value'));
                 $(this).addClass('current');
-                $(this).parents('ul').find('li').not('.current, .chg').fadeOut(400).remove();
+                $(this).parents('ul').find('li').not('.current, .chg').remove();
                 $('.box_line').removeClass('focus');
                 $(this).parents('.box_line').next('.box_line').addClass('focus');
-                $(this).parents('.box_line').next('.box_line').fadeIn(400);
+                $(this).parents('.box_line').next('.box_line').fadeIn(300);
             }
         });
     }
@@ -499,10 +498,10 @@ $(function() {
                 //$(".combo ul li").on('click', comboClick);
                 $('.change_link').unbind('click');
                 $('.change_link').on('click', loadModels);
-                selectModel();
+				selectModel();
                 $('.box_line').removeClass('focus');
                 $('#modelList').parents('.box_line').addClass('focus');
-                $('#modelList').parents('.box_line').fadeIn(400);
+                $('#modelList').parents('.box_line').fadeIn(300);
             });
         else {
             $('#carModel').html('<a class="change_link">изменить</a>');
@@ -519,7 +518,7 @@ $(function() {
             if (typeof $(this).attr('data-value') !== 'undefined') {
                 $('.box_line').removeClass('focus');
                 $(this).parents('.box_line').next('.box_line').addClass('focus');
-                $(this).parents('.box_line').nextAll('.box_line').fadeIn(400);
+                $(this).parents('.box_line').nextAll('.box_line').fadeIn(300);
                 //Reinit plugins, events, etc cause of ajax load
                 $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
                 var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
@@ -937,7 +936,7 @@ $(function() {
             if (data.message == 'success') {
                 //Show success window
                 $('#success_modal .inform_title').text('Ваш расчет сохранен!');
-                $('#success_modal .information_box').append('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                $('#success_modal .information_box').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
                 $('#success_modal').modal().open();
             }
         });

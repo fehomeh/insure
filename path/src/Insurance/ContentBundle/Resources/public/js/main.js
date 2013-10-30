@@ -93,13 +93,7 @@ $(document).ready(
                 var finish = new Date(end_time); //дата до которой ведется отсчет
                 //All next varaibles must be in seconds
                 window.endTime = parseInt((finish.getTime() - now.getTime()) / 1000);
-                console.log(window.endTime);
             }
-            //var years = finish.getFullYear() - now.getFullYear();
-            //var days = years*365 + finish.getDay() - now.getDay();
-            //var hours = now.getHours()*3600; //разница часов
-            //var minutes = now.getMinutes()*60; //разница минут
-            //var seconds = end_time - (now.getFullYear()*360*24*3600+ now.getMonth()*30*24*3600 + now.getDay()*24*3600 + now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds());
             window.endTime--;
             var txtYears = Math.floor(window.endTime / (3600*24*30*365));
             var txtMonths = Math.floor((window.endTime - txtYears*3600*24*30*365) / (3600*24*30));
@@ -107,7 +101,6 @@ $(document).ready(
             var txtHours = Math.floor((window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24)/ 3600);
             var txtMinutes = Math.floor((window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600)/ 60);
             var txtSeconds = window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600 - txtMinutes*60;
-            //console.log(end_time, seconds);
             if (window.endTime <= 0) {
                 $('.hours .tdigit').text('00');
                 $('.minutes .tdigit').text('00');
@@ -115,7 +108,6 @@ $(document).ready(
                 window.timerEnd = true;
                 return;
             }
-            //console.log(days + ' ' + hours + ' ' + minutes + ' ' + seconds);
             if (String(txtHours).length == 1) txtHours = '0' + String(txtHours);
             else if (String(txtHours).length == 0) txtHours = '00';
             if (String(txtMinutes).length == 1) txtMinutes = '0' + txtMinutes;

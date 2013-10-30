@@ -49,7 +49,7 @@ class Feedback
    *
    * @var string
    *
-   * @ORM\Column(name="email", type="string", length=20, options={ "default"=null }, nullable=true)
+   * @ORM\Column(name="email", type="string", length=50, options={ "default"=null }, nullable=true)
    */
   private $email;
 
