@@ -41,7 +41,7 @@
                         <!-- polis_date -->
                         <div class="grey_area polis_date">
                             <div class="label">Полис начнет действовать:</div>
-                            <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ '+2 days'|date('d/m/Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
+                            <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ '+2 days'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
 							<div class="pop_up_date">
                                     <b>Не ранее чем послезавтра.</b> Если полис Вам нужен срочно, пожалуйста свяжитесь с нами и мы постараемся Вам помочь.
                                 </div>
@@ -124,7 +124,7 @@
                                 <div class="control_point date"><input type="text" value="{{ app.session.get('birthDate')}}" name="birthDate" id="birthDate"/><span></span>
 								<div class="error_text_box">Введите дату рождения</div>
 								</div>
-                                
+
                             </div>
                             <!-- -->
                             <div class="line">
@@ -173,41 +173,40 @@
                             <div class="line">
                                 <div class="param_adres">Адрес проживания:</div>
                                 <div class="combo one_column">
-                                    <div class="current">
-                                    {% if app.session.get('region') %}
-                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif %}
+                                    <div class="current">Киевская обл.
+                                    {# if app.session.get('region') %}
+                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif #}
                                     </div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar2"  class="scroll_box">
+                                    <div id="scrollbar2"  class="scrolll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
                                 				<ul form-input-id="region" id="regionList">
-                                                    {% for region in regions %}
+                                                    {# for region in regions %}
             <li data-value="{{region.id}}" {% if region.id == app.session.get('region') %}class="active"{% endif %}>{{region.value}}</li>
-        {% endfor %}
+        {% endfor #}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="hidden" name="region" id="region" />
+                                    <input type="hidden" name="region" id="region" value="10{#app.session.get('region')#}"/>
                                 </div>
                                 <div class="combo one_column">
-                                    <div class="current">{% if app.session.get('city') %}
-                                        {% for city in cities %} {% if city.id == app.session.get('city')%}{{city.value}}{% endif %}{% endfor %}{% else %}Выбрать город{% endif %}</div>
+                                    <div class="current">Киев</div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar3" class="scroll_box">
+                                    <div id="scrollbar3" class="scrolll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
                                 				<ul form-input-id="city" id="cityList">
-                                                    {% if app.session.get('registerCity') %}
-                                        {% for city in cities %} <li data-value="{{city.id}}"{% if city.id == app.session.get('city') %} class="active"{% endif %}>{{city.value}}</li>{% endfor %}{% endif %}
+                                                    {# if app.session.get('registerCity') %}
+                                        {% for city in cities %} <li data-value="{{city.id}}"{% if city.id == app.session.get('city') %} class="active"{% endif %}>{{city.value}}</li>{% endfor %}{% endif #}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="hidden" id="city" name="city" value="{{app.session.get('city')}}" />
+                                    <input type="hidden" id="city" name="city" value="908{#app.session.get('city')#}" />
                                 </div>
                                 <div style="clear: both;"></div>
                                 <div class="control_point size4">
@@ -305,7 +304,7 @@
 		if ($('#documentInn').val().length != 10) {
             errors.documentInn = true;
         } else
-            errors.documentInn = false;	
+            errors.documentInn = false;
         if ($('#phone').val().length == 0) {
             errors.phone = true;
         } else
@@ -362,15 +361,14 @@
         $('#documentDate').val(null);
 		$('#documentInn').val(null);
         $('#phone').val(null);
-        $('#region').val(null);
-        $('#region').parents('.combo').find('.current').text('Выбрать область');
-        $('#region').parents('.combo').find('li').removeClass('active');
-        $('#city').val(null);
-        $('#city').parents('.combo').find('.current').text('Выбрать город');
-        $('#city').parents('.combo').find('ul').text('');
+        $('#region').val(10);
+        //$('#region').parents('.combo').find('.current').text('Выбрать область');
+        //$('#region').parents('.combo').find('li').removeClass('active');
+        $('#city').val(908);
+        //$('#city').parents('.combo').find('.current').text('Выбрать город');
+        //$('#city').parents('.combo').find('ul').text('');
         $('#registerAddress').val(null);
         $('#registerBuilding').val(null);
-        $('#processPersonalData').removeAttr('checked');
         $('.person li').removeClass('active');
     }
 
@@ -384,19 +382,22 @@
     $('.new_insurer').on('click', clearData);
     $.datepicker.setDefaults($.datepicker.regional[ "ru" ]);
     $('#activeFrom').datepicker({
+    dateFormat: 'dd.mm.yy',
     minDate: +2
     });
 	$('#birthDate').datepicker({
+    dateFormat: 'dd.mm.yy',
 	yearRange: "1945:-17",
 	changeMonth: true,
     changeYear: true,
     });
 	$('#documentDate').datepicker({
+    dateFormat: 'dd.mm.yy',
 	yearRange: "1960:-1",
 	changeMonth: true,
     changeYear: true,
     });
-    function selectCity() {
+    {#/*function selectCity() {
         var inputEl = $(this).parents('ul').attr('form-input-id');
         $('#'+inputEl).val($(this).attr('data-value'));
         $(this).parents('.your_auto').find('.box_line').removeClass('focus');
@@ -415,7 +416,7 @@
         });
     }
     $('#region').on('dataavailable', loadCities);
-    $('#cityList li').on('click', selectCity);
+    $('#cityList li').on('click', selectCity);*/#}
     $(document).ready(function(){
         $(":input").attr('autocomplete', 'off');
     });
@@ -433,6 +434,7 @@
                     documentAuthority: '{{personData.documentAuthority}}',
                     documentDate: '{{personData.documentDate|date('d.m.Y')}}',
 					documentInn: '{{personData.documentInn}}',
+                    birthDate: '{{personData.birthDate|date('d.m.Y')}}',
                     phone: '{{personData.phone}}',
                     region: '{{personData.city.region.id}}',
                     city: '{{personData.city.id}}',
