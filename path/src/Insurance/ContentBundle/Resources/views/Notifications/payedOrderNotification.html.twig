@@ -11,11 +11,11 @@
 </p>
 
 <p><b>Детальная информация по заказу:</b></p>
-<p>Полис Автогражданки (ОСАГО) - {{order.price}} грн</p>
-{% if order.priceDgo %}<p>Разширение ответственности (ДГО) - {{order.priceDgo}} грн</p>{% endif %}
-{% if order.priceNs %}<p>Здоровье водителя и пассажиров (НС) - {{order.priceNs}} грн</p>{% endif %}
+<p>Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн</p>
+{% if order.priceDgo > 0 %}<p>Расширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн</p>{% endif %}
+{% if order.priceNs > 0 %}<p>Здоровье водителя и пассажиров (НС) - {{order.priceNs|number_format(2, ',', ' ')}} грн</p>{% endif %}
 
-<p><b>Общая сумма Вашего заказа:</b> {{order.price + order.priceDgo + order.priceNs}} грн</p>
+<p><b>Общая сумма Вашего заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн</p>
 
 <p>Наш партнер, обеспечивающий страховые обязательства: ЧАО «СК «БРОКБИЗНЕС».</p>
 <p>

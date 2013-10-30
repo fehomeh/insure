@@ -370,6 +370,8 @@
         $('#registerAddress').val(null);
         $('#registerBuilding').val(null);
         $('.person li').removeClass('active');
+        $('.control_point').removeClass('error');
+        $('.control_point').removeClass('success');
     }
 
     $('#identity-form').on('submit', checkForm);
