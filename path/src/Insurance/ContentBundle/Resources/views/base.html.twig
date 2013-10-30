@@ -87,7 +87,7 @@
                             <span class="home"></span>
                             <span class="delim"></span>
                         </a>
-                        
+
                     </li>
                     <li>
                         <a href="{{path('step1')}}">Калькулятор ОСАГО<span class="delim"></span></a>
@@ -259,7 +259,19 @@
                             $.modal().close();
                             if (typeof callbackF === 'function') callbackF();
                             //If we on calculator page than change order button behaviour
-                            if ($('.form_now').length > 0 && $('.form_now').is(':visible')) {
+                            if (window.saveCalculation == true) {
+                                $.ajax('{{path('save_calculation')}}', {
+                                    type: 'POST',
+                                    data: $('#calculator-form').serialize()
+                                }).done(function (data){
+                                    if (data.message == 'success') {
+                                        //Show success window
+                                        $('#success_modal .inform_title').text('Ваш расчет сохранен!');
+                                        $('#success_modal .information_box').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                                        $('#success_modal').modal().open();
+                                    }
+                                });
+                            } else if ($('.form_now').length > 0 && $('.form_now').is(':visible')) {
                                 $.ajax('{{path('step1')}}', {
                                 type: 'POST',
                                 data: $('#calculator-form').serialize()
@@ -331,7 +343,7 @@
 						$('#success_modal').fadeOut(1000);
 						$.modal().close();
 						}, 2000);
-						
+
                     } else if(data.message == 'error') {
                         console.log(data.error);
                         $('#error_modal').show();
