@@ -51,8 +51,8 @@ class NotifySender
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
         $contactPhone = $this->sc->getParameter('contact.phone');
-      if ($entity->getPayStatus() == 0 && $entity->getPayType() == 'cash' && $entity->getActive() == 1) {
-          //If cash payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
+      if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'cash' || $entity->getPayType() == 'terminal') && $entity->getActive() == 1) {
+          //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
           $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
               ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')

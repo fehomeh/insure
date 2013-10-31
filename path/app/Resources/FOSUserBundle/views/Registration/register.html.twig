@@ -14,28 +14,28 @@
             {{ form_widget(form.firstname, { 'attr': { 'placeholder': "Введите Ваше имя"} }) }}
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">{{- form_errors(form.firstname) -}}</div>
+            <div class="error_text">{{- form_errors(form.firstname)|trim(', ') -}}</div>
         </div>
         <div class="control_point{% if form.email.vars.errors|length > 0%} error{% endif %}">
             {{ form_label(form.email) }}
             {{ form_widget(form.email, { 'attr': { 'placeholder': "Введите Ваш e-mail"} }) }}
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">{{- form_errors(form.email) -}}</div>
+            <div class="error_text">{{- form_errors(form.email)|trim(', ') -}}</div>
         </div>
         <div class="control_point{% if form.plainPassword.first.vars.errors|length > 0%} error{% endif %}">
             {{ form_label(form.plainPassword.first) }}
             {{ form_widget(form.plainPassword.first) }}
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">{{- form_errors(form.plainPassword.first) -}}</div>
+            <div class="error_text">{{- form_errors(form.plainPassword.first)|trim(', ') -}}</div>
         </div>
         <div class="control_point{% if form.plainPassword.second.vars.errors|length > 0%} error{% endif %}">
             {{ form_label(form.plainPassword.second) }}
             {{ form_widget(form.plainPassword.second) }}
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">{{- form_errors(form.plainPassword.second) -}}</div>
+            <div class="error_text">{{- form_errors(form.plainPassword.second)|trim(', ') -}}</div>
         </div>
         <div class="control_point">
             <input type="checkbox" class="styled" id="subscribe" checked="checked"/>
