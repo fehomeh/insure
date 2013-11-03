@@ -78,42 +78,42 @@
                             <!-- -->
                             <div class="line adres_fields" style="display: none;">
                                 <div class="combo one_column">
-                                    <div class="current">{% if app.session.get('region') %}
-                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif %}</div>
+                                    <div class="current">Киевская область{# if app.session.get('region') %}
+                                        {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif #}</div>
                                     <div class="arrow"></div>
                                     <div id="scrollbar2" class="scroll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
                                 				<ul form-input-id="deliveryRegion" id="regionList">
-                                                    {% for region in regions %}
+                                                    {# for region in regions %}
                                                     <li data-value="{{region.id}}" {% if region.id == app.session.get('region') %}class="active"{% endif %}>{{region.value}}</li>
-        {% endfor %}
+        {% endfor #}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="text" value="{{app.session.get('region')}}" name="deliveryRegion" id="deliveryRegion"/>
+                                    <input type="text" value="10{#app.session.get('region')#}" name="deliveryRegion" id="deliveryRegion"/>
                                 </div>
                                 <div class="combo one_column">
-                                    <div class="current">{% if app.session.get('city') %}
-                                        {% for city in cities %} {% if city.id == app.session.get('city')%}{{city.value}}{% endif %}{% endfor %}{% else %}Выбрать город{% endif %}</div>
+                                    <div class="current">Киев{# if app.session.get('city') %}
+                                        {% for city in cities %} {% if city.id == app.session.get('city')%}{{city.value}}{% endif %}{% endfor %}{% else %}Выбрать город{% endif #}</div>
                                     <div class="arrow"></div>
                                     <div id="scrollbar3"  class="scroll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
                                 				<ul form-input-id="deliveryCity" id="cityList">
-                                                    {% if cities %}
+                                                    {# if cities %}
                                                     {% for city in cities %}
                                                     <li data-value="{{city.id}}" {% if city.id == app.session.get('city') %}class="active"{% endif %}>{{city.value}}</li>
                                                     {% endfor %}
-                                                    {% endif %}
+                                                    {% endif #}
                                                 </ul>
                                 			</div>
                                 		</div>
                                 	</div>
-                                    <input type="text" value="{{app.session.get('city')}}" name="deliveryCity" id="deliveryCity"/>
+                                    <input type="text" value="908{#app.session.get('city')#}" name="deliveryCity" id="deliveryCity"/>
                                 </div>
                                 <div style="clear: both;"></div>
                                 <div class="control_point size4">
@@ -166,7 +166,7 @@
                                 <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%}">
                                     <div id="privat24" class="ico privat24"></div>
                                     <div class="text"><b>Приват 24</b></div>
-                                </div>								
+                                </div>
                                 <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%}">
                                     <div id="terminal" class="ico terminal"></div>
                                     <div class="text"><b>Терминалы</b> оплаты</div>
