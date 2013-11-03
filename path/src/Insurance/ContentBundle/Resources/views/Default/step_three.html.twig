@@ -81,7 +81,7 @@
                                     <div class="current">Киевская область{# if app.session.get('region') %}
                                         {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif #}</div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar2" class="scroll_box">
+                                    <div id="scrollbar2" class="scrolll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
@@ -99,7 +99,7 @@
                                     <div class="current">Киев{# if app.session.get('city') %}
                                         {% for city in cities %} {% if city.id == app.session.get('city')%}{{city.value}}{% endif %}{% endfor %}{% else %}Выбрать город{% endif #}</div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar3"  class="scroll_box">
+                                    <div id="scrollbar3"  class="scrolll_box">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
                                 		<div class="viewport">
                                 			 <div class="overview">
