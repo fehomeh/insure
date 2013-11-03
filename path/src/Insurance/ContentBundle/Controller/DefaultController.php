@@ -633,6 +633,7 @@ class DefaultController extends Controller
                             $session->set('orderState', 'success');
                         elseif ($activity == '0')
                             $session->set('orderState', 'delayed');
+                        $session->remove('policy');
                         switch($payType) {
                             case 'cash':
                                 return $this->redirect($this->generateUrl('finish'));
