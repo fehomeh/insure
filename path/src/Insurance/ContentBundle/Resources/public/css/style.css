@@ -39,11 +39,11 @@ header {
       margin-bottom: 3px;
       font-family: Arial black, Helvetica, sans-serif;
       font-size: 27px;
-      color: #2c2a22;
+      color: #5b5b5b;
       position: relative; }
       header .center_part .phone_number span.code {
         font-family: Arial, Helvetica, sans-serif;
-        color: #2c2a22;
+        color: #5b5b5b;
         font-size: 27px;
         padding-right: 8px; }
       header .center_part .phone_number span.hours24 {
