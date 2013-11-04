@@ -30,7 +30,7 @@ class HelperController extends Controller
           $policy->setCompany($company)
           ->setStatus(0)
           ->setSerie($postData['serie'])
-          ->setValue(sprintf("%010d", $i));
+          ->setValue(sprintf("%d", $i));
           $errors = $validator->validate($policy);
           if (count($errors) == 0) {
             $em->persist($policy);

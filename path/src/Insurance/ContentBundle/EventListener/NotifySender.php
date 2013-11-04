@@ -15,6 +15,36 @@ class NotifySender
     $this->sc = $sc;
   }
 
+    public function generatePDFPolicy($orderId)
+    {
+        //echo('wtfwft!');
+        $tcPdf = new \TCPDF();
+        $request = $this->sc->get('request');
+        $router = $this->sc->get('router');
+        $doctrine = $this->sc->get('doctrine');
+        try {
+            $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
+            $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
+            error_reporting(E_ERROR);
+            $tcPdf->SetFont('dejavusans', '', 10);
+            $tcPdf->AddPage();
+            $tcPdf->writeHTML($policyHTML);
+            $fileName = sha1(microtime());
+            $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
+            $tcPdf->Output($file, 'F');
+            $order = $this->sc->get('doctrine')->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+            $httpFile = $protocol . $request->server->get('HTTP_HOST') . '/pdf/' . $fileName . '.pdf';
+            $order->setPdfUrl($httpFile);
+            $em = $doctrine->getEntityManager();
+            $em->persist($order);
+            $em->flush();
+        } catch (Exception $e) {
+            die($e->getMessage());
+          return false;
+        }
+        return $file;
+    }
+
   public function postPersist(LifecycleEventArgs $args)
   {
     $entity = $args->getEntity();
@@ -51,8 +81,8 @@ class NotifySender
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
         $contactPhone = $this->sc->getParameter('contact.phone');
-      if ($entity->getPayStatus() == 0 && $entity->getPayType() == 'cash' && $entity->getActive() == 1) {
-          //If cash payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
+      if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'cash' || $entity->getPayType() == 'terminal') && $entity->getActive() == 1) {
+          //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
           $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
               ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
@@ -156,7 +186,10 @@ class NotifySender
                         )
               //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
                 ;
-                $this->sc->get('mailer')->send($message);
+                    if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                        $message->attach(\Swift_Attachment::fromPath($pdfFile));
+                   }
+                    $this->sc->get('mailer')->send($message);
                 }
             }
         }

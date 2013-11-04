@@ -39,7 +39,7 @@ class PDFController extends Controller {
       } catch (Exception $e) {
         return new Response($e->getMessage(), 500);
       }
-      return new Response($policyHTML);
+      //return new Response($policyHTML);
       return $this->redirect($this->generateUrl('dashboard', array()));
     }
 }

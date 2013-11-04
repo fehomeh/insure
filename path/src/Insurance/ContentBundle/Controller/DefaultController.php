@@ -202,14 +202,17 @@ class DefaultController extends Controller
             } else
                 $discount = 1;
             $session->set('discount', $discount);
+            $city = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findOneById($registerCity);
+            if(!empty($city)) {
             $session->set('price', $calculator->calculateCommon(array(
-                'region' => $registerCity,
+                'region' => $city->getValue(),
                 'displacement' => $displacement,
                 'experience' => $experience,
                 'term' => $insuranceTerm,
                 'year' => $carAge,
                 'company' => static::DEFAULT_COMPANY_ID,
             )) * $discount);
+            } else $error['registerCity'] = 'Город не найден!';
             if (count($error) == 0) {
                 //return $this->redirect($this->generateUrl('step2'));
                 $response = new Response(json_encode(array('message' => 'success')));
@@ -630,6 +633,7 @@ class DefaultController extends Controller
                             $session->set('orderState', 'success');
                         elseif ($activity == '0')
                             $session->set('orderState', 'delayed');
+                        $session->remove('policy');
                         switch($payType) {
                             case 'cash':
                                 return $this->redirect($this->generateUrl('finish'));
@@ -934,7 +938,7 @@ class DefaultController extends Controller
         if ($request->isXmlHttpRequest()) {
             $timerEnd = $request->getSession()->get('timerEnd');
             $request->getSession()->clear();
-            $request->getSession()->set('timerEnd', $timerEnd);
+            if (!empty($timerEnd)) $request->getSession()->set('timerEnd', $timerEnd);
             $response = new Response();
             $response->headers->clearCookie('sc');
             return $response;
