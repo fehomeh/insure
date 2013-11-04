@@ -17,12 +17,12 @@
 <p>Наш партнер, исполняющий страховые обязательства: ЧАО «СК «БРОКБИЗНЕС».</p>
 
 <p>--------------------------</p>
-<p><b>Выбранный Вами способ оплаты:</b> {%- if order.payType = 'cash' -%}Наличными курьеру
-{%- elseif order.payType = 'plastic' -%}Пластиковая карта
-{%- elseif order.payType = 'privat_card' -%}Карта Приват Банка
-{%- elseif order.payType = 'privat24' -%} Приват24
-{%- elseif order.payType = 'terminal' -%}Терминал самообслуживания
-{%- elseif order.payType = 'webmoney' -%}Webmoney
+<p><b>Выбранный Вами способ оплаты:</b> {%- if order.payType == 'cash' -%}Наличными курьеру
+{%- elseif order.payType == 'plastic' -%}Пластиковая карта
+{%- elseif order.payType == 'privat_card' -%}Карта Приват Банка
+{%- elseif order.payType == 'privat24' -%} Приват24
+{%- elseif order.payType == 'terminal' -%}Терминал самообслуживания
+{%- elseif order.payType == 'webmoney' -%}Webmoney
 {%- endif -%}</p>
 <p>--------------------------</p>
 <p>Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>
