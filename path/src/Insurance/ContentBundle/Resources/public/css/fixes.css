@@ -55,6 +55,14 @@ form.modal_form .control_point input[type="email"] {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
+header .center_part .phone_number {
+      font-family: "RobotoBlack", Helvetica, sans-serif;
+      font-size: 29px;}
+
+header .center_part .phone_number span.code {
+        font-family: "RobotoRegular", Helvetica, sans-serif;
+        font-size: 29px;}
+
 header .main_menu div.shadow {
         position: absolute;
         width: 1016px;

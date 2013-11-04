@@ -858,6 +858,32 @@ class DefaultController extends Controller
                 $nsSum = $request->request->get('hNSSum');
                 $passengersCount = $request->request->get('passengersCount');
             }*/
+            //Send email to user to remember about saved calculation
+            $from = $this->container->getParameter('email.send.from');
+            $emailName = $this->container->getParameter('email.name');
+            $siteName = $this->container->getParameter('site.name');
+            $siteDomain = $this->container->getParameter('site.domain');
+            $contactEmail = $this->container->getParameter('contact.email');
+            $contactPhone = $this->container->getParameter('contact.phone');
+            $user = $this->get('security.context')->getToken()->getUser();
+            $to = $user->getEmail();
+            $message = \Swift_Message::newInstance()
+                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
+                ->setFrom(array($from => $emailName))
+                ->setTo($to)
+                ->setBody(
+                      $this->render(
+                          'InsuranceContentBundle:Notifications:savedCalculationNotification.html.twig',
+                          array(
+                          'siteName' => $siteName,
+                          'siteDomain' => $siteDomain,
+                          'contactEmail' => $contactEmail,
+                          'contactPhone' => $contactPhone,
+                          )
+                  ),
+                  'text/html'
+            );
+          $this->container->get('mailer')->send($message);
             $cookieData = array(
                 'carBrand' => $request->request->get('carBrand'),
                 'carModel' => $request->request->get('hCarModel'),

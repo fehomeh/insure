@@ -295,7 +295,7 @@ $(function() {
                             <!-- -->
                             <div class="box_line term">
 							<div class="fixed_pop_up">
-                                        Если Вы страхуетесь меньше чем на 8 месяцев, то скидка Бонус-Малус к сожалению не начисляется
+                                        Если Вы страхуетесь меньше чем на 8 месяцев, скидка Бонус-Малус не начисляется
                                     </div>
                                 <div class="param_name">Срок страхования:</div>
                                 <div class="combo one_column">
@@ -886,6 +886,19 @@ $(function() {
                 if (data.message == 'success') window.location = '{{path('step2')}}';
                 });
                 });
+        $('.save-calculation').on('click', function(){
+            $.ajax('{{path('save_calculation')}}', {
+                type: 'POST',
+                data: $('#calculator-form').serialize()
+            }).done(function (data){
+                if (data.message == 'success') {
+                    //Show success window
+                    $('#success_modal .inform_title').text('Ваш расчет сохранен!');
+                    $('#success_modal .information_box').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                    $('#success_modal').modal().open();
+                }
+            });
+        });
         {% else %}
         function registerFormShow(){
             $.ajax('{{path('fos_user_registration_register')}}', {
@@ -901,6 +914,10 @@ $(function() {
         }
         //Registration form load
             $('.form_now').on('click', registerFormShow);
+            $('.save-calculation').on('click', function () {
+            window.saveCalculation = true;
+            registerFormShow();
+            });
         {% endif %}
 
         //Initialize model selection on error and reload
@@ -928,19 +945,7 @@ $(function() {
                 $('#passengersCount').val(0);
         }
     });
-    $('.save-calculation').on('click', function(){
-        $.ajax('{{path('save_calculation')}}', {
-        type: 'POST',
-        data: $('#calculator-form').serialize()
-        }).done(function (data){
-            if (data.message == 'success') {
-                //Show success window
-                $('#success_modal .inform_title').text('Ваш расчет сохранен!');
-                $('#success_modal .information_box').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
-                $('#success_modal').modal().open();
-            }
-        });
-    });
+
     $('.clear_all').on('click', function(){
         clearForm();
     });

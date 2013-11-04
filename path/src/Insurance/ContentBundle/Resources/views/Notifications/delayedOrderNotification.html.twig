@@ -2,7 +2,7 @@
 
 Прежде всего позвольте выразить Вам свою благодарность за оказанное доверие нашему сервису.
 
-Мы получили оплату за Ваш заказ на {{siteDomain}}.
+Вы оформили заказ полиса ОСАГО на сайте {{siteDomain}}.
 
 --------------------------
 Номер вашего заказа: {{order.id}}
@@ -10,11 +10,11 @@
 
 <b>Детальная информация по заказу:</b>
 
-Полис Автогражданки (ОСАГО) - {{order.price}} грн
-{% if order.priceDgo %}Разширение ответственности (ДГО) - {{order.priceDgo}} грн ( +{{order.sumDgo}} грн ){% endif %}
-{% if order.priceNs %} Здоровье водителя и пассажиров (НС) - {{order.priceNs}} грн {% if order.passengerCount > 0 %}( {{order.passengerCount}} пассажира ){% endif %}{% endif %}
+Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн
+{% if order.priceDgo %}Разширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн ( +{{order.sumDgo}} грн ){% endif %}
+{% if order.priceNs %}Здоровье водителя и пассажиров (НС) - {{order.priceNs|number_format(2, ',', ' ')}} грн {% if order.passengerCount > 0 %}( {{order.passengerCount}} пассажира ){% endif %}{% endif %}
 
-<b>Общая сумма заказа:</b> {{order.price + order.priceDgo + order.priceNs}} грн
+<b>Общая сумма заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн
 
 Наш партнер, обеспечивающий страховые обязательства: ЧАО «СК «БРОКБИЗНЕС».
 

@@ -447,10 +447,10 @@ footer {
       background-position: -318px -67px;
       background-repeat: no-repeat;
       background-color: transparent;
-      font-family: "roboroBlack", Arial black, Helvetica, sans-serif;
+      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
       font-size: 32px;
       color: white;
-      font-weight: bold;
+      font-weight: 900;
       letter-spacing: 18px;
       padding-left: 7px;
       position: relative;

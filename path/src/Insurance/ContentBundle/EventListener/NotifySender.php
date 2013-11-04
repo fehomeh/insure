@@ -37,7 +37,7 @@ class NotifySender
                 'contact' => $entity,
                 'feedbackTypeText' => $feedbackTypeText,
                 )
-            ), 
+            ),
 			'text/html'
 		)
         //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
@@ -51,7 +51,8 @@ class NotifySender
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
         $contactPhone = $this->sc->getParameter('contact.phone');
-      if ($entity->getPayStatus() == 0 && $entity->getPayType() == 'cash') {
+      if ($entity->getPayStatus() == 0 && $entity->getPayType() == 'cash' && $entity->getActive() == 1) {
+          //If cash payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
           $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
               ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
@@ -72,9 +73,10 @@ class NotifySender
           );
           $this->sc->get('mailer')->send($message);
         } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
+            //After payment succesfully verified send message to user with attached electronical policy version and order details
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
-                ->setSubject(strtoupper($siteDomain) . 'Оплата за Ваш заказ получена!')
+                ->setSubject(strtoupper($siteDomain) . ': Оплата за Ваш заказ получена!')
                 ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(
@@ -91,11 +93,11 @@ class NotifySender
                 'text/html'
           );
           $this->sc->get('mailer')->send($message);
-        } elseif ($entity->getActive() == 0 && strlen($entity->getHash()) == 40) {
+        } elseif ($entity->getActive() == 0 && $entity->getPayStatus() == 0 && strlen($entity->getHash()) == 40) {
             //Send notification to user that he has stored order without confirmation
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
-                ->setSubject(strtoupper($siteDomain) . 'Вы отложили решение по покупке полиса.')
+                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ ожидает подтверждения...')
                 ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(
@@ -113,6 +115,7 @@ class NotifySender
             );
             $this->sc->get('mailer')->send($message);
         }
+        //Notify admin
       $to = $this->sc->getParameter('admin.emails');
       $messageToAdmin = \Swift_Message::newInstance()
             ->setSubject('Поступил новый заказ!')
@@ -132,7 +135,7 @@ class NotifySender
   }
 
     public function preUpdate(PreUpdateEventArgs $args)
-    { 
+    {
         $entity = $args->getEntity();
         if ($entity instanceof InsuranceOrder) {
             if ($args->hasChangedField('payStatus')) {

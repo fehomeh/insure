@@ -70,7 +70,7 @@ swiftmailer:
     spool:     { type: memory }
     port:      465
     encryption: ssl
-   
+
 #FOS User Bundle configuration
 fos_user:
     db_driver: orm
