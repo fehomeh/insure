@@ -187,7 +187,7 @@ class NotifySender
               //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
                 ;
                     if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
-                        $message->attach(\Swift_Attachment::fromPath($pdfFile));
+                        $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
                    }
                     $this->sc->get('mailer')->send($message);
                 }
