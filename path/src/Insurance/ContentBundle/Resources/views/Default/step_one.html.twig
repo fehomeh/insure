@@ -894,7 +894,16 @@ $(function() {
                 if (data.message == 'success') {
                     //Show success window
                     $('#success_modal .inform_title').text('Ваш расчет сохранен!');
-                    $('#success_modal .information_box').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                    $('#success_modal .inform_text').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                    $('#success_modal .form_green_button').unbind('click');
+                    $('#success_modal .form_grey_button').unbind('click');
+                    $('#success_modal .form_green_button').on('click', function (){
+                        window.location = '{{path('step1')}}#clear';
+                        window.location.reload();
+                    });
+                    $('#success_modal .form_grey_button').on('click', function (){
+                        window.location = '{{path('homepage')}}';
+                    });
                     $('#success_modal').modal().open();
                 }
             });
