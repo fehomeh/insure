@@ -175,6 +175,7 @@
     <div class="information_box">
         <div class="ico"></div>
         <div class="inform_title">Спасибо, Ваш заказ принят.</div>
+        <div class="inform_text"></div>
         <!--Наш менеджер свяжется с Вами в ближайшее время.-->
     </div>
     <div class="form_grey_button">На главную</div>
@@ -265,9 +266,11 @@
                                     data: $('#calculator-form').serialize()
                                 }).done(function (data){
                                     if (data.message == 'success') {
+                                        $('.common_error').hide();
+                                        $('.error_login, .error_pass').hide();
                                         //Show success window
                                         $('#success_modal .inform_title').text('Ваш расчет сохранен!');
-                                        $('#success_modal .information_box').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                                        $('#success_modal .inform_text').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
                                         $('#success_modal').modal().open();
                                     }
                                 });
@@ -291,9 +294,9 @@
                             }
                         } else {
                             if (typeof data.message !== undefined)
-                                alert(data.message)
+                                $('.error_login, .error_pass').show();
                             else
-                                alert('Произошла ошибка во время авторизации!');
+                                $('.common_error').show();
                         }
                     });
                 });
