@@ -621,8 +621,6 @@ form.personal_data .kiev_info {
 	font-style: italic;
 	}
     	
-	
-
 
 form.personal_data .control_point input:focus {
       -moz-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.41);
@@ -964,4 +962,17 @@ form.personal_data .line.adres {
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.26), 0px 0px 3px rgba(0, 0, 0, 0.47) inset;
    }
 
+/*------------------------------------------------------------------------------------------- */
+/*-------------------------------------- FINISH PAGE --------------------------------- */
+/*------------------------------------------------------------------------------------------- */   
 
+.text_content span {
+    float:left;
+    width:85px;
+	height:70px;
+	position: relative;
+	background-image: url(../images/sprite.png);
+      background-position: -313px -506px;
+      background-color: transparent;
+	margin-right:20px;
+	margin-top: 6px;}

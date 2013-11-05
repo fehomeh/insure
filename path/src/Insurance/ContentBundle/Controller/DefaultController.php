@@ -952,12 +952,12 @@ class DefaultController extends Controller
             //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
-            $message = '<h3>Ваш заказ принят!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
+            $message = '<span></span><h3>Ваш заказ принят!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
         } elseif ($request->getSession()->get('orderState') == 'delayed') {
             //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
-            $message = '<div class="title">Ваш заказ сохранен!</div><p>На Ваш электронный адрес выслано письмо со ссылкой для завершения заказа.</p> <p>Спасибо за то, что воспользовались нашим сервисом!</p>';
+            $message = '<span></span><h3>Ваш заказ сохранен!</h3><p>На Ваш электронный адрес выслано письмо со ссылкой для завершения заказа.</p> <p>Спасибо за то, что воспользовались нашим сервисом!</p>';
         } else $message = '<p>Возникла ошибка при оформлении. Пожалуйста, попробуйте еще раз.</p>';
         return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
             'feedback_form' => $feedbackForm->createView(),

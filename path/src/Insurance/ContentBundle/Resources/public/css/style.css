@@ -2188,18 +2188,19 @@ form.personal_data {
   margin-bottom: 30px; }
   .text_block .text_title {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     color: black;
-    margin-bottom: 15px; }
+    margin-bottom: 15px;
+	line-height: 25px;}
   .text_block p {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     color: black;
     margin-bottom: 10px;
     position: relative;
-    padding-left: 20px; }
+    padding-left: 25px; }
     .text_block p.bold {
-      font-weight: bold; }
+      font-weight: normal; }
       .text_block p.bold span {
         position: absolute;
         left: 0;
@@ -2213,12 +2214,12 @@ form.personal_data {
 
 .adres_text {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 22px;
+  font-size: 18px;
   color: black;
   font-style: italic;
   display: inline-block;
   margin: 0 10px;
-  line-height: 41px; }
+  line-height: 37px; }
 
 .change.for_adres {
   position: relative;
