@@ -55,6 +55,14 @@ form.modal_form .control_point input[type="email"] {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
+header .center_part .phone_number {
+      font-family: "RobotoBlack", Helvetica, sans-serif;
+      font-size: 29px;}
+
+header .center_part .phone_number span.code {
+        font-family: "RobotoRegular", Helvetica, sans-serif;
+        font-size: 29px;}
+
 header .main_menu div.shadow {
         position: absolute;
         width: 1016px;
@@ -241,6 +249,10 @@ footer .bottom_part .counter_container {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- ECONOM BOX ---------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
+.how_it_work .step_point .text {
+	font-style:normal;
+}
+
 .advantages .adv_point {
     padding-left: 85px;
 	margin: 0 15px 50px 0;}
@@ -250,6 +262,27 @@ footer .bottom_part .counter_container {
 	width: 285px;
 	}
 
+.advantages .adv_point p.text { 
+	  line-height: 14px;
+}	
+
+.partner .text_box p.short_text, .partner .text_box p.drop_text {
+	font-size: 16px;
+    text-align: justify; 
+	margin-bottom:10px;
+	font-family:'robotoregular', Arial, Helvetica, sans-serif;
+	}
+
+.min_cost .limit h2 {
+	font-size: 23px;
+    line-height: 27px;
+    text-shadow: 0 0 1px white;
+	font-weight: 400;
+	font-style: normal;
+	margin:0;
+	font-family:'robotoregular', Arial, Helvetica, sans-serif;
+}
+	
 .question .question_point.phone {
     width: 300px;
     margin: 0 0px 10px 0;}

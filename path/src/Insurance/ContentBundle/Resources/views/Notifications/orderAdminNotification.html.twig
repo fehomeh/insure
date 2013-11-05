@@ -2,23 +2,32 @@
 <p></p>
 <p><b>Серия и номер полиса:</b> {{order.policy.serie}}/{{order.policy.value}}</p>
 <p><b>Начало действия полиса:</b> {{order.activeFrom|date('d.m.Y')}}</p>
-<p><b>Срок страхования:</b> {{order.insuranceTerm}}</p>
+<p><b>Срок страхования:</b> {% if order.insuranceTerm == '0,5' -%}2 недели{% else %}{{order.insuranceTerm}} мес.{%endif%}</p>
 <p><b>ФИО:</b> {{order.surname}} {{order.firstname}} {{order.middlename}}</p>
 <p><b>Адрес проживания:</b> {{order.city}}, {{order.registerAddress}}, {{order.registerBuilding}}</p>
 <p><b>Адрес доставки:</b> {{order.deliveryAddress}}, {{order.deliveryBuilding}}</p>
 <p><b>Документ:</b> {% if order.documentType == 'D'%}вод. права{% elseif order.documentType == 'P'%}паспорт{%endif%} - {{order.documentSerie}}/{{order.documentNumber}}, {{order.documentAuthority}}, {{order.documentDate|date('d.m.Y')}}</p>
 <p><b>ИНН:</b> {{order.documentInn}}</p>
 <p><b>Телефон:</b> {{order.phone}}</p>
-<p>-------</p>
-<p><b>Авто:</b> {{order.carModel.brand.value}} {{order.carModel}} {{order.carAge}}, {% if order.displacement == '1.4' %}до 1.6 л.,
-                                {%- elseif order.displacement == '1.7' -%}1.601 - 2.0 л.,
-                                {%- elseif order.displacement == '2.1' -%}2.01 - 3.0 л.,
+<p>---------------------</p>
+<p><b>Авто:</b> {{order.carModel.brand.value}} {{order.carModel}} {{order.carAge}}, {% if order.displacement == '1.4' %}до 1.6 л.
+                                {%- elseif order.displacement == '1.7' -%}1.601 - 2.0 л.
+                                {%- elseif order.displacement == '2.1' -%}2.01 - 3.0 л.
                                 {%- elseif order.displacement == '3.1' -%}больше 3.0 л.{% endif %}</p>
 <p><b>Место регистрации ТС:</b> {{order.registerCity.region.value}}, {{order.registerCity}}</p>
 <p><b>VIN-код:</b> {{order.vinCode}}</p>
 <p><b>Номерной знак:</b> {{order.carNumber}}</p>
-<p>-------</p>
-<p><b>ОСАГО:</b> {{order.price}}</p>
-<p><b>ДГО:</b> {{order.priceDgo}}</p>
-<p><b>НС:</b> {{order.priceNs}}</p>
-<p><b>Сумма:</b> {{order.price + order.priceDgo + order.priceNs}} грн</p>
+<p>---------------------</p>
+<p><b>Расчет:</b></p>
+<p>Полис (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн</p>
+{% if order.priceDgo > 0 %}<p>Расширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн</p>{% endif %}
+{% if order.priceNs > 0 %}<p>Здоровье водителя и пассажиров (НС) - {{order.priceNs|number_format(2, ',', ' ')}} грн</p>{% endif %}
+<p><b>Общая сумма Вашего заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн</p>
+<p>&nbsp;</p>
+<b>Cпособ оплаты:</b> {%- if order.payType == 'cash' -%}Наличными курьеру
+{%- elseif order.payType == 'plastic' -%}Пластиковая карта
+{%- elseif order.payType == 'privat_card' -%}Карта Приват Банка
+{%- elseif order.payType == 'privat24' -%} Приват24
+{%- elseif order.payType == 'terminal' -%}Терминал самообслуживания
+{%- elseif order.payType == 'webmoney' -%}Webmoney
+{%- endif -%}

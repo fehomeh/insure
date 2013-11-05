@@ -106,7 +106,7 @@ class NotifySender
             //After payment succesfully verified send message to user with attached electronical policy version and order details
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
-                ->setSubject(strtoupper($siteDomain) . 'Оплата за Ваш заказ получена!')
+                ->setSubject(strtoupper($siteDomain) . ': Оплата за Ваш заказ получена!')
                 ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(
@@ -127,7 +127,7 @@ class NotifySender
             //Send notification to user that he has stored order without confirmation
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
-                ->setSubject(strtoupper($siteDomain) . 'Вы отложили решение по покупке полиса.')
+                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ ожидает подтверждения...')
                 ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(
@@ -187,7 +187,7 @@ class NotifySender
               //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
                 ;
                     if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
-                        $message->attach(\Swift_Attachment::fromPath($pdfFile));
+                        $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
                    }
                     $this->sc->get('mailer')->send($message);
                 }
