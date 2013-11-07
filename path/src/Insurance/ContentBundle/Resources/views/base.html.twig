@@ -267,7 +267,7 @@
                                 }).done(function (data){
                                     if (data.message == 'success') {
                                         $('.common_error').hide();
-                                        $('.error_login, .error_pass').hide();
+                                        $('.error_login').hide();
                                         //Show success window
                                         $('#success_modal .inform_title').text('Ваш расчет сохранен!');
                                         $('#success_modal .inform_text').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
@@ -294,7 +294,7 @@
                             }
                         } else {
                             if (typeof data.message !== undefined)
-                                $('.error_login, .error_pass').show();
+                                $('.error_login').show();
                             else
                                 $('.common_error').show();
                         }

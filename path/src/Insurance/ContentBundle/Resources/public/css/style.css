@@ -37,7 +37,7 @@ header {
       left: 0; }
     header .center_part .phone_number {
       margin-bottom: 3px;
-      font-family: Arial black, Helvetica, sans-serif;
+      font-family: 'arialblack', Helvetica, sans-serif;
       font-size: 27px;
       color: #5b5b5b;
       position: relative; }
@@ -108,7 +108,7 @@ header {
     text-transform: uppercase;
     font-size: 11px;
     color: white;
-    font-family: Arial black, Helvetica, sans-serif;
+    font-family: 'arialblack', Helvetica, sans-serif;
     background-image: url(../images/bg.png);
     background-position: 0px -21px;
     background-repeat: repeat-x;
@@ -447,7 +447,7 @@ footer {
       background-position: -318px -67px;
       background-repeat: no-repeat;
       background-color: transparent;
-      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
       font-size: 32px;
       color: white;
       font-weight: 900;
@@ -533,7 +533,7 @@ footer {
       font-size: 20px;
       color: white;
       text-shadow: 1px 1px 1px rgba(38, 59, 7, 0.8);
-      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
       background-image: url(../images/sprite.png);
       background-position: 0px -143px;
       background-repeat: no-repeat;
@@ -787,7 +787,7 @@ footer {
     background-position: -372px -114px;
     background-repeat: no-repeat;
     background-color: transparent;
-    font-family: "robotoblack", Arial black, Helvetica, sans-serif;
+    font-family: "robotoblack", 'arialblack', Helvetica, sans-serif;
     font-size: 30px;
     color: #3d3d3d;
     line-height: 51px;
@@ -803,7 +803,7 @@ footer {
   margin-bottom: 110px;
   padding-left: 50px; }
   .how_it_work .step_point {
-    width: 240px;
+    width: 245px;
     height: 175px;
     position: relative;
     display: inline-block;
@@ -838,7 +838,7 @@ footer {
     .how_it_work .step_point .arrow {
       position: absolute;
       top: 50%;
-      right: 20px;
+      right: 25px;
       height: 54px;
       width: 26px;
       margin-top: -27px;
@@ -997,7 +997,7 @@ footer {
       top: 50%;
       margin-top: -26px;
       right: 60px;
-      font-family: Arial black, Helvetica, sans-serif;
+      font-family: 'arialblack', Helvetica, sans-serif;
       font-size: 21px;
       color: white;
       text-transform: uppercase;
@@ -1250,7 +1250,7 @@ form.modal_form {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     -khtml-border-radius: 6px;
-    font-family: Arial black, Helvetica, sans-serif;
+    font-family: 'arialblack', Helvetica, sans-serif;
     font-weight: bold;
     font-size: 14px;
     color: white;
@@ -1427,7 +1427,7 @@ form.modal_form {
     font-size: 14px;
     color: black; }
     .preloader .text span {
-      font-family: Arial black, Helvetica, sans-serif;
+      font-family: 'arialblack', Helvetica, sans-serif;
       font-size: 24px;
       color: black;
       display: block; }
@@ -1553,7 +1553,7 @@ form.modal_form {
     font-size: 14px; }
 
 .orange_button {
-  font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+  font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
   font-size: 13px;
   color: white;
   text-transform: uppercase;
@@ -1619,7 +1619,7 @@ form.modal_form {
   font-weight: 400;
   display: none; }
   .pop_up .popup_title {
-    font-family: Arial black, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
     color: black;
     font-weight: bold;
@@ -1662,7 +1662,7 @@ form.modal_form {
   font-weight: 400;
   display: block; }
   .fixed_pop_up .popup_title {
-    font-family: Arial black, Helvetica, sans-serif;
+    font-family: 'arialblack', Helvetica, sans-serif;
     font-size: 12px;
     color: black;
     font-weight: bold;
@@ -2027,7 +2027,7 @@ form.personal_data {
   text-transform: uppercase;
   margin-left: 10px;
   position: relative;
-  font-family: "roboroBlack", Arial black, Helvetica, sans-serif;
+  font-family: "roboroBlack", 'arialblack', Helvetica, sans-serif;
   font-size: 16px;
   color: white;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
@@ -2094,7 +2094,7 @@ form.personal_data {
     text-align: center;
     cursor: pointer;
     float: right;
-    font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+    font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
     font-size: 14px;
     color: white;
     text-transform: uppercase;
@@ -2343,7 +2343,7 @@ form.personal_data {
     -khtml-border-radius: 6px;
     padding: 15px; }
     .calculator_content aside .sidebar_title {
-      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
       font-size: 20px;
       color: black;
       margin-bottom: 20px; }
@@ -2406,7 +2406,7 @@ form.personal_data {
         padding: 0;
         height: 65px;
         line-height: 65px;
-        font-family: Arial black, Helvetica, sans-serif;
+        font-family: 'arialblack', Helvetica, sans-serif;
         font-size: 32px;
         color: #419e00;
         text-align: center; }
@@ -2431,7 +2431,7 @@ form.personal_data {
   text-transform: uppercase;
   cursor: pointer;
   margin: 0 0 10px -5px;
-  font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+  font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
   font-size: 20px;
   color: white;
   text-shadow: 1px 1px 1px rgba(66, 94, 25, 0.8);
@@ -2610,7 +2610,7 @@ form.personal_data {
       -moz-border-radius: 6px;
       -khtml-border-radius: 6px;
       font-weight: bold;
-      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
       font-size: 16px;
       color: #507e0e;
       line-height: 18px; }
@@ -2618,7 +2618,7 @@ form.personal_data {
         display: block;
         text-align: center;
         line-height: 29px;
-        font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+        font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
         font-size: 25px;
         color: #507e0e; }
   .box_line.focus {
@@ -2889,7 +2889,7 @@ form.personal_data {
     font-size: 14px;
     color: black; }
     #success_modal .information_box .inform_title, #error_modal .information_box .inform_title {
-      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
       font-size: 18px;
       color: black; }
   #success_modal .ico, #error_modal .ico {

@@ -8,23 +8,20 @@
     <form class="modal_form" action="{{ path("fos_user_security_check") }}" method="post" id="login-form">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         <div class="common_error" style="display: none;">Во время авторизации что-то пошло не так. Перезагрузите страницу и попробуйте снова!</div>
+		<div class="error_login" style="display: none;">Возможно Вы ввели неправильный E-mail или пароль, попробуйте пожалуйста еще раз.</div>
         <div class="control_point">
-            <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-            <div class="error_login" style="display: none;">Неправильный логин/пароль</div>
-            <input type="text" placeholder="Логин" id="username" name="_username" value="{{ last_username }}" required="required"/>
+            <label for="username">E-mail</label>
+            <input type="text" placeholder="Ваш E-mail" id="username" name="_username" value="{{ last_username }}" required="required"/>
             <div class="shadow_box"><span class="user"></span></div>
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">Не верный логин/пароль</div>
         </div>
         <div class="control_point">
             <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-            <div class="error_pass" style="display: none;">Неправильный логин/пароль</div>
             <input type="password" placeholder="Пароль" id="password" name="_password" required="required" />
             <div class="shadow_box"><span class="kee"></span></div>
             <div class="success ico"></div>
             <div class="error ico"></div>
-            <div class="error_text">Текст ошибки</div>
         </div>
         <div class="control_point remember_point">
             <input type="checkbox" class="styled" id="remember_me" name="_remember_me" value="on" />

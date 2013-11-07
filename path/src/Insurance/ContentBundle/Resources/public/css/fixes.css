@@ -15,6 +15,15 @@ form.modal_form .control_point input[type="email"] {
     padding: 0 10px;
     width: 100%;
 }
+
+.error_login {
+	background-color: #fff4f4;
+	color: #c34949;
+	padding: 10px;
+	border-radius: 5px 5px 5px 5px;
+	margin-bottom: 20px;
+	}
+
 .login-area {
     display:inline-block;
     float:right;
@@ -23,16 +32,16 @@ form.modal_form .control_point input[type="email"] {
     padding:0;
 }
 
-  header .personal_office a {
+ header .personal_office a {
    font-size: 11px;
     color: white;
 	text-transform: uppercase;
-    font-family: Arial black, Helvetica, sans-serif;
+    font-family: 'arialblack', Helvetica, sans-serif;
 	}
 
 .calculator_box .count_down_container .counter div .tdigit {
     color: #FFFFFF;
-    font-family: "roboroBlack",Arial black,Helvetica,sans-serif;
+    font-family: "roboroBlack",'arialblack',Helvetica,sans-serif;
     font-size: 32px;
     font-weight: bold;
     letter-spacing: 18px;
@@ -55,13 +64,6 @@ form.modal_form .control_point input[type="email"] {
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- HEADER -------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
-header .center_part .phone_number {
-      font-family: "RobotoBlack", Helvetica, sans-serif;
-      font-size: 29px;}
-
-header .center_part .phone_number span.code {
-        font-family: "RobotoRegular", Helvetica, sans-serif;
-        font-size: 29px;}
 
 header .main_menu div.shadow {
         position: absolute;
@@ -721,10 +723,11 @@ line-height: 28px;
   position: absolute;
   top: 2px;
   text-transform: uppercase!important;
-  font-size: 12px; }
+  font-size: 12px; 
+  margin-right: 0;}
 
 .calculator_content aside .sidebar_title {
-      font-family: "robotoregular", Arial black, Helvetica, sans-serif;
+      font-family: "robotoregular", 'arialblack', Helvetica, sans-serif;
       font-size: 18px;
       color: black;
       margin-bottom: 20px;
@@ -886,7 +889,7 @@ line-height: 28px;
     font-size: 14px;
     color: black; }
     #success_modal .information_box .inform_title, #error_modal .information_box .inform_title {
-      font-family: "robotoBlack", Arial black, Helvetica, sans-serif;
+      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
       font-size: 18px;
       color: black; }	  
 
@@ -906,7 +909,7 @@ form.personal_data .line.adres {
       font-size: 14px;
       text-transform: uppercase;
       text-shadow: 1px 1px 1px rgba(56, 39, 9, 0.5);
-      font-family: "robotoBlack",Arial black,Helvetica,sans-serif;
+      font-family: "robotoBlack",'arialblack',Helvetica,sans-serif;
   }
   .auto_info .change a {
     color: #FFFFFF;
