@@ -19,7 +19,7 @@ class HelperController extends Controller
       $form->bindRequest($request);
       if ($form->isValid()){
         $postData = $request->request->get('policy_generator');
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $validator = $this->get('validator');
         $company = $em->getRepository('InsuranceContentBundle:InsuranceCompany')->findOneBy(array(
             'id' => $postData['insuranceCompany']

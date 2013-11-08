@@ -28,7 +28,7 @@
 	}
 
 	.sign-info table td {
-		border-right:0; border-bottom:0;
+		/*border-right:0;*/ border-bottom:0;
 		padding:.75em 1.5em;
 	}
 
@@ -91,9 +91,9 @@
 <p><strong>3. Строк дії</strong></p>
 <p align="center">
     з
-    <strong>{{ date_from }}</strong>
+    <strong>{{ order.activeFrom|date('d.m.Y H:i:s') }}</strong>
     до
-    <strong> {{date_to}} </strong>
+    <strong> {{order.activeFrom|date_modify('+1 year -1 second')|date('d.m.Y H:i:s')}} </strong>
     включно<br>
     <em>Договір (поліс) набирає чинності з початку зазначенного строку його дії</em>
 </p>
@@ -106,7 +106,10 @@
       <tr>
         <td width="50%"><em>За шкоду, заподіяну життю і здоров'ю (на одного потерпілого)</em></td>
         <td width="50%">
-        	<strong> {{order.priceNs}} гривень </strong>
+        	{% if order.passengerCount > 0 %}<strong> {{(order.priceNs / order.passengerCount)|number_format(2, ',', ' ')}} гривень </strong>
+            {% else %}
+                <strong> {{order.priceNs|number_format(2, ',', ' ')}} гривень </strong>
+            {% endif %}
         </td>
     </tr>
     {% endif %}
@@ -114,7 +117,7 @@
     <tr>
         <td width="50%"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
         <td width="50%">
-        	<strong>{{order.priceDgo}} гривень</strong>
+        	<strong>{{order.priceDgo|number_format(2, ',', ' ')}} гривень</strong>
         </td>
     </tr>
     {% endif %}
@@ -178,7 +181,7 @@
 <p><strong>Виключно для страхувальника - фізичної особи</strong></p>
 <p>
 	<strong>Дата народження</strong> 4 березня 1985 р.	&nbsp;
-	<strong>ІНПП</strong> 5678568656</p>
+	<strong>ІНПП</strong>order.documentInn</p>
 <p>
 	<strong>Документ, що посвідчує особу</strong>
 	<em>(для пільговика - документ, що підтверджує його право на зменшення розміру страхового платежу)</em>
@@ -209,10 +212,10 @@
             <strong>{{ order.vinCode }}</strong>
             &nbsp;
             Рік випуску
-            <strong>2010</strong>
+            <strong>{{ order.carAge }}</strong>
             &nbsp;
             Місце реєстрації
-            <strong>{{ order.registerCity }}</strong>
+            <strong>{{ order.registerCity.region.value }}, {{ order.registerCity }}</strong>
         </td>
     </tr>
 </tbody></table>
@@ -220,7 +223,7 @@
 <br>
 
 <p><strong>Страхова премія</strong> <strong>{{ order.price }}&nbsp;грн.</strong><br>
-Сплачена <strong>{{order.payDate|date('D, d F Y H г i хв s с', 'Europe/Kiev')}}</strong></p>
+{% if order.payDate in not null %}Сплачена <strong>{{order.payDate|date('D, d F Y H г i хв s с', 'Europe/Kiev')}}</strong></p>{% endif %}
 <table width="100%" cellpadding="0" border="0">
   <tbody><tr>
     <td width="40%" align="left"></td>
