@@ -28,9 +28,12 @@
             <label class="check_label" for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
         </div>
         <div class="right_part">
-            <a href="#" class="forget_pass">Забыли пароль!?</a>
-            <input class="green_button" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+        <input class="green_button" type="submit" id="_submit" name="_submit" value="ВХОД" />
+        </div>
+	    <div class="modal_preloader">
+        <img src="{{asset('bundles/insurancecontent/images/3.gif')}}" alt="img" />
         </div>
         <div style="clear: both;"></div>
+		<div class="reset_pass"><a href="#" class="forget_pass">Не удается войти? Восстановить пароль.</a></div>
     </form>
 </div>

@@ -297,6 +297,12 @@ footer {
       display: block;
       text-decoration: underline;
       line-height: 26px; }
+	 footer .column.first a, footer .column.second a {
+	 -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+	transition:  all 0.3s ease;
+	 }
       footer .column a span {
         width: 14px;
         height: 14px;
@@ -1344,7 +1350,7 @@ form.modal_form {
     display: inline-block;
     float: left;
     width: 150px;
-    margin-top: 14px; }
+    margin-top: 12px; }
   #login_modal .right_part {
     margin-top: 5px;
     display: inline-block;

@@ -380,6 +380,32 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
 /*------------------------------------- PASS MODAL ------------------------------------------ */
 /*------------------------------------------------------------------------------------------- */
 
+.reset_pass {
+    border-top: 1px solid #cac9c9;
+	background-color:#ececec;
+	text-align: center;
+	margin: 20px -35px -20px -35px;
+	padding: 20px;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+	box-shadow: 0 -1px 3px rgba(198, 198, 198, 0.7);
+	}
+
+.reset_pass a{
+	font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: black;
+	font-style: italic;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+	transition:  all 0.3s ease;
+}
+
+.reset_pass a:hover {
+	color: #ffa600;
+}
+
   #pass_modal .sub_text {
     width: 435px;
     font-family: Arial, Helvetica, sans-serif;
@@ -397,10 +423,10 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
 .modal_preloader {
 	float: right;
     display: inline-block;
-	margin-right:10px;
+	margin-right:12px;
     display:none;
     position: relative;
-	margin-top:8px;
+	margin-top:10px;
 	}
 .modal_preloader.on {
     display:block;
