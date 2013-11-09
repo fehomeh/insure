@@ -10,3 +10,5 @@
 /app/config/parameters.yml
 *~
 /web/pdf/
+/src/Insurance/ContentBundle/Resources/public/fonts/
+/src/Insurance/ContentBundle/Resources/public/images/
