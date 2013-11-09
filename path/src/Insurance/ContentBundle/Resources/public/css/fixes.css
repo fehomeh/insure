@@ -20,7 +20,10 @@ form.modal_form .control_point input[type="email"] {
 	background-color: #fff4f4;
 	color: #c34949;
 	padding: 10px;
-	border-radius: 5px 5px 5px 5px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
 	margin-bottom: 20px;
 	}
 
@@ -41,7 +44,7 @@ form.modal_form .control_point input[type="email"] {
 
 .calculator_box .count_down_container .counter div .tdigit {
     color: #FFFFFF;
-    font-family: "roboroBlack",'arialblack',Helvetica,sans-serif;
+    font-family: 'arialblack',Helvetica,sans-serif;
     font-size: 32px;
     font-weight: bold;
     letter-spacing: 18px;
