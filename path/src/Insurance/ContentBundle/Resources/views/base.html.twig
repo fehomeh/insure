@@ -206,6 +206,21 @@
 {% endblock %}
     <script type="text/javascript">
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
+        function greenButtonSubmit() {
+            $('.green_button').on('click', function (){
+                var form = $(this).parents('form');
+                $.ajax($(form).attr('action'), {
+                    data: form.serialize(),
+                    type: 'POST'
+                })
+                        .done(function(data){
+                            $('.sub_text').hide();
+                            $('.form-container').html(data);
+                            greenButtonSubmit();
+                        });
+            });
+        }
+
         function loginFormShow(e, callbackF) {
             $.ajax('{{path('fos_user_security_login')}}', {
                 type: 'GET'}).done(function (data){
@@ -224,17 +239,7 @@
                     $.ajax('{{path('fos_user_resetting_request')}}')
                     .done(function (data){
                         $('#pass_modal .form-container').html(data);
-                        $('.green_button').on('click', function (){
-                            var form = $(this).parents('form');
-                            $.ajax($(form).attr('action'), {
-                                data: form.serialize(),
-                                type: 'POST'
-                            })
-                            .done(function(data){
-                                $('.sub_text').hide();
-                                $('.form-container').html(data);
-                            });
-                        });
+                        greenButtonSubmit();
                         $('#pass_modal').modal().open({
                             closeOnEsc: false,
                             closeOnOverlayClick: false

@@ -102,10 +102,12 @@ $(document).ready(
             var txtMinutes = Math.floor((window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600)/ 60);
             var txtSeconds = window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600 - txtMinutes*60;
             if (window.endTime <= 0) {
-                $('.hours .tdigit').text('00');
-                $('.minutes .tdigit').text('00');
-                $('.seconds .tdigit').text('00');
-                window.timerEnd = true;
+                finish.setHours(now.getHours() + 3);
+                window.endTime = now.getTime() + finish.getTime();
+                //$('.hours .tdigit').text('00');
+                //$('.minutes .tdigit').text('00');
+                //$('.seconds .tdigit').text('00');
+                //window.timerEnd = true;
                 return;
             }
             if (String(txtHours).length == 1) txtHours = '0' + String(txtHours);
