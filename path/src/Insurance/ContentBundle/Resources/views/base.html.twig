@@ -208,6 +208,7 @@
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
         function greenButtonSubmit() {
             $('.green_button').on('click', function (){
+                $('.modal_preloader').fadeIn(300).addClass('on');
                 var form = $(this).parents('form');
                 $.ajax($(form).attr('action'), {
                     data: form.serialize(),
@@ -216,7 +217,7 @@
                         .done(function(data){
                             $('.sub_text').hide();
                             $('.form-container').html(data);
-                            greenButtonSubmit();
+                            $('.modal_preloader').fadeOut(300).removeClass('on');
                         });
             });
         }
@@ -240,19 +241,6 @@
                     $.ajax('{{path('fos_user_resetting_request')}}')
                     .done(function (data){
                         $('#pass_modal .form-container').html(data);
-                        $('.green_button').on('click', function (){
-						    $('.modal_preloader').fadeIn(300).addClass('on');
-                            var form = $(this).parents('form');
-                            $.ajax($(form).attr('action'), {
-                                data: form.serialize(),
-                                type: 'POST'
-                            })
-                            .done(function(data){
-                                $('.sub_text').hide();
-                                $('.form-container').html(data);
-								$('.modal_preloader').fadeOut(300).removeClass('on');
-                            });
-                        });
                         greenButtonSubmit();
                         $('#pass_modal').modal().open({
                             closeOnEsc: false,
