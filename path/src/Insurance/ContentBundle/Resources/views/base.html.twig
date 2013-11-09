@@ -236,9 +236,23 @@
                 Custom.init();
                 //Reset password
                 $('.forget_pass').on('click', function (){
+					$('.modal_preloader').fadeIn(300).addClass('on');
                     $.ajax('{{path('fos_user_resetting_request')}}')
                     .done(function (data){
                         $('#pass_modal .form-container').html(data);
+                        $('.green_button').on('click', function (){
+						    $('.modal_preloader').fadeIn(300).addClass('on');
+                            var form = $(this).parents('form');
+                            $.ajax($(form).attr('action'), {
+                                data: form.serialize(),
+                                type: 'POST'
+                            })
+                            .done(function(data){
+                                $('.sub_text').hide();
+                                $('.form-container').html(data);
+								$('.modal_preloader').fadeOut(300).removeClass('on');
+                            });
+                        });
                         greenButtonSubmit();
                         $('#pass_modal').modal().open({
                             closeOnEsc: false,
@@ -251,6 +265,7 @@
                     $.modal().close();
                     });
                 $('#login-form').submit(function (e) {
+				$('.modal_preloader').fadeIn(300).addClass('on');
                     e.preventDefault();
                     $.ajax('{{path("fos_user_security_check")}}',
                         {
@@ -262,6 +277,7 @@
                     .done(function(data){
                         if (typeof data.email !== 'undefined') {
                             $('.login-area').html('<div class="personal_office login_link"><span></span><a href="{{path('fos_user_security_logout')}}">Выйти</a></div>');
+							$('.modal_preloader').fadeOut(300).removeClass('on');
                             $.modal().close();
                             if (typeof callbackF === 'function') callbackF();
                             //If we on calculator page than change order button behaviour
@@ -298,6 +314,7 @@
                             });
                             }
                         } else {
+						    $('.modal_preloader').fadeOut(300).removeClass('on');
                             if (typeof data.message !== undefined)
                                 $('.error_login').show();
                             else
@@ -334,14 +351,14 @@
                 }
             });
             if (errors === 0) {
-			    $('.modal_preloader').addClass('on');
+			    $('.modal_preloader').fadeIn(300).addClass('on');
                 var form = $(this).parents('form');
                 $.ajax($(form).attr('action'),{
                 data: form.serialize(),
                 type: 'POST'
                 })
                 .done(function(data){
-				    $('.modal_preloader').removeClass('on');
+				    $('.modal_preloader').fadeOut(300).removeClass('on');
                     if (data.message == 'success') {
                         $('#success_modal .inform_title').text('Спасибо, Ваш запрос принят.');
                         $('#success_modal .form_grey_button').hide();

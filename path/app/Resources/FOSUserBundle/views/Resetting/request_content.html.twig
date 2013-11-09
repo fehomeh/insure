@@ -1,5 +1,5 @@
 <form class="modal_form fos_user_resetting_reset" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-    <div>
+
         {% if invalid_username is defined %}
             <div class="error_login">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</div>
         {% endif %}
@@ -9,7 +9,10 @@
         <div class="error ico"></div>
         <div class="error_text">Заполните поле</div>
         </div>
-    </div>
+
     <div class="green_button">Отправить</div>
+	<div class="modal_preloader">
+        <img src="{{asset('bundles/insurancecontent/images/3.gif')}}" alt="img" />
+        </div>
     <div style="clear: both;"></div>
 </form>
