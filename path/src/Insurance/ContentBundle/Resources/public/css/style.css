@@ -20,10 +20,36 @@ header {
     background-color: transparent; }
   header .center_part {
     display: inline-block;
-    margin: 0 110px 20px;
+    margin: -20px 110px 20px;
     padding-left: 40px;
     position: relative;
     top: -7px; }
+  header .center_part span.over24h {
+   position: relative;
+   z-index: 3;
+   top: -20px;
+   font-family: 'arialblack', Helvetica, sans-serif;
+   font-size: 13px;
+   color: black;
+   line-height: 0px;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing:0.45em;
+   color: #f9cc4f;
+   padding-left: 3px;
+   opacity: 0;
+   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+   -webkit-transition: top 500ms ease, opacity 0.8s ease;
+    -moz-transition: top 500ms ease, opacity 0.8s ease;
+    -o-transition: top 500ms ease, opacity 0.8s ease;
+	transition:  top 500ms ease, opacity 0.8s ease;
+
+}
+  header .center_part:hover span.over24h {
+  top: 5px;
+  opacity:1;
+}
+  
     header .center_part span.phone_ico {
       height: 22px;
       width: 21px;
@@ -33,7 +59,7 @@ header {
       background-color: transparent;
       position: absolute;
       top: 50%;
-      margin-top: -8px;
+      margin-top: 0px;
       left: 10px; }
     header .center_part .phone_number {
       margin-bottom: 0px;
