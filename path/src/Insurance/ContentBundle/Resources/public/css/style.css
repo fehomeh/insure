@@ -1260,12 +1260,12 @@ form.modal_form {
       position: absolute;
       bottom: -17px;
       right: 0;
-      background-color: #e73636;
+      background-color: #ff3333;
       z-index: 3;
       display: none; }
       form.modal_form .control_point .error_text:before {
         content: "";
-        border-bottom: 8px solid #e73636;
+        border-bottom: 8px solid #ff3333;
         border-left: 8px solid rgba(0, 0, 0, 0);
         border-right: 8px solid rgba(0, 0, 0, 0);
         position: absolute;
@@ -1276,7 +1276,7 @@ form.modal_form {
     form.modal_form .control_point.success .ico.success {
       display: block; }
     form.modal_form .control_point.error input {
-      border-color: #e73636; }
+      border-color: #ff3333; }
     form.modal_form .control_point.error .ico.error {
       display: block; }
     form.modal_form .control_point.error .error_text, form.modal_form .control_point.error .error_text_box {
@@ -1416,7 +1416,8 @@ form.modal_form {
 #pass_modal {
   width: 505px;
   height: auto;
-  z-index: 103; }
+  z-index: 103;
+  padding:20px 0;  }
   #pass_modal .sub_text {
     width: 435px;
     font-family: Arial, Helvetica, sans-serif;

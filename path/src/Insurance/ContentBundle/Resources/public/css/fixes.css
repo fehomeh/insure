@@ -348,7 +348,7 @@ form.modal_form .control_point input[type="email"] {
 
  form.modal_form .control_point .error_text:before {
         content: "";
-        border-bottom: 8px solid #e73636;
+        border-bottom: 8px solid #ff3333;
         border-left: 8px solid rgba(0, 0, 0, 0);
         border-right: 8px solid rgba(0, 0, 0, 0);
         position: absolute;
@@ -367,18 +367,41 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
       position: absolute;
       top: 30px;
       left: -4px;
-      background-color: #e73636;
+      background-color: #ff3333;
       z-index: 3;
       display: none; }
       form.personal_data .control_point .error_text_box_quest:before, .fos_user_registration_register .control_point .error_text_box_quest:before {
         content: "";
-        border-bottom: 8px solid #e73636;
+        border-bottom: 8px solid #ff3333;
         border-left: 8px solid rgba(0, 0, 0, 0);
         border-right: 8px solid rgba(0, 0, 0, 0);
         position: absolute;
         top: -8px;
         left: 5px; }
-		
+	form.modal_form .control_point .error_text_quest_reg	{
+	background-color: #fff4f4;
+	color: #ff3333;
+	padding: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: none;
+	}
+	form.modal_form .control_point .error_text_quest_reg span {
+	width: 20px;
+      height: 21px;
+	  position: relative;
+      background-image: url(../images/sprite.png);
+      background-repeat: no-repeat;
+	  background-position: -210px -119px;
+	  float:left;
+	  display: inline-block;
+	  top: -2px;
+	  margin-right: 7px;
+	}
 /*------------------------------------------------------------------------------------------- */
 /*------------------------------------- PASS MODAL ------------------------------------------ */
 /*------------------------------------------------------------------------------------------- */
@@ -682,7 +705,7 @@ form.personal_data .control_point.size7 {
     border-color: #79a837;
   }
   
- form.modal_form .control_point.error .error_text_box_quest, form.modal_form .control_point.error .error_text_box {
+ form.modal_form .control_point.error .error_text_box_quest, form.modal_form .control_point.error .error_text_box, form.modal_form .control_point.error .error_text_quest_reg {
     display: block;
 }
 
