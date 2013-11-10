@@ -94,6 +94,15 @@ $(document).ready(
                 //All next varaibles must be in seconds
                 window.endTime = parseInt((finish.getTime() - now.getTime()) / 1000);
             }
+            if (window.endTime <= 0) {
+                finish.setTime((now.getTime() + 10800000));
+                window.endTime = parseInt((finish.getTime() - now.getTime()) / 1000);
+                //$('.hours .tdigit').text('00');
+                //$('.minutes .tdigit').text('00');
+                //$('.seconds .tdigit').text('00');
+                //window.timerEnd = true;
+                //return;
+            }
             window.endTime--;
             var txtYears = Math.floor(window.endTime / (3600*24*30*365));
             var txtMonths = Math.floor((window.endTime - txtYears*3600*24*30*365) / (3600*24*30));
@@ -101,15 +110,6 @@ $(document).ready(
             var txtHours = Math.floor((window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24)/ 3600);
             var txtMinutes = Math.floor((window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600)/ 60);
             var txtSeconds = window.endTime - txtYears*3600*24*30*365 - txtMonths*3600*24*30 - txtDays*3600*24 - txtHours*3600 - txtMinutes*60;
-            if (window.endTime <= 0) {
-                finish.setHours(now.getHours() + 3);
-                window.endTime = now.getTime() + finish.getTime();
-                //$('.hours .tdigit').text('00');
-                //$('.minutes .tdigit').text('00');
-                //$('.seconds .tdigit').text('00');
-                //window.timerEnd = true;
-                return;
-            }
             if (String(txtHours).length == 1) txtHours = '0' + String(txtHours);
             else if (String(txtHours).length == 0) txtHours = '00';
             if (String(txtMinutes).length == 1) txtMinutes = '0' + txtMinutes;

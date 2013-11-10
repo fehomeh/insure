@@ -165,7 +165,6 @@
 <div class="modal" id="pass_modal" style="display: none;">
     <div class="close"></div>
     <div class="title">Восстановление пароля</div>
-    <div class="sub_text">Введите e-mail адрес, указанный при регистрации, на него будет выслана информация по восстановлению пароля.</div>
     <div class="form-container"></div>
 </div>
 
@@ -219,6 +218,7 @@
                             $('.sub_text').hide();
                             $('.form-container').html(data);
                             $('.modal_preloader').fadeOut(300).removeClass('on');
+                            greenButtonSubmit();
                         });
             });
         }
