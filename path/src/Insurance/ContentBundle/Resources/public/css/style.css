@@ -25,16 +25,16 @@ header {
     position: relative;
     top: -7px; }
     header .center_part span.phone_ico {
-      height: 31px;
-      width: 30px;
+      height: 22px;
+      width: 21px;
       background-image: url(../images/sprite.png);
-      background-position: -338px 0px;
+      background-position: -343px 0px;
       background-repeat: no-repeat;
       background-color: transparent;
       position: absolute;
       top: 50%;
-      margin-top: -15px;
-      left: 0; }
+      margin-top: -8px;
+      left: 10px; }
     header .center_part .phone_number {
       margin-bottom: 0px;
       font-family: 'robotoblack', Helvetica, sans-serif;
