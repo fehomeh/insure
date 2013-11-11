@@ -596,7 +596,6 @@ $(function() {
             },
             data: { carAge: $('#carAge').val(), insuranceTerm: $('#insuranceTerm').val() }
             }).done(function (data) {
-                window.discountInProgress = false;
                 window.discountSum = ((1 - data.discount)*commonPrice);
                 var pD = 0;
                 var pN = 0;
@@ -615,6 +614,7 @@ $(function() {
                     $('.discount span').text(parseInt(window.discountSum) + '%');
                 }
                 $('.calc').fadeIn(300).addClass('show');
+                window.discountInProgress = false;
             });
         });
     }
@@ -727,6 +727,7 @@ $(function() {
         $('.calc .ns').parents('.white_box').addClass('hidden');
         $('.calc .dgo').parents('.white_box').addClass('hidden');
         $('.calc').removeClass('show');
+        $('.calc').hide();
         $('.before_calc').addClass('show');
         $('.calc .discount').addClass('hidden');
         $('.category.your_auto').removeClass('all_verified');
@@ -954,8 +955,8 @@ $(function() {
         }
     });
 
-    $('.clear_all').on('click', function(){
-        clearForm();
+    $('.clear_all').on('click', function(e){
+        if (!window.commonInProgress) clearForm();
     });
     </script>
     {% endblock%}

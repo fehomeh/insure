@@ -206,7 +206,7 @@
     <script type="text/javascript">
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED')%}
         function greenButtonSubmit() {
-            $('.green_button').on('click', function (){
+            $('.green_button').on('click', function (){ return;
                 $('.modal_preloader').fadeIn(300).addClass('on');
                 var form = $(this).parents('form');
                 $.ajax($(form).attr('action'), {
