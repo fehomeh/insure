@@ -48,6 +48,9 @@
         </div>
         {{ form_widget(form._token) }}
         <div class="green_button register">Продолжить</div>
+		<div class="modal_preloader">
+        <img src="{{asset('bundles/insurancecontent/images/3.gif')}}" alt="img" />
+        </div>
         <div style="clear: both;"></div>
     </form>
 </div>
@@ -112,6 +115,7 @@ $('.green_button.register').on('click', function(){
         errorsPresent = true;
     }
     if (!errorsPresent) {
+	$('.modal_preloader').fadeIn(300).addClass('on');
         $.ajax($(form).attr('action'), {
             data: form.serialize(),
             type: 'POST'
@@ -124,6 +128,7 @@ $('.green_button.register').on('click', function(){
                 data: $('#calculator-form').serialize()
                 }).done(function(data){
                 if (data.message === 'success') window.location = '{{path('step2')}}';
+				$('.modal_preloader').fadeOut(300).removeClass('on');
                 });
             } else {
                 $('#registration_modal').replaceWith(data);

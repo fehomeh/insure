@@ -4,19 +4,18 @@
 
 <p>Вы оформили заказ на PolisMarket.</p>
 
-<p>--------------------------</p>
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
 Номер вашего заказа: {{order.id}}
-<p>--------------------------</p>
+</div>
 
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;"> 
 <p><b>Детальная информация по заказу:</b></p>
 <p>Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн</p>
 {% if order.priceDgo > 0 %}<p>Расширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн</p>{% endif %}
 {% if order.priceNs > 0 %}<p>Здоровье водителя и пассажиров (НС) - {{order.priceNs|number_format(2, ',', ' ')}} грн</p>{% endif %}
 <p><b>Общая сумма Вашего заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн</p>
-
-<p>Наш партнер, исполняющий страховые обязательства: ЧАО «СК «БРОКБИЗНЕС».</p>
-
-<p>--------------------------</p>
+</div>
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px;	-webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;"> 
 <b>Выбранный Вами способ оплаты:</b> {%- if order.payType == 'cash' -%}Наличными курьеру
 {%- elseif order.payType == 'plastic' -%}Пластиковая карта
 {%- elseif order.payType == 'privat_card' -%}Карта Приват Банка
@@ -24,8 +23,11 @@
 {%- elseif order.payType == 'terminal' -%}Терминал самообслуживания
 {%- elseif order.payType == 'webmoney' -%}Webmoney
 {%- endif -%}
-<p>--------------------------</p>
+</div>
+<p>Страховая компания, исполняющая обзязательства по договорам заключенным с нашего сайта: ЧАО «СК «БРОКБИЗНЕС».</p>
 <p>Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>
+
+<div style="background-color: #FFF0DE; padding:20px; margin-bottom:20px; font-weight: bold; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">Также система создала для Вас схематический полис ОСАГО с Вашими данными в формате PDF (прикреплен к письму).</div>
 
 <p>С уважением,<br />
 {{siteName}},<br />

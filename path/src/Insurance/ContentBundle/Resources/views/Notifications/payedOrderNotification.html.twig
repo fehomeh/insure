@@ -2,30 +2,32 @@
 
 <p>Прежде всего позвольте выразить Вам свою благодарность за оказанное доверие нашему сервису.</p>
 
-<p>Мы получили оплату за Ваш заказ на PolisMarket.</p>
+<p><b>Мы получили оплату за Ваш заказ на PolisMarket.</b></p>
 
-<p>--------------------------</p>
-<p>Номер вашего заказа: {{order.id}}</p>
-<p>--------------------------</p>
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
+Номер вашего заказа: {{order.id}}
+</div>
 
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;"> 
 <p><b>Детальная информация по заказу:</b></p>
 <p>Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн</p>
 {% if order.priceDgo > 0 %}<p>Расширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн</p>{% endif %}
 {% if order.priceNs > 0 %}<p>Здоровье водителя и пассажиров (НС) - {{order.priceNs|number_format(2, ',', ' ')}} грн</p>{% endif %}
 <p><b>Общая сумма Вашего заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн</p>
-
-<p>Наш партнер, исполняющий страховые обязательства: ЧАО «СК «БРОКБИЗНЕС».</p>
-
-<p>--------------------------</p>
-<p><b>Выбранный Вами способ оплаты:</b> {%- if order.payType == 'cash' -%}Наличными курьеру
+</div>
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px;	-webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;"> 
+<b>Выбранный Вами способ оплаты:</b> {%- if order.payType == 'cash' -%}Наличными курьеру
 {%- elseif order.payType == 'plastic' -%}Пластиковая карта
 {%- elseif order.payType == 'privat_card' -%}Карта Приват Банка
 {%- elseif order.payType == 'privat24' -%} Приват24
 {%- elseif order.payType == 'terminal' -%}Терминал самообслуживания
 {%- elseif order.payType == 'webmoney' -%}Webmoney
-{%- endif -%}</p>
-<p>--------------------------</p>
+{%- endif -%}
+</div>
+<p>Страховая компания, исполняющая обзязательства по договорам заключенным с нашего сайта: ЧАО «СК «БРОКБИЗНЕС».</p>
 <p>Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>
+
+<div style="background-color: #FFF0DE; padding:20px; margin-bottom:20px; font-weight: bold; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">Также система создала для Вас схематический полис ОСАГО с Вашими данными в формате PDF (прикреплен к письму).</div>
 
 <p>С уважением,<br />
 {{siteName}},<br />

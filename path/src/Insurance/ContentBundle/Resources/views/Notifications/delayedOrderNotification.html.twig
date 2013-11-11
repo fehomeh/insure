@@ -1,28 +1,28 @@
-Уважаемый, {{order.firstname}}!
+<p>Здравствуйте, {{order.firstname}}!</p>
 
-Прежде всего позвольте выразить Вам свою благодарность за оказанное доверие нашему сервису.
+<p>Прежде всего позвольте выразить Вам свою благодарность за оказанное доверие нашему сервису.</p>
 
-Вы оформили заказ полиса ОСАГО на сайте {{siteDomain}}.
+<p><b>Вы еще не завершили заказ на сайте на PolisMarket.</b></p>
 
---------------------------
-Номер вашего заказа: {{order.id}}
---------------------------
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
+<p><b>Детальная информация по заказу:</b></p>
+<p>Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн</p>
+{% if order.priceDgo > 0 %}<p>Расширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн</p>{% endif %}
+{% if order.priceNs > 0 %}<p>Здоровье водителя и пассажиров (НС) - {{order.priceNs|number_format(2, ',', ' ')}} грн</p>{% endif %}
+<p><b>Общая сумма Вашего заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн</p>
+</div>
 
-<b>Детальная информация по заказу:</b>
+<div style="background-color: #FFF0DE; padding:20px; margin-bottom:20px; font-weight: bold; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
+Также система создала для Вас схематический полис ОСАГО с Вашими данными в формате PDF (прикреплен к письму).
+</div>
 
-Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн
-{% if order.priceDgo %}Разширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн ( +{{order.sumDgo}} грн ){% endif %}
-{% if order.priceNs %}Здоровье водителя и пассажиров (НС) - {{order.priceNs|number_format(2, ',', ' ')}} грн {% if order.passengerCount > 0 %}( {{order.passengerCount}} пассажира ){% endif %}{% endif %}
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
+Чтобы завершить заказ, Вы можете перейти по ссылке: http://{{siteDomain}}/{{path('step3')}}?hash={{order.hash}}
+</div>
+<p>После этого наш менеджер свяжется с Вами для уточнения деталей доставки.</p>
+<p>Страховая компания, исполняющая обзязательства по договорам заключенным с нашего сайта: ЧАО «СК «БРОКБИЗНЕС».</p>
 
-<b>Общая сумма заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн
-
-Наш партнер, обеспечивающий страховые обязательства: ЧАО «СК «БРОКБИЗНЕС».
-
-Чтобы завершить оформление заказа, перейдите пожалуйста, по ссылке: http://{{siteDomain}}/{{path('step3')}}?hash={{order.hash}}
-
-Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.
-
-С уважением,
-{{siteName}},
-Email: {{contactEmail}}
-Тел.: {{contactPhone}}
+<p>С уважением,<br />
+{{siteName}},<br />
+Email: {{contactEmail}}<br />
+Тел.: {{contactPhone}}</p>
