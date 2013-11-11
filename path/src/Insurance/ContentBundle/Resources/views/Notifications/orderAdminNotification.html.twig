@@ -4,6 +4,7 @@
 <p><b>Начало действия полиса:</b> {{order.activeFrom|date('d.m.Y')}}</p>
 <p><b>Срок страхования:</b> {% if order.insuranceTerm == '0,5' -%}2 недели{% else %}{{order.insuranceTerm}} мес.{%endif%}</p>
 <p><b>ФИО:</b> {{order.surname}} {{order.firstname}} {{order.middlename}}</p>
+<p><b>Дата рождения:</b> {{order.birthDate|date('d.m.Y')}}</p>
 <p><b>Адрес проживания:</b> {{order.city}}, {{order.registerAddress}}, {{order.registerBuilding}}</p>
 <p><b>Адрес доставки:</b> {{order.deliveryAddress}}, {{order.deliveryBuilding}}</p>
 <p><b>Документ:</b> {% if order.documentType == 'D'%}вод. права{% elseif order.documentType == 'P'%}паспорт{%endif%} - {{order.documentSerie}}/{{order.documentNumber}}, {{order.documentAuthority}}, {{order.documentDate|date('d.m.Y')}}</p>

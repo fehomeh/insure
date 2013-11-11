@@ -596,6 +596,7 @@ $(function() {
             },
             data: { carAge: $('#carAge').val(), insuranceTerm: $('#insuranceTerm').val() }
             }).done(function (data) {
+                window.discountInProgress = false;
                 window.discountSum = ((1 - data.discount)*commonPrice);
                 var pD = 0;
                 var pN = 0;
@@ -603,17 +604,17 @@ $(function() {
                 if (window.priceNs) pN = window.priceNs;
                 if (data.discount > 0 && data.discount < 1) {
                     $('.calc .discount .discount').text('- ' + (String(Number(discountSum).toFixed(2)).replace('.', ',')) + '');
-                    $('.calc .discount').fadeIn(300).removeClass('hidden');
+                    $('.calc .discount').fadeIn(200).removeClass('hidden');
                     //$('.calc .discount').show();
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
                     $('.discount span').text('-' + Math.round((1 - data.discount)*100) + '%');
                 } else {
                     $('.itog').text(String((commonPrice - discountSum + pD + pN).toFixed(2)).replace('.', ',') + ' грн.');
-                    $('.calc .discount').fadeOut(300).addClass('hidden');
+                    $('.calc .discount').fadeOut(200).addClass('hidden');
                     //$('.calc .discount').hide();
                     $('.discount span').text(parseInt(window.discountSum) + '%');
                 }
-                $('.calc').fadeIn(300).addClass('show');
+                $('.calc').fadeIn(100).addClass('show');
                 window.discountInProgress = false;
             });
         });
@@ -727,7 +728,6 @@ $(function() {
         $('.calc .ns').parents('.white_box').addClass('hidden');
         $('.calc .dgo').parents('.white_box').addClass('hidden');
         $('.calc').removeClass('show');
-        $('.calc').hide();
         $('.before_calc').addClass('show');
         $('.calc .discount').addClass('hidden');
         $('.category.your_auto').removeClass('all_verified');
@@ -955,8 +955,8 @@ $(function() {
         }
     });
 
-    $('.clear_all').on('click', function(e){
-        if (!window.commonInProgress) clearForm();
+    $('.clear_all').on('click', function(){
+        clearForm();
     });
     </script>
     {% endblock%}

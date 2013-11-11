@@ -20,20 +20,46 @@ header {
     background-color: transparent; }
   header .center_part {
     display: inline-block;
-    margin: 0 110px 20px;
+    margin: -20px 110px 20px;
     padding-left: 40px;
     position: relative;
     top: -7px; }
+  header .center_part span.over24h {
+   position: relative;
+   z-index: 3;
+   top: -20px;
+   font-family: 'arialblack', Helvetica, sans-serif;
+   font-size: 13px;
+   color: black;
+   line-height: 0px;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing:0.45em;
+   color: #f9cc4f;
+   padding-left: 3px;
+   opacity: 0;
+   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+   -webkit-transition: top 500ms ease, opacity 0.8s ease;
+    -moz-transition: top 500ms ease, opacity 0.8s ease;
+    -o-transition: top 500ms ease, opacity 0.8s ease;
+	transition:  top 500ms ease, opacity 0.8s ease;
+
+}
+  header .center_part:hover span.over24h {
+  top: 5px;
+  opacity:1;
+}
+  
     header .center_part span.phone_ico {
       height: 22px;
-      width: 21px;
+      width: 23px;
       background-image: url(../images/sprite.png);
-      background-position: -343px 0px;
+      background-position: -342px 0px;
       background-repeat: no-repeat;
       background-color: transparent;
       position: absolute;
       top: 50%;
-      margin-top: -8px;
+      margin-top: 0px;
       left: 10px; }
     header .center_part .phone_number {
       margin-bottom: 0px;
@@ -1234,12 +1260,12 @@ form.modal_form {
       position: absolute;
       bottom: -17px;
       right: 0;
-      background-color: #e73636;
+      background-color: #ff3333;
       z-index: 3;
       display: none; }
       form.modal_form .control_point .error_text:before {
         content: "";
-        border-bottom: 8px solid #e73636;
+        border-bottom: 8px solid #ff3333;
         border-left: 8px solid rgba(0, 0, 0, 0);
         border-right: 8px solid rgba(0, 0, 0, 0);
         position: absolute;
@@ -1250,7 +1276,7 @@ form.modal_form {
     form.modal_form .control_point.success .ico.success {
       display: block; }
     form.modal_form .control_point.error input {
-      border-color: #e73636; }
+      border-color: #ff3333; }
     form.modal_form .control_point.error .ico.error {
       display: block; }
     form.modal_form .control_point.error .error_text, form.modal_form .control_point.error .error_text_box {
@@ -1390,7 +1416,8 @@ form.modal_form {
 #pass_modal {
   width: 505px;
   height: auto;
-  z-index: 103; }
+  z-index: 103;
+  padding:20px 0;  }
   #pass_modal .sub_text {
     width: 435px;
     font-family: Arial, Helvetica, sans-serif;

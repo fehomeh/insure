@@ -75,7 +75,7 @@
                             </div>
                             <!-- -->
                             <div class="line adres_fields" style="display: none;">
-                                <!--<div class="combo one_column">
+                                <div class="combo one_column">
                                     <div class="current">Киевская область{# if app.session.get('region') %}
                                         {% for region in regions%} {% if region.id == app.session.get('region')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif #}</div>
                                     <div class="arrow"></div>
@@ -113,7 +113,7 @@
                                 	</div>
                                     <input type="text" value="908{#app.session.get('city')#}" name="deliveryCity" id="deliveryCity"/>
                                 </div>
-                                <div style="clear: both;"></div>-->
+                                <div style="clear: both;"></div>
                                 <div class="control_point size4">
                                     <input type="text" placeholder="Улица" name="deliveryAddress" id="deliveryAddress" value="{{ deliveryAddress }}"/>
                                     <div class="success ico"></div>
