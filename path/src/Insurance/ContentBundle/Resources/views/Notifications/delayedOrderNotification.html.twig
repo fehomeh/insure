@@ -4,7 +4,7 @@
 
 <p><b>Вы еще не завершили заказ на сайте на PolisMarket.</b></p>
 
-<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
+<div style="background-color: #EBFFE2; padding:10px 20px 10px 20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
 <p><b>Детальная информация по заказу:</b></p>
 <p>Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн</p>
 {% if order.priceDgo > 0 %}<p>Расширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн</p>{% endif %}
@@ -12,12 +12,11 @@
 <p><b>Общая сумма Вашего заказа:</b> {{(order.price + order.priceDgo + order.priceNs)|number_format(2, ',', ' ')}} грн</p>
 </div>
 
+<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
+Чтобы завершить заказ, Вы можете перейти по ссылке: http://{{siteDomain}}{{path('step3')}}?hash={{order.hash}}
+</div>
 <div style="background-color: #FFF0DE; padding:20px; margin-bottom:20px; font-weight: bold; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
 Также система создала для Вас схематический полис ОСАГО с Вашими данными в формате PDF (прикреплен к письму).
-</div>
-
-<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;">
-Чтобы завершить заказ, Вы можете перейти по ссылке: http://{{siteDomain}}/{{path('step3')}}?hash={{order.hash}}
 </div>
 <p>После этого наш менеджер свяжется с Вами для уточнения деталей доставки.</p>
 <p>Страховая компания, исполняющая обзязательства по договорам заключенным с нашего сайта: ЧАО «СК «БРОКБИЗНЕС».</p>
