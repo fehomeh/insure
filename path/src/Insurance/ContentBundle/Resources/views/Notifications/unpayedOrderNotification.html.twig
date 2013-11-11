@@ -8,7 +8,7 @@
 Номер вашего заказа: {{order.id}}
 </div>
 
-<div style="background-color: #EBFFE2; padding:20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;"> 
+<div style="background-color: #EBFFE2; padding:10px 20px 10px 20px; margin-bottom:20px; color:#363636; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px;"> 
 <p><b>Детальная информация по заказу:</b></p>
 <p>Полис Автогражданки (ОСАГО) - {{order.price|number_format(2, ',', ' ')}} грн</p>
 {% if order.priceDgo > 0 %}<p>Расширение ответственности (ДГО) - {{order.priceDgo|number_format(2, ',', ' ')}} грн</p>{% endif %}
