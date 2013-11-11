@@ -24,9 +24,22 @@ form.modal_form .control_point input[type="email"] {
 	-webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
-	margin-bottom: 20px;
+	margin: 0 35px 20px 35px;
+	}
+	
+.success_reset {
+	background-color: #EDFFE5;
+	color: #3E841F;
+	padding: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+	margin: 0 35px 20px 35px;
 	}
 
+	
+	
 .login-area {
     display:inline-block;
     float:right;

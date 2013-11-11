@@ -60,7 +60,7 @@ resetting:
     password_already_requested: Пароль для данного пользователя уже запрашивался за последние 24 часа.
     check_email: Письмо на адрес %email% отправлено. Перейдите по ссылке внутри, чтобы сбросить старый пароль.
     request:
-        invalid_username: Пользователя "%username%" не существует.
+        invalid_username: Пользователя %username% не существует.
         username: "Имя пользователя:"
         submit: Сбросить пароль
     reset:
