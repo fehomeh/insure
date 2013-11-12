@@ -615,6 +615,7 @@ $(function() {
                     $('.discount span').text(parseInt(window.discountSum) + '%');
                 }
                 $('.calc').fadeIn(100).addClass('show');
+                window.discountInProgress = false;
             });
         });
     }
@@ -654,7 +655,7 @@ $(function() {
                     if (window.discountSum) dS = window.discountSum;
                     if (window.priceNs) pN = window.priceNs;
                     $('.calc .dgo').text(String((data.priceDgo.toFixed(2))).replace('.', ','));
-                    $('.calc .dgo').parents('.white_box').fadeIn(200).removeClass('hidden');
+                    $('.calc .dgo').parents('.white_box').fadeIn(300).removeClass('hidden');
                     $('.itog').text(String(((cP - dS) + data.priceDgo + pN).toFixed(2)).replace('.', ',') + ' грн.');
                 }
             });
@@ -664,7 +665,7 @@ $(function() {
         if ($('#respons').is(':checked')) $('#respons').trigger('click');
         //if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
         $('.price.dgo').text('');
-        $('.price.dgo').parents('.white_box').fadeOut(200).addClass('hidden');
+        $('.price.dgo').parents('.white_box').fadeOut(300).addClass('hidden');
         $('.box_line.responsibility').removeClass('focus');
         $('.responsibility').find('.disabled_shadow').addClass('show');
         var pN = 0;
@@ -703,7 +704,7 @@ $(function() {
                 if (window.discountSum) dS = window.discountSum;
                 if (window.priceDgo) pD = window.priceDgo;
                 $('.calc .ns').text(String((data.priceNs.toFixed(2))).replace('.', ','));
-                $('.calc .ns').parents('.white_box').fadeIn(200).removeClass('hidden');
+                $('.calc .ns').parents('.white_box').fadeIn(300).removeClass('hidden');
                 $('.itog').text(String(((cP - dS + pD) + data.priceNs).toFixed(2)).replace('.', ',') + ' грн.');
             };
         });
@@ -714,7 +715,7 @@ $(function() {
         //if ($('#passenger').is(':checked')) $('#passenger').removeAttr('checked');
         $('.price.ns').text('');
         $('.box_line.passengers').removeClass('focus');
-        $('.price.ns').parents('.white_box').fadeOut(200).addClass('hidden');
+        $('.price.ns').parents('.white_box').fadeOut(300).addClass('hidden');
         $('.passengers').find('.disabled_shadow').addClass('show');
         var pD = 0;
         if (window.priceDgo) pD = window.priceDgo;

@@ -81,7 +81,7 @@ class NotifySender
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
         $contactPhone = $this->sc->getParameter('contact.phone');
-      if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'cash' || $entity->getPayType() == 'terminal') && $entity->getActive() == 1) {
+      if ($entity->getPayStatus() == 0 && $entity->getPayType() == 'terminal' && $entity->getActive() == 1) {
           //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
           $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
@@ -122,6 +122,9 @@ class NotifySender
                 ),
                 'text/html'
           );
+          if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+              $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+          }
           $this->sc->get('mailer')->send($message);
         } elseif ($entity->getActive() == 0 && $entity->getPayStatus() == 0 && strlen($entity->getHash()) == 40) {
             //Send notification to user that he has stored order without confirmation
@@ -143,6 +146,9 @@ class NotifySender
                 ),
                 'text/html'
             );
+            if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+            }
             $this->sc->get('mailer')->send($message);
         }
         //Notify admin
