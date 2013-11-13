@@ -1158,18 +1158,6 @@ display:block;
 margin-bottom: 20px;
 margin-left:10px;
 }
-
-.text_content .boxFaq ul {
-	display:block;
-}
-
-
-.text_content .boxFaq ul li{
-	display:block;
-	list-style:none outside none;
-}
-
-
 	  
 .text_content .boxFaq p {
 	text-align: justify;
