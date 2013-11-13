@@ -82,7 +82,7 @@ $('.green_button.register').on('click', function(){
     if ($(form).find('#fos_user_registration_form_plainPassword_first').val().length == 0) {
         $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').addClass('error');
         $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').removeClass('success');
-        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Введите пароль');
+        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Пароль не должен быть пустым');
         errors.fos_user_registration_form_plainPassword_first = true;
     } else if (
     $(form).find('#fos_user_registration_form_plainPassword_first').val() != $(form).find('#fos_user_registration_form_plainPassword_second').val()
@@ -115,21 +115,36 @@ $('.green_button.register').on('click', function(){
         errorsPresent = true;
     }
     if (!errorsPresent) {
-	$('.modal_preloader').fadeIn(300).addClass('on');
         $.ajax($(form).attr('action'), {
             data: form.serialize(),
             type: 'POST'
         }).done(function(data){
             //On success we will get JSON object with message, on failure we must pull html to form container again and reinit Custom
             if (typeof data === 'object' && data.message == 'success') {
-                //Process form data
-                $.ajax('{{path('step1')}}', {
-                type: 'POST',
-                data: $('#calculator-form').serialize()
-                }).done(function(data){
-                if (data.message === 'success') window.location = '{{path('step2')}}';
-				$('.modal_preloader').fadeOut(300).removeClass('on');
-                });
+                if (window.saveCalculation == true) {
+                    $.ajax('{{path('save_calculation')}}', {
+                        type: 'POST',
+                        data: $('#calculator-form').serialize()
+                    }).done(function (data){
+                                if (data.message == 'success') {
+                                    $('.common_error').hide();
+                                    $('.error_login').hide();
+                                    //Show success window
+                                    $('#success_modal .inform_title').text('Ваш расчет сохранен!');
+                                    $('#success_modal .inform_text').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                                    $('#success_modal').modal().open();
+                                }
+                            });
+                } else {
+                    //Process form data
+                    $.ajax('{{path('step1')}}', {
+                    type: 'POST',
+                    data: $('#calculator-form').serialize()
+                    }).done(function(data){
+                        if (data.message === 'success') window.location = '{{path('step2')}}';
+                                $('.modal_preloader').fadeOut(300).removeClass('on');
+                    });
+                }
             } else {
                 $('#registration_modal').replaceWith(data);
                 $('#registration_modal').modal().open();
