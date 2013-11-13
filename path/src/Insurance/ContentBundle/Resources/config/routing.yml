@@ -83,3 +83,6 @@ osago-info:
 event-info:
     pattern: /goodtoknow/event
     defaults: { _controller: "InsuranceContentBundle:Default:about" }
+faq:
+    pattern: /faq
+    defaults: { _controller: "InsuranceContentBundle:Default:faq" }
