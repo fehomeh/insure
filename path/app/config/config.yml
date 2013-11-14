@@ -82,7 +82,7 @@ fos_user:
                 sonata_user_registration
     from_email:
         address:        noreply@polismarket.com.ua
-        sender_name:    Polismarket
+        sender_name:    Polis Market
 
 sonata_block:
     default_contexts: [cms]
