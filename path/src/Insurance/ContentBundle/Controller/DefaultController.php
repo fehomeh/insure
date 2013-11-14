@@ -634,6 +634,7 @@ class DefaultController extends Controller
                         elseif ($activity == '0')
                             $session->set('orderState', 'delayed');
                         $session->remove('policy');
+                        $this->clearSessionData($session);
                         switch($payType) {
                             case 'cash':
                                 return $this->redirect($this->generateUrl('finish'));
@@ -992,4 +993,51 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
+    public function clearSessionData($session)
+    {
+        $session->remove('carBrand');
+        $session->remove('carModel');
+        $session->remove('displacement');
+        $session->remove('carAge');
+        $session->remove('registerRegion');
+        $session->remove('registerCity');
+        $session->remove('insuranceTerm');
+        $session->remove('dgoSum');
+        $session->remove('priceDGO');
+        $session->remove('taxiUse');
+        $session->remove('nsSum');
+        $session->remove('passengersCount');
+        $session->remove('priceNs');
+        $session->remove('discount');
+        $session->remove('price');
+
+        $session->remove('activeFrom');
+        $session->remove('vinCode');
+        $session->remove('carNumber');
+        $session->remove('surname');
+        $session->remove('firstname');
+        $session->remove('middlename');
+        $session->remove('birthDate');
+        $session->remove('documentType');
+        $session->remove('documentSerie');
+        $session->remove('documentNumber');
+        $session->remove('documentAuthority');
+        $session->remove('documentDate');
+        $session->remove('documentInn');
+        $session->remove('phone');
+        $session->remove('region');
+        $session->remove('city');
+        $session->remove('registerAddress');
+        $session->remove('registerBuilding');
+
+        $session->remove('deliveryRegion');
+        $session->remove('deliveryCity');
+        $session->remove('deliveryAddress');
+        $session->remove('deliveryBuilding');
+        $session->remove('phone');
+        $session->remove('payType');
+        $session->remove('activity');
+        $session->remove('policy');
+    }
+
 }
