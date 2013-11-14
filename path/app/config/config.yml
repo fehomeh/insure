@@ -80,6 +80,10 @@ fos_user:
         form:
             type:
                 sonata_user_registration
+    from_email:
+        address:        noreply@polismarket.com.ua
+        sender_name:    Polismarket
+
 sonata_block:
     default_contexts: [cms]
     blocks:
