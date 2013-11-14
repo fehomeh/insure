@@ -1,7 +1,29 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <style>
-        sign-info {
+ <head>
+   <style>
+.our_logo {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 338px;
+    height: 62px;
+       padding-top: 40px;
+}
+.bbs_logo {
+    display: inline-block;
+    position: relative;
+    float: right;
+    width: 272px;
+    height: 105px;
+    background-color: blue;
+}
+
+.our_logo img, .bbs_logo img {
+       vertical-align: bottom;
+     }
+
+.sign-info {
 	margin: 2em 0;
 }
 
@@ -17,19 +39,21 @@
 		padding:0;
 		color:#333;
 		line-height:1.2em;
-	}
-
-	.sign-info table, .sign-info table td {
-		border: 1px dashed silver;
+       text-align: center;
 	}
 
 	.sign-info table {
-		border-top:0; border-left:0;
+    border-top: 1px dashed silver;
+    border-left:1px dashed silver;
+    border-right: 0; border-bottom: 0;
 	}
 
-	.sign-info table td {
-		/*border-right:0;*/ border-bottom:0;
-		padding:.75em 1.5em;
+	.sign-info table td{
+    border-top:0; border-left: 0;
+    border-right: 1px dashed silver;
+    border-bottom: 1px dashed silver;
+    padding:.75em 1.5em;
+    text-align: justify;
 	}
 
 		.sign-info table table, .sign-info table table td {
@@ -39,206 +63,7 @@
 		.sign-info table table td {
 			padding:0;
 		}
-    </style>
-  </head>
-  <body>
-<div id="content">
-            <div style="margin: 0 20px;">
-
-
-<div class="br-block">
-  <i class="cn tl"></i>
-  <i class="cn tr"></i>
-  <div class="br-content">
-
-                    <div class="inner-header">
-                        <h1>Подписание договора</h1>
-                    </div>
-    <!-- Policy info -->
-    <div class="sign-info">
-
-<h1 align="center">
-	Поліс </h1>
-
-<h2 align="center">
-    обов'язкового страхування цивільно-правової відповідальності<br>
-    власників наземних транспортних засобів<br>
-    (діє на території України)
-</h2>
-<br>
-
-<table width="100%" cellspacing="0" cellpadding="5" border="1">
-    <tbody><tr>
-        <td width="40%" valign="top" rowspan="2">
-            <strong>1. Страховик</strong><br><font size="-1">(назва, адреса, № телефону)</font><br>
-            {{order.company.requisites}}
-        </td>
-        <td width="60%" valign="top">
-        	<font size="-1">Код страховика:</font> <strong>{{order.company.insurerCode}}</strong>
-        </td>
-    </tr>
-    <tr>
-        <td width="60%" valign="top">
-        	<strong>2. Страховим випадком є</strong> подія, внаслідок якої заподіяна шкода третім особам під час
-    		дорожньо-транспортної пригоди, яка сталася за участю забезпеченого транспортного засобу і внаслідок якої
-    		настає цивільно-правова відповідальність особи, відповідальність якої застрахована за договором.
-        </td>
-    </tr>
-</tbody></table>
-
-<br>
-
-<p><strong>3. Строк дії</strong></p>
-<p align="center">
-    з
-    <strong>{{ order.activeFrom|date('d.m.Y H:i:s') }}</strong>
-    до
-    <strong> {{order.activeFrom|date_modify('+1 year -1 second')|date('d.m.Y H:i:s')}} </strong>
-    включно<br>
-    <em>Договір (поліс) набирає чинності з початку зазначенного строку його дії</em>
-</p>
-
-
-<p><strong>4. Страхова сума (ліміт відповідальності) на одного потерпілого</strong>, грн.</p>
-<table width="100%" cellspacing="0" cellpadding="5" border="1">
-    <tbody>
-      {% if (order.priceNs) %}
-      <tr>
-        <td width="50%"><em>За шкоду, заподіяну життю і здоров'ю (на одного потерпілого)</em></td>
-        <td width="50%">
-        	{% if order.passengerCount > 0 %}<strong> {{(order.priceNs / order.passengerCount)|number_format(2, ',', ' ')}} гривень </strong>
-            {% else %}
-                <strong> {{order.priceNs|number_format(2, ',', ' ')}} гривень </strong>
-            {% endif %}
-        </td>
-    </tr>
-    {% endif %}
-    {% if (order.priceDgo) %}
-    <tr>
-        <td width="50%"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
-        <td width="50%">
-        	<strong>{{order.priceDgo|number_format(2, ',', ' ')}} гривень</strong>
-        </td>
-    </tr>
-    {% endif %}
-    <tr>
-        <td width="50%"><em><strong>5. Розмір франшизи</strong>, грн.</em></td>
-        <td width="50%">
-                        	<strong> {{order.company.franchise}} гривень </strong>
-                    </td>
-    </tr>
-</tbody></table>
-
-<br>
-
-<p><strong>6. Страхувальник</strong> <em>(П.І.Б./назва організації)</em></p>
-
-<table width="100%">
-	<tbody><tr>
-		<td width="35%" valign="top">
-            <table width="100%" cellpadding="3" border="1">
-                <tbody><tr>
-                    <td>
-                    	<strong>{{ order.surname }}</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    	<strong>{{ order.firstname }}</strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    	<strong>{{ order.middlename }}</strong>
-                    </td>
-                </tr>
-            </tbody></table>
-        </td>
-        <td width="5%" valign="top"></td>
-        <td width="60%" valign="top">
-            <table width="100%" cellpadding="3" border="1">
-                <tbody><tr>
-                    <td><strong>Адреса</strong></td>
-                </tr>
-                <tr>
-                	<td colspan="3"><strong>{{ order.registerAddress }}, {{order.registerCity}}, Україна</strong></td>
-                </tr>
-            </tbody></table>
-            <table width="100%" cellpadding="3" border="1">
-                <tbody><tr>
-                    <td>
-                    	Телефон
-                    </td>
-                    <td>{{ order.phone }}</td>
-                </tr>
-            </tbody></table>
-        </td>
-    </tr>
-</tbody></table>
-
-<br>
-
-<p><strong>Виключно для страхувальника - фізичної особи</strong></p>
-<p>
-	<strong>Дата народження</strong> 4 березня 1985 р.	&nbsp;
-	<strong>ІНПП</strong>order.documentInn</p>
-<p>
-	<strong>Документ, що посвідчує особу</strong>
-	<em>(для пільговика - документ, що підтверджує його право на зменшення розміру страхового платежу)</em>
-	<br>
-	назва документа <strong>паспорт</strong>,
-	серія <strong>{{ order.documentSerie }}</strong>,
-	номер <strong>{{ order.documentNumber }}</strong>,
-	дата видачі <strong>{{ order.documentDate.format('d.m.Y') }}</strong>,
-	ким виданий документ <strong> {{ order.documentAuthority }}</strong>
-</p>
-
-<br>
-
-<p><strong>7. Забезпечений транспортний засіб (ТЗ)</strong></p>
-<table width="100%" cellspacing="0" cellpadding="5">
-    <tbody><tr>
-        <td>
-            Тип
-            <strong>B2</strong>
-            &nbsp;
-            Марка, модель
-            <strong>{{ order.carModel.brand.value }} {{order.carModel.value}}</strong>
-            &nbsp;
-            Номерний знак
-            <strong>{{ order.carNumber }}</strong>
-            &nbsp;
-            Номер кузова (шасі)
-            <strong>{{ order.vinCode }}</strong>
-            &nbsp;
-            Рік випуску
-            <strong>{{ order.carAge }}</strong>
-            &nbsp;
-            Місце реєстрації
-            <strong>{{ order.registerCity.region.value }}, {{ order.registerCity }}</strong>
-        </td>
-    </tr>
-</tbody></table>
-
-<br>
-
-<p><strong>Страхова премія</strong> <strong>{{ order.price }}&nbsp;грн.</strong><br>
-{% if order.payDate in not null %}Сплачена <strong>{{order.payDate|date('D, d F Y H г i хв s с', 'Europe/Kiev')}}</strong></p>{% endif %}
-<table width="100%" cellpadding="0" border="0">
-  <tbody><tr>
-    <td width="40%" align="left"></td>
-    <td width="60%" align="right">При настанні страхового випадку негайно телефонуйте за телефоном: 0-800-501-501.</td>
-  </tr>
-</tbody></table>
-<p></p>
-
-
-    </div>
-
-    <!-- Policy  -->
-
-    <style type="text/css">
-      .policy-default {
+ .policy-default {
         width: auto; color: #555;
         height: 250px; overflow: auto;
         border: 1px solid #ddd; padding: 10px 25px;
@@ -266,7 +91,198 @@
       .policy-default span.bordered {
         padding: 2px 5px; border: 1px solid #ddd;
       }
-    </style>
+   </style>
+  </head>
+<body>
+<div id="content">
+            <div style="margin: 0 20px;">
+                <div class="our_logo"><img src="http://gyazo.com/cce0795ba44d3e2a043dc21a7bd00fb8.png" /></div>
+                <div class="bbs_logo"><img src="http://gyazo.com/fdd8520123a08b5a7303061e4938add0.png" /></div>
+                    <div style="clear: both;"></div>
+<div class="br-block">
+  <i class="cn tl"></i>
+  <i class="cn tr"></i>
+  <div class="br-content">
+                 
+    <!-- Policy info -->
+    <div class="sign-info">
+
+<h1 align="center">
+	Поліс № {{order.policy.value}}</h1>
+
+<h2 align="center">
+    обов'язкового страхування цивільно-правової відповідальності<br>
+    власників наземних транспортних засобів<br>
+    (діє на території України)
+</h2>
+<br>
+
+<table width="100%" cellspacing="0" cellpadding="5" border="1">
+    <tbody><tr>
+        <td width="40%" valign="top" rowspan="2">
+            <strong>1. Страховик</strong><br><font size="-1">(назва, адреса, № телефону)</font><br>
+            {{order.company.requisites}}
+        </td>
+        <td width="60%" valign="top">
+        	<font size="-1">Код страховика:</font> {{order.company.insurerCode}}
+        </td>
+    </tr>
+    <tr>
+        <td width="60%" valign="top">
+        	<strong>2. Страховим випадком є</strong> подія, внаслідок якої заподіяна шкода третім особам під час
+    		дорожньо-транспортної пригоди, яка сталася за участю забезпеченого транспортного засобу і внаслідок якої
+    		настає цивільно-правова відповідальність особи, відповідальність якої застрахована за договором.
+        </td>
+    </tr>
+</tbody></table>
+
+<br>
+
+<p><strong>3. Строк дії</strong></p>
+<p align="center">
+    з
+    <strong>{{ order.activeFrom|date('d.m.Y H:i:s') }}</strong>
+    до
+    <strong> {{order.activeFrom|date_modify('+1 year -1 second')|date('d.m.Y H:i:s')}} </strong>
+    включно<br>
+    <em>Договір (поліс) набирає чинності з початку зазначенного строку його дії</em>
+</p>
+
+
+<p><strong>4. Страхова сума (ліміт відповідальності) на одного потерпілого</strong>, грн.</p>
+<table width="100%" cellspacing="0" cellpadding="5" border="1">
+    <tbody>
+      <tr>
+        <td width="50%"><em>За шкоду, заподіяну життю і здоров'ю (на одного потерпілого)</em></td>
+        <td width="50%">
+        	100 000 грн.
+        </td>
+    </tr>
+    <tr>
+        <td width="50%"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
+        <td width="50%">
+        	50 000 грн.
+        </td>
+    </tr>
+</tbody></table>
+<p></p>
+<table width="100%" cellspacing="0" cellpadding="5" border="0">
+    <tbody>
+    <tr>
+        <td width="50%" border="0"><strong>Розмір франшизи</strong>, грн.</td>
+        <td width="50%">
+                        	{{order.company.franchise}} гривень
+                    </td>
+    </tr>
+</tbody></table>
+
+<br>
+
+<p><strong>5. Страхувальник</strong> <em>(П.І.Б./назва організації)</em></p>
+
+<table width="100%">
+	<tbody><tr>
+		<td width="35%" valign="top">
+            <table width="100%" cellpadding="3" border="1">
+                <tbody><tr>
+                    <td>
+                        <strong>{{ order.surname }}</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>{{ order.firstname }}</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    	<strong>{{ order.middlename }}</strong>
+                    </td>
+                </tr>
+            </tbody></table>
+        </td>
+        <td width="60%" valign="top">
+            <table width="100%" cellpadding="3" border="1">
+                <tbody><tr>
+                    <td><strong>Адреса</strong></td>
+                </tr>
+                <tr>
+                	<td colspan="3">м. {{order.registerCity}}, {{ order.registerAddress }}, {{order.registerBuilding}}</td>
+                </tr>
+            </tbody></table>
+            <table width="100%" cellpadding="3" border="1">
+                <tbody><tr>
+                    <td>
+                    	Телефон
+                    </td>
+                    <td>{{ order.phone }}</td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody></table>
+
+<br>
+
+<p><strong>Виключно для страхувальника - фізичної особи</strong></p>
+<p>
+	<strong>Дата народження</strong> {{order.birthDate|date('d.m.Y')}} року	&nbsp;
+	<strong>ІНПП</strong> {{order.documentInn}}</p>
+<p>
+	<strong>Документ, що посвідчує особу</strong>
+	<em>(для пільговика - документ, що підтверджує його право на зменшення розміру страхового платежу)</em>
+	<br>
+	назва документа <strong>{% if order.documentType == 'D'%}вод. права{% elseif order.documentType == 'P'%}паспорт{%endif%}</strong>,
+	серія <strong>{{ order.documentSerie }}</strong>,
+	номер <strong>{{ order.documentNumber }}</strong>,
+	дата видачі <strong>{{ order.documentDate.format('d.m.Y') }}</strong>,
+	ким виданий документ <strong>{{ order.documentAuthority }}</strong>
+</p>
+
+<br>
+
+<p><strong>6. Забезпечений транспортний засіб (ТЗ)</strong></p>
+<table width="100%" cellspacing="0" cellpadding="5">
+    <tbody><tr>
+        <td>
+            Тип
+            <strong>{% if order.displacement == '1.4' %}B1{%- elseif order.displacement == '1.7' -%}B2{%- elseif order.displacement == '2.1' -%}B3{%- elseif order.displacement == '3.1' -%}B4{% endif %}</strong>
+            &nbsp;
+            Марка, модель
+            <strong>{{ order.carModel.brand.value }} {{order.carModel.value}}</strong>
+            &nbsp;
+            Номерний знак
+            <strong>{{ order.carNumber }}</strong>
+            &nbsp;
+            Номер кузова (шасі)
+            <strong>{{ order.vinCode }}</strong>
+            &nbsp;
+            Рік випуску
+            <strong>{{ order.carAge }}</strong>
+            &nbsp;
+            Місце реєстрації
+            <strong>{{ order.registerCity.region.value }}, {{ order.registerCity }}</strong>
+        </td>
+    </tr>
+</tbody></table>
+
+<br>
+
+<p><strong>7. Страховий платіж</strong> <strong>{{order.price|number_format(2, ',', ' ')}} грн.</strong><br>
+{% if order.payDate in not null %}Сплачений <strong>{{order.payDate|date('D, d F Y H г i хв s с', 'Europe/Kiev')}}</strong></p>{% endif %}
+<table width="100%" cellpadding="0" border="0">
+  <tbody><tr>
+    <td width="40%" align="left"></td>
+    <td width="60%" align="right">При настанні страхового випадку негайно телефонуйте за телефоном: 0-800-700-123.</td>
+  </tr>
+</tbody></table>
+<p></p>
+
+
+    </div>
+
+    <!-- Policy  -->
+
     <br>
           </div>
           <i class="cn bl"></i>
@@ -274,5 +290,6 @@
         </div>
   </div>
 </div>
-    </body>
-    </html>
+  
+</body>
+</html>
