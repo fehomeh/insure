@@ -82,7 +82,7 @@ $('.green_button.register').on('click', function(){
     if ($(form).find('#fos_user_registration_form_plainPassword_first').val().length == 0) {
         $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').addClass('error');
         $(form).find('#fos_user_registration_form_plainPassword_first').parents('.control_point').removeClass('success');
-        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Пароль не должен быть пустым');
+        $(form).find('#fos_user_registration_form_plainPassword_first').nextAll('.error_text').text('Введите пароль');
         errors.fos_user_registration_form_plainPassword_first = true;
     } else if (
     $(form).find('#fos_user_registration_form_plainPassword_first').val() != $(form).find('#fos_user_registration_form_plainPassword_second').val()
@@ -115,6 +115,7 @@ $('.green_button.register').on('click', function(){
         errorsPresent = true;
     }
     if (!errorsPresent) {
+        $('.modal_preloader').fadeIn(300).addClass('on');
         $.ajax($(form).attr('action'), {
             data: form.serialize(),
             type: 'POST'
@@ -142,7 +143,7 @@ $('.green_button.register').on('click', function(){
                     data: $('#calculator-form').serialize()
                     }).done(function(data){
                         if (data.message === 'success') window.location = '{{path('step2')}}';
-                                $('.modal_preloader').fadeOut(300).removeClass('on');
+                            $('.modal_preloader').fadeOut(300).removeClass('on');
                     });
                 }
             } else {
