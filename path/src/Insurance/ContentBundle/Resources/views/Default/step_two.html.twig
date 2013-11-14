@@ -140,7 +140,7 @@
                                 <div style="clear: both;"></div>
                                 <div class="control_point size0">
                                     <input type="text" name="documentSerie" id="documentSerie" placeholder="Серия" value="{{ app.session.get('documentSerie')}}" />
-                                    <div class="error_text_box">Заполните поле</div>
+                                    <div class="error_text_box">Неверный формат серии</div>
                                 </div>
                                 <div class="control_point size1">
                                     <input type="text" name="documentNumber" id="documentNumber" placeholder="Номер" value="{{ app.session.get('documentNumber')}}" />
@@ -261,7 +261,7 @@
             errors.vinCode = true;
         } else
             errors.vinCode = false;
-        if ($('#carNumber').val().length < 7) {
+        if ($('#carNumber').val().length < 7 || $('#carNumber').val().length > 8) {
             errors.carNumber = true;
         } else
             errors.carNumber = false;
@@ -285,7 +285,7 @@
             errors.documentTypePassport = true;
         } else
             errors.documentTypePassport = false;
-        if ($('#documentSerie').val().length == 0) {
+        if ($('#documentSerie').val().length < 2 || $('#documentSerie').val().length > 3) {
             errors.documentSerie = true;
         } else
             errors.documentSerie = false;
