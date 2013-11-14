@@ -261,7 +261,7 @@
             errors.vinCode = true;
         } else
             errors.vinCode = false;
-        if ($('#carNumber').val().length != 7 || $('#carNumber').val().length != 8) {
+        if ($('#carNumber').val().length < 7 || $('#carNumber').val().length > 8) {
             errors.carNumber = true;
         } else
             errors.carNumber = false;
@@ -289,7 +289,7 @@
             errors.documentSerie = true;
         } else
             errors.documentSerie = false;
-        if ($('#documentNumber').val().length != 2 || $('#documentNumber').val().length != 3) {
+        if ($('#documentNumber').val().length < 2 || $('#documentNumber').val().length > 3) {
             errors.documentNumber = true;
         } else
             errors.documentNumber = false;
