@@ -15,7 +15,7 @@ $(function() {
       min: 0,
       max: 3,
       step: 1,
-      slide: function( event, ui ) {
+      stop: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hDisplacement').val(displacement[ui.value]);
         $(this).parents('.box_line').trigger('click');
@@ -39,7 +39,7 @@ $(function() {
       min: 0,
       max: 4,
       step: 1,
-      slide: function( event, ui ) {
+      stop: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hDGOSum').val(dgoValues[ui.value]);
         $(this).parents('.box_line').trigger('click');
@@ -62,7 +62,7 @@ $(function() {
       min: 0,
       max: 3,
       step: 1,
-      slide: function( event, ui ) {
+      stop: function( event, ui ) {
         $( "#amount" ).val( "$" + ui.value );
         $('#hNSSum').val(nsValues[ui.value]);
         $(this).parents('.box_line').trigger('click');
