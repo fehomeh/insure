@@ -81,7 +81,7 @@ class NotifySender
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
         $contactPhone = $this->sc->getParameter('contact.phone');
-      if ($entity->getPayStatus() == 0 && $entity->getPayType() == 'terminal' && $entity->getActive() == 1) {
+      if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'terminal' || $entity->getPayType() == 'cash') && $entity->getActive() == 1) {
           //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
           $to = $entity->getUser()->getEmail();
           $message = \Swift_Message::newInstance()
@@ -101,8 +101,11 @@ class NotifySender
                 ),
                 'text/html'
           );
+          if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+              $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+          }
           $this->sc->get('mailer')->send($message);
-        } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
+        } /*elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
             //After payment succesfully verified send message to user with attached electronical policy version and order details
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
@@ -126,7 +129,7 @@ class NotifySender
               $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
           }
           $this->sc->get('mailer')->send($message);
-        } elseif ($entity->getActive() == 0 && $entity->getPayStatus() == 0 && strlen($entity->getHash()) == 40) {
+        }*/ elseif ($entity->getActive() == 0 && $entity->getPayStatus() == 0 && strlen($entity->getHash()) == 40) {
             //Send notification to user that he has stored order without confirmation
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
@@ -174,27 +177,37 @@ class NotifySender
     {
         $entity = $args->getEntity();
         if ($entity instanceof InsuranceOrder) {
-            if ($args->hasChangedField('payStatus')) {
-                if ($args->getOldValue('payStatus') == 0 && $args->getNewValue('payStatus') == 1) {
-                    $from = $this->sc->getParameter('email.send.from');
-					$emailName = $this->sc->getParameter('email.name');
+            $from = $this->sc->getParameter('email.send.from');
+            $emailName = $this->sc->getParameter('email.name');
+            $siteName = $this->sc->getParameter('site.name');
+            $siteDomain = $this->sc->getParameter('site.domain');
+            $contactEmail = $this->sc->getParameter('contact.email');
+            $contactPhone = $this->sc->getParameter('contact.phone');
+            if ($args->hasChangedField('payStatus') && !$args->hasChangedField('payType')) {
+                if ($args->getOldValue('payStatus') == 0 && $args->getNewValue('payStatus') == 1
+                    && $entity->getPayType() != 'cash' &&$entity->getPayType() != 'terminal'
+                ) {
                     $to = $entity->getUser()->getEmail();
                     $message = \Swift_Message::newInstance()
-                        ->setSubject('Ваш полис успешно оплачен. В скоре Вы получите оригинал.')
+                        ->setSubject(strtoupper($siteDomain) . ': Оплата за Ваш заказ получена!')
                         ->setFrom(array($from => $emailName))
                         ->setTo($to)
                         ->setBody(
                             $this->sc->get('templating')->render(
-                                'InsuranceContentBundle:Notifications:policySendNotification.html.twig',
-                                array('order' => $entity)
-                                ),
-                                'text/html'
-                        )
-              //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
-                ;
+                                'InsuranceContentBundle:Notifications:payedOrderNotification.html.twig',
+                                array(
+                                    'order' => $entity,
+                                    'siteName' => $siteName,
+                                    'siteDomain' => $siteDomain,
+                                    'contactEmail' => $contactEmail,
+                                    'contactPhone' => $contactPhone,
+                                )
+                            ),
+                            'text/html'
+                        );
                     if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
                         $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
-                   }
+                    }
                     $this->sc->get('mailer')->send($message);
                 }
             }
