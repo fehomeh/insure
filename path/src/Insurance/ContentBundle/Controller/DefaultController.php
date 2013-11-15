@@ -953,7 +953,7 @@ class DefaultController extends Controller
             //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
-            $message = '<span></span><h3>Ваш заказ принят!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
+            $message = '<span class="success"></span><h3>Ваш заказ принят!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
         } elseif ($request->getSession()->get('orderState') == 'delayed') {
             //$request->getSession()->clear();
             $response = new Response();
