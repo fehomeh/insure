@@ -47,48 +47,53 @@ class NotifySender
 
   public function postPersist(LifecycleEventArgs $args)
   {
-    $entity = $args->getEntity();
-    if ($entity instanceof Feedback) {
-      //var_dump($this->sc->getParameter('admin_emails'));exit;
-	  $from = $this->sc->getParameter('email.send.from');
-	  $emailName = $this->sc->getParameter('email.name');
-      $to = $this->sc->getParameter('contact.email');
-      $conType = $entity->getConnectionType();
-      if($conType == Feedback::CALLBACK) $feedbackTypeText = 'запрос на обратный звонок';
-        elseif ($conType == Feedback::FEEDBACK) $feedbackTypeText = 'вопрос';
-      $message = \Swift_Message::newInstance()
-        ->setSubject('Поступил новый ' . $feedbackTypeText)
-        ->setFrom(array($from => $emailName))
-        ->setTo($to)
-        ->setBody(
+      $entity = $args->getEntity();
+      if ($entity instanceof Feedback) {
+        //var_dump($this->sc->getParameter('admin_emails'));exit;
+        $from = $this->sc->getParameter('email.send.from');
+        $emailName = $this->sc->getParameter('email.name');
+        $to = $this->sc->getParameter('contact.email');
+        $conType = $entity->getConnectionType();
+        if($conType == Feedback::CALLBACK) $feedbackTypeText = 'запрос на обратный звонок';
+            elseif ($conType == Feedback::FEEDBACK) $feedbackTypeText = 'вопрос';
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Поступил новый ' . $feedbackTypeText)
+            ->setFrom(array($from => $emailName))
+            ->setTo($to)
+            ->setBody(
             $this->sc->get('templating')->render(
-                'InsuranceContentBundle:Notifications:feedbackNotification.html.twig',
-                array(
-                'contact' => $entity,
-                'feedbackTypeText' => $feedbackTypeText,
-                )
-            ),
-			'text/html'
-		)
+                    'InsuranceContentBundle:Notifications:feedbackNotification.html.twig',
+                    array(
+                    'contact' => $entity,
+                    'feedbackTypeText' => $feedbackTypeText,
+                    )
+                ),
+                'text/html'
+            )
         //->attach(\Swift_Attachment::fromPath('my-document.pdf'))
-    ;
-    $this->sc->get('mailer')->send($message);
-    }
-    if ($entity instanceof InsuranceOrder) {
+        ;
+        $this->sc->get('mailer')->send($message);
+        }
+  }
+
+    public function postFlush(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        if ($entity instanceof InsuranceOrder) {
         $from = $this->sc->getParameter('email.send.from');
 		$emailName = $this->sc->getParameter('email.name');
         $siteName = $this->sc->getParameter('site.name');
         $siteDomain = $this->sc->getParameter('site.domain');
         $contactEmail = $this->sc->getParameter('contact.email');
         $contactPhone = $this->sc->getParameter('contact.phone');
-      if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'terminal' || $entity->getPayType() == 'cash') && $entity->getActive() == 1) {
-          //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
-          $to = $entity->getUser()->getEmail();
-          $message = \Swift_Message::newInstance()
-              ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
-              ->setFrom(array($from => $emailName))
-              ->setTo($to)
-              ->setBody(
+        if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'terminal' || $entity->getPayType() == 'cash') && $entity->getActive() == 1) {
+            //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
+            $to = $entity->getUser()->getEmail();
+            $message = \Swift_Message::newInstance()
+                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
+                ->setFrom(array($from => $emailName))
+                ->setTo($to)
+                ->setBody(
                     $this->sc->get('templating')->render(
                         'InsuranceContentBundle:Notifications:unpayedOrderNotification.html.twig',
                         array(
@@ -98,14 +103,14 @@ class NotifySender
                         'contactEmail' => $contactEmail,
                         'contactPhone' => $contactPhone,
                         )
-                ),
-                'text/html'
-          );
-          if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
-              $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
-          }
-          $this->sc->get('mailer')->send($message);
-        } /*elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
+                    ),
+                    'text/html'
+                );
+            if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+            }
+            $this->sc->get('mailer')->send($message);
+            } /*elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
             //After payment succesfully verified send message to user with attached electronical policy version and order details
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
@@ -154,24 +159,24 @@ class NotifySender
             }
             $this->sc->get('mailer')->send($message);
         }
-        //Notify admin
-      $to = $this->sc->getParameter('admin.emails');
-      $messageToAdmin = \Swift_Message::newInstance()
-            ->setSubject('Поступил новый заказ!')
-            ->setFrom(array($from => $emailName))
-            ->setTo($to)
-            ->setBody(
-            $this->sc->get('templating')->render(
-                'InsuranceContentBundle:Notifications:orderAdminNotification.html.twig',
-                array(
-                'order' => $entity,
-                )
-            ),
-			'text/html'
-        );
-        $this->sc->get('mailer')->send($messageToAdmin);
+            //Notify admin
+            $to = $this->sc->getParameter('admin.emails');
+            $messageToAdmin = \Swift_Message::newInstance()
+                ->setSubject('Поступил новый заказ!')
+                ->setFrom(array($from => $emailName))
+                ->setTo($to)
+                ->setBody(
+                $this->sc->get('templating')->render(
+                    'InsuranceContentBundle:Notifications:orderAdminNotification.html.twig',
+                    array(
+                    'order' => $entity,
+                    )
+                ),
+                'text/html'
+            );
+            $this->sc->get('mailer')->send($messageToAdmin);
+        }
     }
-  }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
