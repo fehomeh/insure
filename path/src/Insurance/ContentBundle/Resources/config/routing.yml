@@ -79,10 +79,10 @@ goodtoknow:
     defaults: { _controller: "InsuranceContentBundle:Default:about" }
 osago-info:
     pattern: /goodtoknow/osago
-    defaults: { _controller: "InsuranceContentBundle:Default:about" }
+    defaults: { _controller: "InsuranceContentBundle:Default:osago" }
 event-info:
     pattern: /goodtoknow/event
-    defaults: { _controller: "InsuranceContentBundle:Default:about" }
+    defaults: { _controller: "InsuranceContentBundle:Default:event" }
 faq:
     pattern: /faq
     defaults: { _controller: "InsuranceContentBundle:Default:faq" }
