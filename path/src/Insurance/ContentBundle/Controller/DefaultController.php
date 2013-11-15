@@ -958,7 +958,7 @@ class DefaultController extends Controller
             //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
-            $message = '<span></span><h3>Ваш заказ сохранен!</h3><p>На Ваш электронный адрес выслано письмо со ссылкой для завершения заказа.</p> <p>Спасибо за то, что воспользовались нашим сервисом!</p>';
+            $message = '<span class="success"></span><h3>Ваш заказ сохранен!</h3><p>На Ваш электронный адрес выслано письмо со ссылкой для завершения заказа.</p> <p>Спасибо за то, что воспользовались нашим сервисом!</p>';
         } else $message = '<p>Возникла ошибка при оформлении. Пожалуйста, попробуйте еще раз.</p>';
         return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
             'feedback_form' => $feedbackForm->createView(),
@@ -989,6 +989,22 @@ class DefaultController extends Controller
     {
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:faq.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+        ));
+    }
+	public function osagoAction()
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        return $this->render('InsuranceContentBundle:Default:osago-info.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+        ));
+    }
+	public function eventAction()
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        return $this->render('InsuranceContentBundle:Default:event-info.html.twig', array(
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
         ));
