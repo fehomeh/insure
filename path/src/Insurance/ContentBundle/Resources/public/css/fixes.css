@@ -1145,20 +1145,30 @@ margin-left:10px;
 /*------------------------------------------------------------------------------------------- */  
 
 
-.text_content .contacts {
+.text_content .contact_left {
 	margin-left: 0px;
 	display: inline-block;
 }
 
-.text_content .contacts  p {
+.text_content .contact_left .call_center {
+	margin-bottom: 25px;
+	border-bottom: 1px solid #E3E3E3;
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 1.0);
+    padding-bottom: 30px;
+}
+
+.text_content .contact_left .office {
+	margin-bottom: 0px;
+}
+
+.text_content .contact_left  p {
 	font-size: 16px;
 	font-family: Arial;
 	font-weight: normal;
-	margin-bottom: 20px;
 	padding-top: 4px;
 }
 
-.text_content .contacts span.ico {
+.text_content .contact_left span.ico {
 	width:39px;
 	height:24px;
 	vertical-align: middle;
@@ -1169,20 +1179,21 @@ margin-left:10px;
 	display: inline-block;
 }
 
-.text_content .contacts span.bold {
+.text_content .contact_left span.bold {
 	font-weight: bold;
 	font-size: 16px;
 	background-image: none;
 }
 
-.text_content .contacts h3 {
+.text_content .contact_left h3 {
 	font-size: 18px;
 	font-weight: bold;
 	line-height: 14px;
+	margin-bottom:20px;
 }
 
 
-.text_content .map {
+.text_content .contact_right {
 	float: right;
 	display: inline-block;
 }
