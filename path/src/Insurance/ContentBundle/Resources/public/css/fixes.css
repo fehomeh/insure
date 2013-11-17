@@ -1197,3 +1197,6 @@ margin-left:10px;
 	float: right;
 	display: inline-block;
 }
+.payment-form {
+    display: none;
+}
