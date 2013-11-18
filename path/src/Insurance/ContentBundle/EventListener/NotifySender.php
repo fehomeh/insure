@@ -15,40 +15,10 @@ class NotifySender
     $this->sc = $sc;
   }
 
-    public function generatePDFPolicy($orderId)
+    public function postPersist(LifecycleEventArgs $args)
     {
-        //echo('wtfwft!');
-        $tcPdf = new \TCPDF();
-        $request = $this->sc->get('request');
-        $router = $this->sc->get('router');
-        $doctrine = $this->sc->get('doctrine');
-        try {
-            $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
-            $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
-            error_reporting(E_ERROR);
-            $tcPdf->SetFont('dejavusans', '', 10);
-            $tcPdf->AddPage();
-            $tcPdf->writeHTML($policyHTML);
-            $fileName = sha1(microtime());
-            $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
-            $tcPdf->Output($file, 'F');
-            $order = $this->sc->get('doctrine')->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
-            $httpFile = $protocol . $request->server->get('HTTP_HOST') . '/pdf/' . $fileName . '.pdf';
-            $order->setPdfUrl($httpFile);
-            $em = $doctrine->getEntityManager();
-            $em->persist($order);
-            $em->flush();
-        } catch (Exception $e) {
-            die($e->getMessage());
-          return false;
-        }
-        return $file;
-    }
-
-  public function postPersist(LifecycleEventArgs $args)
-  {
-      $entity = $args->getEntity();
-      if ($entity instanceof Feedback) {
+        $entity = $args->getEntity();
+        if ($entity instanceof Feedback) {
         //var_dump($this->sc->getParameter('admin_emails'));exit;
         $from = $this->sc->getParameter('email.send.from');
         $emailName = $this->sc->getParameter('email.name');
@@ -74,43 +44,39 @@ class NotifySender
         ;
         $this->sc->get('mailer')->send($message);
         }
-  }
 
-    public function postFlush(LifecycleEventArgs $args)
-    {
-        $entity = $args->getEntity();
         if ($entity instanceof InsuranceOrder) {
-        $from = $this->sc->getParameter('email.send.from');
-		$emailName = $this->sc->getParameter('email.name');
-        $siteName = $this->sc->getParameter('site.name');
-        $siteDomain = $this->sc->getParameter('site.domain');
-        $contactEmail = $this->sc->getParameter('contact.email');
-        $contactPhone = $this->sc->getParameter('contact.phone');
-        if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'terminal' || $entity->getPayType() == 'cash') && $entity->getActive() == 1) {
-            //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
-            $to = $entity->getUser()->getEmail();
-            $message = \Swift_Message::newInstance()
-                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
-                ->setFrom(array($from => $emailName))
-                ->setTo($to)
-                ->setBody(
-                    $this->sc->get('templating')->render(
-                        'InsuranceContentBundle:Notifications:unpayedOrderNotification.html.twig',
-                        array(
-                        'order' => $entity,
-                        'siteName' => $siteName,
-                        'siteDomain' => $siteDomain,
-                        'contactEmail' => $contactEmail,
-                        'contactPhone' => $contactPhone,
-                        )
-                    ),
-                    'text/html'
-                );
-            if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
-                $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
-            }
-            $this->sc->get('mailer')->send($message);
-            } /*elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
+            $from = $this->sc->getParameter('email.send.from');
+            $emailName = $this->sc->getParameter('email.name');
+            $siteName = $this->sc->getParameter('site.name');
+            $siteDomain = $this->sc->getParameter('site.domain');
+            $contactEmail = $this->sc->getParameter('contact.email');
+            $contactPhone = $this->sc->getParameter('contact.phone');
+            /*if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'terminal' || $entity->getPayType() == 'cash') && $entity->getActive() == 1) {
+                //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
+                $to = $entity->getUser()->getEmail();
+                $message = \Swift_Message::newInstance()
+                    ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
+                    ->setFrom(array($from => $emailName))
+                    ->setTo($to)
+                    ->setBody(
+                        $this->sc->get('templating')->render(
+                            'InsuranceContentBundle:Notifications:unpayedOrderNotification.html.twig',
+                            array(
+                                'order' => $entity,
+                                'siteName' => $siteName,
+                                'siteDomain' => $siteDomain,
+                                'contactEmail' => $contactEmail,
+                                'contactPhone' => $contactPhone,
+                            )
+                        ),
+                        'text/html'
+                    );
+                if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                    $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+                }
+                $this->sc->get('mailer')->send($message);
+            } elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
             //After payment succesfully verified send message to user with attached electronical policy version and order details
             $to = $entity->getUser()->getEmail();
             $message = \Swift_Message::newInstance()
@@ -134,31 +100,31 @@ class NotifySender
               $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
           }
           $this->sc->get('mailer')->send($message);
-        }*/ elseif ($entity->getActive() == 0 && $entity->getPayStatus() == 0 && strlen($entity->getHash()) == 40) {
-            //Send notification to user that he has stored order without confirmation
-            $to = $entity->getUser()->getEmail();
-            $message = \Swift_Message::newInstance()
-                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ ожидает подтверждения...')
-                ->setFrom(array($from => $emailName))
-                ->setTo($to)
-                ->setBody(
-                    $this->sc->get('templating')->render(
-                        'InsuranceContentBundle:Notifications:delayedOrderNotification.html.twig',
-                        array(
-                        'order' => $entity,
-                        'siteName' => $siteName,
-                        'siteDomain' => $siteDomain,
-                        'contactEmail' => $contactEmail,
-                        'contactPhone' => $contactPhone,
-                        )
-                ),
-                'text/html'
-            );
-            if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
-                $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
-            }
-            $this->sc->get('mailer')->send($message);
-        }
+        } elseif ($entity->getActive() == 0 && $entity->getPayStatus() == 0 && strlen($entity->getHash()) == 40) {
+                //Send notification to user that he has stored order without confirmation
+                $to = $entity->getUser()->getEmail();
+                $message = \Swift_Message::newInstance()
+                    ->setSubject(strtoupper($siteDomain) . ': Ваш заказ ожидает подтверждения...')
+                    ->setFrom(array($from => $emailName))
+                    ->setTo($to)
+                    ->setBody(
+                        $this->sc->get('templating')->render(
+                            'InsuranceContentBundle:Notifications:delayedOrderNotification.html.twig',
+                            array(
+                                'order' => $entity,
+                                'siteName' => $siteName,
+                                'siteDomain' => $siteDomain,
+                                'contactEmail' => $contactEmail,
+                                'contactPhone' => $contactPhone,
+                            )
+                        ),
+                        'text/html'
+                    );
+                if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                    $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+                }
+                $this->sc->get('mailer')->send($message);
+            }*/
             //Notify admin
             $to = $this->sc->getParameter('admin.emails');
             $messageToAdmin = \Swift_Message::newInstance()
@@ -166,14 +132,14 @@ class NotifySender
                 ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(
-                $this->sc->get('templating')->render(
-                    'InsuranceContentBundle:Notifications:orderAdminNotification.html.twig',
-                    array(
-                    'order' => $entity,
-                    )
-                ),
-                'text/html'
-            );
+                    $this->sc->get('templating')->render(
+                        'InsuranceContentBundle:Notifications:orderAdminNotification.html.twig',
+                        array(
+                            'order' => $entity,
+                        )
+                    ),
+                    'text/html'
+                );
             $this->sc->get('mailer')->send($messageToAdmin);
         }
     }

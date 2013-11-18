@@ -196,6 +196,7 @@
                     </form>
                     <!-- end form -->
                 </div>
+                <div class="payment-form"></div>
             <!-- footer-push -->
             <div class="footer-push"></div>
         </section>
@@ -235,8 +236,9 @@
         }
     });
 
-    function checkForm(e) {
+    function checkForm() {
         var errors = {};
+        var ret = false;
         if ($('#deliveryRegion').val().length == 0) {
             errors.deliveryRegion = true;
         } else
@@ -266,26 +268,54 @@
             if (errors[v] == true) {
                 $('#' + v).parents('.control_point').addClass('error');
                 $('#' + v).parents('.control_point').removeClass('success');
-                e.preventDefault();
+                ret = true;
             }
             else {
                 $('#' + v).parents('.control_point').removeClass('error');
                 $('#' + v).parents('.control_point').addClass('success');
             }
         }
+        return ret;
     }
-    $('#payment-form').on('submit', checkForm);
+
+    function processOrder() {
+        if (!checkForm()) {
+            $.ajax($('#payment-form').attr('action'), {
+                dataType: 'JSON',
+                type: 'POST',
+                data: $('#payment-form').serialize()
+            }).done(function(data) {
+                if (typeof data == 'object' && data.message !== null) {
+                    if (data.message == 'redirect') {
+                        if (data.url.length > 0) window.location = data.url;
+                    }
+                    if (data.message == 'submit') {
+                        $('.payment-form').html(data.form);
+                        $('.payment-form form').trigger('submit');
+                    }
+                    if (data.message == 'error') {
+                        console.log(data.error);
+                    }
+                }
+            });
+        }
+    }
+
+    //$('#payment-form').on('submit', checkForm);
     $('.pay_now .form_green_button').on('click', function(){
         $('#activity').val('1');
-        $('#payment-form').trigger('submit');
+        processOrder();
+        //$('#payment-form').trigger('submit');
     });
     $('.form_grey_button').on('click', function(){
         $('#activity').val('0');
-        $('#payment-form').trigger('submit');
+        processOrder();
+        //$('#payment-form').trigger('submit');
     });
     $('.pay_later .form_green_button').on('click', function(){
         $('#activity').val('1');
-        $('#payment-form').trigger('submit');
+        processOrder();
+       // $('#payment-form').trigger('submit');
     });
 
     $('.change.for_adres').on('click', function () {

@@ -486,6 +486,8 @@ class DefaultController extends Controller
         $deliveryAddress = $session->get('registerAddress');
         $deliveryBuilding = $session->get('registerBuilding');
         if($request->getMethod() == 'POST') {
+            $response = new Response();
+            $response->headers->set('Content-Type', 'application/json');
             $errors = array();
             $deliveryRegion = $request->request->get('deliveryRegion');
             $deliveryCity = $request->request->get('deliveryCity');
@@ -634,21 +636,22 @@ class DefaultController extends Controller
                         elseif ($activity == '0')
                             $session->set('orderState', 'delayed');
                         $session->remove('policy');
-                        $this->clearSessionData($session);
+                        //$this->clearSessionData($session);
                         switch($payType) {
                             case 'cash':
-                                return $this->redirect($this->generateUrl('finish'));
-                                break;
+                                $this->sendNotification($order);
+                                return $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('finish'))));
                             case 'terminal':
-                                return $this->redirect($this->generateUrl('finish'));
-                                break;
+                                $this->sendNotification($order);
+                                return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('finish'))));
                         }
                     } catch (\Exception $e) {
                         $errors['message'] = $e->getMessage();
                     }
                 }
             } else $errors['message'] = 'Все поля обязательны к заполнению';
-            if (count($errors) > 0) return $this->redirect($this->generateUrl('step3'));
+            //if (count($errors) > 0) return $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('step3'))));
+            if (count($errors) > 0) return $response->setContent(json_encode(array('message' => 'error', 'error' => $errors['message'])));
             }
 
         $city = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findOneById($session->get('city'));
@@ -1054,6 +1057,119 @@ class DefaultController extends Controller
         $session->remove('payType');
         $session->remove('activity');
         $session->remove('policy');
+    }
+
+    public function generatePDFPolicy($orderId)
+    {
+        //echo('wtfwft!');
+        $tcPdf = new \TCPDF();
+        $request = $this->get('request');
+        $router = $this->get('router');
+        $doctrine = $this->get('doctrine');
+        try {
+            $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
+            $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
+            error_reporting(E_ERROR);
+            $tcPdf->SetFont('dejavusans', '', 10);
+            $tcPdf->AddPage();
+            $tcPdf->writeHTML($policyHTML);
+            $fileName = sha1(microtime());
+            $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
+            $tcPdf->Output($file, 'F');
+            $order = $this->get('doctrine')->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+            $httpFile = $protocol . $request->server->get('HTTP_HOST') . '/pdf/' . $fileName . '.pdf';
+            $order->setPdfUrl($httpFile);
+            $em = $doctrine->getEntityManager();
+            $em->persist($order);
+            $em->flush();
+        } catch (Exception $e) {
+            die($e->getMessage());
+            return false;
+        }
+        return $file;
+    }
+
+    public function sendNotification(InsuranceOrder $entity)
+    {
+        $from = $this->container->getParameter('email.send.from');
+        $emailName = $this->container->getParameter('email.name');
+        $siteName = $this->container->getParameter('site.name');
+        $siteDomain = $this->container->getParameter('site.domain');
+        $contactEmail = $this->container->getParameter('contact.email');
+        $contactPhone = $this->container->getParameter('contact.phone');
+        if ($entity->getPayStatus() == 0 && ($entity->getPayType() == 'terminal' || $entity->getPayType() == 'cash') && $entity->getActive() == 1) {
+            //If cash (terminal) payment processed but isn't payed than send notification about unpayed order with atteched electronical version of policy
+            $to = $entity->getUser()->getEmail();
+            $message = \Swift_Message::newInstance()
+                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
+                ->setFrom(array($from => $emailName))
+                ->setTo($to)
+                ->setBody(
+                    $this->get('templating')->render(
+                        'InsuranceContentBundle:Notifications:unpayedOrderNotification.html.twig',
+                        array(
+                            'order' => $entity,
+                            'siteName' => $siteName,
+                            'siteDomain' => $siteDomain,
+                            'contactEmail' => $contactEmail,
+                            'contactPhone' => $contactPhone,
+                        )
+                    ),
+                    'text/html'
+                );
+            if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+            }
+            $this->get('mailer')->send($message);
+        } /*elseif ($entity->getPayType() != 'cash' && $entity->getPayStatus() == 1) {
+            //After payment succesfully verified send message to user with attached electronical policy version and order details
+            $to = $entity->getUser()->getEmail();
+            $message = \Swift_Message::newInstance()
+                ->setSubject(strtoupper($siteDomain) . ': Оплата за Ваш заказ получена!')
+                ->setFrom(array($from => $emailName))
+                ->setTo($to)
+                ->setBody(
+                    $this->get('templating')->render(
+                        'InsuranceContentBundle:Notifications:payedOrderNotification.html.twig',
+                        array(
+                            'order' => $entity,
+                            'siteName' => $siteName,
+                            'siteDomain' => $siteDomain,
+                            'contactEmail' => $contactEmail,
+                            'contactPhone' => $contactPhone,
+                        )
+                    ),
+                    'text/html'
+                );
+            if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+            }
+            $this->get('mailer')->send($message);
+        }*/ elseif ($entity->getActive() == 0 && $entity->getPayStatus() == 0 && strlen($entity->getHash()) == 40) {
+            //Send notification to user that he has stored order without confirmation
+            $to = $entity->getUser()->getEmail();
+            $message = \Swift_Message::newInstance()
+                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ ожидает подтверждения...')
+                ->setFrom(array($from => $emailName))
+                ->setTo($to)
+                ->setBody(
+                    $this->get('templating')->render(
+                        'InsuranceContentBundle:Notifications:delayedOrderNotification.html.twig',
+                        array(
+                            'order' => $entity,
+                            'siteName' => $siteName,
+                            'siteDomain' => $siteDomain,
+                            'contactEmail' => $contactEmail,
+                            'contactPhone' => $contactPhone,
+                        )
+                    ),
+                    'text/html'
+                );
+            if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
+            }
+            $this->get('mailer')->send($message);
+        }
     }
 
 }
