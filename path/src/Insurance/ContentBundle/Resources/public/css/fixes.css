@@ -106,43 +106,22 @@ header .main_menu li a span.arrow {
 		  background-position: -230px -135px;
           top: 0px; }
 
-header .main_menu li span.home {
-        width: 18px;
-        height: 18px;
-        display: inline-block;
-        margin: 13px 0px 0 0;
-        background-image: url(../images/sprite.png);
-        background-position: 0px -62px;
-        background-repeat: no-repeat;
-        background-color: transparent; }
-
 header .main_menu li:hover span.home {
         width: 18px;
         height: 18px;
-        display: inline-block;
-        
+        display: inline-block;      
         background-image: url(../images/sprite.png);
         background-position: -138px -464px;
         background-repeat: no-repeat;
-        background-color: transparent; }		
-		  
-header .main_menu li.current > a span.arrow {
-          background-position: 0px 0px !important; }
-
-header .main_menu li:hover a {
-        background-image: url(../images/bg.png);
-        background-position: 0px -100px;
-        background-repeat: repeat-x;
-        background-color: transparent;
-        color: #fff; }
-		  
-header .main_menu li:hover a span.arrow {
-          background-position: -242px -135px; 
-		  }
+        background-color: transparent; }	
+		
+header .main_menu li ul.inner_menu li a{
+		color: white;
+}
 
 header .inner_menu {
     bottom: -28px;
-	z-index:100;}		  
+	z-index: 100;}		  
 		  
 header .inner_menu li a {
         height: 33px;

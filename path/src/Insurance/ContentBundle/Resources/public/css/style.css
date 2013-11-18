@@ -198,8 +198,8 @@ header {
         background-position: top center;
         background-repeat: no-repeat; }
       header .main_menu li a {
-        height: 46px;
-        line-height: 46px;
+        height: 45px;
+        line-height: 45px;
         padding: 0 15px;
         font-size: 17px;
         display: block;
@@ -232,7 +232,7 @@ header {
         width: 18px;
         height: 18px;
         display: inline-block;
-        margin: 0 3px;
+        margin: 13px 0px 0 0;
         background-image: url(../images/sprite.png);
         background-position: 0px -62px;
         background-repeat: no-repeat;
@@ -247,21 +247,25 @@ header {
           background-position: -368px -14px !important; }
         header .main_menu li.current > a span.delim {
           display: none; }
-      header .main_menu li:hover .inner_menu {
-        display: block; }
-      header .main_menu li:hover a {
+
+      header .main_menu li:hover a{
         background-image: url(../images/bg.png);
         background-position: 0px -100px;
         background-repeat: repeat-x;
         background-color: transparent;
         color: #fff; }
-        header .main_menu li:hover a span.arrow {
-          background-position: -368px -22px; }
+		header .main_menu li:hover a span.arrow {
+          background-position: -242px -135px; 
+		  }
         header .main_menu li:hover a span.delim {
           display: none; }
       header .main_menu li:last-of-type a span.delim {
         display: none; }
-  header .inner_menu {
+		
+        header .main_menu li:hover .inner_menu {
+          display: block; }
+		  
+    header .inner_menu {
     height: 33px;
     line-height: 33px;
     position: absolute;
@@ -269,6 +273,7 @@ header {
     left: 0;
     width: 100%;
     display: none;
+	color: white;
     background-image: url(../images/bg.png);
     background-position: 0px -146px;
     background-repeat: repeat-x;
@@ -277,8 +282,12 @@ header {
     -webkit-border-radius: 0 0 5px 5px;
     -moz-border-radius: 0 0 5px 5px;
     -khtml-border-radius: 0 0 5px 5px; }
+	
+	
     header .inner_menu li {
-      height: 37px; }
+      height: 37px; 
+	  	color: white;
+	}
       header .inner_menu li a {
         height: 33px;
         line-height: 33px;
@@ -467,11 +476,73 @@ footer {
   position: relative;
   margin-bottom: 25px;
   z-index: 2; }
+.calculator_box span.first_part_slogon { 
+      font-family: "robotoBlack", Helvetica, sans-serif;
+	  font-size: 20px;
+	  color: #fefefe;
+	  text-transform: uppercase;
+	  position: relative;
+	  top: 25px;
+	  right: -20px;
+	  text-shadow: 1px 1px 1px rgba(61, 97, 9, 0.7);
+	  letter-spacing: 1px;
+} 
+.calculator_box h1 {
+	  margin-top: 0px;
+	  letter-spacing: 0px;
+	  font-size: 44px;
+	  color: #fefefe;
+	  text-transform: uppercase;
+	  line-height: 20px;
+	  position: relative;
+	  top: 40px;
+	  right: -20px;
+	  font-family: "robotoBlack", Helvetica, sans-serif;
+	  text-shadow: 1px 1px 1px rgba(61, 97, 9, 0.7);
+}
+.calculator_box h1 span.second {
+	  letter-spacing: 0px;
+	  font-size: 32px;
+	  color: #fefefe;
+	  font-family: "robotoBlack", Helvetica, sans-serif;
+}
+
+.calculator_box h2.fivemin {
+	font-family: "robotoregular", Helvetica, sans-serif;
+	color: #fefefe;
+	position: relative;
+	top:45px;
+	right: -20px;
+	font-size: 20px;
+	letter-spacing: 0.01em;
+	font-weight: 700;
+	text-shadow: 1px 1px 1px rgba(61, 97, 9, 0.5);
+	line-height: 22px;
+	font-style: normal;
+}
+
+.calculator_box h2.fivemin span {
+	font-family: "robotoregular", Helvetica, sans-serif;
+	color: #fefefe;
+	font-size: 26px;
+	text-transform: uppercase;
+	letter-spacing: 0px;
+}
+
+ 
   .calculator_box .count_down_container {
     height: 80px;
     position: relative;
-    top: 275px;
+    top: 50px;
     left: 20px; }
+  .calculator_box .count_down_container .discount_phrase {
+	font-size: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #303030;
+	font-weight: 700;
+	line-height: 40px;
+	text-shadow: 0px -1px 0px #fff;
+  }
     .calculator_box .count_down_container .label {
       font-size: 15px;
       color: black;
@@ -491,7 +562,7 @@ footer {
       background-position: -318px -67px;
       background-repeat: no-repeat;
       background-color: transparent;
-      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
+      font-family: "robotoBlack", Helvetica, sans-serif;
       font-size: 32px;
       color: white;
       font-weight: 900;
