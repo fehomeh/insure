@@ -2,23 +2,9 @@
 <html>
  <head>
    <style>
-.our_logo {
-    display: inline-block;
-    float: left;
-       padding-top: 0.714em;
-}
-
-.bbs_logo {
-    display: inline-block;
-    float: right;
-}
-
-.our_logo img, .bbs_logo img {
-       vertical-align: bottom;
-     }
 
 .sign-info {
-	margin: 2em 0;
+	margin: 0;
 }
 
 	.sign-info h1 {
@@ -60,22 +46,20 @@
    </style>
   </head>
 <body>
-<div id="content">
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-    <tbody><tr>
-                <td width="50%" valign="bottom" align="left"><img src="http://imageshack.us/a/img24/2073/dkrf.png" /></td>
-                <td width="50%" valign="bottom" align="right"><img src="http://imageshack.us/a/img14/3949/e8ld.png" /></td>
-                   </tr>
-</tbody></table>
+
 					
-<div class="br-block">
-  <i class="cn tl"></i>
-  <i class="cn tr"></i>
-  <div class="br-content">
+
                  
     <!-- Policy info -->
     <div class="sign-info">
 
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tbody><tr>
+                <td width="50%" valign="bottom" align="left" border="0"><img src="{{asset('bundles/insurancecontent/images/our_logo.png')}}" border="0" /></td>
+                <td width="50%" valign="bottom" align="right" border="0"><img src="{{asset('bundles/insurancecontent/images/bbs_logo.png')}}" border="0" /></td>
+                   </tr>
+</tbody></table>	
+	
 <h1 align="center">
 	Поліс № {{order.policy.value}}</h1>
 
@@ -245,20 +229,9 @@
     <td width="60%" align="right">При настанні страхового випадку негайно телефонуйте за телефоном: 0-800-700-123.</td>
   </tr>
 </tbody></table>
-<p></p>
-
 
     </div>
-
     <!-- Policy  -->
 
-    <br>
-          </div>
-          <i class="cn bl"></i>
-          <i class="cn br"></i>
-        </div>
-  </div>
-</div>
-  
 </body>
 </html>
