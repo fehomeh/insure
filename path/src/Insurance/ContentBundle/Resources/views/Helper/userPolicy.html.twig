@@ -2,7 +2,19 @@
 <html>
  <head>
    <style>
+	#logos table {
+    border:0
+	}
 
+	#logos table td {
+    border:0;
+	}
+	
+	#logos table td img {
+	border: 0px none;
+	padding: 0;
+	}
+	
 .sign-info {
 	margin: 0;
 }
@@ -47,18 +59,18 @@
   </head>
 <body>
 
-					
-
-                 
+<div id="logos">					
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tbody><tr>
+                <td width="50%" valign="bottom" align="left" border="0"><img src="{{asset('bundles/insurancecontent/images/our_logo.jpg')}}" width="219" height="40" border="0" /></td>
+                <td width="50%" valign="bottom" align="right" border="0"><img src="{{asset('bundles/insurancecontent/images/bbs_logo.jpg')}}" width="219" height="84" border="0" /></td>
+                   </tr>
+</tbody></table>	
+</div>                
     <!-- Policy info -->
     <div class="sign-info">
 
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-    <tbody><tr>
-                <td width="50%" valign="bottom" align="left" border="0"><img src="{{asset('bundles/insurancecontent/images/our_logo.png')}}" border="0" /></td>
-                <td width="50%" valign="bottom" align="right" border="0"><img src="{{asset('bundles/insurancecontent/images/bbs_logo.png')}}" border="0" /></td>
-                   </tr>
-</tbody></table>	
+
 	
 <h1 align="center">
 	Поліс № {{order.policy.value}}</h1>
