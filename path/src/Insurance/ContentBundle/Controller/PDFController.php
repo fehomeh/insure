@@ -18,7 +18,7 @@ class PDFController extends Controller {
 
     public function generatePDFPolicyAction($orderId)
     {
-      $tcPdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+      $tcPdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, A4, true, 'UTF-8', false);
       $request = $this->getRequest();
       try {
         $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
@@ -27,7 +27,7 @@ class PDFController extends Controller {
       $tcPdf->SetFont('dejavusans', '', 10);
       $tcPdf->AddPage();
 	  // set JPEG quality
-      $tcpdf->setJPEGQuality(100);
+      $tcPdf->setJPEGQuality(100);
 // Image example with resizing
       //$tcpdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', 340, 62, 'JPG', 'http://polismarket.com.ua', 'left', true, 150, '', false, false, 0, false, false, false);
       $tcPdf->writeHTML($policyHTML);
