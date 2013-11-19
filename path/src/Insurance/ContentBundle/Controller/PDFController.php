@@ -26,6 +26,10 @@ class PDFController extends Controller {
       error_reporting(E_ERROR);
       $tcPdf->SetFont('dejavusans', '', 10);
       $tcPdf->AddPage();
+	  // set JPEG quality
+      $tcpdf->setJPEGQuality(100);
+// Image example with resizing
+      //$tcpdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', 340, 62, 'JPG', 'http://polismarket.com.ua', 'left', true, 150, '', false, false, 0, false, false, false);
       $tcPdf->writeHTML($policyHTML);
       $fileName = sha1(microtime());
       $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
