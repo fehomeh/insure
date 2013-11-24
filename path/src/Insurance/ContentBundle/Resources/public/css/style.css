@@ -10,7 +10,7 @@ header {
   header .logo {
     display: inline-block;
     position: relative;
-    top: -5px;
+    top: -8px;
     float: left;
     width: 338px;
     height: 62px;
@@ -20,11 +20,11 @@ header {
     background-color: transparent; }
   header .center_part {
     display: inline-block;
-    margin: -20px 110px 20px;
+    margin: -32px 110px 30px;
     padding-left: 40px;
     position: relative;
-    top: -7px; }
-  header .center_part span.over24h {
+    top: 0; }
+  header .center_part span.callnow {
    position: relative;
    z-index: 3;
    top: -20px;
@@ -33,16 +33,16 @@ header {
    font-weight: 600;
    text-transform: uppercase;
    letter-spacing:0.20em;
-   color: #8f8f8f;
+   color: #b0b0b0;
    padding-left: 3px;
    opacity: 0;
    -webkit-transition: top 500ms ease, opacity 0.8s ease;
     -moz-transition: top 500ms ease, opacity 0.8s ease;
     -o-transition: top 500ms ease, opacity 0.8s ease;
 	transition:  top 500ms ease, opacity 0.8s ease;
-
+	text-shadow: 0 -1px 1px black;
 }
-  header .center_part:hover span.over24h {
+  header .center_part:hover span.callnow {
   top: 5px;
   opacity:1;
 }
@@ -56,7 +56,7 @@ header {
       background-color: transparent;
       position: absolute;
       top: 50%;
-      margin-top: 0px;
+      margin-top: 5px;
       left: 10px; }
     header .center_part .phone_number {
       margin-bottom: 0px;
@@ -344,7 +344,7 @@ footer {
       display: block;
       text-decoration: underline;
       line-height: 26px; }
-	 footer .column.first a, footer .column.second a {
+	 footer .column.first a, footer .column.second a, footer .bottom_part .counter_container a {
 	 -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -458,11 +458,21 @@ footer {
       float: left;
       line-height: 15px; }
     footer .bottom_part .counter_container {
-      width: 88px;
+      width: 200px;
       height: 31px;
       margin-right: 60px;
       display: inline-block;
-      float: right; }
+      float: right; 
+	  line-height: 31px;
+	  font-size: 14px;
+	  text-align: right;
+	}
+	footer .bottom_part .counter_container a {
+	text-decoration: underline;}
+	
+    footer .bottom_part .counter_container a:hover {
+        color: #ffa600;
+		text-decoration: none;}
 
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- INDEX --------------------------------------------- */
@@ -866,6 +876,7 @@ footer {
   position: relative;
   height: 96px;
   padding: 0 47px;
+  margin-top:30px;
   margin-bottom: 30px; }
   .econom_box .shadow {
     position: absolute;
@@ -881,7 +892,7 @@ footer {
     background-position: top center;
     background-repeat: no-repeat; }
   .econom_box .text {
-    line-height: 96px;
+    line-height: 90px;
     font-family: "robotoregular", Arial, Helvetica, sans-serif;
     font-size: 25px;
     color: black;
@@ -903,9 +914,11 @@ footer {
     color: #3d3d3d;
     line-height: 51px;
     text-align: center;
-    text-shadow: 0 1px 0 white;
+    text-shadow: 0 -1px 0 white;
     float: left;
-    margin: 0 2px; }
+    margin: 0 2px; 
+	padding-left: 1px;}
+	
     .econom_box span.delim {
       background-image: none;
       width: 10px; }
@@ -1220,8 +1233,60 @@ footer {
       margin-bottom: 0px; 
 	  color:#3F3F3F;}
 
+.text_content p {
+	font-size: 16px;
+	font-family: Arial;
+	font-weight: normal;
+	padding-bottom: 10px;
+	text-align: justify;
+	}
+.text_content ul {
+	margin-left: 30px;
+	margin-bottom: 10px;
+	list-style-type: none;
+}
 
+.text_content ul li {
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: normal;
+	padding-bottom: 5px;
+	display: list-item;
+}
 
+.text_content a {
+	font-family: Arial Bold, Helvetica, sans-serif;
+    font-size: 16px;
+    cursor:pointer;
+	font-weight: 600;
+	color: #ffa600;
+	border-bottom: 1px dashed #ffa600;
+	-webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+	transition:  all 300ms ease;
+}
+
+.text_content a:hover {
+	border-bottom: 0px dashed #ffa600;
+	color:#3F3F3F; 
+}
+
+.text_content span.plus {
+	float:none;
+    width:16px;
+	height:15px;
+    position: relative;
+    top:-1px;
+    right:0px;
+    display: inline-block;
+    vertical-align: middle;
+	margin-right: 5px;
+	background-image: url(../images/sprite.png);
+    background-position: -343px -31px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
 /*------------------------------------------------------------------------------------------- */
 /*-----------------------------------  MODAL GENERAL ---------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
