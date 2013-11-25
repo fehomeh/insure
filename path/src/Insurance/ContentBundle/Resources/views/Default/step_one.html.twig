@@ -89,7 +89,7 @@ $(function() {
 							<br/>
 							Пожалуйста, начните заполнять калькулятор.
 							</div>
-							<div class="calc">
+							<div class="calc prices-container">
 							<div class="white_box">
                                 Полис ОСАГО
                                 <div class="price common"></div>
@@ -666,6 +666,7 @@ $(function() {
         //if ($('#respons').is(':checked')) $('#respons').removeAttr('checked');
         $('.price.dgo').text('');
         $('.price.dgo').parents('.white_box').fadeOut(300).addClass('hidden');
+        $('.price.dgo').parents('.white_box').hide();
         $('.box_line.responsibility').removeClass('focus');
         $('.responsibility').find('.disabled_shadow').addClass('show');
         var pN = 0;
@@ -716,6 +717,7 @@ $(function() {
         $('.price.ns').text('');
         $('.box_line.passengers').removeClass('focus');
         $('.price.ns').parents('.white_box').fadeOut(300).addClass('hidden');
+        $('.price.ns').parents('.white_box').hide();
         $('.passengers').find('.disabled_shadow').addClass('show');
         var pD = 0;
         if (window.priceDgo) pD = window.priceDgo;
@@ -727,6 +729,7 @@ $(function() {
     {
         $('.calc .ns').parents('.white_box').addClass('hidden');
         $('.calc .dgo').parents('.white_box').addClass('hidden');
+        $('.prices-container').hide();
         $('.calc').removeClass('show');
         $('.before_calc').addClass('show');
         $('.calc .discount').addClass('hidden');
@@ -761,6 +764,8 @@ $(function() {
         $('.responsibility .disabled_shadow').addClass('show');
         $('#hDGOSum').val(100000);
         $('.price.dgo').text('');
+        $('.price.dgo').parents('.white_box').hide();
+        $('#inputrespons').css('background-position', '0px 0px');
         $('#slider2').slider('value', 1);
         $('#passenger').removeAttr('checked');
         $('.passenger_line .disabled_shadow').addClass('show');
@@ -768,6 +773,8 @@ $(function() {
         $('#slider2').slider('value', 1);
         $('#hNSSum').val(10000);
         $('.price.ns').text('');
+        $('.price.ns').parents('.white_box').hide();
+        $('#inputpassenger').css('background-position', '0px 0px');
         window.commonPrice = null;
         window.discountSum = null;
         window.priceDgo = null;
