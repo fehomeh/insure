@@ -13,6 +13,7 @@ use Insurance\ContentBundle\Entity\InsuranceOrder;
 use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Insurance\ContentBundle\Helper\PayU;
 
 class DefaultController extends Controller
 {
@@ -644,6 +645,59 @@ class DefaultController extends Controller
                             case 'terminal':
                                 $this->sendNotification($order);
                                 return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('finish'))));
+                            case 'privat_card':
+                                $merchantId = $this->container->getParameter('liqpay.merchantId');
+                                $merchantSign = $this->container->getParameter('liqpay.merchantSign');
+                                $resultUrl = $this->generateUrl('finish', array(), true);
+                                $serverUrl = $this->generateUrl('liqpay', array(), true);
+                                $price = sprintf('%.2f', $order->getTotalPrice());
+                                $xml = <<<EOD
+                                <request>
+                                    <version>1.2</version>
+                                    <merchant_id>$merchantId</merchant_id>
+                                    <result_url>$resultUrl</result_url>
+                                    <server_url>$serverUrl</server_url>
+                                    <order_id>{$order->getId()}</order_id>
+                                    <amount>{$price}</amount>
+                                    <default_phone>+380937211919</default_phone>
+                                    <currency>UAH</currency>
+                                    <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
+                                    <pay_way>card</pay_way>
+                                    <goods_id>0</goods_id>
+                                </request>
+EOD;
+                                $xmlEnc = base64_encode($xml);
+
+                                $sign=base64_encode(sha1($merchantSign.$xml.$merchantSign,1));
+                                $formData = <<<EOD
+                                <form action="https://www.liqpay.com/?do=clickNbuy" method="POST" />
+                                          <input type="hidden" name="operation_xml" value="$xmlEnc" />
+                                          <input type="hidden" name="signature" value="$sign" />
+                                </form>
+EOD;
+                                $response->setContent(json_encode(array('message' => 'submit', 'form' => $formData)));
+                                return $response;
+                            case 'privat24':
+                                $resultUrl = $this->generateUrl('finish');
+                                $serverUrl = $this->generateUrl('privat24');
+                                $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                                    ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
+                                    $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
+                                $formData = <<<EOD
+                                <form action="https://api.privatbank.ua:9083/p24api/ishop" method="post" style="margin: 0px; padding: 0px;">
+                                <input type="hidden" name="amt" value="{$order->getTotalPrice()}" />
+                                <input type="hidden" name="ccy" value="UAH" />
+                                <input type="hidden" name="merchant" value="76463" />
+                                <input type="hidden" name="order" value="{$order->getId()}" />
+                                <input type="hidden" name="details" value="$description" />
+                                <input type="hidden" name="ext_details" value="" />
+                                <input type="hidden" name="pay_way" value="privat24" />
+                                <input type="hidden" name="return_url" value="$resultUrl" />
+                                <input type="hidden" name="server_url" value="$serverUrl" />
+                                </form>
+EOD;
+                                $response->setContent(json_encode(array('message' => 'submit', 'form' => $formData)));
+                                return $response;
                         }
                     } catch (\Exception $e) {
                         $errors['message'] = $e->getMessage();
@@ -723,6 +777,9 @@ class DefaultController extends Controller
      //TODO Kill this method - it is useless
     public function processCalculatorAction(Request $request)
     {
+
+        $c = $this->container->getParameter('liqpay.merchantId');
+        var_dump($c);
         $calculator = $this->get('insurance.service.calculator');
         $calculator->setRateType('base')
             ->setCompany(2);
@@ -1172,4 +1229,39 @@ class DefaultController extends Controller
         }
     }
 
+    public function liqpayResponseAction(Request $request)
+    {
+        $xmlEnc = $request->request->get('operation_xml');
+        $xmlDecoded = base64_decode($xmlEnc);
+        $receivedSign = $request->request->get('signature');
+        $merchantId = $this->container->getParameter('liqpay.merchantId');
+        $merchantSign = $this->container->getParameter('liqpay.merchantSign');
+        if (base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)) == $receivedSign) {
+            $xmlOb  = simplexml_load_string($xmlDecoded);
+            $orderId = $xmlOb->order_id;
+            try {
+                $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+                $order->setPayStatus(1);
+                $order->setPayDate(new \DateTime('now'));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($order);
+                $em->flush();
+                return new Response();
+            } catch(Exception $e) {
+                $logger = $this->get('logger');
+                $logger->error('Exception received in Liqpay answer: ' .$e->getMessage());
+            }
+        }
+        return new Response();
+    }
+
+    public function privat24ResponseAction(Request $request)
+    {
+
+    }
+
+    public function payRedirectAction(Request $request)
+    {
+        return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',array());
+    }
 }

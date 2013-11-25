@@ -86,3 +86,12 @@ event-info:
 faq:
     pattern: /faq
     defaults: { _controller: "InsuranceContentBundle:Default:faq" }
+liqpay:
+    pattern: /liqresp
+    defaults: { _controller: "InsuranceContentBundle:Default:liqpayResponse" }
+privat24:
+    pattern: /privat24
+    defaults: { _controller: "InsuranceContentBundle:Default:privat24Response" }
+pay_redirect:
+    pattern: /pay
+    defaults: { _controller: "InsuranceContentBundle:Default:payRedirect" }
