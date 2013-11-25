@@ -1,1 +1,17 @@
-{{ paymentForm }}
+{% extends 'InsuranceContentBundle::base.html.twig'%}
+{% block content %}
+    <section class="content">
+        <div class="limit text_content">
+            Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже
+            {{ paymentForm|raw }}
+        </div>
+        <!-- footer-push -->
+        <div class="footer-push"></div>
+    </section>
+    </section>
+    <script type="text/javascript">
+        setTimeout(function(){
+            $('#payment-form').trigger('submit');
+        }, 3000);
+    </script>
+{% endblock %}

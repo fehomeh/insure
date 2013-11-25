@@ -637,7 +637,7 @@ class DefaultController extends Controller
                         elseif ($activity == '0')
                             $session->set('orderState', 'delayed');
                         $session->remove('policy');
-                        //$this->clearSessionData($session);
+                        $this->clearSessionData($session);
                         switch($payType) {
                             case 'cash':
                                 $this->sendNotification($order);
@@ -645,37 +645,11 @@ class DefaultController extends Controller
                             case 'terminal':
                                 $this->sendNotification($order);
                                 return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('finish'))));
+                            case 'plastic':
                             case 'privat_card':
-                                $merchantId = $this->container->getParameter('liqpay.merchantId');
-                                $merchantSign = $this->container->getParameter('liqpay.merchantSign');
-                                $resultUrl = $this->generateUrl('finish', array(), true);
-                                $serverUrl = $this->generateUrl('liqpay', array(), true);
-                                $price = sprintf('%.2f', $order->getTotalPrice());
-                                $xml = <<<EOD
-                                <request>
-                                    <version>1.2</version>
-                                    <merchant_id>$merchantId</merchant_id>
-                                    <result_url>$resultUrl</result_url>
-                                    <server_url>$serverUrl</server_url>
-                                    <order_id>{$order->getId()}</order_id>
-                                    <amount>{$price}</amount>
-                                    <default_phone>+380937211919</default_phone>
-                                    <currency>UAH</currency>
-                                    <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
-                                    <pay_way>card</pay_way>
-                                    <goods_id>0</goods_id>
-                                </request>
-EOD;
-                                $xmlEnc = base64_encode($xml);
-
-                                $sign=base64_encode(sha1($merchantSign.$xml.$merchantSign,1));
-                                $formData = <<<EOD
-                                <form action="https://www.liqpay.com/?do=clickNbuy" method="POST" />
-                                          <input type="hidden" name="operation_xml" value="$xmlEnc" />
-                                          <input type="hidden" name="signature" value="$sign" />
-                                </form>
-EOD;
-                                $response->setContent(json_encode(array('message' => 'submit', 'form' => $formData)));
+                                $session->set('orderId', $order->getId());
+                                $session->set('payType', 'plastic');
+                                $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
                             case 'privat24':
                                 $resultUrl = $this->generateUrl('finish');
@@ -1270,6 +1244,59 @@ EOD;
 
     public function payRedirectAction(Request $request)
     {
-        return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',array());
+        $session = $request->getSession();
+        try {
+            $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($session->get('orderId'));
+        } catch (Exception $e) {
+            $paymentForm = $e->getMessage();
+        }
+        if ($order) {
+            switch ($session->get('payType')) {
+                case 'privat_card':
+                case 'plastic':
+                    $merchantId = $this->container->getParameter('liqpay.merchantId');
+                    $merchantSign = $this->container->getParameter('liqpay.merchantSign');
+                    $resultUrl = $this->generateUrl('finish', array(), true);
+                    $serverUrl = $this->generateUrl('liqpay', array(), true);
+                    $price = sprintf('%.2f', $order->getTotalPrice());
+                    $xml = <<<EOD
+                                        <request>
+                                            <version>1.2</version>
+                                            <merchant_id>$merchantId</merchant_id>
+                                            <result_url>$resultUrl</result_url>
+                                            <server_url>$serverUrl</server_url>
+                                            <order_id>{$order->getId()}</order_id>
+                                            <amount>{$price}</amount>
+                                            <default_phone>+380937211919</default_phone>
+                                            <currency>UAH</currency>
+                                            <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
+                                            <pay_way>card</pay_way>
+                                            <goods_id>0</goods_id>
+                                        </request>
+EOD;
+                    $xmlEnc = base64_encode($xml);
+
+                    $sign=base64_encode(sha1($merchantSign.$xml.$merchantSign,1));
+                    $paymentForm = <<<EOD
+                                        <form action="https://www.liqpay.com/?do=clickNbuy" method="POST" id="payment-form"/>
+                                                  <input type="hidden" name="operation_xml" value="$xmlEnc" />
+                                                  <input type="hidden" name="signature" value="$sign" />
+                                                  <button type="submit">Перейти</button>
+                                        </form>
+EOD;
+                break;
+                default:
+                    $paymentForm = 'Что-то пошло не так...';
+                break;
+
+            }
+        }
+        $feedbackForm = $this->createForm(new FeedbackType());
+        return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
+            array(
+                'paymentForm' => $paymentForm,
+                'feedback_form' => $feedbackForm->createView(),
+                'callback_form' => $feedbackForm->createView(),
+            ));
     }
 }
