@@ -86,6 +86,9 @@ event-info:
 faq:
     pattern: /faq
     defaults: { _controller: "InsuranceContentBundle:Default:faq" }
+partner:
+    pattern: /partner
+    defaults: { _controller: "InsuranceContentBundle:Default:partner" }    defaults: { _controller: "InsuranceContentBundle:Default:faq" }
 liqpay:
     pattern: /liqresp
     defaults: { _controller: "InsuranceContentBundle:Default:liqpayResponse" }

@@ -10,7 +10,7 @@ header {
   header .logo {
     display: inline-block;
     position: relative;
-    top: -5px;
+    top: -8px;
     float: left;
     width: 338px;
     height: 62px;
@@ -20,11 +20,11 @@ header {
     background-color: transparent; }
   header .center_part {
     display: inline-block;
-    margin: -20px 110px 20px;
+    margin: -32px 110px 30px;
     padding-left: 40px;
     position: relative;
-    top: -7px; }
-  header .center_part span.over24h {
+    top: 0; }
+  header .center_part span.callnow {
    position: relative;
    z-index: 3;
    top: -20px;
@@ -33,16 +33,16 @@ header {
    font-weight: 600;
    text-transform: uppercase;
    letter-spacing:0.20em;
-   color: #8f8f8f;
+   color: #b0b0b0;
    padding-left: 3px;
    opacity: 0;
    -webkit-transition: top 500ms ease, opacity 0.8s ease;
     -moz-transition: top 500ms ease, opacity 0.8s ease;
     -o-transition: top 500ms ease, opacity 0.8s ease;
 	transition:  top 500ms ease, opacity 0.8s ease;
-
+	text-shadow: 0 -1px 1px black;
 }
-  header .center_part:hover span.over24h {
+  header .center_part:hover span.callnow {
   top: 5px;
   opacity:1;
 }
@@ -56,7 +56,7 @@ header {
       background-color: transparent;
       position: absolute;
       top: 50%;
-      margin-top: 0px;
+      margin-top: 5px;
       left: 10px; }
     header .center_part .phone_number {
       margin-bottom: 0px;
@@ -198,8 +198,8 @@ header {
         background-position: top center;
         background-repeat: no-repeat; }
       header .main_menu li a {
-        height: 46px;
-        line-height: 46px;
+        height: 45px;
+        line-height: 45px;
         padding: 0 15px;
         font-size: 17px;
         display: block;
@@ -232,7 +232,7 @@ header {
         width: 18px;
         height: 18px;
         display: inline-block;
-        margin: 0 3px;
+        margin: 13px 0px 0 0;
         background-image: url(../images/sprite.png);
         background-position: 0px -62px;
         background-repeat: no-repeat;
@@ -247,21 +247,25 @@ header {
           background-position: -368px -14px !important; }
         header .main_menu li.current > a span.delim {
           display: none; }
-      header .main_menu li:hover .inner_menu {
-        display: block; }
-      header .main_menu li:hover a {
+
+      header .main_menu li:hover a{
         background-image: url(../images/bg.png);
         background-position: 0px -100px;
         background-repeat: repeat-x;
         background-color: transparent;
         color: #fff; }
-        header .main_menu li:hover a span.arrow {
-          background-position: -368px -22px; }
+		header .main_menu li:hover a span.arrow {
+          background-position: -242px -135px; 
+		  }
         header .main_menu li:hover a span.delim {
           display: none; }
       header .main_menu li:last-of-type a span.delim {
         display: none; }
-  header .inner_menu {
+		
+        header .main_menu li:hover .inner_menu {
+          display: block; }
+		  
+    header .inner_menu {
     height: 33px;
     line-height: 33px;
     position: absolute;
@@ -269,6 +273,7 @@ header {
     left: 0;
     width: 100%;
     display: none;
+	color: white;
     background-image: url(../images/bg.png);
     background-position: 0px -146px;
     background-repeat: repeat-x;
@@ -277,8 +282,12 @@ header {
     -webkit-border-radius: 0 0 5px 5px;
     -moz-border-radius: 0 0 5px 5px;
     -khtml-border-radius: 0 0 5px 5px; }
+	
+	
     header .inner_menu li {
-      height: 37px; }
+      height: 37px; 
+	  	color: white;
+	}
       header .inner_menu li a {
         height: 33px;
         line-height: 33px;
@@ -335,7 +344,7 @@ footer {
       display: block;
       text-decoration: underline;
       line-height: 26px; }
-	 footer .column.first a, footer .column.second a {
+	 footer .column.first a, footer .column.second a, footer .bottom_part .counter_container a {
 	 -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -449,11 +458,21 @@ footer {
       float: left;
       line-height: 15px; }
     footer .bottom_part .counter_container {
-      width: 88px;
+      width: 200px;
       height: 31px;
       margin-right: 60px;
       display: inline-block;
-      float: right; }
+      float: right; 
+	  line-height: 31px;
+	  font-size: 14px;
+	  text-align: right;
+	}
+	footer .bottom_part .counter_container a {
+	text-decoration: underline;}
+	
+    footer .bottom_part .counter_container a:hover {
+        color: #ffa600;
+		text-decoration: none;}
 
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- INDEX --------------------------------------------- */
@@ -464,14 +483,71 @@ footer {
   background-repeat: no-repeat;
   width: 1000px;
   height: 352px;
-  position: relative;
   margin-bottom: 25px;
   z-index: 2; }
+.calculator_box span.first_part_slogon { 
+      font-family: 'robotoBlack', Helvetica, sans-serif;
+	  font-size: 20px;
+	  color: #fefefe;
+	  text-transform: uppercase;
+	  position: relative;
+	  top: 25px;
+	  right: -20px;
+	  text-shadow: 1px 1px 1px rgba(61, 97, 9, 0.7);
+	  letter-spacing: 1px;
+} 
+.calculator_box h1 {
+	  font-size: 44px;
+	  color: #fefefe;
+	  text-transform: uppercase;
+	  line-height: 0.7;
+	  position: relative;
+	  top: 40px;
+	  right: -20px;
+	  font-family: 'robotoBlack', Helvetica, sans-serif;
+	  text-shadow: 1px 1px 1px rgba(61, 97, 9, 0.7);
+}
+.calculator_box h1 span.second {
+	  font-size: 32px;
+	  color: #fefefe;
+	  font-family: 'robotoBlack', Helvetica, sans-serif;
+}
+
+/*.calculator_box h2.fivemin {
+	font-family: 'robotoregular', Helvetica, sans-serif;
+	color: #fefefe;
+	position: relative;
+	top:45px;
+	right: -20px;
+	font-size: 20px;
+	letter-spacing: 0.01em;
+	font-weight: 700;
+	text-shadow: 1px 1px 1px rgba(61, 97, 9, 0.5);
+	line-height: 0.95;
+	font-style: normal;
+}
+
+.calculator_box h2.fivemin span {
+	font-family: 'robotoregular', Helvetica, sans-serif;
+	color: #fefefe;
+	font-size: 25px;
+	text-transform: uppercase;
+}*/
+
+ 
   .calculator_box .count_down_container {
     height: 80px;
     position: relative;
-    top: 275px;
+    top: 115px;
     left: 20px; }
+  .calculator_box .count_down_container .discount_phrase {
+	font-size: 18px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #303030;
+	font-weight: 700;
+	line-height: 40px;
+	text-shadow: 0px -1px 0px #fff;
+  }
     .calculator_box .count_down_container .label {
       font-size: 15px;
       color: black;
@@ -486,16 +562,16 @@ footer {
       margin-right: 25px;
       width: 73px;
       height: 47px;
-      line-height: 47px;
+      line-height: 45px;
       background-image: url(../images/sprite.png);
       background-position: -318px -67px;
       background-repeat: no-repeat;
       background-color: transparent;
-      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
+      font-family: "robotoBlack", Helvetica, sans-serif;
       font-size: 32px;
       color: white;
       font-weight: 900;
-      letter-spacing: 18px;
+      letter-spacing: 17px;
       padding-left: 7px;
       position: relative;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.95); }
@@ -523,7 +599,8 @@ footer {
         text-shadow: none;
         line-height: 17px;
         font-size: 17px;
-        color: #4d4d4d; }
+        color: #4d4d4d; 
+		text-shadow: 0px -1px 0px #fff;}
   .calculator_box .calculator {
     height: 290px;
     width: 380px;
@@ -799,6 +876,7 @@ footer {
   position: relative;
   height: 96px;
   padding: 0 47px;
+  margin-top:30px;
   margin-bottom: 30px; }
   .econom_box .shadow {
     position: absolute;
@@ -814,7 +892,7 @@ footer {
     background-position: top center;
     background-repeat: no-repeat; }
   .econom_box .text {
-    line-height: 96px;
+    line-height: 90px;
     font-family: "robotoregular", Arial, Helvetica, sans-serif;
     font-size: 25px;
     color: black;
@@ -836,9 +914,11 @@ footer {
     color: #3d3d3d;
     line-height: 51px;
     text-align: center;
-    text-shadow: 0 1px 0 white;
+    text-shadow: 0 -1px 0 white;
     float: left;
-    margin: 0 2px; }
+    margin: 0 2px; 
+	padding-left: 1px;}
+	
     .econom_box span.delim {
       background-image: none;
       width: 10px; }
@@ -1153,8 +1233,60 @@ footer {
       margin-bottom: 0px; 
 	  color:#3F3F3F;}
 
+.text_content p {
+	font-size: 16px;
+	font-family: Arial;
+	font-weight: normal;
+	padding-bottom: 10px;
+	text-align: justify;
+	}
+.text_content ul {
+	margin-left: 30px;
+	margin-bottom: 10px;
+	list-style-type: none;
+}
 
+.text_content ul li {
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: normal;
+	padding-bottom: 5px;
+	display: list-item;
+}
 
+.text_content a {
+	font-family: Arial Bold, Helvetica, sans-serif;
+    font-size: 16px;
+    cursor:pointer;
+	font-weight: 600;
+	color: #ffa600;
+	border-bottom: 1px dashed #ffa600;
+	-webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+	transition:  all 300ms ease;
+}
+
+.text_content a:hover {
+	border-bottom: 0px dashed #ffa600;
+	color:#3F3F3F; 
+}
+
+.text_content span.plus {
+	float:none;
+    width:16px;
+	height:15px;
+    position: relative;
+    top:-1px;
+    right:0px;
+    display: inline-block;
+    vertical-align: middle;
+	margin-right: 5px;
+	background-image: url(../images/sprite.png);
+    background-position: -343px -31px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
 /*------------------------------------------------------------------------------------------- */
 /*-----------------------------------  MODAL GENERAL ---------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
