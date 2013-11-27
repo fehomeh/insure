@@ -652,25 +652,9 @@ class DefaultController extends Controller
                                 $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
                             case 'privat24':
-                                $resultUrl = $this->generateUrl('finish');
-                                $serverUrl = $this->generateUrl('privat24');
-                                $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
-                                    ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
-                                    $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
-                                $formData = <<<EOD
-                                <form action="https://api.privatbank.ua:9083/p24api/ishop" method="post" style="margin: 0px; padding: 0px;">
-                                <input type="hidden" name="amt" value="{$order->getTotalPrice()}" />
-                                <input type="hidden" name="ccy" value="UAH" />
-                                <input type="hidden" name="merchant" value="76463" />
-                                <input type="hidden" name="order" value="{$order->getId()}" />
-                                <input type="hidden" name="details" value="$description" />
-                                <input type="hidden" name="ext_details" value="" />
-                                <input type="hidden" name="pay_way" value="privat24" />
-                                <input type="hidden" name="return_url" value="$resultUrl" />
-                                <input type="hidden" name="server_url" value="$serverUrl" />
-                                </form>
-EOD;
-                                $response->setContent(json_encode(array('message' => 'submit', 'form' => $formData)));
+                                $session->set('orderId', $order->getId());
+                                $session->set('payType', 'privat24');
+                                $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
                         }
                     } catch (\Exception $e) {
@@ -1285,6 +1269,28 @@ EOD;
                                         </form>
 EOD;
                 break;
+                case 'privat24':
+                    $merchantPassword = $this->container->getParameter('privat24.password');
+                    $resultUrl = $this->generateUrl('finish');
+                    $serverUrl = $this->generateUrl('privat24');
+                    $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                        ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
+                        $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
+                    $paymentForm = <<<EOD
+                                <form action="https://api.privatbank.ua:9083/p24api/ishop" method="post" id="payment-form" style="margin: 0px; padding: 0px;">
+                                <input type="hidden" name="amt" value="{$order->getTotalPrice()}" />
+                                <input type="hidden" name="ccy" value="UAH" />
+                                <input type="hidden" name="merchant" value="76463" />
+                                <input type="hidden" name="order" value="{$order->getId()}" />
+                                <input type="hidden" name="details" value="$description" />
+                                <input type="hidden" name="ext_details" value="" />
+                                <input type="hidden" name="pay_way" value="privat24" />
+                                <input type="hidden" name="return_url" value="$resultUrl" />
+                                <input type="hidden" name="server_url" value="$serverUrl" />
+                                <button type="submit">Перейти</button>
+                                </form>
+EOD;
+                    break;
                 default:
                     $paymentForm = 'Что-то пошло не так...';
                 break;
@@ -1298,5 +1304,15 @@ EOD;
                 'feedback_form' => $feedbackForm->createView(),
                 'callback_form' => $feedbackForm->createView(),
             ));
+    }
+
+    protected function payPrivat(Request $request, $merchantPass)
+    {
+        if ($payment = $request->request->get('payment')) {
+            $generatedSignature = sha1(md5($payment.$merchantPass));
+            if ($generatedSignature == $request->request->get('signature')) {
+
+            }
+        }
     }
 }
