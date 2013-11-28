@@ -786,6 +786,19 @@ line-height: 28px;
     -khtml-border-radius: 6px;
 }
 
+.before_calc span {
+	font-family: Arial;
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.before_calc img {
+	margin-top: 30px;
+	margin-bottom: 10px;
+	border-bottom: 1px dashed #c0c0c0;
+	padding-bottom: 30px;
+}
+
 .before_calc.show {
   display:block;
 }
