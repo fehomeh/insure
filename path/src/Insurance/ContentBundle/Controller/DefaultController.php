@@ -1238,11 +1238,12 @@ class DefaultController extends Controller
     public function privat24ResponseAction(Request $request)
     {
         $merchantPassword = $this->container->getParameter('privat24.password');
-        if ($this->payPrivat24($request, $merchantPassword)) return Response();
+        if ($this->payPrivat24($request, $merchantPassword)) return new Response();
     }
 
     public function payRedirectAction(Request $request)
     {
+        $error = true;
         $session = $request->getSession();
         try {
             $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($session->get('orderId'));
@@ -1266,7 +1267,7 @@ class DefaultController extends Controller
                                             <server_url>$serverUrl</server_url>
                                             <order_id>{$order->getId()}</order_id>
                                             <amount>{$price}</amount>
-                                            <default_phone>+380937211919</default_phone>
+                                            <default_phone></default_phone>
                                             <currency>UAH</currency>
                                             <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
                                             <pay_way>card</pay_way>
@@ -1283,6 +1284,7 @@ EOD;
                                                   <button type="submit">Перейти</button>
                                         </form>
 EOD;
+                    $error = false;
                 break;
                 case 'privat24':
                     $resultUrl = $this->generateUrl('payment_success', array(), true);
@@ -1304,7 +1306,8 @@ EOD;
                                 <button type="submit">Перейти</button>
                                 </form>
 EOD;
-                    break;
+                    $error = false;
+                break;
                 default:
                     $paymentForm = 'Что-то пошло не так...';
                 break;
@@ -1312,6 +1315,10 @@ EOD;
             }
         } else {
             $paymentForm = 'Заказ не найден';
+        }
+        if ($error === false) {
+            $session->remove('payType');
+            $session->remove('orderId');
         }
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
@@ -1337,17 +1344,19 @@ EOD;
                 parse_str($payment, $payArray);
                 $logger->info('Pay Array:');
                 $logger->info(var_export($payArray, true));
-                try {
-                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($payArray['order']);
-                    $order->setPayStatus(1);
-                    $order->setPayDate(\DateTime::createFromFormat('dmyHis', $payArray['date']));
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($order);
-                    $em->flush();
-                } catch (\Exception $e) {
-                    $logger->error('Privat24 processing Doctrine error: ' . $e->getMessage());
-                    return false;
-                }
+                if ($payArray['state'] == 'test' || $payArray['state'] == 'ok' ) {
+                    try {
+                        $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($payArray['order']);
+                        $order->setPayStatus(1);
+                        $order->setPayDate(\DateTime::createFromFormat('dmyHis', $payArray['date']));
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($order);
+                        $em->flush();
+                    } catch (\Exception $e) {
+                        $logger->info('Privat24 processing Doctrine error: ' . $e->getMessage());
+                        return false;
+                    }
+                } else return false;
             } else return false;
         } else return false;
         return true;
