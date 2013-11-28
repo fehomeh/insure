@@ -1373,9 +1373,9 @@ EOD;
         $feedbackForm = $this->createForm(new FeedbackType());
         $merchantPassword = $this->container->getParameter('privat24.password');
         if ($request->getMethod() == 'POST' && $this->payPrivat24($request, $merchantPassword)) {
-            $message = 'Ваш заказ оплачен успешно!';
+            $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
         } elseif ($request->query->get('payment') == 'liqpay') {
-            $message = 'Ваш заказ оплачен успешно!';
+            $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
         } else {
             return $this->redirect($this->generateUrl('homepage'));
         }
