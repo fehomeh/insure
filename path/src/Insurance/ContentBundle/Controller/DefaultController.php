@@ -14,6 +14,7 @@ use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Insurance\ContentBundle\Helper\PayU;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -735,7 +736,9 @@ class DefaultController extends Controller
      //TODO Kill this method - it is useless
     public function processCalculatorAction(Request $request)
     {
-
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');
+        $logger->error('An error occurred');
         $c = $this->container->getParameter('liqpay.merchantId');
         var_dump($c);
         $calculator = $this->get('insurance.service.calculator');
@@ -1200,8 +1203,19 @@ class DefaultController extends Controller
         $xmlEnc = $request->request->get('operation_xml');
         $xmlDecoded = base64_decode($xmlEnc);
         $receivedSign = $request->request->get('signature');
-        $merchantId = $this->container->getParameter('liqpay.merchantId');
+        //$merchantId = $this->container->getParameter('liqpay.merchantId');
         $merchantSign = $this->container->getParameter('liqpay.merchantSign');
+        $logger = $this->get('logger');
+        $logger->info('Liqpay  response: ');
+        $logger->info('XML encoded: ');
+        $logger->info($xmlEnc);
+        $logger->info('XML decoded: ');
+        $logger->info($xmlDecoded);
+        $logger->info('Received signature:');
+        $logger->info($receivedSign);
+        $logger->info('Calculated signature:');
+        $logger->info(base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)));
+
         if (base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)) == $receivedSign) {
             $xmlOb  = simplexml_load_string($xmlDecoded);
             $orderId = $xmlOb->order_id;
@@ -1214,8 +1228,7 @@ class DefaultController extends Controller
                 $em->flush();
                 return new Response();
             } catch(Exception $e) {
-                $logger = $this->get('logger');
-                $logger->error('Exception received in Liqpay answer: ' .$e->getMessage());
+                $logger->error('Exception received in update order on Liqpay answer: ' .$e->getMessage());
             }
         }
         return new Response();
@@ -1223,7 +1236,8 @@ class DefaultController extends Controller
 
     public function privat24ResponseAction(Request $request)
     {
-
+        $merchantPassword = $this->container->getParameter('privat24.password');
+        if ($this->payPrivat24($request, $merchantPassword)) return Response();
     }
 
     public function payRedirectAction(Request $request)
@@ -1240,14 +1254,14 @@ class DefaultController extends Controller
                 case 'plastic':
                     $merchantId = $this->container->getParameter('liqpay.merchantId');
                     $merchantSign = $this->container->getParameter('liqpay.merchantSign');
-                    $resultUrl = $this->generateUrl('finish', array(), true);
+                    $resultUrl = $this->generateUrl('payment_success', array(), true);
                     $serverUrl = $this->generateUrl('liqpay', array(), true);
                     $price = sprintf('%.2f', $order->getTotalPrice());
                     $xml = <<<EOD
                                         <request>
                                             <version>1.2</version>
                                             <merchant_id>$merchantId</merchant_id>
-                                            <result_url>$resultUrl</result_url>
+                                            <result_url>$resultUrl?payment=liqpay</result_url>
                                             <server_url>$serverUrl</server_url>
                                             <order_id>{$order->getId()}</order_id>
                                             <amount>{$price}</amount>
@@ -1270,7 +1284,6 @@ EOD;
 EOD;
                 break;
                 case 'privat24':
-                    $merchantPassword = $this->container->getParameter('privat24.password');
                     $resultUrl = $this->generateUrl('finish');
                     $serverUrl = $this->generateUrl('privat24');
                     $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
@@ -1296,6 +1309,8 @@ EOD;
                 break;
 
             }
+        } else {
+            $paymentForm = 'Заказ не найден';
         }
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
@@ -1306,13 +1321,52 @@ EOD;
             ));
     }
 
-    protected function payPrivat(Request $request, $merchantPass)
+    protected function payPrivat24(Request $request, $merchantPass)
     {
+        $logger = $this->get('logger');
+        $logger->info('Pay privat initialized');
+        $logger->info('POST data:');
+        $logger->info(var_export($request->request->all(), true));
+        $logger->info('Generated signature:');
+        $logger->info(sha1(md5($request->request->get('payment').$merchantPass)));
         if ($payment = $request->request->get('payment')) {
             $generatedSignature = sha1(md5($payment.$merchantPass));
             if ($generatedSignature == $request->request->get('signature')) {
+                $logger->info('Signatures are equal');
+                parse_str($payment, $payArray);
+                $logger->info('Pay Array:');
+                $logger->info(var_export($payArray, true));
+                try {
+                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($payArray['order']);
+                    $order->setPayStatus(1);
+                    $order->setPayDate(\DateTime::createFromFormat('dmyHis', $payArray['date']));
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($order);
+                    $em->flush();
+                } catch (\Exception $e) {
+                    $logger->error('Privat24 processing Doctrine error: ' . $e->getMessage());
+                    return false;
+                }
+            } else return false;
+        } else return false;
+        return true;
+    }
 
-            }
+    public function paymentSuccessAction(Request $request)
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        $merchantPassword = $this->container->getParameter('privat24.password');
+        if ($request->getMethod() == 'POST' && $this->payPrivat24($request, $merchantPassword)) {
+            $message = 'Ваш заказ оплачен успешно!';
+        } elseif ($request->get('payment') == 'liqpay') {
+            $message = 'Ваш заказ оплачен успешно!';
+        } else {
+            $message = 'Что-то пошло не так...';
         }
+        return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+            'message' => $message,
+        ));
     }
 }

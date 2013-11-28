@@ -78,7 +78,8 @@
                         <div class="grey_area person_info">
                             <div class="title">
                                 <div class="label">Страхователь:</div>
-                                <div class="right_part">
+                                {% if (registerPersons) %}
+								<div class="right_part">
                                     <div class="combo person">
                                         <div class="current">{% if registerPersons%}{{registerPersons[0].surname}} {{registerPersons[0].firstname}} {{registerPersons[0].middlename}} {% endif %}</div>
                                         <div class="arrow"></div>
@@ -100,7 +101,8 @@
                                     </div>
                                     <div class="new_insurer">Новый страхователь</div>
                                 </div>
-                                <div style="clear: both;"></div>
+								{% endif %}
+							  <div style="clear: both;"></div>
                             </div>
                             <!-- -->
                             <div class="line">
