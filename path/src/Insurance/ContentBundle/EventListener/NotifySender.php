@@ -18,9 +18,9 @@ class NotifySender
     public function generatePDFPolicy($orderId)
     {
         $tcPdf = new \TCPDF();
-        $request = $this->get('request');
-        $router = $this->get('router');
-        $doctrine = $this->get('doctrine');
+        $request = $this->sc->get('request');
+        $router = $this->sc->get('router');
+        $doctrine = $this->sc->get('doctrine');
         try {
             $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
             $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
@@ -31,10 +31,10 @@ class NotifySender
             $fileName = sha1(microtime());
             $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
             $tcPdf->Output($file, 'F');
-            $order = $this->get('doctrine')->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+            $order = $this->sc->get('doctrine')->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
             $httpFile = $protocol . $request->server->get('HTTP_HOST') . '/pdf/' . $fileName . '.pdf';
             $order->setPdfUrl($httpFile);
-            $em = $doctrine->getEntityManager();
+            $em = $doctrine->getManager();
             $em->persist($order);
             $em->flush();
         } catch (Exception $e) {
