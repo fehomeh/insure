@@ -1,5 +1,6 @@
 <p>Поступил заказ от клиента.</p>
 <p></p>
+<p><b>Номер заказа:</b> {{order.id}}</p>
 <p><b>Серия и номер полиса:</b> {{order.policy.serie}}/{{order.policy.value}}</p>
 <p><b>Начало действия полиса:</b> {{order.activeFrom|date('d.m.Y')}}</p>
 <p><b>Срок страхования:</b> {% if order.insuranceTerm == '0,5' -%}2 недели{% else %}{{order.insuranceTerm}} мес.{%endif%}</p>
