@@ -1237,8 +1237,12 @@ class DefaultController extends Controller
 
     public function privat24ResponseAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $logger->info('Privat24 server url response:');
+        $logger->info('POST:' . var_export($request->request->all(), true));
+        $logger->info('GET:' . var_export($request->query->all(), true));
         $merchantPassword = $this->container->getParameter('privat24.password');
-        if ($this->payPrivat24($request, $merchantPassword)) return Response();
+        if ($this->payPrivat24($request, $merchantPassword)) return new Response();
     }
 
     public function payRedirectAction(Request $request)
@@ -1266,7 +1270,7 @@ class DefaultController extends Controller
                                             <server_url>$serverUrl</server_url>
                                             <order_id>{$order->getId()}</order_id>
                                             <amount>{$price}</amount>
-                                            <default_phone>+380937211919</default_phone>
+                                            <default_phone></default_phone>
                                             <currency>UAH</currency>
                                             <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
                                             <pay_way>card</pay_way>
@@ -1345,7 +1349,7 @@ EOD;
                     $em->persist($order);
                     $em->flush();
                 } catch (\Exception $e) {
-                    $logger->error('Privat24 processing Doctrine error: ' . $e->getMessage());
+                    $logger->info('Privat24 processing Doctrine error: ' . $e->getMessage());
                     return false;
                 }
             } else return false;
