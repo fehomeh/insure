@@ -15,15 +15,14 @@ class NotifySender
         $this->sc = $sc;
     }
 
-    public function generatePDFPolicy($orderId)
+    public function generatePDFPolicy($orderEntity)
     {
         $tcPdf = new \TCPDF();
         $request = $this->sc->get('request');
         $router = $this->sc->get('router');
-        $doctrine = $this->sc->get('doctrine');
         try {
             $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
-            $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
+            $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderEntity->getId())));
             error_reporting(E_ERROR);
             $tcPdf->SetFont('dejavusans', '', 10);
             $tcPdf->AddPage();
@@ -31,12 +30,8 @@ class NotifySender
             $fileName = sha1(microtime());
             $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
             $tcPdf->Output($file, 'F');
-            $order = $this->sc->get('doctrine')->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
             $httpFile = $protocol . $request->server->get('HTTP_HOST') . '/pdf/' . $fileName . '.pdf';
-            $order->setPdfUrl($httpFile);
-            $em = $doctrine->getManager();
-            $em->persist($order);
-            $em->flush();
+            $orderEntity->setPdfUrl($httpFile);
         } catch (Exception $e) {
             die($e->getMessage());
             return false;
@@ -205,7 +200,7 @@ class NotifySender
                             ),
                             'text/html'
                         );
-                    if ($pdfFile = $this->generatePDFPolicy($entity->getId())) {
+                    if ($pdfFile = $this->generatePDFPolicy($entity)) {
                         $message->attach(\Swift_Attachment::fromPath($pdfFile)->setContentType('application/pdf')->setFilename('Полис ОСАГО.pdf'));
                     }
                     $this->sc->get('mailer')->send($message);
