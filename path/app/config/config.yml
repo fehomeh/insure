@@ -167,7 +167,7 @@ monolog:
         applog:
             type: stream
             path: "%kernel.root_dir%/logs/payment.log"
-            level: error
+            level: info
         main:
             type: fingers_crossed
             action_level: warning

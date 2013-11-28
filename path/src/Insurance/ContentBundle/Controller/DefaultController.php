@@ -642,9 +642,11 @@ class DefaultController extends Controller
                         switch($payType) {
                             case 'cash':
                                 $this->sendNotification($order);
+                                $session->set('payType', 'cash');
                                 return $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('finish'))));
                             case 'terminal':
                                 $this->sendNotification($order);
+                                $session->set('payType', 'terminal');
                                 return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('finish'))));
                             case 'plastic':
                             case 'privat_card':
@@ -970,17 +972,17 @@ class DefaultController extends Controller
     public function finishAction(Request $request)
     {
         $feedbackForm = $this->createForm(new FeedbackType());
-        if ($request->getSession()->get('orderState') == 'success') {
+        if ($request->getSession()->get('orderState') == 'success' && ($request->getSession()->get('payType') == 'cash' || $request->getSession()->get('payType') == 'terminal')) {
             //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
             $message = '<span class="success"></span><h3>Ваш заказ принят!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
-        } elseif ($request->getSession()->get('orderState') == 'delayed') {
+        } elseif ($request->getSession()->get('orderState') == 'delayed' && ($request->getSession()->get('payType') == 'cash' || $request->getSession()->get('payType') == 'terminal')) {
             //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
             $message = '<span class="success"></span><h3>Ваш заказ сохранен!</h3><p>На Ваш электронный адрес выслано письмо со ссылкой для завершения заказа.</p> <p>Спасибо за то, что воспользовались нашим сервисом!</p>';
-        } else $message = '<p>Возникла ошибка при оформлении. Пожалуйста, попробуйте еще раз.</p>';
+        } else return $this->redirect($this->generateUrl('homepage'));
         return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
@@ -1087,7 +1089,6 @@ class DefaultController extends Controller
 
     public function generatePDFPolicy($orderId)
     {
-        //echo('wtfwft!');
         $tcPdf = new \TCPDF();
         $request = $this->get('request');
         $router = $this->get('router');
@@ -1284,8 +1285,8 @@ EOD;
 EOD;
                 break;
                 case 'privat24':
-                    $resultUrl = $this->generateUrl('finish');
-                    $serverUrl = $this->generateUrl('privat24');
+                    $resultUrl = $this->generateUrl('payment_success', array(), true);
+                    $serverUrl = $this->generateUrl('privat24', array(), true);
                     $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
                         ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
                         $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
@@ -1354,14 +1355,20 @@ EOD;
 
     public function paymentSuccessAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $logger->info('Payment success page visited.');
+        $logger->info('Method: ' . var_export($request->getMethod(), true));
+        $logger->info('Host: ' . var_export($request->getHost(), true));
+        $logger->info('POST: ' . var_export($request->request->all(), true));
+        $logger->info('GET: ' . var_export($request->query->all(), true));
         $feedbackForm = $this->createForm(new FeedbackType());
         $merchantPassword = $this->container->getParameter('privat24.password');
         if ($request->getMethod() == 'POST' && $this->payPrivat24($request, $merchantPassword)) {
             $message = 'Ваш заказ оплачен успешно!';
-        } elseif ($request->get('payment') == 'liqpay') {
+        } elseif ($request->query->get('payment') == 'liqpay') {
             $message = 'Ваш заказ оплачен успешно!';
         } else {
-            $message = 'Что-то пошло не так...';
+            return $this->redirect($this->generateUrl('homepage'));
         }
         return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
             'feedback_form' => $feedbackForm->createView(),
