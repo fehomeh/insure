@@ -162,3 +162,19 @@ sonata_doctrine_orm_admin:
                 bigint:     SonataAdminBundle:CRUD:base_show_field.html.twig
                 integer:    SonataAdminBundle:CRUD:base_show_field.html.twig
                 decimal:    SonataAdminBundle:CRUD:base_show_field.html.twig
+monolog:
+    handlers:
+        applog:
+            type: stream
+            path: "%kernel.root_dir%/logs/payment.log"
+            level: error
+        main:
+            type: fingers_crossed
+            action_level: warning
+            handler: file
+        file:
+            type: stream
+            level: debug
+        syslog:
+            type: syslog
+            level: error

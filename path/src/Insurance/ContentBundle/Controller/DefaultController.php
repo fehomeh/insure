@@ -14,6 +14,7 @@ use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Insurance\ContentBundle\Helper\PayU;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -652,25 +653,9 @@ class DefaultController extends Controller
                                 $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
                             case 'privat24':
-                                $resultUrl = $this->generateUrl('finish');
-                                $serverUrl = $this->generateUrl('privat24');
-                                $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
-                                    ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
-                                    $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
-                                $formData = <<<EOD
-                                <form action="https://api.privatbank.ua:9083/p24api/ishop" method="post" style="margin: 0px; padding: 0px;">
-                                <input type="hidden" name="amt" value="{$order->getTotalPrice()}" />
-                                <input type="hidden" name="ccy" value="UAH" />
-                                <input type="hidden" name="merchant" value="76463" />
-                                <input type="hidden" name="order" value="{$order->getId()}" />
-                                <input type="hidden" name="details" value="$description" />
-                                <input type="hidden" name="ext_details" value="" />
-                                <input type="hidden" name="pay_way" value="privat24" />
-                                <input type="hidden" name="return_url" value="$resultUrl" />
-                                <input type="hidden" name="server_url" value="$serverUrl" />
-                                </form>
-EOD;
-                                $response->setContent(json_encode(array('message' => 'submit', 'form' => $formData)));
+                                $session->set('orderId', $order->getId());
+                                $session->set('payType', 'privat24');
+                                $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
                         }
                     } catch (\Exception $e) {
@@ -751,7 +736,9 @@ EOD;
      //TODO Kill this method - it is useless
     public function processCalculatorAction(Request $request)
     {
-
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');
+        $logger->error('An error occurred');
         $c = $this->container->getParameter('liqpay.merchantId');
         var_dump($c);
         $calculator = $this->get('insurance.service.calculator');
@@ -1216,8 +1203,19 @@ EOD;
         $xmlEnc = $request->request->get('operation_xml');
         $xmlDecoded = base64_decode($xmlEnc);
         $receivedSign = $request->request->get('signature');
-        $merchantId = $this->container->getParameter('liqpay.merchantId');
+        //$merchantId = $this->container->getParameter('liqpay.merchantId');
         $merchantSign = $this->container->getParameter('liqpay.merchantSign');
+        $logger = $this->get('logger');
+        $logger->info('Liqpay  response: ');
+        $logger->info('XML encoded: ');
+        $logger->info($xmlEnc);
+        $logger->info('XML decoded: ');
+        $logger->info($xmlDecoded);
+        $logger->info('Received signature:');
+        $logger->info($receivedSign);
+        $logger->info('Calculated signature:');
+        $logger->info(base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)));
+
         if (base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)) == $receivedSign) {
             $xmlOb  = simplexml_load_string($xmlDecoded);
             $orderId = $xmlOb->order_id;
@@ -1230,8 +1228,7 @@ EOD;
                 $em->flush();
                 return new Response();
             } catch(Exception $e) {
-                $logger = $this->get('logger');
-                $logger->error('Exception received in Liqpay answer: ' .$e->getMessage());
+                $logger->error('Exception received in update order on Liqpay answer: ' .$e->getMessage());
             }
         }
         return new Response();
@@ -1239,7 +1236,8 @@ EOD;
 
     public function privat24ResponseAction(Request $request)
     {
-
+        $merchantPassword = $this->container->getParameter('privat24.password');
+        if ($this->payPrivat24($request, $merchantPassword)) return Response();
     }
 
     public function payRedirectAction(Request $request)
@@ -1256,14 +1254,14 @@ EOD;
                 case 'plastic':
                     $merchantId = $this->container->getParameter('liqpay.merchantId');
                     $merchantSign = $this->container->getParameter('liqpay.merchantSign');
-                    $resultUrl = $this->generateUrl('finish', array(), true);
+                    $resultUrl = $this->generateUrl('payment_success', array(), true);
                     $serverUrl = $this->generateUrl('liqpay', array(), true);
                     $price = sprintf('%.2f', $order->getTotalPrice());
                     $xml = <<<EOD
                                         <request>
                                             <version>1.2</version>
                                             <merchant_id>$merchantId</merchant_id>
-                                            <result_url>$resultUrl</result_url>
+                                            <result_url>$resultUrl?payment=liqpay</result_url>
                                             <server_url>$serverUrl</server_url>
                                             <order_id>{$order->getId()}</order_id>
                                             <amount>{$price}</amount>
@@ -1285,11 +1283,34 @@ EOD;
                                         </form>
 EOD;
                 break;
+                case 'privat24':
+                    $resultUrl = $this->generateUrl('finish');
+                    $serverUrl = $this->generateUrl('privat24');
+                    $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                        ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
+                        $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
+                    $paymentForm = <<<EOD
+                                <form action="https://api.privatbank.ua:9083/p24api/ishop" method="post" id="payment-form" style="margin: 0px; padding: 0px;">
+                                <input type="hidden" name="amt" value="{$order->getTotalPrice()}" />
+                                <input type="hidden" name="ccy" value="UAH" />
+                                <input type="hidden" name="merchant" value="76463" />
+                                <input type="hidden" name="order" value="{$order->getId()}" />
+                                <input type="hidden" name="details" value="$description" />
+                                <input type="hidden" name="ext_details" value="" />
+                                <input type="hidden" name="pay_way" value="privat24" />
+                                <input type="hidden" name="return_url" value="$resultUrl" />
+                                <input type="hidden" name="server_url" value="$serverUrl" />
+                                <button type="submit">Перейти</button>
+                                </form>
+EOD;
+                    break;
                 default:
                     $paymentForm = 'Что-то пошло не так...';
                 break;
 
             }
+        } else {
+            $paymentForm = 'Заказ не найден';
         }
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
@@ -1298,5 +1319,54 @@ EOD;
                 'feedback_form' => $feedbackForm->createView(),
                 'callback_form' => $feedbackForm->createView(),
             ));
+    }
+
+    protected function payPrivat24(Request $request, $merchantPass)
+    {
+        $logger = $this->get('logger');
+        $logger->info('Pay privat initialized');
+        $logger->info('POST data:');
+        $logger->info(var_export($request->request->all(), true));
+        $logger->info('Generated signature:');
+        $logger->info(sha1(md5($request->request->get('payment').$merchantPass)));
+        if ($payment = $request->request->get('payment')) {
+            $generatedSignature = sha1(md5($payment.$merchantPass));
+            if ($generatedSignature == $request->request->get('signature')) {
+                $logger->info('Signatures are equal');
+                parse_str($payment, $payArray);
+                $logger->info('Pay Array:');
+                $logger->info(var_export($payArray, true));
+                try {
+                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($payArray['order']);
+                    $order->setPayStatus(1);
+                    $order->setPayDate(\DateTime::createFromFormat('dmyHis', $payArray['date']));
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($order);
+                    $em->flush();
+                } catch (\Exception $e) {
+                    $logger->error('Privat24 processing Doctrine error: ' . $e->getMessage());
+                    return false;
+                }
+            } else return false;
+        } else return false;
+        return true;
+    }
+
+    public function paymentSuccessAction(Request $request)
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        $merchantPassword = $this->container->getParameter('privat24.password');
+        if ($request->getMethod() == 'POST' && $this->payPrivat24($request, $merchantPassword)) {
+            $message = 'Ваш заказ оплачен успешно!';
+        } elseif ($request->get('payment') == 'liqpay') {
+            $message = 'Ваш заказ оплачен успешно!';
+        } else {
+            $message = 'Что-то пошло не так...';
+        }
+        return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+            'message' => $message,
+        ));
     }
 }
