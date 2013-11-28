@@ -8,12 +8,41 @@ use Insurance\ContentBundle\Entity\InsuranceOrder;
 
 class NotifySender
 {
-  protected $sc;
+    protected $sc;
 
-  public function __construct($sc)
-  {
-    $this->sc = $sc;
-  }
+    public function __construct($sc)
+    {
+        $this->sc = $sc;
+    }
+
+    public function generatePDFPolicy($orderId)
+    {
+        $tcPdf = new \TCPDF();
+        $request = $this->get('request');
+        $router = $this->get('router');
+        $doctrine = $this->get('doctrine');
+        try {
+            $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,strpos( $_SERVER["SERVER_PROTOCOL"],'/'))).'://';
+            $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
+            error_reporting(E_ERROR);
+            $tcPdf->SetFont('dejavusans', '', 10);
+            $tcPdf->AddPage();
+            $tcPdf->writeHTML($policyHTML);
+            $fileName = sha1(microtime());
+            $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
+            $tcPdf->Output($file, 'F');
+            $order = $this->get('doctrine')->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+            $httpFile = $protocol . $request->server->get('HTTP_HOST') . '/pdf/' . $fileName . '.pdf';
+            $order->setPdfUrl($httpFile);
+            $em = $doctrine->getEntityManager();
+            $em->persist($order);
+            $em->flush();
+        } catch (Exception $e) {
+            die($e->getMessage());
+            return false;
+        }
+        return $file;
+    }
 
     public function postPersist(LifecycleEventArgs $args)
     {
