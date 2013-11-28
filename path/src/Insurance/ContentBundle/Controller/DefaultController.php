@@ -1220,17 +1220,20 @@ class DefaultController extends Controller
         if (base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)) == $receivedSign) {
             $xmlOb  = simplexml_load_string($xmlDecoded);
             $orderId = $xmlOb->order_id;
-            try {
-                $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
-                $order->setPayStatus(1);
-                $order->setPayDate(new \DateTime('now'));
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($order);
-                $em->flush();
-                return new Response();
-            } catch(Exception $e) {
-                $logger->error('Exception received in update order on Liqpay answer: ' .$e->getMessage());
-            }
+            if ($xmlOb->status == 'success'){
+                $logger->info('Liqpay answer status: SUCCESS!');
+                try {
+                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+                    $order->setPayStatus(1);
+                    $order->setPayDate(new \DateTime('now'));
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($order);
+                    $em->flush();
+                    return new Response();
+                } catch(Exception $e) {
+                    $logger->info('Exception received in update order on Liqpay answer: ' .$e->getMessage());
+                }
+            } else $logger->info('Liqpay payment status is fail!');
         }
         return new Response();
     }
@@ -1238,7 +1241,14 @@ class DefaultController extends Controller
     public function privat24ResponseAction(Request $request)
     {
         $merchantPassword = $this->container->getParameter('privat24.password');
-        if ($this->payPrivat24($request, $merchantPassword)) return new Response();
+        if ($this->payPrivat24($request, $merchantPassword))
+            return new Response();
+        else {
+            $resp = new Response();
+            $resp->setStatusCode(500);
+            return $resp;
+        }
+
     }
 
     public function payRedirectAction(Request $request)
@@ -1266,7 +1276,7 @@ class DefaultController extends Controller
                                             <result_url>$resultUrl?payment=liqpay</result_url>
                                             <server_url>$serverUrl</server_url>
                                             <order_id>{$order->getId()}</order_id>
-                                            <amount>{$price}</amount>
+                                            <amount>0.2</amount>
                                             <default_phone></default_phone>
                                             <currency>UAH</currency>
                                             <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
