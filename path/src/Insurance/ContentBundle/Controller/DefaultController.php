@@ -1089,7 +1089,6 @@ class DefaultController extends Controller
 
     public function generatePDFPolicy($orderId)
     {
-        //echo('wtfwft!');
         $tcPdf = new \TCPDF();
         $request = $this->get('request');
         $router = $this->get('router');
