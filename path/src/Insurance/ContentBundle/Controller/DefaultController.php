@@ -1220,17 +1220,20 @@ class DefaultController extends Controller
         if (base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)) == $receivedSign) {
             $xmlOb  = simplexml_load_string($xmlDecoded);
             $orderId = $xmlOb->order_id;
-            try {
-                $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
-                $order->setPayStatus(1);
-                $order->setPayDate(new \DateTime('now'));
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($order);
-                $em->flush();
-                return new Response();
-            } catch(Exception $e) {
-                $logger->error('Exception received in update order on Liqpay answer: ' .$e->getMessage());
-            }
+            if ($xmlOb->status == 'success'){
+                $logger->info('Liqpay answer status: SUCCESS!');
+                try {
+                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+                    $order->setPayStatus(1);
+                    $order->setPayDate(new \DateTime('now'));
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($order);
+                    $em->flush();
+                    return new Response();
+                } catch(Exception $e) {
+                    $logger->info('Exception received in update order on Liqpay answer: ' .$e->getMessage());
+                }
+            } else $logger->info('Liqpay payment status is fail!');
         }
         return new Response();
     }
