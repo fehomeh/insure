@@ -1355,11 +1355,17 @@ EOD;
 
     public function paymentSuccessAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $logger->info('Payment success page visited.');
+        $logger->info('Method: ' . var_export($request->getMethod(), true));
+        $logger->info('Host: ' . var_export($request->getHost(), true));
+        $logger->info('POST: ' . var_export($request->request->all(), true));
+        $logger->info('GET: ' . var_export($request->query->all(), true));
         $feedbackForm = $this->createForm(new FeedbackType());
         $merchantPassword = $this->container->getParameter('privat24.password');
         if ($request->getMethod() == 'POST' && $this->payPrivat24($request, $merchantPassword)) {
             $message = 'Ваш заказ оплачен успешно!';
-        } elseif ($request->get('payment') == 'liqpay') {
+        } elseif ($request->query->get('payment') == 'liqpay') {
             $message = 'Ваш заказ оплачен успешно!';
         } else {
             return $this->redirect($this->generateUrl('homepage'));
