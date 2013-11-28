@@ -1241,7 +1241,14 @@ class DefaultController extends Controller
     public function privat24ResponseAction(Request $request)
     {
         $merchantPassword = $this->container->getParameter('privat24.password');
-        if ($this->payPrivat24($request, $merchantPassword)) return new Response();
+        if ($this->payPrivat24($request, $merchantPassword))
+            return new Response();
+        else {
+            $resp = new Response();
+            $resp->setStatusCode(500);
+            return $resp;
+        }
+
     }
 
     public function payRedirectAction(Request $request)
@@ -1269,7 +1276,7 @@ class DefaultController extends Controller
                                             <result_url>$resultUrl?payment=liqpay</result_url>
                                             <server_url>$serverUrl</server_url>
                                             <order_id>{$order->getId()}</order_id>
-                                            <amount>{$price}</amount>
+                                            <amount>0.2</amount>
                                             <default_phone></default_phone>
                                             <currency>UAH</currency>
                                             <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
