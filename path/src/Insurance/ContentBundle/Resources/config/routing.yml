@@ -101,3 +101,6 @@ pay_redirect:
 payment_success:
     pattern: /payment_success
     defaults: { _controller: "InsuranceContentBundle:Default:paymentSuccess" }
+agreement:
+    pattern: /agreement
+    defaults: { _controller: "InsuranceContentBundle:Default:agreement" }
