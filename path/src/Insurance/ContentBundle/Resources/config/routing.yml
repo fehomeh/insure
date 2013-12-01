@@ -98,6 +98,12 @@ privat24:
 pay_redirect:
     pattern: /pay
     defaults: { _controller: "InsuranceContentBundle:Default:payRedirect" }
+payment_processing:
+    pattern: /payment_processing
+    defaults: { _controller: "InsuranceContentBundle:Default:paymentProcessing" }
 payment_success:
     pattern: /payment_success
     defaults: { _controller: "InsuranceContentBundle:Default:paymentSuccess" }
+agreement:
+    pattern: /agreement
+    defaults: { _controller: "InsuranceContentBundle:Default:agreement" }

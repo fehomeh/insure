@@ -524,6 +524,7 @@ $(function() {
                 //Reinit plugins, events, etc cause of ajax load
                 $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
                 var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
+                if ((date.getFullYear() - $(this).attr('data-value')) == 0) discount = 3;
                 if (discount > 25) discount = 25;
                 if ($('#insuranceTerm').val() <=7) discount = 0;
                 if (discount > 0)

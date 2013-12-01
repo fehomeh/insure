@@ -1040,6 +1040,14 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
+	public function agreementAction()
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        return $this->render('InsuranceContentBundle:Default:agreement.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+        ));
+    }	
     public function clearSessionData($session)
     {
         $session->remove('carBrand');
@@ -1201,41 +1209,13 @@ class DefaultController extends Controller
 
     public function liqpayResponseAction(Request $request)
     {
-        $xmlEnc = $request->request->get('operation_xml');
-        $xmlDecoded = base64_decode($xmlEnc);
-        $receivedSign = $request->request->get('signature');
-        //$merchantId = $this->container->getParameter('liqpay.merchantId');
-        $merchantSign = $this->container->getParameter('liqpay.merchantSign');
-        $logger = $this->get('logger');
-        $logger->info('Liqpay  response: ');
-        $logger->info('XML encoded: ');
-        $logger->info($xmlEnc);
-        $logger->info('XML decoded: ');
-        $logger->info($xmlDecoded);
-        $logger->info('Received signature:');
-        $logger->info($receivedSign);
-        $logger->info('Calculated signature:');
-        $logger->info(base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)));
-
-        if (base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)) == $receivedSign) {
-            $xmlOb  = simplexml_load_string($xmlDecoded);
-            $orderId = $xmlOb->order_id;
-            if ($xmlOb->status == 'success'){
-                $logger->info('Liqpay answer status: SUCCESS!');
-                try {
-                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
-                    $order->setPayStatus(1);
-                    $order->setPayDate(new \DateTime('now'));
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($order);
-                    $em->flush();
-                    return new Response();
-                } catch(Exception $e) {
-                    $logger->info('Exception received in update order on Liqpay answer: ' .$e->getMessage());
-                }
-            } else $logger->info('Liqpay payment status is fail!');
+        if ($this->payLiqpay($request))
+            return new Response();
+        else {
+            $resp = new Response();
+            $resp->setStatusCode(500);
+            return $resp;
         }
-        return new Response();
     }
 
     public function privat24ResponseAction(Request $request)
@@ -1266,7 +1246,7 @@ class DefaultController extends Controller
                 case 'plastic':
                     $merchantId = $this->container->getParameter('liqpay.merchantId');
                     $merchantSign = $this->container->getParameter('liqpay.merchantSign');
-                    $resultUrl = $this->generateUrl('payment_success', array(), true);
+                    $resultUrl = $this->generateUrl('payment_processing', array(), true);
                     $serverUrl = $this->generateUrl('liqpay', array(), true);
                     $price = sprintf('%.2f', $order->getTotalPrice());
                     $xml = <<<EOD
@@ -1276,7 +1256,7 @@ class DefaultController extends Controller
                                             <result_url>$resultUrl?payment=liqpay</result_url>
                                             <server_url>$serverUrl</server_url>
                                             <order_id>{$order->getId()}</order_id>
-                                            <amount>0.2</amount>
+                                            <amount>{$price}</amount>
                                             <default_phone></default_phone>
                                             <currency>UAH</currency>
                                             <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
@@ -1297,7 +1277,7 @@ EOD;
                     $error = false;
                 break;
                 case 'privat24':
-                    $resultUrl = $this->generateUrl('payment_success', array(), true);
+                    $resultUrl = $this->generateUrl('payment_processing', array(), true);
                     $serverUrl = $this->generateUrl('privat24', array(), true);
                     $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
                         ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
@@ -1372,23 +1352,84 @@ EOD;
         return true;
     }
 
-    public function paymentSuccessAction(Request $request)
+    protected function payLiqpay($request)
     {
+        $xmlEnc = $request->request->get('operation_xml');
+        $xmlDecoded = base64_decode($xmlEnc);
+        $receivedSign = $request->request->get('signature');
+        //$merchantId = $this->container->getParameter('liqpay.merchantId');
+        $merchantSign = $this->container->getParameter('liqpay.merchantSign');
+        $logger = $this->get('logger');
+        $logger->info('Liqpay  response: ');
+        $logger->info('XML encoded: ');
+        $logger->info($xmlEnc);
+        $logger->info('XML decoded: ');
+        $logger->info($xmlDecoded);
+        $logger->info('Received signature:');
+        $logger->info($receivedSign);
+        $logger->info('Calculated signature:');
+        $logger->info(base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)));
+
+        if (base64_encode(sha1($merchantSign.$xmlDecoded.$merchantSign,1)) == $receivedSign) {
+            $xmlOb  = simplexml_load_string($xmlDecoded);
+            $orderId = $xmlOb->order_id;
+            if ($xmlOb->status == 'success'){
+                $logger->info('Liqpay answer status: SUCCESS!');
+                try {
+                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+                    $order->setPayStatus(1);
+                    $order->setPayDate(new \DateTime('now'));
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($order);
+                    $em->flush();
+                    $logger->info('Liqpay payment succeeded!');
+                } catch(Exception $e) {
+                    $logger->info('Exception received in update order on Liqpay answer: ' .$e->getMessage());
+                    return false;
+                }
+            } else {
+                $logger->info('Liqpay payment status is fail!');
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public function paymentProcessingAction(Request $request)
+    {
+        $session = $request->getSession();
         $logger = $this->get('logger');
         $logger->info('Payment success page visited.');
         $logger->info('Method: ' . var_export($request->getMethod(), true));
         $logger->info('Host: ' . var_export($request->getHost(), true));
         $logger->info('POST: ' . var_export($request->request->all(), true));
         $logger->info('GET: ' . var_export($request->query->all(), true));
-        $feedbackForm = $this->createForm(new FeedbackType());
         $merchantPassword = $this->container->getParameter('privat24.password');
         if ($request->getMethod() == 'POST' && $this->payPrivat24($request, $merchantPassword)) {
-            $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
-        } elseif ($request->query->get('payment') == 'liqpay') {
-            $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
+            $session->getFlashBag()->add('payStatus', 'success');
+            return $this->redirect($this->generateUrl('payment_success'));
+        } elseif ($request->query->get('payment') == 'liqpay' && $request->getMethod() == 'POST' && $this->payLiqpay($request)) {
+            $session->getFlashBag()->add('payStatus', 'success');
+            return $this->redirect($this->generateUrl('payment_success'));
         } else {
             return $this->redirect($this->generateUrl('homepage'));
         }
+
+    }
+
+    public function paymentSuccessAction(Request $request)
+    {
+        $session = $request->getSession();
+        $feedbackForm = $this->createForm(new FeedbackType());
+
+        if ($session->getFlashBag()->get('payStatus') == 'success') {
+            $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
+        } elseif ($session->getFlashBag()->get('payStatus') == 'failure') {
+            return $this->redirect($this->generateUrl('homepage'));
+        } else
+            return $this->redirect($this->generateUrl('homepage'));
         return $this->render('InsuranceContentBundle:Default:finish.html.twig', array(
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
