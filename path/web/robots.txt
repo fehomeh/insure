@@ -4,5 +4,6 @@ Disallow: /register/
 Disallow: /login/
 Disallow: /delivery/
 Disallow: /personaldata/
+Disallow: /resetting/
 
 Host: polismarket.com.ua
