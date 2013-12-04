@@ -1040,6 +1040,14 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
+	public function privacypolicyAction()
+    {
+        $feedbackForm = $this->createForm(new FeedbackType());
+        return $this->render('InsuranceContentBundle:Default:privacypolicy.html.twig', array(
+            'feedback_form' => $feedbackForm->createView(),
+            'callback_form' => $feedbackForm->createView(),
+        ));
+    }	
     public function clearSessionData($session)
     {
         $session->remove('carBrand');

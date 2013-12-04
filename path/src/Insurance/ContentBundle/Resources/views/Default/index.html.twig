@@ -7,15 +7,14 @@ var end_time = '{{timerEnd}}';
 <script type="text/javascript">
 jQuery(function(){
  $("#Go_Top").hide().removeAttr("href");
- if ($(window).scrollTop()>="550") $("#Go_Top").fadeIn("slow")
+ if ($(window).scrollTop()>="550") $("#Go_Top").fadeIn(1000)
  $(window).scroll(function(){
-  if ($(window).scrollTop()<="550") $("#Go_Top").fadeOut("slow")
+  if ($(window).scrollTop()<="550") $("#Go_Top").fadeOut(1000)
   else $("#Go_Top").fadeIn("slow")
  });
-
  $("#Go_Top").click(function(){
-  $("html, body").animate({scrollTop:0},"slow")
- })
+  $("html, body").animate({scrollTop:0},1000)
+ });
 });
 </script>
 {% endblock %}
