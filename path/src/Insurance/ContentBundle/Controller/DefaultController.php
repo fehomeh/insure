@@ -1290,6 +1290,24 @@ EOD;
 EOD;
                     $error = false;
                 break;
+                case 'webmoney':
+                    $price = sprintf('%.2f', $order->getTotalPrice());
+                    $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                        ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
+                        $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
+                    $webmoneyPurse = $this->container->getParameter('webmoney.purse');
+                    $paymentForm = <<< EOD
+                        <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" id="payment-form">
+                        <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{$price}">
+                        <input type="hidden" name="LMI_PAYMENT_DESC" value="{$description}">
+                        <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoneyPurse}">
+                        <input type="hidden" name="id" value="{$order->getId()}">
+                        <input type="text" name="email" size="15" value="{$order->getUser()->getEmail()}">
+                        <input type="submit" value="Перейти">
+                        </form>
+EOD;
+                    $error = false;
+                break;
                 default:
                     $paymentForm = 'Что-то пошло не так...';
                 break;
@@ -1305,6 +1323,7 @@ EOD;
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
             array(
+                'error' => $error,
                 'paymentForm' => $paymentForm,
                 'feedback_form' => $feedbackForm->createView(),
                 'callback_form' => $feedbackForm->createView(),
@@ -1344,7 +1363,7 @@ EOD;
         return true;
     }
 
-    protected function payLiqpay($request)
+    protected function payLiqpay(Request $request)
     {
         $xmlEnc = $request->request->get('operation_xml');
         $xmlDecoded = base64_decode($xmlEnc);
@@ -1405,7 +1424,13 @@ EOD;
         } elseif ($request->query->get('payment') == 'liqpay' && $request->getMethod() == 'POST' && $this->payLiqpay($request)) {
             $session->getFlashBag()->add('payStatus', 'success');
             return $this->redirect($this->generateUrl('payment_success'));
-        } else {
+        } elseif ($request->getMethod() == 'POST' && $request->query->get('payment') == 'webmoney' && 1 == $request->request->get('LMI_PREREQUEST')) {
+            return $this->processWMPreRequest($request);
+        } elseif ($request->getMethod() == 'POST' && $request->query->get('payment') == 'webmoney' && $this->payWebMoney($request)) {
+            $session->getFlashBag()->add('payStatus', 'success');
+            return $this->redirect($this->generateUrl('payment_success'));
+        }
+        else {
             return $this->redirect($this->generateUrl('homepage'));
         }
 
@@ -1427,5 +1452,66 @@ EOD;
             'callback_form' => $feedbackForm->createView(),
             'message' => $message,
         ));
+    }
+
+    protected function processWMPreRequest(Request $request)
+    {
+        $logger = $this->get('logger');
+        $orderId = $request->request->get('LMI_PAYMENT_NO');
+        $payeePurse = $request->request->get('LMI_PAYEE_PURSE');
+        $payAmount = $request->request->get('LMI_PAYMENT_AMOUNT');
+        $webmoneyPurse = $this->container->getParameter('webmoney.purse');
+        try {
+            $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+        } catch (\Exception $e) {
+            $logger->error('WM prerequest error: ' . $e->getMessage());
+            return new Response('Заказ не найден');
+        }
+        if ($order->getTotalPrice() != $payAmount) {
+            $logger->error('WM prerequest wrong amount');
+            return new Response('Суммы оплаты не совпадают');
+        }
+        if ($payeePurse != $webmoneyPurse) {
+            $logger->error('WM prerequest wrong wallet (purse)');
+            return new Response('Неверный кошелек');
+        }
+        return new Response('YES');
+    }
+
+    protected function payWebMoney(Request $request)
+    {
+        $logger = $this->get('logger');
+        $orderId = $request->request->get('LMI_PAYMENT_NO');
+        $payeePurse = $request->request->get('LMI_PAYEE_PURSE');
+        $payAmount = $request->request->get('LMI_PAYMENT_AMOUNT');
+        $mode = $request->request->get('LMI_MODE');
+        $wmInvId = $request->request->get('LMI_SYS_INVS_NO');
+        $wmOrderId = $request->request->get('LMI_SYS_TRANS_NO');
+        $wmOrderDate = $request->request->get('LMI_SYS_TRANS_DATE');
+        $secretKey = $this->container->getParameter('webmoney.secret');
+        $payerPurse = $request->request->get('LMI_PAYER_PURSE');
+        $payerWMId = $request->request->get('LMI_PAYER_WM');
+
+        $receivedHash = $request->request->get('LMI_HASH');
+        $calculatedHash = $payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId;
+
+        if ($receivedHash === $calculatedHash) {
+            try {
+                $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+                $order->setPayStatus(1);
+                $order->setPayDate(new \DateTime($wmOrderDate));
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($order);
+                $em->flush();
+                $logger->info('WM payment succeeded!');
+            } catch(Exception $e) {
+                $logger->error('Exception received in update order on WM answer: ' .$e->getMessage());
+                return false;
+            }
+        } else {
+            $logger->error('WM payment hashes does not match');
+            return false;
+        }
+        return false;
     }
 }
