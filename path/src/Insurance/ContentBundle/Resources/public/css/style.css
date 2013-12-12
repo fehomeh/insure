@@ -819,12 +819,20 @@ footer {
   -webkit-box-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.8); }
 
+.scroll_box.term { 
+	height: 185px;
+}
+  
 .scroll_box .viewport {
   width: 100%;
-  height: 200px;
+  height: 180px;
   overflow: hidden;
   position: relative;
   top: 5px; }
+  
+.scroll_box .viewport.term {
+	  height: 175px;
+} 
 
 .scroll_box .overview {
   list-style: none;
@@ -851,6 +859,7 @@ footer {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px; }
+
 
 .scroll_box .thumb {
   background: transparent url(../images/thumb.png) no-repeat top center;
@@ -1243,6 +1252,18 @@ footer {
 	padding-bottom: 10px;
 	text-align: justify;
 	}
+	
+.text_content h2 {
+	font-size: 18px;
+	font-family: Arial;
+	font-weight: normal;
+	margin: 10px 0 10px;
+	padding: 0;
+	font-weight: 600;
+	color: #ffa600;
+	font-style: normal;
+}
+
 .text_content ul {
 	margin-left: 30px;
 	margin-bottom: 10px;

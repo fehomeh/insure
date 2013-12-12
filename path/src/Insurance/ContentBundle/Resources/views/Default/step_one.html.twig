@@ -326,9 +326,9 @@ $(function() {
                                     {% endif %}
                                     </div>
                                     <div class="arrow"></div>
-                                    <div id="scrollbar4" class="scroll_box">
+                                    <div id="scrollbar4" class="scroll_box term">
                                 		<div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
-                                		<div class="viewport">
+                                		<div class="viewport term">
                                 			 <div class="overview">
                                 				<ul form-input-id="insuranceTerm">
                                                     {% for term in insureTerm %}
@@ -469,6 +469,7 @@ $(function() {
 {% endblock %}
     {% block footer_scripts %}
     <script type="text/javascript">
+	
     function selectModel() {
         $('#modelList li').on('click', function() {
             if($('#modelList .current').length == 0 ) {
