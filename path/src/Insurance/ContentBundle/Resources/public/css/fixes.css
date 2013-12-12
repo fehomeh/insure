@@ -1201,3 +1201,52 @@ margin-left:10px;
 	text-align: center;
 }
 
+/*------------------------------------------------------------------------------------------- */
+/*-------------------------------------- EVENT PAGE --------------------------------- */
+/*------------------------------------------------------------------------------------------- */ 
+.text_content ul.list_event {
+	margin-top: 20px;
+	margin-left: 30px;
+	margin-bottom: 10px;
+}
+
+.text_content ul.list_event li {
+	position: relative;
+	background-image: url(../images/circle.png);
+	height: 62px;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	padding-left: 80px;
+	margin-bottom: 20px;
+	line-height: normal;
+	display: block;
+}
+
+.text_content ul.list_event li:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;       
+}
+
+.text_content ul.list_event li span.number {
+	width:60px;
+	text-align: center;
+	font-size: 35px;
+	font-family: Arial;
+	font-weight: 700;
+	color: white;
+	position: absolute;
+	top: 9px;
+	left: 1px;
+	text-shadow: -1px -1px 0px rgba(112,83,30,0.5);
+}
+
+.text_content ul.list_event li span.list_text {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 15px;
+	font-family: Arial;
+	font-weight: normal;
+	color: black;
+}
