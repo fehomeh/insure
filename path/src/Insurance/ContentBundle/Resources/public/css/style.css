@@ -456,7 +456,9 @@ footer {
     footer .bottom_part .copyright {
       display: inline-block;
       float: left;
-      line-height: 15px; }
+      line-height: 15px; 
+	  font-size: 13px;
+	  font-family: 'robotoregular', Arial, Helvetica, sans-serif;}
     footer .bottom_part .counter_container {
       width: 350px;
       margin-right: 60px;
