@@ -11,5 +11,7 @@
     </section>
 {% endblock %}
 {% block footer_scripts %}
-<script type="text/javascript" src="//rdr.salesdoubler.com.ua/in/pixel/245/tracking.js?trans_id={{order.id}}"></script>
+{% if orderId > 0 %}
+<script type="text/javascript" src="//rdr.salesdoubler.com.ua/in/pixel/245/tracking.js?trans_id={{orderId}}"></script>
+{% endif %}
 {% endblock %}
