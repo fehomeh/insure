@@ -639,6 +639,7 @@ class DefaultController extends Controller
                             $session->set('orderState', 'delayed');
                         $session->remove('policy');
                         $this->clearSessionData($session);
+						$session->set('orderId', $order->getId());
                         switch($payType) {
                             case 'cash':
                                 $this->sendNotification($order);
@@ -650,12 +651,10 @@ class DefaultController extends Controller
                                 return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('finish'))));
                             case 'plastic':
                             case 'privat_card':
-                                $session->set('orderId', $order->getId());
                                 $session->set('payType', 'plastic');
                                 $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
                             case 'privat24':
-                                $session->set('orderId', $order->getId());
                                 $session->set('payType', 'privat24');
                                 $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
@@ -972,7 +971,9 @@ class DefaultController extends Controller
     public function finishAction(Request $request)
     {
         $feedbackForm = $this->createForm(new FeedbackType());
-        if ($request->getSession()->get('orderState') == 'success' && ($request->getSession()->get('payType') == 'cash' || $request->getSession()->get('payType') == 'terminal')) {
+		$orderId = $request->getSession()->get('orderId');
+		$request->getSession()->remove('orderId');
+        if ($request->getSession()->get('orderState') == 'success' && ($request->getSession()->get('payType') == 'cash' || $request->getSession()->get('payType') == 'terminal') && ($orderId > 0)) {
             //$request->getSession()->clear();
             $response = new Response();
             $response->headers->clearCookie('sc');
@@ -987,6 +988,7 @@ class DefaultController extends Controller
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
             'message' => $message,
+			'orderId' => $orderId,
         ));
     }
 
@@ -1448,7 +1450,8 @@ EOD;
     {
         $session = $request->getSession();
         $feedbackForm = $this->createForm(new FeedbackType());
-
+		$orderId = $session->get('orderId');
+		$session->remove('orderId');
         if ($session->getFlashBag()->get('payStatus') == 'success') {
             $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
         } elseif ($session->getFlashBag()->get('payStatus') == 'failure') {
@@ -1459,6 +1462,7 @@ EOD;
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
             'message' => $message,
+			'orderId' => $orderId,
         ));
     }
 
