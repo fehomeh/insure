@@ -69,7 +69,7 @@ class NotifySender
         $this->sc->get('mailer')->send($message);
         }
 
-        if ($entity instanceof InsuranceOrder) {
+        if ($entity instanceof InsuranceOrder && $entity->getActive() === true) {
             $from = $this->sc->getParameter('email.send.from');
             $emailName = $this->sc->getParameter('email.name');
             $siteName = $this->sc->getParameter('site.name');
@@ -180,7 +180,7 @@ class NotifySender
             $contactPhone = $this->sc->getParameter('contact.phone');
             if ($args->hasChangedField('payStatus') && !$args->hasChangedField('payType')) {
                 if ($args->getOldValue('payStatus') == 0 && $args->getNewValue('payStatus') == 1
-                    && $entity->getPayType() != 'cash' &&$entity->getPayType() != 'terminal'
+                    && $entity->getPayType() != 'cash' && $entity->getPayType() != 'terminal'
                 ) {
                     $to = $entity->getUser()->getEmail();
                     $message = \Swift_Message::newInstance()
