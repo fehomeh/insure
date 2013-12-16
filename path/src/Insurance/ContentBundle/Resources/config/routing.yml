@@ -33,10 +33,6 @@ feedback_create:
 step1:
     pattern: /calculate/osago
     defaults: { _controller: InsuranceContentBundle:Default:calculator }
-calculate_process:
-    pattern: /save-calculator.htm
-    defaults: { _controller: "InsuranceContentBundle:Default:processCalculator" }
-    #methods: [ 'POST' ]
 get_discount:
     pattern: /get-discount.htm
     defaults: { _controller: "InsuranceContentBundle:Default:getDiscount" }

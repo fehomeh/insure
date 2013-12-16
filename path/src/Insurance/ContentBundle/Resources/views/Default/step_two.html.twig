@@ -131,7 +131,7 @@
                             </div>
                             <!-- -->
                             <div class="line">
-                                <div class="param">Документы:</div>
+                                <div class="param">Документы:</div><span class="add_info">(Вы можете указать что-то <b>ОДНО</b>. Или данные паспорта или водительских прав)</span>
                                 <div class="control_point radio_control">
                                     <input type="radio" class="styled" name="documentType" value="P" {% if app.session.get('documentType') == 'P' or app.session.get('documentType') == null %} checked="" {% endif %}id="documentTypePassport" />
                                     <label for="documentTypePassport">Паспорт</label>
