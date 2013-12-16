@@ -40,7 +40,7 @@ services:
             - { name: sonata.admin, manager_type: orm, group: 'Регионы', label: 'Регионы' }
     insurance.content.admin.insuranceOrder:
         class: Insurance\ContentBundle\Admin\InsuranceOrderAdmin
-        arguments: [null, Insurance\ContentBundle\Entity\InsuranceOrder, SonataAdminBundle:CRUD]
+        arguments: [null, Insurance\ContentBundle\Entity\InsuranceOrder, InsuranceContentBundle:InsuranceAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: 'Страхование', label: 'Заказы' }
     insurance.block.service.policy:
