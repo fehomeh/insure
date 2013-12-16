@@ -716,7 +716,6 @@ class DefaultController extends Controller
         $form = $this->createForm(new FeedbackType(), $entity);
         $form->bind($request);
         try {
-        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -728,34 +727,6 @@ class DefaultController extends Controller
             $response->headers->set('Content-Type', 'application/json');
             return $response;
         }
-    }
-
-    /**
-     * Process calculator (save data to session) and redirect to next step - filling personal data
-     *
-     */
-     //TODO Kill this method - it is useless
-    public function processCalculatorAction(Request $request)
-    {
-        $logger = $this->get('logger');
-        $logger->info('I just got the logger');
-        $logger->error('An error occurred');
-        $c = $this->container->getParameter('liqpay.merchantId');
-        var_dump($c);
-        $calculator = $this->get('insurance.service.calculator');
-        $calculator->setRateType('base')
-            ->setCompany(2);
-        $k1 = $calculator->getRate('Киев', 'region');
-        $k2 = $calculator->getRate('1.7', 'displacement');
-        $discount = $calculator->getRate(date('Y') - 2005, 'discount');
-        $city = $this->getDoctrine()->getRepository('InsuranceContentBundle:City')->findOneById(78);
-        //var_dump($k1->getValue(), $k2->getValue(), $discount->getValue(), $city->getValue());
-        //$calculator->setRateType('base')
-        //    ->setCompany(2);
-        //$k1 = $calculator->getRate('Киев', 'region');
-        //$k2 = $calculator->getRate('1.7', 'displacement');
-        var_dump($request->getSession()->all());
-        return new Response();
     }
 
     /**
@@ -939,7 +910,7 @@ class DefaultController extends Controller
     /**
      * Check for stored calculation cookie and restores data to session
      * @param \Symfony\Component\HttpFoundation\Request $request Symfony's request object
-     * @return type Description
+     * @return bool If cookie is present and session data restored without errors returns true
      */
     public function getStoredCalculation(\Symfony\Component\HttpFoundation\Request $request)
     {
