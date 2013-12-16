@@ -1232,7 +1232,7 @@ class DefaultController extends Controller
                                             <amount>{$price}</amount>
                                             <default_phone></default_phone>
                                             <currency>UAH</currency>
-                                            <description>Polis OSAGO {$order->getPolicy()->getValue()}</description>
+                                            <description>Zakaz #{$order->getId()}</description>
                                             <pay_way>card</pay_way>
                                             <goods_id>0</goods_id>
                                         </request>
