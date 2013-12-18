@@ -1232,7 +1232,7 @@ class DefaultController extends Controller
                                             <amount>{$price}</amount>
                                             <default_phone></default_phone>
                                             <currency>UAH</currency>
-                                            <description>Zakaz #{$order->getId()}</description>
+                                            <description>Zakaz {$order->getId()}</description>
                                             <pay_way>card</pay_way>
                                             <goods_id>0</goods_id>
                                         </request>
@@ -1252,8 +1252,8 @@ EOD;
                 case 'privat24':
                     $resultUrl = $this->generateUrl('payment_processing', array(), true);
                     $serverUrl = $this->generateUrl('privat24', array(), true);
-                    $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
-                        ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
+                    $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'/' . $order->getPolicy()->getValue() .
+                        ($order->getPriceDgo() >0 ?', +ДГО':''). ($order->getPriceNs() >0 ?', +НС':'') . ', ' .
                         $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
                     $paymentForm = <<<EOD
                                 <form action="https://api.privatbank.ua:9083/p24api/ishop" method="post" id="payment-form" style="margin: 0px; padding: 0px;">
