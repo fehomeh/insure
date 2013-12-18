@@ -759,6 +759,9 @@ footer {
       display: none!important; }
   .combo.active {
     z-index: 15; }
+	.combo.one_column.active {
+	z-index: 14;
+	}
     .combo.active.mark {
       z-index: 16; }
     .combo.active ul li {
@@ -830,13 +833,15 @@ footer {
   height: 200px;
   overflow: hidden;
   position: relative;
-  top: 5px; }
+  top: 5px;
+  padding-bottom: 2px;}
   
 .scroll_box .viewport.term {
 	  height: 175px;
 } 
 
 .scroll_box .overview {
+  width: 100%;
   list-style: none;
   position: absolute;
   left: 0;
@@ -2735,20 +2740,35 @@ form.personal_data span.add_info {
 .combo.wide {
   width: 100%;
   border-color: #CFCFCF;
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.126) inset; }
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset; }
   .combo.wide .scroll_box {
     width: 100%;
-    height: 315px; }
-    .combo.wide .scroll_box .viewport {
-      height: 310px; }
+    height: 420px;
+	background-color: #fff;
+	}
+.combo.wide .scroll_box .viewport {
+      height: 410px; }
     .combo.wide .scroll_box .overview {
       padding-top: 2px; }
     .combo.wide .scroll_box .track {
-      height: 305px!important; }
+      height: 410px!important; 
+	  }
   .combo.wide ul li {
-    width: 20%;
+    width: 19%;
     border: 0 none;
-    line-height: 26px; }
+    line-height: 26px;
+	margin-left: 4px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -khtml-border-radius: 6px;	}
+	
+.combo.wide ul li.active {
+      background-image: url(../images/bg.png);
+      background-position: 0px -1101px;
+      background-repeat: repeat-x;
+      background-color: transparent;
+      color: #fff; }
   .combo.wide .current {
     font-style: normal;
     font-size: 16px;
@@ -2757,8 +2777,8 @@ form.personal_data span.add_info {
     width: 21px;
     height: 21px;
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 5px;
+    right: 5px;
     z-index: 20;
     cursor: pointer;
     background-image: url(../images/sprite.png);
@@ -2864,7 +2884,8 @@ form.personal_data span.add_info {
     margin-left: 10px;
     border-color: #CFCFCF;
     width: 47%;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.126) inset; }
+    margin-top:5px;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset;}
     .box_line .combo .current {
       font-family: Arial, Helvetica, sans-serif;
       font-size: 16px;
