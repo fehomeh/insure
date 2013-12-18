@@ -829,55 +829,7 @@ line-height: 28px;
       right: 12px;
 }
 
-.combo.wide {
-  width: 100%;
-  border-color: #CFCFCF;
-  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset;
-  }
 
-.combo.wide .scroll_box {
-    width: 100%;
-    height: 420px;
-	background-color: #fff;
-	}
-.combo.wide .scroll_box .viewport {
-      height: 415px; }
-.combo.wide .scroll_box .track {
-      height: 410px!important;
-	  }
-
-
-.combo.wide ul li {
-    width: 19%;
-	margin-left: 6px;
-    border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -khtml-border-radius: 6px;
-	}
-
-.combo.wide ul li.active {
-      background-image: url(../images/bg.png);
-      background-position: 0px -1101px;
-      background-repeat: repeat-x;
-      background-color: transparent;
-      color: #fff; }
-
-.combo.wide .close_scroll {
-    bottom: 5px;
-    right: 5px;
-    }
-
-
-
-  .box_line.model {
-    padding-right: 95px;
-	}
-
-.box_line .combo {
-    margin-top:5px;
-    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.125) inset;
-	}
 
 .slider_container .description span {
       font-weight: normal;}
