@@ -29,7 +29,7 @@ class PDFController extends Controller {
 	  // set JPEG quality
       $tcPdf->setJPEGQuality(100);
 // Image example with resizing
-      $tcpdf->Image('{{asset('bundles/insurancecontent/images/our_logo.jpg')}}', '20', '40', 219, 54, 'JPG', 'http://polismarket.com.ua', 'left', false, 300, '', false, false, 0, false, false, false);
+      $tcpdf->Image('{{asset('bundles/insurancecontent/images/our_logo.jpg')}}', 20, 40, 219, 40, 'JPG', 'http://polismarket.com.ua', 'left', false, 300, '', false, false, 0, false, false, false);
       $tcPdf->writeHTML($policyHTML);
       $fileName = sha1(microtime());
       $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
