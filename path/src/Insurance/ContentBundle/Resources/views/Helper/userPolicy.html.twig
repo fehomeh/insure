@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
  <head>
-   <style>
-	
+<style>
+#logos img.our {height: 30px;}
+#logos img.bbs {height: 57px;}
+	 
 .sign-info {
 	margin: 0;
 }
@@ -27,8 +29,9 @@
 	}
 
 	.sign-info table td{
-    padding:.75em 1.5em;
+    padding:15px;
     text-align: justify;
+    border: 1px solid #838383;
 	}
 
 		.sign-info table table, .sign-info table table td {
@@ -45,8 +48,8 @@
 <div id="logos">					
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
     <tbody><tr>
-                <td width="50%" height="90" valign="bottom" align="left" border="0"><img src="{{asset('bundles/insurancecontent/images/our_logo.jpg')}}" border="0" align="bottom" /></td>
-                <td width="50%" height="90" valign="bottom" align="right" border="0"><img src="{{asset('bundles/insurancecontent/images/bbs_logo.jpg')}}" border="0" align="bottom" /></td>
+                <td width="50%" height="57" valign="bottom" align="left" border="0"><img class="our" src="{{asset('bundles/insurancecontent/images/our_logo.jpg')}}" border="0" align="bottom" /></td>
+                <td width="50%" height="57" valign="bottom" align="right" border="0"><img class="bbs" src="{{asset('bundles/insurancecontent/images/bbs_logo.jpg')}}" border="0" align="bottom" /></td>
                    </tr>
 </tbody></table>	
 </div>                

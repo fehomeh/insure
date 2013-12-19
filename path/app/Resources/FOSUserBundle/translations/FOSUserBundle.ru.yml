@@ -91,6 +91,6 @@ form:
     email: "Электронная почта:"
     current_password: "Текущий пароль:"
     password: "Пароль:"
-    password_confirmation: "Подтвердите пароль:"
+    password_confirmation: "Еще раз:"
     new_password: "Новый пароль:"
-    new_password_confirmation: "Подтвердите пароль:"
+    new_password_confirmation: "Еще раз:"
