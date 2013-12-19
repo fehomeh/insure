@@ -27,9 +27,9 @@ class PDFController extends Controller {
       $tcPdf->SetFont('dejavusans', '', 10);
       $tcPdf->AddPage();
 	  // set JPEG quality
-      $tcPdf->setJPEGQuality(100);
+      $tcPdf->setJPEGQuality(75);
 // Image example with resizing
-      $tcpdf->Image('{{asset('bundles/insurancecontent/images/our_logo.jpg')}}', 20, 40, 219, 40, 'JPG', 'http://polismarket.com.ua', 'left', false, 300, '', false, false, 0, false, false, false);
+      $tcpdf->Image('http://gyazo.com/cce0795ba44d3e2a043dc21a7bd00fb8.png', 20, 40, 219, 40, '', 'http://polismarket.com.ua', 'left', true, 300, '', false, false, 0);
       $tcPdf->writeHTML($policyHTML);
       $fileName = sha1(microtime());
       $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
