@@ -45,14 +45,7 @@
   </head>
 <body>
 
-<div id="logos">					
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-    <tbody><tr>
-                <td width="50%" height="57" valign="bottom" align="left" border="0"><img class="our" src="{{asset('bundles/insurancecontent/images/our_logo.jpg')}}" border="0" align="bottom" /></td>
-                <td width="50%" height="57" valign="bottom" align="right" border="0"><img class="bbs" src="{{asset('bundles/insurancecontent/images/bbs_logo.jpg')}}" border="0" align="bottom" /></td>
-                   </tr>
-</tbody></table>	
-</div>                
+              
     <!-- Policy info -->
     <div class="sign-info">
 
@@ -68,18 +61,18 @@
 </h2>
 <br>
 
-<table width="100%" cellspacing="0" cellpadding="0" border="1">
+<table width="100%" cellspacing="0" cellpadding="15" border="0">
     <tbody><tr>
         <td width="40%" valign="top" rowspan="2">
             <strong>1. Страховик</strong><br><font size="-1">(назва, адреса, № телефону)</font><br>
             {{order.company.requisites}}
         </td>
-        <td width="60%" valign="top">
+      <td width="60%" valign="top" style="border-left:1px dashed #838383;">
         	<font size="-1">Код страховика:</font> {{order.company.insurerCode}}
         </td>
     </tr>
     <tr>
-        <td width="60%" valign="top">
+      <td width="60%" valign="top" style="border-left:1px dashed #838383; border-top:1px dashed #838383;">
         	<strong>2. Страховим випадком є</strong> подія, внаслідок якої заподіяна шкода третім особам під час
     		дорожньо-транспортної пригоди, яка сталася за участю забезпеченого транспортного засобу і внаслідок якої
     		настає цивільно-правова відповідальність особи, відповідальність якої застрахована за договором.
@@ -101,36 +94,36 @@
 
 
 <p><strong>4. Страхова сума (ліміт відповідальності) на одного потерпілого</strong>, грн.</p>
-<table width="100%" cellspacing="0" cellpadding="0" border="1">
+<table width="100%" cellspacing="0" cellpadding="15" border="0">
     <tbody>
       <tr>
-        <td width="50%"><em>За шкоду, заподіяну життю і здоров'ю (на одного потерпілого)</em></td>
-        <td width="50%">
+        <td width="50%" style="border-right:1px dashed #838383; border-bottom:1px dashed #838383;"><em>За шкоду, заподіяну життю і здоров'ю (на одного потерпілого)</em></td>
+        <td width="50%" style="border-bottom:1px dashed #838383;">
         	100 000 грн.
         </td>
     </tr>
     <tr>
-        <td width="50%"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
+        <td width="50%" style="border-right:1px dashed #838383;"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
         <td width="50%">
         	50 000 грн.
         </td>
     </tr>
 </tbody></table>
 <br>
-<table width="100%" cellspacing="0" cellpadding="0" border="1">
+<table width="100%" cellspacing="0" cellpadding="15" border="0">
     <tbody>
     <tr>
-        <td width="50%"><strong>Розмір франшизи</strong>, грн.</td>
+        <td width="50%" style="border-right:1px dashed #838383;"><strong>Розмір франшизи</strong>, грн.</td>
         <td width="50%">{{order.company.franchise}} гривень</td>
     </tr>
 </tbody></table>
 
 <p><strong>5. Страхувальник</strong> <em>(П.І.Б./назва організації)</em></p>
 
-<table width="100%" cellspacing="0" border="1">
+<table width="100%" cellspacing="0" cellpadding="15" border="0">
 	<tbody><tr>
-		<td width="35%" valign="top">
-            <table width="100%" cellpadding="0">
+		<td width="35%" valign="top" style="border-right:1px dashed #838383;">
+            <table width="100%" cellpadding="10">
                 <tbody><tr>
                     <td>
                         <strong>{{ order.surname }}</strong>
@@ -207,7 +200,7 @@
 
 <p><strong>7. Страховий платіж</strong> <strong>{{order.price|number_format(2, ',', ' ')}} грн.</strong><br>
 {% if order.payDate in not null %}Сплачений <strong>{{order.payDate|date('D, d F Y H г i хв s с', 'Europe/Kiev')}}</strong></p>{% endif %}
-<table width="100%" cellpadding="0" border="0">
+<table width="100%" cellpadding="15" border="0">
   <tbody><tr>
     <td width="40%" align="left"></td>
     <td width="60%" align="right">При настанні страхового випадку негайно телефонуйте за телефоном: 0-800-700-123.</td>
