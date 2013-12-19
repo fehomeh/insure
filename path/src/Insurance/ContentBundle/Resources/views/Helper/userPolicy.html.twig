@@ -101,16 +101,12 @@
         </td>
     </tr>
     <tr>
-        <td width="50%" style="border-right:1px dashed #838383;"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
-        <td width="50%">
+        <td width="50%" style="border-right:1px dashed #838383;border-bottom:1px dashed #838383;"><em>За шкоду, заподіяну майну (на одного потерпілого)</em></td>
+        <td width="50%" style="border-bottom:1px dashed #838383;">
         	50 000 грн.
         </td>
     </tr>
-</tbody></table>
-<br>
-<table width="100%" cellspacing="0" cellpadding="15" border="0">
-    <tbody>
-    <tr>
+      <tr>
         <td width="50%" style="border-right:1px dashed #838383;"><strong>Розмір франшизи</strong>, грн.</td>
         <td width="50%">{{order.company.franchise}} гривень</td>
     </tr>
@@ -121,7 +117,7 @@
 <table width="100%" cellspacing="0" cellpadding="15" border="0">
 	<tbody><tr>
 		<td width="35%" valign="top" style="border-right:1px dashed #838383;">
-            <table width="100%" cellpadding="10">
+            <table width="100%" cellpadding="0">
                 <tbody><tr>
                     <td>
                         <strong>{{ order.surname }}</strong>
@@ -145,14 +141,13 @@
                     <td><strong>Адреса</strong></td>
                 </tr>
                 <tr>
-                	<td colspan="3">м. {{order.registerCity}}, {{ order.registerAddress }}, {{order.registerBuilding}}</td>
+                	<td>м. {{order.registerCity}}, {{ order.registerAddress }}, {{order.registerBuilding}}</td>
                 </tr>
             </tbody></table>
+          <p></p>
             <table width="100%" cellpadding="0" border="0">
                 <tbody><tr>
-                    <td>
-                    	<strong>Телефон</strong>
-                    </td>
+                    <td><strong>Телефон</strong></td>
                     <td>{{ order.phone }}</td>
                 </tr>
             </tbody></table>
