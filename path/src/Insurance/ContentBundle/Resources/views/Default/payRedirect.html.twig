@@ -3,16 +3,19 @@
 {% block content %}
     <section class="content">
         <div class="limit text_content center">
-            Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже
+            {% if paymentForm != 'Заказ не найден' %}Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже
+            {{- paymentForm|raw -}}
+            {%- else -%}
             {{ paymentForm|raw }}
+            {% endif %}
         </div>
         <!-- footer-push -->
         <div class="footer-push"></div>
     </section>
     </section>
     <script type="text/javascript">
-        setTimeout(function(){
+        (function(){
             $('#payment-form').trigger('submit');
-        }, 2000);
+        })();
     </script>
 {% endblock %}
