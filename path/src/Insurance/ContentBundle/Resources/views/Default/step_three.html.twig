@@ -191,6 +191,7 @@
                                 <div class="form_green_button">Подтвердить заказ</div>
                                 <div class="form_grey_button">Отложить решение</div>
                             </div>
+                            <div class="inline-preloader"><img src="{{asset('bundles/insurancecontent/images/4.gif')}}" alt="img" /></div>
                             <div style="clear: both;"></div>
                         </div>
                         <input type="hidden" id="activity" name="activity" value="{% if app.session.get('activity') is null %}1{% else %}{{app.session.get('activity')}}{% endif %}"/>
@@ -281,6 +282,9 @@
 
     function processOrder() {
         if (!checkForm()) {
+            $('.pay_now').hide();
+            $('.pay_later').hide();
+            $('.inline-preloader').show();
             $.ajax($('#payment-form').attr('action'), {
                 dataType: 'JSON',
                 type: 'POST',
@@ -295,7 +299,7 @@
                         //$('.payment-form form').trigger('submit');
                     }
                     if (data.message == 'error') {
-                        console.log(data.error);
+                        if (console) console.log(data.error);
                     }
                 }
             });

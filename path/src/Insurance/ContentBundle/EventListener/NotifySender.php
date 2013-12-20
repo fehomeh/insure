@@ -68,8 +68,7 @@ class NotifySender
         ;
         $this->sc->get('mailer')->send($message);
         }
-
-        if ($entity instanceof InsuranceOrder && $entity->getActive() === true) {
+        if ($entity instanceof InsuranceOrder && $entity->getActive() === 1) {
             $from = $this->sc->getParameter('email.send.from');
             $emailName = $this->sc->getParameter('email.name');
             $siteName = $this->sc->getParameter('site.name');
