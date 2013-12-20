@@ -25,6 +25,7 @@ class PDFController extends Controller {
       $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $this->generateUrl('generate_html_policy', array('orderId' => $orderId)));
       error_reporting(E_ERROR);
       $tcPdf->SetFont('dejavusans', '', 10);
+	  $tcPdf->setImageScale(1.53);
       $tcPdf->AddPage();
 	  // set JPEG quality
       $tcPdf->setJPEGQuality(75);
