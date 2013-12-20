@@ -1080,6 +1080,7 @@ class DefaultController extends Controller
             error_reporting(E_ERROR);
             $tcPdf->SetFont('dejavusans', '', 10);
             $tcPdf->AddPage();
+			$tcPdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', 219, 40, 'JPG', 'http://polismarket.com.ua', 'left', true, 300, '', false, false, 0, false, false, false);
             $tcPdf->writeHTML($policyHTML);
             $fileName = sha1(microtime());
             $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
