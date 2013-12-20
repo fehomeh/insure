@@ -1081,7 +1081,9 @@ class DefaultController extends Controller
             $tcPdf->SetFont('dejavusans', '', 10);
 			$tcPdf->setImageScale(1.53);
             $tcPdf->AddPage();
-			$tcPdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'L', false, 150, '', false, false, 0, false, false, false);
+			$tcPdf->setJPEGQuality(98);
+			$tcPdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'L', false, 150, 'B', false, false, 0, false, false, false);
+	        $tcPdf->Image('bundles/insurancecontent/images/bbs_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'R', false, 150, 'B', false, false, 0, false, false, false);
             $tcPdf->writeHTML($policyHTML);
             $fileName = sha1(microtime());
             $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
