@@ -1079,6 +1079,7 @@ class DefaultController extends Controller
             $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
             error_reporting(E_ERROR);
             $tcPdf->SetFont('dejavusans', '', 10);
+			$tcPdf->setImageScale(1.53);
             $tcPdf->AddPage();
 			$tcPdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'L', false, 150, '', false, false, 0, false, false, false);
             $tcPdf->writeHTML($policyHTML);
