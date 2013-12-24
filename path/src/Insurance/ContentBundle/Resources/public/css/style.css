@@ -412,13 +412,14 @@ footer {
         footer .column .subscribe_form input[type=submit]:hover {
           background-position: 0 -212px; }
     footer .column .social_buttons {
+	  margin-top: 15px;
       margin-bottom: 20px; }
       footer .column .social_buttons a {
         width: 50px;
         height: 47px;
         display: inline-block;
-        float: left;
-        margin-right: 3px; }
+        float: right;
+        margin-left: 3px; }
         footer .column .social_buttons a.vk {
           background-image: url(../images/sprite.png);
           background-position: -18px -62px;
@@ -442,6 +443,7 @@ footer {
             background-position: -268px -62px; }
   footer .bottom_part {
     padding-top: 15px;
+	padding-bottom:15px; 
     border-top: 6px solid #71b838; }
     footer .bottom_part .footer_logo {
       width: 190px;
@@ -458,26 +460,44 @@ footer {
       float: left;
       line-height: 15px; 
 	  font-size: 13px;
-	  font-family: 'robotoregular', Arial, Helvetica, sans-serif;}
+	  font-family: 'robotoregular', Arial, Helvetica, sans-serif;
+	  color: #5c5c5c;}
     footer .bottom_part .counter_container {
-      width: 350px;
+      width: 266px;
       margin-right: 60px;
-	  margin-top: 15px;
-      display: block;
       float: right; 
-	  text-align: right;
-	  display: inline;
+	  display: inline-block;
 	  font-size: 11px;	
 	 }
+	footer .bottom_part .counter_container span.privat24 {
+	width: 34px;
+	height: 34px;
+	background-image: url(../images/p24.png);
+      background-repeat: no-repeat;
+      background-color: transparent;
+	  margin-right: 4px;
+	  display: inline-block;
+	}
+	footer .bottom_part .counter_container span.webmoney {
+	width: 88px;
+	height: 34px;
+	background-image: url(../images/webmoney.png);
+      background-repeat: no-repeat;
+      background-color: transparent;
+	  margin-right: 4px;
+	  display: inline-block;
+	}
+	footer .bottom_part .counter_container span.visa_master {
+	float: right;
+	width: 136px;
+	height: 32px;
+	background-image: url(../images/visa_mastercard.png);
+      background-repeat: no-repeat;
+      background-color: transparent;
+	  display: inline-block;
+	}
 	
-	footer .bottom_part .counter_container a {
-	text-decoration: underline;
-	font-size: 11px;
-}
 	
-    footer .bottom_part .counter_container a:hover {
-        color: #ffa600;
-		text-decoration: none;}
 
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- INDEX --------------------------------------------- */
@@ -1837,7 +1857,8 @@ form.modal_form {
   color: black;
   line-height: 14px;
   font-weight: 400;
-  display: none; }
+  display: none; 
+  text-align: justify;}
   .pop_up .popup_title {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
@@ -1986,7 +2007,7 @@ form.modal_form {
 .ui-datepicker-title span {
   font-family: "Arial", Helvetica, sans-serif !important;
   font-size: 16px !important;
-  line-height: 29px;
+  line-height: 1.8em;
   font-weight: 600;
   color: #fff; }
 
@@ -2011,7 +2032,7 @@ form.modal_form {
   background-image: url(../images/sprite.png) !important;
   background-repeat: no-repeat;
   cursor: pointer;
-  top: 5px!important;
+  top: 8px!important;
   margin-top: 0px !important;
   margin-left: -3px!important; }
 
@@ -2265,7 +2286,7 @@ form.personal_data span.add_info {
   text-transform: uppercase;
   margin-left: 10px;
   position: relative;
-  font-family: "roboroBlack", 'arialblack', Helvetica, sans-serif;
+  font-family: 'arialblack', Helvetica, sans-serif;
   font-size: 16px;
   color: white;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
@@ -2282,7 +2303,6 @@ form.personal_data span.add_info {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.26), 0 0 3px rgba(0, 0, 0, 0.47) inset; }
   .form_green_button:hover,
   .form_grey_button:hover {
-    background-color: #a1a1a1;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
     -moz-box-shadow: 0 1px 0 white, 0 1px 4px rgba(0, 0, 0, 0.5) inset;
     -webkit-box-shadow: 0 1px 0 white, 0 1px 4px rgba(0, 0, 0, 0.5) inset;
