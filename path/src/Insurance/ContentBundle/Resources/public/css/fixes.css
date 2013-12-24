@@ -167,46 +167,6 @@ footer .column.tel {
 
 }
 
- footer .column .social_buttons {
-      margin-top: 15px;
-
-	  }
- footer .column .social_buttons a {
-        width: 50px;
-        height: 47px;
-        display: inline-block;
-        float: right;
-        margin-left: 3px; }
-
-        footer .column .social_buttons a.vk {
-          background-image: url(../images/sprite.png);
-          background-position: -68px -62px;
-          background-repeat: no-repeat;
-          background-color: transparent; }
-          footer .column .social_buttons a.vk:hover {
-            background-position: -18px -62px; }
-        footer .column .social_buttons a.fb {
-          background-image: url(../images/sprite.png);
-          background-position: -168px -62px;
-          background-repeat: no-repeat;
-          background-color: transparent; }
-          footer .column .social_buttons a.fb:hover {
-            background-position: -118px -62px; }
-        footer .column .social_buttons a.tw {
-          background-image: url(../images/sprite.png);
-          background-position: -268px -62px;
-          background-repeat: no-repeat;
-          background-color: transparent; }
-          footer .column .social_buttons a.tw:hover {
-            background-position: -218px -62px; }
-
-footer .bottom_part {
-    padding-bottom:15px; }
-
-footer .bottom_part .counter_container {
-        margin-right: 60px;
-		}
-
 /*------------------------------------------------------------------------------------------- */
 /*--------------------------------------- INDEX --------------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
@@ -402,7 +362,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
 	padding: 20px;
 	border-bottom-right-radius: 6px;
 	border-bottom-left-radius: 6px;
-	box-shadow: 0 -1px 3px rgba(198, 198, 198, 0.7);
+	box-shadow: 0 -1px 3px rgba(198, 198, 198, 0.4);
 	}
 
 .reset_pass a{
@@ -760,6 +720,17 @@ line-height: 28px;
     background-color: #adadad;
 }
 
+.attention {
+	position: relative;
+	text-align: center;
+	font-size: 16px;
+	color: red;
+	display: inline-block;
+	padding-top: 10px;
+	margin-top: 20px;
+	border-top: 1px solid #E3E3E3;
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 1.0) inset;
+}
 /*------------------------------------------------------------------------------------------- */
 /*----------------------------------------- CALCULATOR PAGE --------------------------------- */
 /*------------------------------------------------------------------------------------------- */

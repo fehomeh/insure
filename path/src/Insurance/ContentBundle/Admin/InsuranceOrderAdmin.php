@@ -76,7 +76,7 @@ class InsuranceOrderAdmin extends Admin {
 		    //->add('company', null, array('label' => 'Страховая'))
 		    ->add('policy', null, array('label' => 'Номер полиса'))
 		    ->add('orderDate', null, array('input_type' => 'date', 'format' => 'd.m.Y', 'label' => 'Дата заказа'))
-            ->add('insuranceTerm', null, array('label' => 'Срок страхования(мес.)'))
+            //->add('insuranceTerm', null, array('label' => 'Срок страхования(мес.)'))
 		    ->add('totalPrice', null, array('label' => 'Общая цена'))
 		    ->add('price', null, array('label' => 'Цена'))
 		    ->add('priceDgo', null, array('label' => 'Цена ДГО'))
