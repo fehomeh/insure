@@ -2270,7 +2270,7 @@ form.personal_data span.add_info {
   top: 10px; }
 .person_info .control_point.accept_control label {
   display: inline-block;
-  line-height: 21px; }
+}
   .person_info .control_point.accept_control label .question_ico {
     top: -5px;
     right: -22px; }
