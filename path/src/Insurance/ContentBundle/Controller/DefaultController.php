@@ -1302,7 +1302,7 @@ EOD;
             $paymentForm = 'Заказ не найден';
         }
         if ($error === false) {
-            $session->remove('orderId');
+            $session->remove('payType');
         }
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
