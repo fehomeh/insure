@@ -16,13 +16,6 @@ class FeedbackType extends AbstractType
                     'placeholder' => 'Введите Ваше имя',
                 ),
             ))
-           // ->add('timeToCall', 'text', array('attr' =>
-            //    array(
-            //      'class' => 'callback-time',
-             //     'placeholder' => 'Введите желаемое время звонка',
-             //     ),
-             //   'label' => 'Желаемое время звонка:'
-            //))
             ->add('phoneNumber', null, array('label' => 'Номер телефона:',
                 'attr' => array(
                     'placeholder' => '(ХХХ)ХХХ-ХХ-ХХ',
