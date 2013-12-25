@@ -16,7 +16,7 @@ class InsuranceAdminController extends Controller {
         $fakeCaptured = false;
         foreach ($queryProxy->getQuery()->iterate() as $pos => $object) {
             try {
-                if ($policyOb = $object[0]->getPolicy()->getId()) {
+                if ($policyOb = $object[0]->getPolicy()) {
                     $policy = $em->getRepository('InsuranceContentBundle:Policy')->findOneById($policyOb->getId());
                     $policy->setStatus(0);
                     $em->persist($policy);
