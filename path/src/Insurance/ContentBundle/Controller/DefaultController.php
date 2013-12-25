@@ -1303,7 +1303,6 @@ EOD;
         }
         if ($error === false) {
             $session->remove('payType');
-            $session->remove('orderId');
         }
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
