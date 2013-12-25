@@ -1427,9 +1427,10 @@ EOD;
         $feedbackForm = $this->createForm(new FeedbackType());
 		$orderId = $session->get('orderId');
 		$session->remove('orderId');
-        if ($session->getFlashBag()->get('payStatus') == 'success') {
+        $payStatus = $session->getFlashBag()->get('payStatus');
+        if ($payStatus == 'success') {
             $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
-        } elseif ($session->getFlashBag()->get('payStatus') == 'failure') {
+        } elseif ($payStatus == 'failure') {
             return $this->redirect($this->generateUrl('homepage'));
         } else
             return $this->redirect($this->generateUrl('homepage'));
