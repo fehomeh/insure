@@ -1,4 +1,3 @@
-{%block title %}Идет перенаправление на платежную систему{% endblock %}
 {%block head_scripts%}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <link href="{{asset('bundles/insurancecontent/css/style.css')}}" rel="stylesheet" type="text/css" />
@@ -6,8 +5,8 @@
 {% endblock %}
 {% block content %}
     <section class="content">
-        <div class="limit text_content center">
-            {% if paymentForm != 'Заказ не найден' %}Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже
+        <div class="limit text_content center" style="margin-top:50px; width: 600px;">
+            {% if paymentForm != 'Заказ не найден' %}Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже<br/>
             {{- paymentForm|raw -}}
             {%- else -%}
             {{ paymentForm|raw }}
