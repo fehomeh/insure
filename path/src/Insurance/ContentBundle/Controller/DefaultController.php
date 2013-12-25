@@ -1302,7 +1302,6 @@ EOD;
             $paymentForm = 'Заказ не найден';
         }
         if ($error === false) {
-            $session->remove('payType');
             $session->remove('orderId');
         }
         $feedbackForm = $this->createForm(new FeedbackType());
