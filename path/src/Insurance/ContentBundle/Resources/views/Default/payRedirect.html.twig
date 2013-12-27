@@ -6,7 +6,7 @@
 {% block content %}
     <section class="content">
         <div class="limit text_content center" style="margin-top:50px; width: 600px; position: absolute; left: 50%; margin-left: -300px;">
-            {% if paymentForm != 'Заказ не найден' %}Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже<br/>
+            {% if paymentForm != 'Заказ не найден' %}Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже<br/><br/>
             {{- paymentForm|raw -}}
             {%- else -%}
             {{ paymentForm|raw }}
