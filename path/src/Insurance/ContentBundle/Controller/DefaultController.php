@@ -658,6 +658,10 @@ class DefaultController extends Controller
                                 $session->set('payType', 'privat24');
                                 $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                                 return $response;
+                            case 'webmoney':
+                                $session->set('payType', 'webmoney');
+                                $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
+                                return $response;
                         }
                     } catch (\Exception $e) {
                         $errors['message'] = $e->getMessage();
