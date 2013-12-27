@@ -1482,13 +1482,14 @@ EOD;
         $secretKey = $this->container->getParameter('webmoney.secret');
         $payerPurse = $request->request->get('LMI_PAYER_PURSE');
         $payerWMId = $request->request->get('LMI_PAYER_WM');
-
+        $internalOrderId = $request->request->get('id');
+        
         $receivedHash = $request->request->get('LMI_HASH');
         $calculatedHash = $payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId;
 
         if ($receivedHash === $calculatedHash) {
             try {
-                $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($orderId);
+                $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($internalOrderId);
                 $order->setPayStatus(1);
                 $order->setPayDate(new \DateTime($wmOrderDate));
                 $em = $this->getDoctrine()->getManager();
