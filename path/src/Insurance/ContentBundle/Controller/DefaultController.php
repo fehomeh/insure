@@ -1485,7 +1485,7 @@ EOD;
         $internalOrderId = $request->request->get('id');
         
         $receivedHash = $request->request->get('LMI_HASH');
-        $calculatedHash = $payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId;
+        $calculatedHash = strtoupper(md5($payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId));
 
         if ($receivedHash === $calculatedHash) {
             try {
