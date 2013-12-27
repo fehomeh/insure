@@ -1291,7 +1291,7 @@ EOD;
                         <input type="hidden" name="LMI_PAYMENT_DESC" value="{$description}">
                         <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoneyPurse}">
                         <input type="hidden" name="id" value="{$order->getId()}">
-                        <input type="text" name="email" size="15" value="{$order->getUser()->getEmail()}">
+                        <input type="hidden" name="email" size="15" value="{$order->getUser()->getEmail()}">
                         <input type="submit" value="Перейти">
                         </form>
 EOD;

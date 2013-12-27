@@ -284,6 +284,7 @@
         if (!checkForm()) {
             $('.pay_now').hide();
             $('.pay_later').hide();
+            $('.payment_container').hide();
             $('.inline-preloader').show();
             $.ajax($('#payment-form').attr('action'), {
                 dataType: 'JSON',
