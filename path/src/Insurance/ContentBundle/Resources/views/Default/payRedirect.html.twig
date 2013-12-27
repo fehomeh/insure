@@ -4,7 +4,7 @@
 <link href="{{asset('bundles/insurancecontent/css/fixes.css')}}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-    <section class="content">
+    <section class="content" style="text-align: center;">
         <div class="limit text_content center" style="margin-top:50px; width: 600px;">
             {% if paymentForm != 'Заказ не найден' %}Сейчас Вы будете перенаправлены на страницу системы оплаты, если переход не происходит автоматически, нажмите на кнопку ниже<br/>
             {{- paymentForm|raw -}}

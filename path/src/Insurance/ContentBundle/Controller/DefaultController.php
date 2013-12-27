@@ -639,7 +639,7 @@ class DefaultController extends Controller
                             $session->set('orderState', 'delayed');
                         $session->remove('policy');
                         $this->clearSessionData($session);
-						$session->set('orderId', $order->getId());
+                        $session->set('orderId', $order->getId());
                         switch($payType) {
                             case 'cash':
                                 $this->sendNotification($order);
@@ -946,8 +946,8 @@ class DefaultController extends Controller
     public function finishAction(Request $request)
     {
         $feedbackForm = $this->createForm(new FeedbackType());
-		$orderId = $request->getSession()->get('orderId');
-		$request->getSession()->remove('orderId');
+        $orderId = $request->getSession()->get('orderId');
+        $request->getSession()->remove('orderId');
         if ($request->getSession()->get('orderState') == 'success' && ($request->getSession()->get('payType') == 'cash' || $request->getSession()->get('payType') == 'terminal') && ($orderId > 0)) {
             //$request->getSession()->clear();
             $response = new Response();
@@ -963,7 +963,7 @@ class DefaultController extends Controller
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
             'message' => $message,
-			'orderId' => $orderId,
+            'orderId' => $orderId,
         ));
     }
 
@@ -984,8 +984,8 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
-	
-	public function faqAction()
+    
+    public function faqAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:faq.html.twig', array(
@@ -993,7 +993,7 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
-	public function osagoAction()
+    public function osagoAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:osago-info.html.twig', array(
@@ -1001,7 +1001,7 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
-	public function eventAction()
+    public function eventAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:event-info.html.twig', array(
@@ -1009,7 +1009,7 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
-	public function partnerAction()
+    public function partnerAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:partner.html.twig', array(
@@ -1017,14 +1017,14 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
-	public function privacypolicyAction()
+    public function privacypolicyAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:privacypolicy.html.twig', array(
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
         ));
-    }	
+    }   
     public function clearSessionData($session)
     {
         $session->remove('carBrand');
@@ -1083,11 +1083,11 @@ class DefaultController extends Controller
             $policyHTML = file_get_contents($protocol . $request->server->get('HTTP_HOST') . $router->generate('generate_html_policy', array('orderId' => $orderId)));
             error_reporting(E_ERROR);
             $tcPdf->SetFont('dejavusans', '', 10);
-			$tcPdf->setImageScale(1.53);
+            $tcPdf->setImageScale(1.53);
             $tcPdf->AddPage();
-			$tcPdf->setJPEGQuality(98);
-			$tcPdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'L', false, 150, '', false, false, 0, false, false, false);
-	        $tcPdf->Image('bundles/insurancecontent/images/bbs_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'R', false, 150, '', false, false, 0, false, false, false);
+            $tcPdf->setJPEGQuality(98);
+            $tcPdf->Image('bundles/insurancecontent/images/our_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'L', false, 150, '', false, false, 0, false, false, false);
+            $tcPdf->Image('bundles/insurancecontent/images/bbs_logo.jpg', '', '', '', '', 'JPG', 'http://polismarket.com.ua', 'R', false, 150, '', false, false, 0, false, false, false);
             $tcPdf->writeHTML($policyHTML);
             $fileName = sha1(microtime());
             $file = $request->server->get('DOCUMENT_ROOT') . '/pdf/' . $fileName . '.pdf';
@@ -1307,7 +1307,6 @@ EOD;
         }
         if ($error === false) {
             $session->remove('payType');
-            $session->remove('orderId');
         }
         $feedbackForm = $this->createForm(new FeedbackType());
         return $this->render('InsuranceContentBundle:Default:payRedirect.html.twig',
@@ -1429,12 +1428,12 @@ EOD;
     {
         $session = $request->getSession();
         $feedbackForm = $this->createForm(new FeedbackType());
-		$orderId = $session->get('orderId');
-		$session->remove('orderId');
+        $orderId = $session->get('orderId');
+        $session->remove('orderId');
         $payStatus = $session->getFlashBag()->get('payStatus');
-        if ($payStatus == 'success') {
+        if ($payStatus[0] == 'success') {
             $message = '<span class="success"></span><h3>Мы получили Вашу оплату!</h3><p>Спасибо за то, что воспользовались нашим сервисом! Наш менеджер свяжется с Вами в ближайшее время для уточнения деталей доставки.</p>';
-        } elseif ($payStatus == 'failure') {
+        } elseif ($payStatus[0] == 'failure') {
             return $this->redirect($this->generateUrl('homepage'));
         } else
             return $this->redirect($this->generateUrl('homepage'));
@@ -1442,7 +1441,7 @@ EOD;
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
             'message' => $message,
-			'orderId' => $orderId,
+            'orderId' => $orderId,
         ));
     }
 

@@ -29,13 +29,7 @@ class Feedback
    */
   private $name;
 
-  /**
-   *
-   * @var \DateTime
-   * @ORM\Column(name="time_to_call", length=20, type="string", options={ "default"=null }, nullable=true)
-   */
-  private $timeToCall;
-
+ 
   /**
    *
    * @var string
@@ -101,28 +95,7 @@ class Feedback
         return $this->name;
     }
 
-    /**
-     * Set timeToCall
-     *
-     * @param \DateTime $timeToCall
-     * @return Feedback
-     */
-    public function setTimeToCall($timeToCall)
-    {
-        $this->timeToCall = $timeToCall;
-
-        return $this;
-    }
-
-    /**
-     * Get timeToCall
-     *
-     * @return \DateTime
-     */
-    public function getTimeToCall()
-    {
-        return $this->timeToCall;
-    }
+  
 
     /**
      * Set phoneNumber
