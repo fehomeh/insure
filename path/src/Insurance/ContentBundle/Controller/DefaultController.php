@@ -1272,7 +1272,7 @@ EOD;
                                 <input type="hidden" name="details" value="$description" />
                                 <input type="hidden" name="ext_details" value="" />
                                 <input type="hidden" name="pay_way" value="privat24" />
-                                <input type="hidden" name="return_url" value="$resultUrl" />
+                                <input type="hidden" name="return_url" value="$resultUrl?payment=privat24" />
                                 <input type="hidden" name="server_url" value="$serverUrl" />
                                 <button type="submit">Перейти</button>
                                 </form>
@@ -1281,9 +1281,9 @@ EOD;
                 break;
                 case 'webmoney':
                     $price = sprintf('%.2f', $order->getTotalPrice());
-                    $description = 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                    $description = iconv('utf-8', 'windows-1251', 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
                         ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
-                        $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename();
+                        $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename());
                     $webmoneyPurse = $this->container->getParameter('webmoney.purse');
                     $paymentForm = <<< EOD
                         <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" id="payment-form">
@@ -1406,15 +1406,15 @@ EOD;
         $logger->info('POST: ' . var_export($request->request->all(), true));
         $logger->info('GET: ' . var_export($request->query->all(), true));
         $merchantPassword = $this->container->getParameter('privat24.password');
-        if ($request->getMethod() == 'POST' && $this->payPrivat24($request, $merchantPassword)) {
-            $session->getFlashBag()->add('payStatus', 'success');
-            return $this->redirect($this->generateUrl('payment_success'));
-        } elseif ($request->query->get('payment') == 'liqpay' && $request->getMethod() == 'POST' && $this->payLiqpay($request)) {
+        if ($request->query->get('payment') == 'liqpay' && $request->getMethod() == 'POST' && $this->payLiqpay($request)) {
             $session->getFlashBag()->add('payStatus', 'success');
             return $this->redirect($this->generateUrl('payment_success'));
         } elseif ($request->getMethod() == 'POST' && $request->query->get('payment') == 'webmoney' && 1 == $request->request->get('LMI_PREREQUEST')) {
             return $this->processWMPreRequest($request);
         } elseif ($request->getMethod() == 'POST' && $request->query->get('payment') == 'webmoney' && $this->payWebMoney($request)) {
+            $session->getFlashBag()->add('payStatus', 'success');
+            return $this->redirect($this->generateUrl('payment_success'));
+        } elseif ($request->getMethod() == 'POST' && $request->query->get('payment') == 'privat24' && $this->payPrivat24($request, $merchantPassword)) {
             $session->getFlashBag()->add('payStatus', 'success');
             return $this->redirect($this->generateUrl('payment_success'));
         }
@@ -1448,7 +1448,7 @@ EOD;
     protected function processWMPreRequest(Request $request)
     {
         $logger = $this->get('logger');
-        $orderId = $request->request->get('LMI_PAYMENT_NO');
+        $orderId = $request->request->get('id');
         $payeePurse = $request->request->get('LMI_PAYEE_PURSE');
         $payAmount = $request->request->get('LMI_PAYMENT_AMOUNT');
         $webmoneyPurse = $this->container->getParameter('webmoney.purse');
