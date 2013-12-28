@@ -1486,24 +1486,36 @@ EOD;
 
         $receivedHash = $request->request->get('LMI_HASH');
         $calculatedHash = strtoupper(md5($payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId));
-
-        if ($receivedHash === $calculatedHash) {
+        if (is_null($receivedHash)) {
             try {
-                $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($internalOrderId);
-                $order->setPayStatus(1);
-                $order->setPayDate(new \DateTime($wmOrderDate));
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($order);
-                $em->flush();
-                $logger->info('WM payment succeeded!');
-            } catch(Exception $e) {
-                $logger->error('Exception received in update order on WM answer: ' .$e->getMessage());
+                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($internalOrderId);
+                    if (1 === $order->getPayStatus())
+                        return true;
+                    else
+                        return false;
+                } catch(Exception $e) {
+                    $logger->error('Exception received in success redirect Webmoney payment: ' .$e->getMessage());
+                    return false;
+                }
+        } else {
+            if ($receivedHash === $calculatedHash) {
+                try {
+                    $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($internalOrderId);
+                    $order->setPayStatus(1);
+                    $order->setPayDate(new \DateTime($wmOrderDate));
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($order);
+                    $em->flush();
+                    $logger->info('WM payment succeeded!');
+                } catch(Exception $e) {
+                    $logger->error('Exception received in update order on WM answer: ' .$e->getMessage());
+                    return false;
+                }
+            } else {
+                $logger->error('WM payment hashes does not match! Received hash:' . $receivedHash . ' Calculated hash:' . $calculatedHash . 'POST data:' . var_export($request->request->all(), true));
                 return false;
             }
-        } else {
-            $logger->error('WM payment hashes does not match! Received hash:' . $receivedHash . ' Calculated hash:' . $calculatedHash . 'POST data:' . var_export($request->request->all()), true);
             return false;
         }
-        return false;
     }
 }
