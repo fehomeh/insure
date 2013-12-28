@@ -984,7 +984,7 @@ class DefaultController extends Controller
             'callback_form' => $feedbackForm->createView(),
         ));
     }
-    
+
     public function faqAction()
     {
         $feedbackForm = $this->createForm(new FeedbackType());
@@ -1024,7 +1024,7 @@ class DefaultController extends Controller
             'feedback_form' => $feedbackForm->createView(),
             'callback_form' => $feedbackForm->createView(),
         ));
-    }   
+    }
     public function clearSessionData($session)
     {
         $session->remove('carBrand');
@@ -1281,14 +1281,14 @@ EOD;
                 break;
                 case 'webmoney':
                     $price = sprintf('%.2f', $order->getTotalPrice());
-                    $description = iconv('utf-8', 'windows-1251', 'Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                    $description = base64_encode('Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
                         ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
                         $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename());
                     $webmoneyPurse = $this->container->getParameter('webmoney.purse');
                     $paymentForm = <<< EOD
                         <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" id="payment-form">
                         <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{$price}">
-                        <input type="hidden" name="LMI_PAYMENT_DESC" value="{$description}">
+                        <input type="hidden" name="LMI_PAYMENT_DESC_BASE64" value="{$description}">
                         <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoneyPurse}">
                         <input type="hidden" name="id" value="{$order->getId()}">
                         <input type="hidden" name="email" size="15" value="{$order->getUser()->getEmail()}">
@@ -1483,9 +1483,9 @@ EOD;
         $payerPurse = $request->request->get('LMI_PAYER_PURSE');
         $payerWMId = $request->request->get('LMI_PAYER_WM');
         $internalOrderId = $request->request->get('id');
-        
+
         $receivedHash = $request->request->get('LMI_HASH');
-        $calculatedHash = $payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId;
+        $calculatedHash = strtoupper(md5($payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId));
 
         if ($receivedHash === $calculatedHash) {
             try {
@@ -1501,7 +1501,7 @@ EOD;
                 return false;
             }
         } else {
-            $logger->error('WM payment hashes does not match');
+            $logger->error('WM payment hashes does not match! Received hash:' . $receivedHash . ' Calculated hash:' . $calculatedHash . 'POST data:' . var_export($request->request->all()), true);
             return false;
         }
         return false;
