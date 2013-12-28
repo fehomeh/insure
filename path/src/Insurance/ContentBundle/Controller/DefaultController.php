@@ -1400,7 +1400,6 @@ EOD;
     {
         $session = $request->getSession();
         $logger = $this->get('logger');
-        $logger->info('Payment success page visited.');
         $logger->info('Method: ' . var_export($request->getMethod(), true));
         $logger->info('Host: ' . var_export($request->getHost(), true));
         $logger->info('POST: ' . var_export($request->request->all(), true));
@@ -1487,9 +1486,10 @@ EOD;
         $receivedHash = $request->request->get('LMI_HASH');
         $calculatedHash = strtoupper(md5($payeePurse.$payAmount.$orderId.$mode.$wmInvId.$wmOrderId.$wmOrderDate.$secretKey.$payerPurse.$payerWMId));
         if (is_null($receivedHash)) {
+            $logger->info('webmoney success redirection');
             try {
                     $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($internalOrderId);
-                    if (1 === $order->getPayStatus())
+                    if (true === $order->getPayStatus())
                         return true;
                     else
                         return false;
