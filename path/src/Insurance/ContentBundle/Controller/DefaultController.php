@@ -648,7 +648,7 @@ class DefaultController extends Controller
                             case 'terminal':
                                 $this->sendNotification($order);
                                 $session->set('payType', 'terminal');
-                                return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('pay_redirect'))));
+                                return $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                             case 'plastic':
                             case 'privat_card':
                                 $session->set('payType', 'plastic');
