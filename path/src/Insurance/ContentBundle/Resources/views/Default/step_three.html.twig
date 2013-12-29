@@ -227,7 +227,7 @@
     }
     $('#region').on('dataavailable', loadCities);
     $('#regionList li').on('click', selectCity);
-    $('.payment_point').on('click', function (){
+    $('.payment_point').bind('click', function (){
         $('#payType').val($(this).find('.ico').attr('id'));
         if ($(this).find('.ico').attr('id') == 'cash' || $(this).find('.ico').attr('id') == 'terminal') {
             $('.pay_now').hide();
@@ -282,9 +282,8 @@
 
     function processOrder() {
         if (!checkForm()) {
-            $('.pay_now').hide();
-            $('.pay_later').hide();
-            $('.payment_container').hide();
+			$('.pay_now,.pay_later').hide();
+			$('.payment_point').unbind('click');
             $('.inline-preloader').show();
             $.ajax($('#payment-form').attr('action'), {
                 dataType: 'JSON',
