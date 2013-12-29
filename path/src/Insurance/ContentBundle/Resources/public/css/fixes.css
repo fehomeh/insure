@@ -407,6 +407,7 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
 }	
 
 .inline-preloader {
+	margin-top: 20px;
 	text-align: center;
 	display:none;
 }
