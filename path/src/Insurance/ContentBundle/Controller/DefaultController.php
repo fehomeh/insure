@@ -1306,7 +1306,7 @@ EOD;
                     $paymentForm = <<< EOD
                         <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" id="payment-form">
                         <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{$price}">
-                        <input type="hidden" name=" LMI_ALLOW_SDP" value="8">
+                        <input type="hidden" name="LMI_ALLOW_SDP" value="8">
                         <input type="hidden" name="LMI_PAYMENT_DESC_BASE64" value="{$description}">
                         <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoneyPurse}">
                         <input type="hidden" name="id" value="{$order->getId()}">
