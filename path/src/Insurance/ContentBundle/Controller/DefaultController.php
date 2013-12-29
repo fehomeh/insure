@@ -648,7 +648,7 @@ class DefaultController extends Controller
                             case 'terminal':
                                 $this->sendNotification($order);
                                 $session->set('payType', 'terminal');
-                                return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('finish'))));
+                                return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('pay_redirect'))));
                             case 'plastic':
                             case 'privat_card':
                                 $session->set('payType', 'plastic');
@@ -1508,8 +1508,10 @@ EOD;
             $logger->info('webmoney success redirection');
             try {
                     $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($internalOrderId);
-                    if (true === $order->getPayStatus())
+                    if (true === $order->getPayStatus()) {
+                        $session->set('orderId', $order->getId());
                         return true;
+                    }
                     else
                         return false;
                 } catch(Exception $e) {
