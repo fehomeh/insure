@@ -1489,6 +1489,7 @@ EOD;
 
     protected function payWebMoney(Request $request)
     {
+        $session = $request->getSession();
         $logger = $this->get('logger');
         $orderId = $request->request->get('LMI_PAYMENT_NO');
         $payeePurse = $request->request->get('LMI_PAYEE_PURSE');
