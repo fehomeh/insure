@@ -1297,6 +1297,25 @@ EOD;
 EOD;
                     $error = false;
                 break;
+            case 'terminal':
+                    $price = sprintf('%.2f', $order->getTotalPrice());
+                    $description = base64_encode('Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                        ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
+                        $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename());
+                    $webmoneyPurse = $this->container->getParameter('webmoney.purse');
+                    $paymentForm = <<< EOD
+                        <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" id="payment-form">
+                        <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{$price}">
+                        <input type="hidden" name=" LMI_ALLOW_SDP" value="8">
+                        <input type="hidden" name="LMI_PAYMENT_DESC_BASE64" value="{$description}">
+                        <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoneyPurse}">
+                        <input type="hidden" name="id" value="{$order->getId()}">
+                        <input type="hidden" name="email" size="15" value="{$order->getUser()->getEmail()}">
+                        <input type="submit" value="Перейти">
+                        </form>
+EOD;
+                    $error = false;
+                break;
                 default:
                     $paymentForm = 'Что-то пошло не так...';
                 break;
