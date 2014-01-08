@@ -18,21 +18,21 @@
         </div>
         <div class="control_point{% if form.email.vars.errors|length > 0%} error{% endif %}">
             {{ form_label(form.email) }}
-            {{ form_widget(form.email, { 'attr': { 'placeholder': "Введите Ваш e-mail"} }) }}
+            {{ form_widget(form.email, { 'attr': { 'placeholder': "Введите e-mail адрес"} }) }}
             <div class="success ico"></div>
             <div class="error ico"></div>
             <div class="error_text">{{- form_errors(form.email)|trim(', ') -}}</div>
         </div>
         <div class="control_point{% if form.plainPassword.first.vars.errors|length > 0%} error{% endif %}">
             {{ form_label(form.plainPassword.first) }}
-            {{ form_widget(form.plainPassword.first) }}
+            {{ form_widget(form.plainPassword.first, { 'attr': { 'placeholder': "Введите пароль"} }) }}
             <div class="success ico"></div>
             <div class="error ico"></div>
             <div class="error_text">{{- form_errors(form.plainPassword.first)|trim(', ') -}}</div>
         </div>
         <div class="control_point{% if form.plainPassword.second.vars.errors|length > 0%} error{% endif %}">
             {{ form_label(form.plainPassword.second) }}
-            {{ form_widget(form.plainPassword.second) }}
+            {{ form_widget(form.plainPassword.second, { 'attr': { 'placeholder': "Подтвердите пароль"} }) }}
             <div class="success ico"></div>
             <div class="error ico"></div>
             <div class="error_text">{{- form_errors(form.plainPassword.second)|trim(', ') -}}</div>
@@ -41,11 +41,11 @@
             <input type="checkbox" class="styled" id="subscribe" checked="checked"/>
             <label for="subscribe" class="check_label">Согласен получать рассылку о новостях и акциях сервиса</label>
         </div>
-        <div class="control_point">
+        <!-- <div class="control_point">
             <input type="checkbox" class="styled" id="accept" />
             <label for="accept" class="check_label">Согласен с <a href="">пользовательским соглашением</a></label>
             <div class="error_text_quest_reg"><span></span>Подтвердите Ваше согласие с пользовательским соглашением</div>
-        </div>
+        </div> -->
         {{ form_widget(form._token) }}
         <div class="green_button register">Продолжить</div>
 		<div class="modal_preloader">

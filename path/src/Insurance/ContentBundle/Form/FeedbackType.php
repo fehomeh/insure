@@ -13,7 +13,7 @@ class FeedbackType extends AbstractType
         $builder
             ->add('name', null, array('label' => 'Ваше имя:',
                 'attr' => array(
-                    'placeholder' => 'Введите Ваше имя',
+                    'placeholder' => 'Введите имя',
                 ),
             ))
             ->add('phoneNumber', null, array('label' => 'Номер телефона:',
