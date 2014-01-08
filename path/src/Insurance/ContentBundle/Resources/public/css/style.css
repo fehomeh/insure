@@ -914,7 +914,7 @@ footer {
 .econom_box {
   position: relative;
   height: 96px;
-  padding: 0 47px;
+  padding: 0 30px;
   margin-top:30px;
   margin-bottom: 30px; }
   .econom_box .shadow {
@@ -2490,7 +2490,7 @@ form.personal_data span.add_info {
     float: left;
     height: 86px;
     width: 155px;
-    margin: 0 2px;
+    margin: 0 0.14em;
     position: relative;
     cursor: pointer;
     background-color: #fefefe;
