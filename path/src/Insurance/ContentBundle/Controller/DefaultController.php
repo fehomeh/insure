@@ -648,7 +648,7 @@ class DefaultController extends Controller
                             case 'terminal':
                                 $this->sendNotification($order);
                                 $session->set('payType', 'terminal');
-                                return $response->setContent(json_encode(array('message' => 'redirect', $this->generateUrl('finish'))));
+                                return $response->setContent(json_encode(array('message' => 'redirect', 'url' => $this->generateUrl('pay_redirect'))));
                             case 'plastic':
                             case 'privat_card':
                                 $session->set('payType', 'plastic');
@@ -1297,6 +1297,24 @@ EOD;
 EOD;
                     $error = false;
                 break;
+            case 'terminal':
+                    $price = sprintf('%.2f', $order->getTotalPrice());
+                    $description = base64_encode('Полис ОСАГО '. $order->getPolicy()->getSerie() .'№' . $order->getPolicy()->getValue() .
+                        ($order->getPriceDgo() >0 ?', ДГО':''). ($order->getPriceNs() >0 ?', НС':'') . ', ' .
+                        $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename());
+                    $webmoneyPurse = $this->container->getParameter('webmoney.purse');
+                    $paymentForm = <<< EOD
+                        <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp?at=authtype_13" id="payment-form">
+                        <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{$price}">
+                        <input type="hidden" name="LMI_PAYMENT_DESC_BASE64" value="{$description}">
+                        <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoneyPurse}">
+                        <input type="hidden" name="id" value="{$order->getId()}">
+                        <input type="hidden" name="email" size="15" value="{$order->getUser()->getEmail()}">
+                        <input type="submit" value="Перейти">
+                        </form>
+EOD;
+                    $error = false;
+                break;
                 default:
                     $paymentForm = 'Что-то пошло не так...';
                 break;
@@ -1470,6 +1488,7 @@ EOD;
 
     protected function payWebMoney(Request $request)
     {
+        $session = $request->getSession();
         $logger = $this->get('logger');
         $orderId = $request->request->get('LMI_PAYMENT_NO');
         $payeePurse = $request->request->get('LMI_PAYEE_PURSE');
@@ -1489,8 +1508,10 @@ EOD;
             $logger->info('webmoney success redirection');
             try {
                     $order = $this->getDoctrine()->getRepository('InsuranceContentBundle:InsuranceOrder')->findOneById($internalOrderId);
-                    if (true === $order->getPayStatus())
+                    if (true === $order->getPayStatus()) {
+                        $session->set('orderId', $order->getId());
                         return true;
+                    }
                     else
                         return false;
                 } catch(Exception $e) {
