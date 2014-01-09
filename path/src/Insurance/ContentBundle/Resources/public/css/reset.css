@@ -77,7 +77,6 @@ box-sizing:border-box;
 }
 
 html, body {
-    height: 100%;
     background-color: #FFF;
     background-image: url(../images/inner_bg.jpg);
     background-position: top center;
@@ -85,6 +84,7 @@ html, body {
 }
 
 body.index{
+	height: 100%;
     background-image: url(../images/index_bg.jpg);
 }
 
