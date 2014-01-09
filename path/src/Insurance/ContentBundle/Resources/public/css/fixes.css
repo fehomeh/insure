@@ -555,16 +555,16 @@ margin-top: -10px;
 .pop_up_date {
   position: absolute;
   z-index: 3;
-  left: 510px;
-  top: 189px;
+  left: 505px;
+  top: 184px;
   width: 405px;
-  height: 50px;
+  height: 61px;
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
-  padding: 10px;
-  background-color: #f4fae6;
+  padding: 7px 10px;
+  background-color: #fceacc;
   -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
@@ -580,20 +580,20 @@ margin-top: -10px;
     position: absolute;
     top: 50%;
     left: -10px;
-	margin-top: -15px;
-    border-top: 15px solid rgba(0, 0, 0, 0);
+	margin-top: -10px;
+    border-top: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid #cccccc;
-    border-bottom: 15px solid rgba(0, 0, 0, 0); }
+    border-bottom: 10px solid rgba(0, 0, 0, 0); }
 
   .pop_up_date:after {
     content: "";
     position: absolute;
     top: 50%;
     left: -9px;
-	margin-top: -15px;
-    border-top: 15px solid rgba(0, 0, 0, 0);
-    border-right: 10px solid #f4fae6;
-    border-bottom: 15px solid rgba(0, 0, 0, 0); }
+	margin-top: -10px;
+    border-top: 10px solid rgba(0, 0, 0, 0);
+    border-right: 10px solid #fceacc;
+    border-bottom: 10px solid rgba(0, 0, 0, 0); }
 	
 .ui-datepicker {
 	width: 202px;

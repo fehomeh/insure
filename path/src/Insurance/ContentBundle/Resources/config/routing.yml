@@ -31,7 +31,7 @@ feedback_create:
     defaults: { _controller: "InsuranceContentBundle:Default:createFeedback" }
     requirements: { _method: POST }
 step1:
-    pattern: /calculate/osago
+    pattern: /calculator/osago
     defaults: { _controller: InsuranceContentBundle:Default:calculator }
 get_discount:
     pattern: /get-discount.htm
