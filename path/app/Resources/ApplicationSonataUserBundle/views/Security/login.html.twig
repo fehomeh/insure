@@ -1,6 +1,6 @@
 <div class="modal" id="login_modal">
     <div class="close"></div>
-    <div class="title">Войти в офис</div>
+    <div class="title">Авторизация</div>
     <!--<div class="social">
         <a href="" class="vk">Войти через VK</a>
         <a href="" class="fb">Войти через FB</a>
@@ -8,7 +8,7 @@
     <form class="modal_form" action="{{ path("fos_user_security_check") }}" method="post" id="login-form">
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
         <div class="common_error" style="display: none;">Во время авторизации что-то пошло не так. Перезагрузите страницу и попробуйте снова!</div>
-		<div class="error_login" style="display: none;">Возможно Вы ввели неправильный E-mail или пароль, попробуйте пожалуйста еще раз.</div>
+		<div class="error_login" style="display: none;">Не получается войти, попробуйте пожалуйста еще раз.</div>
         <div class="control_point">
             <label for="username">E-mail</label>
             <input type="text" placeholder="Ваш E-mail" id="username" name="_username" value="{{ last_username }}" required="required"/>
