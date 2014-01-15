@@ -1304,10 +1304,11 @@ EOD;
                         $order->getSurname() . ' ' . $order->getFirstname() . ' ' . $order->getMiddlename());
                     $webmoneyPurse = $this->container->getParameter('webmoney.purse');
                     $paymentForm = <<< EOD
-                        <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp?at=authtype_13" id="payment-form">
+                        <form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp?at=authtype_7" id="payment-form">
                         <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{$price}">
                         <input type="hidden" name="LMI_PAYMENT_DESC_BASE64" value="{$description}">
                         <input type="hidden" name="LMI_PAYEE_PURSE" value="{$webmoneyPurse}">
+                        <input type="hidden" name="LMI_ALLOW_SDP" value="8">
                         <input type="hidden" name="id" value="{$order->getId()}">
                         <input type="hidden" name="email" size="15" value="{$order->getUser()->getEmail()}">
                         <input type="submit" value="Перейти">
