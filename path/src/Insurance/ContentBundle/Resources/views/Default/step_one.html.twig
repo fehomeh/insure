@@ -1,4 +1,4 @@
-{%block title %}Калькулятор ОСАГО - Рассчитать стоимость онлайн{% endblock %}
+{%block title %}Калькулятор ОСАГО - Рассчитать стоимость Автогражданки (Автоцивилки){% endblock %}
 {% extends 'InsuranceContentBundle::base.html.twig'%}
 {# calculator #}
 {%block head_scripts %}
@@ -114,7 +114,7 @@ $(function() {
                             <div class="sub_text">Итого:</div>
                             <div class="white_box itog">грн.</div>
                             <!-- buttons -->
-                            <div class="form_now">Оформить сейчас</div>
+                            <div class="form_now">Оформить online</div>
                             <div class="sub_text center">или</div>
                             <div class="orange_button call_link">Консультация с менеджером</div>
                             <div class="orange_button save-calculation">Сохранить расчет</div>
@@ -379,7 +379,7 @@ $(function() {
                                         </div>
                                         <input type="checkbox" class="styled" id="respons" name="cbDGO" value="yes"{% if app.session.get('dgoSum')%} checked="checked"{% endif %}/>
                                     <label for="respons">
-                                        Добровольную гражданскую ответственность
+                                        Добровольную гражданскую ответственность (ДГО)
                                         <div class="question_ico">
                                           <div class="pop_up">
                                             <div class="popup_title">Разширение ответственности</div>

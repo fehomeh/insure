@@ -1072,13 +1072,11 @@ margin-left:10px;
 .text_content .contact_left {
 	margin-left: 0px;
 	display: inline-block;
+	height: 240px;
 }
 
 .text_content .contact_left .call_center {
-	margin-bottom: 25px;
-	border-bottom: 1px solid #E3E3E3;
-	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 1.0);
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
 
 .text_content .contact_left .office {
@@ -1122,6 +1120,10 @@ margin-left:10px;
 	float: right;
 	display: inline-block;
 }
+
+/*------------------------------------------------------------------------------------------- */
+
+
 .payment-form {
     /*display: none;*/
 }
