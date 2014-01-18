@@ -737,7 +737,6 @@ line-height: 28px;
 /*------------------------------------------------------------------------------------------- */
 .orange_button.clear_all {
   position: absolute;
-  top: 2px;
   text-transform: uppercase!important;
   font-size: 12px; 
   margin-right: 0;}
