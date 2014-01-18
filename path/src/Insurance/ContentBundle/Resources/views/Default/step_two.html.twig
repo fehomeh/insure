@@ -41,10 +41,10 @@
                     <form class="modal_form personal_data" action="{{path('step2')}}" id="identity-form" method="POST">
                         <!-- polis_date -->
                         <div class="grey_area polis_date">
-                            <div class="label">Полис начнет действовать:</div>
-                            <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ '+2 days'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
+                            <div class="label">Дата начала действия полиса:</div>
+                            <div class="date"><input type="text" value="{% if app.session.get('activeFrom') %}{% else %}{{ '+1 days'|date('d.m.Y') }}{% endif %}" name="activeFrom" id="activeFrom"/><span></span></div>
 							<div class="pop_up_date">
-                                    <b>Начиная с послезавтра.</b> Если Вам нужно, чтобы полис начал действовать раньше, пожалуйста позвоните нам для согласования.
+                                    <b>Обратите внимание!</b> Полис может начать действовать не ранее, чем мы получим от Вас оплату. Просим учесть это при установке даты.
                                 </div>
 
                         </div>
@@ -77,7 +77,13 @@
                         <!-- person_info -->
                         <div class="grey_area person_info">
                             <div class="title">
-                                <div class="label">Страхователь:</div>
+                                <div class="label">Страхователь:
+									<div class="question_ico">
+										<div class="pop_up">
+											Страхователь - лицо на которое оформлятся страховой полис.
+										</div>
+									</div>
+								</div>
                                 {% if (registerPersons) %}
 								<div class="right_part">
                                     <div class="combo person">
@@ -389,7 +395,7 @@
     $.datepicker.setDefaults($.datepicker.regional[ "ru" ]);
     $('#activeFrom').datepicker({
     dateFormat: 'dd.mm.yy',
-    minDate: +2
+    minDate: +1
     });
 	$('#birthDate').datepicker({
     dateFormat: 'dd.mm.yy',

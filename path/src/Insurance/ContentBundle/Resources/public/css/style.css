@@ -1943,7 +1943,11 @@ form.modal_form {
     font-weight: bold;
     display: inline-block;
     float: left;
-    margin-right: 15px; }
+    margin-right: 15px; 
+	position: relative;}
+	.grey_area .label .question_ico {
+    top: -5px;
+    right: -22px; }
   .grey_area .title {
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -2210,7 +2214,8 @@ form.personal_data span.add_info {
 /*----------------------------------------- PERSON INFO ------------------------------------- */
 /*------------------------------------------------------------------------------------------- */
 .person_info .label {
-  line-height: 30px; }
+  line-height: 30px; 
+  display: inline-block;}
 .person_info .right_part {
   display: inline-block;
   height: 30px;
