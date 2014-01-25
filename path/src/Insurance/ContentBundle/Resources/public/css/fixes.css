@@ -455,66 +455,35 @@ form.personal_data .control_point .error_text_box_quest, .fos_user_registration_
   position: absolute;
   z-index: 3;
   left: 26px;
-  top: -13px;
-  width: 240px;
+  top: -20px;
+  width: 260px;
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   padding: 10px;
   background-color: #f4fae6;
-  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
+  border: 2px solid rgb(65, 158, 0);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   color: black;
-  line-height: 15px;
-  font-weight: 500;
-  display: none; }
+  line-height: 16px;
+  font-weight: 400;
+  display: none; 
+  cursor: default;}
 
-  .pop_up_total:before {
-    content: "";
-    position: absolute;
-    top: 11px;
-    left: -10px;
-    border-top: 10px solid rgba(0, 0, 0, 0);
-    border-right: 10px solid #cccccc;
-    border-bottom: 10px solid rgba(0, 0, 0, 0); }
 
   .pop_up_total:after {
     content: "";
     position: absolute;
-    top: 11px;
-    left: -9px;
+    top: 16px;
+    left: -10px;
     border-top: 10px solid rgba(0, 0, 0, 0);
-    border-right: 10px solid #f4fae6;
+    border-right: 10px solid rgb(65, 158, 0);
     border-bottom: 10px solid rgba(0, 0, 0, 0); }
 
 
-.fixed_pop_up {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 17px;
-  left: 680px;
-    width: 318px;
-  background-color: #fceacc;
-  }
 
-.fixed_pop_up:before {
-    content: "";
-    position: absolute;
-    left: -10px;
-top:50%;
-margin-top: -10px;
-  }
-  .fixed_pop_up:after {
-    content: "";
-    position: absolute;
-    left: -9px;
-top:50%;
-margin-top: -10px;
- }
 
  
 /*------------------------------------------------------------------------------------------- */
@@ -741,12 +710,6 @@ line-height: 28px;
   font-size: 12px; 
   margin-right: 0;}
 
-.calculator_content aside .sidebar_title {
-      font-family: "robotoregular", 'arialblack', Helvetica, sans-serif;
-      font-size: 18px;
-      color: black;
-      margin-bottom: 20px;
-      font-weight: 600;	  } 
   
 .before_calc {
   font-family: Arial, Helvetica, sans-serif;
@@ -786,7 +749,8 @@ line-height: 28px;
 }
 
 .calculator_content aside .sub_text {
-      margin: 20px 0 0 0; }
+      margin: 20px 0 10px; }
+	  
 .calculator_content aside .sub_text.center {
         text-align: center;
         margin: 3px 0 10px 0; }
@@ -1012,7 +976,7 @@ margin-left:10px;
 	font-family: Arial Bold, Helvetica, sans-serif;
     font-size: 16px;
     cursor:pointer;
-	font-weight: 600;
+	font-weight: 700;
 	color: #ffa600;
 	border-bottom: 1px dashed #ffa600;
 	margin:0 5px 10px;

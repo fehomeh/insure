@@ -4,10 +4,10 @@ parameters:
     admin.emails: ['polisvit@gmail.com','e.kuguk@gmail.com']
     email.send.from: 'noreply@polismarket.com.ua'
     email.name: 'PolisMarket'
-    site.name: 'Страховое агенство "ПОЛИСМАРКЕТ"'
+    site.name: 'Страховое агентство "PolisMarket"'
     site.domain: 'polismarket.com.ua'
     contact.email: 'support@polismarket.com.ua'
-    contact.phone: '(067)426-44-11'
+    contact.phone: '(067) 426-44-11'
     savings: #show user fake money savings
         date.start: '30.07.2013' #initial date to start count
         initial.sum: 12345 #initial money amount

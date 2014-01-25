@@ -30,7 +30,7 @@ header {
    top: -20px;
    font-family: 'arialblack', Helvetica, sans-serif;
    font-size: 15px;
-   font-weight: 600;
+   font-weight: 700;
    text-transform: uppercase;
    letter-spacing:0.20em;
    color: #b0b0b0;
@@ -101,7 +101,7 @@ header {
       font-size: 12px;
       color: #5e5e5e;
       font-family: Arial, Helvetica, sans-serif;
-      font-weight: 600;
+      font-weight: 700;
       display: inline-block;
       float: left;
       border-radius: 5px;
@@ -1286,7 +1286,7 @@ footer {
 	font-weight: normal;
 	margin: 10px 0 10px;
 	padding: 0;
-	font-weight: 600;
+	font-weight: 700;
 	color: #ffa600;
 	font-style: normal;
 }
@@ -1309,7 +1309,7 @@ footer {
 	font-family: Arial Bold, Helvetica, sans-serif;
     font-size: 16px;
     cursor:pointer;
-	font-weight: 600;
+	font-weight: 700;
 	color: #ffa600;
 	border-bottom: 1px dashed #ffa600;
 	-webkit-transition: all 300ms ease;
@@ -1689,7 +1689,7 @@ form.modal_form {
   -moz-border-radius: 5px;
   -khtml-border-radius: 5px;
   position: relative;
-  padding-left: 20px;
+  padding: 0 10px 0 10px;
   margin-bottom: 20px; }
   .navigation .shadow {
     position: absolute;
@@ -1725,7 +1725,7 @@ form.modal_form {
     .navigation .step_point .arrow {
       width: 25px;
       height: 38px;
-      margin-left: 10px;
+      margin-left: 25px;
       display: inline-block;
       background-image: url(../images/sprite.png);
       background-position: -210px -379px;
@@ -1786,14 +1786,14 @@ form.modal_form {
     display: inline-block;
     float: left; }
     .total .sum .question_ico {
-      top: 8px;
-      right: -12px; }
+      top: 12px;
+      right: -14px; }
   .total .orange_button {
     float: right;
     font-size: 14px; }
 
 .orange_button {
-  font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
+  font-family: "robotoBlack", Helvetica, sans-serif;
   font-size: 13px;
   color: white;
   text-transform: uppercase;
@@ -1841,66 +1841,77 @@ form.modal_form {
   position: absolute;
   z-index: 3;
   left: -25px;
-  bottom: 25px;
-  width: 240px;
+  bottom: 27px;
+  width: 249px;
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   padding: 10px;
   background-color: #f4fae6;
-  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
+  border: 2px solid rgb(65, 158, 0);
+  /*-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);*/
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  color: black;
-  line-height: 14px;
+  font-size: 14px;
+  color: #424242;
+  line-height: 16px;
   font-weight: 400;
-  display: none; }
+  display: none; 
+  cursor: default;}
   .pop_up .popup_title {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     color: black;
     font-weight: bold;
-    margin-bottom: 5px; }
-  .pop_up:before {
-    content: "";
-    position: absolute;
-    bottom: -10px;
-    left: 23px;
-    border-top: 10px solid #cccccc;
-    border-left: 10px solid rgba(0, 0, 0, 0);
-    border-right: 10px solid rgba(0, 0, 0, 0); }
+    margin-bottom: 7px; 
+	border-bottom: 1px dashed black;
+	padding-bottom: 4px;}
+  
+    .pop_up  a {
+	font-size: 12px;
+	color: #ffa600;
+	border-bottom: 1px dashed #ffa600;
+	-webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+	transition:  all 300ms ease;
+  }
+  .pop_up  a:hover {
+    border-bottom: 0 none;
+	color:#3F3F3F; 
+  }
+  
   .pop_up:after {
     content: "";
     position: absolute;
-    bottom: -9px;
-    left: 23px;
-    border-top: 10px solid #f4fae6;
+    bottom: -11px;
+    left: 21px;
+    border-top: 10px solid rgb(65, 158, 0);
     border-left: 10px solid rgba(0, 0, 0, 0);
     border-right: 10px solid rgba(0, 0, 0, 0); }
 
 .fixed_pop_up {
   position: absolute;
   z-index: 3;
-  left: 655px;
-  width: 240px;
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   padding: 10px;
-  background-color: #fceacc;
   -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 11px;
   color: black;
-  line-height: 14px;
-  font-weight: 400;
-  display: block; }
+  display: block; 
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 17px;
+  left: 680px;
+  width: 318px;
+  background-color: #fceacc;}
   .fixed_pop_up .popup_title {
     font-family: 'arialblack', Helvetica, sans-serif;
     font-size: 12px;
@@ -1911,15 +1922,17 @@ form.modal_form {
     content: "";
     position: absolute;
     left: -10px;
-    top: 20px;
-    border-right: 10px solid #cccccc;
+	top:50%;
+	margin-top: -10px;
+	border-right: 10px solid #cccccc;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-bottom: 10px solid rgba(0, 0, 0, 0); }
   .fixed_pop_up:after {
     content: "";
     position: absolute;
     left: -9px;
-    top: 20px;
+	top:50%;
+	margin-top: -10px;
     border-right: 10px solid #fceacc;
     border-top: 10px solid rgba(0, 0, 0, 0);
     border-bottom: 10px solid rgba(0, 0, 0, 0); }
@@ -1946,7 +1959,7 @@ form.modal_form {
     margin-right: 15px; 
 	position: relative;}
 	.grey_area .label .question_ico {
-    top: -5px;
+    top: 0px;
     right: -22px; }
   .grey_area .title {
     padding-bottom: 20px;
@@ -2011,7 +2024,7 @@ form.modal_form {
   font-family: "Arial", Helvetica, sans-serif !important;
   font-size: 16px !important;
   line-height: 1.8em;
-  font-weight: 600;
+  font-weight: 700;
   color: #fff; }
 
 .ui-datepicker  {
@@ -2605,10 +2618,11 @@ form.personal_data span.add_info {
     -khtml-border-radius: 6px;
     padding: 15px; }
     .calculator_content aside .sidebar_title {
-      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
-      font-size: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
       color: black;
-      margin-bottom: 20px; }
+      margin-bottom: 20px; 
+	  font-weight: 700;	  }
     .calculator_content aside .white_box {
       height: 52px;
       line-height: 52px;
@@ -2659,7 +2673,7 @@ form.personal_data span.add_info {
           background-position: -265px -455px; }
       .calculator_content aside .white_box.discount {
         color: #ff5151;
-        font-weight: 600;
+        font-weight: 700;
         font-style: italic; }
         .calculator_content aside .white_box.discount .price {
           color: #ff5151;
@@ -2722,7 +2736,7 @@ form.personal_data span.add_info {
     -khtml-border-radius: 6px;
     font-size: 18px;
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     position: relative;
     margin-bottom: 20px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4); }
@@ -2796,7 +2810,7 @@ form.personal_data span.add_info {
   .combo.wide .current {
     font-style: normal;
     font-size: 16px;
-    font-weight: 600; }
+    font-weight: 700; }
   .combo.wide .close_scroll {
     width: 21px;
     height: 21px;
@@ -2886,8 +2900,7 @@ form.personal_data span.add_info {
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px;
       -khtml-border-radius: 6px;
-      font-weight: bold;
-      font-family: "robotoBlack", 'arialblack', Helvetica, sans-serif;
+      font-family: 'ArialBlack', Helvetica, sans-serif;
       font-size: 16px;
       color: #507e0e;
       line-height: 18px; }
