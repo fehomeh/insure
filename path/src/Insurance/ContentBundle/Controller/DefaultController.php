@@ -870,7 +870,7 @@ class DefaultController extends Controller
             $user = $this->get('security.context')->getToken()->getUser();
             $to = $user->getEmail();
             $message = \Swift_Message::newInstance()
-                ->setSubject(strtoupper($siteDomain) . ': Ваш заказ принят!')
+                ->setSubject(strtoupper($siteDomain) . ': Ваш расчет сохранен!')
                 ->setFrom(array($from => $emailName))
                 ->setTo($to)
                 ->setBody(

@@ -79,8 +79,8 @@ $(function() {
 {% block content %}
 <section class="content">
                 <div class="limit">
-                    <h1>Расчет стоимости полиса ОСАГО онлайн</h1>
-                    <div class="orange_button clear_all">Очистить все</div>
+                    <h1>Расчет стоимости полиса ОСАГО (Автогражданки)</h1>
+                    <div class="orange_button clear_all">Сбросить расчет</div>
                     <div class="calculator_content">
 
                         <aside class="">
@@ -245,7 +245,7 @@ $(function() {
                                 <div class="fixed_pop_up">
                                     Выберите место регистрации Вашего автомобиля
                                 </div>
-                                <div class="param_name">Место регистрации:</div>
+                                <div class="param_name">Место регистрации ТС:</div>
                                 <div class="combo one_column">
                                     <div class="current">{% if app.session.get('registerRegion') %}
                                         {% for region in regions%} {% if region.id == app.session.get('registerRegion')%}{{region.value}}{% endif %}{% endfor %}{% else %}Выбрать область{% endif %}</div>
@@ -298,7 +298,7 @@ $(function() {
                             <!-- -->
                             <div class="box_line term">
 							<div class="fixed_pop_up">
-                                        Если Вы страхуетесь меньше чем на 8 месяцев, скидка Бонус-Малус не начисляется
+                                        Обратите внимание, что скидка действует при сроке страхования от 8 мес.
                                     </div>
                                 <div class="param_name">Срок страхования:</div>
                                 <div class="combo one_column">
@@ -382,8 +382,9 @@ $(function() {
                                         Добровольную гражданскую ответственность (ДГО)
                                         <div class="question_ico">
                                           <div class="pop_up">
-                                            <div class="popup_title">Разширение ответственности</div>
-                                            Вы можете увеличить лимит отвественности при нанесении вреда третьим лицам.
+                                            <div class="popup_title">Расширение страховой суммы</div>
+                                            В некоторых случаях страховой суммы по ОСАГО может не хватить для выплаты потерпевшему. Поэтому Вы можете дополнительно увеличить страховую сумму за счет дополнительного полиса ДГО. Оформляется только вместе с основным полисом ОСАГО.
+											<a href="{{path('osago-info')}}">Подробнее</a>
                                           </div>
                                         </div>
                                     </label>
@@ -421,8 +422,8 @@ $(function() {
                                         <div class="question_ico">
                                           <div class="pop_up">
                                             <div class="popup_title">Личная безопастность</div>
-                                            Страхование водителя и пассажиров от несчастных случаев в результате ДТП.<br/>
-											Для этого выберите количество пассажиров и страховую сумму для каждого.
+                                            Страхование от несчастного случая - это добровольный вид страхования, цель которого возместить водителю и пассажирам убытки, связанные со здоровьем, на случай ДТП. Вам нужно выбрать количество страхуемых пассажиров помимо водителя и страховую сумму для каждого.
+											<a href="{{path('osago-info')}}">Подробнее</a>
                                           </div>
                                         </div>
                                     </label>
@@ -907,7 +908,7 @@ $(function() {
                 if (data.message == 'success') {
                     //Show success window
                     $('#success_modal .inform_title').text('Ваш расчет сохранен!');
-                    $('#success_modal .inform_text').text('При следующем посещении сайта, на странице калькулятора Вы увидите свой сохраненный расчет для полиса ОСАГО');
+                    $('#success_modal .inform_text').text('На Ваш e-mail была отправлена ссылка на сохраненный расчет.');
                     $('#success_modal .form_green_button').unbind('click');
                     $('#success_modal .form_grey_button').unbind('click');
                     $('#success_modal .form_green_button').on('click', function (){
