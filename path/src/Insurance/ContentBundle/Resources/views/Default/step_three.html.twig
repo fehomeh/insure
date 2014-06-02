@@ -154,26 +154,26 @@
                                     <div id="cash" class="ico cash"></div>
                                     <div class="text"><b>Наличными</b> курьеру</div>
                                 </div>
-                                <!--<div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%}">
+                                <div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%} none">
                                     <div id="plastic" class="ico plastic"></div>
                                     <div class="text"><b>Пластиковая</b> карта</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'privat_card'%} current{%endif%}">
+                                <div class="payment_point{% if app.session.get('payType') == 'privat_card'%} current{%endif%} none">
                                     <div id="privat_card" class="ico privat_card"></div>
                                     <div class="text"><b>Карта</b> Приват Банка</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%}">
+                                <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%} none">
                                     <div id="privat24" class="ico privat24"></div>
                                     <div class="text"><b>Приват 24</b></div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%}">
+                                <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%} none">
                                     <div id="terminal" class="ico terminal"></div>
                                     <div class="text"><b>Терминалы</b> оплаты</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%}">
+                                <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%} none">
                                     <div id="webmoney" class="ico webmoney"></div>
                                     <div class="text"><b>Webmoney</b></div>
-                                </div>-->
+                                </div>
                                 <div style="clear: both;"></div>
                             </div>
                             <input type="hidden" id="payType" name="payType" value="{% if app.session.get('payType') is null %}cash{% else %}{{app.session.get('payType')}}{% endif %}"/>
