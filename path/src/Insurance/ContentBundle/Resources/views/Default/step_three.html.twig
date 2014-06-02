@@ -154,23 +154,23 @@
                                     <div id="cash" class="ico cash"></div>
                                     <div class="text"><b>Наличными</b> курьеру</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%} none">
+                                <div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%}">
                                     <div id="plastic" class="ico plastic"></div>
                                     <div class="text"><b>Пластиковая</b> карта</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'privat_card'%} current{%endif%} none">
+                                <div class="payment_point{% if app.session.get('payType') == 'privat_card'%} current{%endif%}">
                                     <div id="privat_card" class="ico privat_card"></div>
                                     <div class="text"><b>Карта</b> Приват Банка</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%} none">
+                                <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%}">
                                     <div id="privat24" class="ico privat24"></div>
                                     <div class="text"><b>Приват 24</b></div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%} none">
+                                <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%}">
                                     <div id="terminal" class="ico terminal"></div>
                                     <div class="text"><b>Терминалы</b> оплаты</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%} none">
+                                <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%}">
                                     <div id="webmoney" class="ico webmoney"></div>
                                     <div class="text"><b>Webmoney</b></div>
                                 </div>
@@ -227,16 +227,16 @@
     }
     $('#region').on('dataavailable', loadCities);
     $('#regionList li').on('click', selectCity);
-    //$('.payment_point').bind('click', function (){
-        //$('#payType').val($(this).find('.ico').attr('id'));
-        //if ($(this).find('.ico').attr('id') == 'cash' || $(this).find('.ico').attr('id') == 'terminal') {
-            //$('.pay_now').hide();
-            //$('.pay_later').show();
-        //} else {
-            //$('.pay_now').show();
-            //$('.pay_later').hide();
-        //}
-    //});
+    $('.payment_point').bind('click', function (){
+        $('#payType').val($(this).find('.ico').attr('id'));
+        if ($(this).find('.ico').attr('id') == 'cash' || $(this).find('.ico').attr('id') == 'terminal') {
+            $('.pay_now').hide();
+            $('.pay_later').show();
+        } else {
+            $('.pay_now').show();
+            $('.pay_later').hide();
+        }
+    });
 
     function checkForm() {
         var errors = {};
