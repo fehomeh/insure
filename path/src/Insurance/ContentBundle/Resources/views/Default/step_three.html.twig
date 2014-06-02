@@ -154,7 +154,7 @@
                                     <div id="cash" class="ico cash"></div>
                                     <div class="text"><b>Наличными</b> курьеру</div>
                                 </div>
-                                <div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%}">
+                                <!--<div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%}">
                                     <div id="plastic" class="ico plastic"></div>
                                     <div class="text"><b>Пластиковая</b> карта</div>
                                 </div>
@@ -173,7 +173,7 @@
                                 <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%}">
                                     <div id="webmoney" class="ico webmoney"></div>
                                     <div class="text"><b>Webmoney</b></div>
-                                </div>
+                                </div>-->
                                 <div style="clear: both;"></div>
                             </div>
                             <input type="hidden" id="payType" name="payType" value="{% if app.session.get('payType') is null %}cash{% else %}{{app.session.get('payType')}}{% endif %}"/>
