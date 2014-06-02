@@ -183,11 +183,11 @@
                                 <div class="price">{{(app.session.get('price') + app.session.get('priceDGO')+ app.session.get('priceNs'))|number_format(2, ',', ' ')}} грн.</div>
                             </div>
                             <!-- buttons -->
-                            <div class="pay_now"{% if app.session.get('payType') == 'terminal' or app.session.get('payType') == 'cash' or app.session.get('payType') is null %} style="display: none;"{% endif %}>
+                            <div class="pay_now"{% if <!--app.session.get('payType') == 'terminal' or -->app.session.get('payType') == 'cash' or app.session.get('payType') is null %} style="display: none;"{% endif %}>
                                 <!--<div class="form_green_button success_link">Оплатить сейчас</div>-->
                                 <div class="form_grey_button error_link">! Онлайн оплата временно недоступна. Пожалуйста, выберите, оплату наличными.</div>
                             </div>
-                            <div class="pay_later"{% if app.session.get('payType') != 'terminal' and app.session.get('payType') != 'cash' and app.session.get('payType') is not null %} style="display: none;"{% endif %}>
+                            <div class="pay_later"{% if <!--app.session.get('payType') != 'terminal' and -->app.session.get('payType') != 'cash' and app.session.get('payType') is not null %} style="display: none;"{% endif %}>
                                 <div class="form_green_button">Подтвердить заказ</div>
                                 <div class="form_grey_button">Отложить решение</div>
                             </div>
