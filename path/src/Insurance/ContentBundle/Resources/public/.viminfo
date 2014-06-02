@@ -1,0 +1,198 @@
+# Этот файл viminfo автоматически создан Vim 7.2.
+# Его можно (осторожно!) редактировать.
+
+# Значение опции 'encoding' в момент записи файла
+*encoding=utf-8
+
+
+# hlsearch on (H) or off (h):
+~H
+# Командная строка, история (начиная от свежего к старому):
+:q
+:wq
+:w
+
+# Строка поиска, история (начиная от свежего к старому):
+
+# Выражение, история (начиная от свежего к старому):
+
+# Строка ввода, история (начиная от свежего к старому):
+
+# Строка ввода, история (начиная от свежего к старому):
+
+# Регистры:
+""-	CHAR	0
+	PolisMarket
+
+# Глобальные отметки:
+'0  5  4  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/config/parameters.yml
+'1  6  53  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/config/parameters.yml
+'2  77  6  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Admin/InsuranceOrderAdmin.php
+'3  1  0  /var/www/html/polismarket/.git/MERGE_MSG
+'4  1  0  /tmp/crontab.LIJzmd
+'5  2  89  /tmp/crontab.TNX1ac
+'6  1  0  /tmp/crontab.OCUmlp
+'7  1  0  /etc/crontab
+'8  1  0  /etc/cron.daily/logrotate
+'9  28  0  /etc/cron.daily/makewhatis.cron
+
+# Список прыжков (сначала более свежие):
+-'  5  4  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/config/parameters.yml
+-'  6  4  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/config/parameters.yml
+-'  1  0  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/config/parameters.yml
+-'  77  6  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Admin/InsuranceOrderAdmin.php
+-'  1  0  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Admin/InsuranceOrderAdmin.php
+-'  1  0  /var/www/html/polismarket/.git/MERGE_MSG
+-'  1  0  /tmp/crontab.LIJzmd
+-'  2  89  /tmp/crontab.TNX1ac
+-'  1  0  /tmp/crontab.TNX1ac
+-'  1  0  /tmp/crontab.OCUmlp
+-'  1  0  /etc/crontab
+-'  1  0  /etc/cron.daily/logrotate
+-'  28  0  /etc/cron.daily/makewhatis.cron
+-'  1  0  /etc/cron.daily/makewhatis.cron
+-'  1  0  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/views/Default/finish.html.twig
+-'  1  1  /var/www/html/polismarket/path/app/config/parameters.yml
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  1  1  /var/www/html/polismarket/path/app/config/parameters.yml
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  1  1  /var/www/html/polismarket/path/app/config/parameters.yml
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  1  1  /var/www/html/polismarket/path/app/config/parameters.yml
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  1  0  /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/views/Default/finish.html.twig
+-'  1  1  /var/www/html/polismarket/path/app/config/parameters.yml
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  1  1  /var/www/html/polismarket/path/app/config/parameters.yml
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  2  4  /etc/nginx/conf.d/default.conf
+-'  1  0  /etc/nginx/conf.d/default.conf
+-'  1  1  /var/www/html/polismarket/path/app/config/parameters.yml
+-'  136  0  /etc/nginx/nginx.conf
+-'  1  0  /etc/nginx/nginx.conf
+
+# История местных отметок (от более свежих к старым):
+
+> /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/config/parameters.yml
+	"	5	4
+	^	5	33
+	.	5	30
+	+	6	21
+	+	5	30
+
+> /var/www/html/polismarket/path/src/Insurance/ContentBundle/Admin/InsuranceOrderAdmin.php
+	"	77	6
+	^	77	7
+	.	77	6
+	+	77	6
+
+> /var/www/html/polismarket/.git/MERGE_MSG
+	"	1	0
+
+> /tmp/crontab.LIJzmd
+	"	1	0
+
+> /tmp/crontab.TNX1ac
+	"	2	89
+	^	2	90
+	.	2	72
+	+	2	72
+
+> /tmp/crontab.OCUmlp
+	"	1	0
+
+> /etc/crontab
+	"	1	0
+
+> /etc/cron.daily/logrotate
+	"	1	0
+
+> /etc/cron.daily/makewhatis.cron
+	"	28	0
+
+> /var/www/html/polismarket/path/src/Insurance/ContentBundle/Resources/views/Default/finish.html.twig
+	"	1	0
+
+> /var/www/html/polismarket/path/app/config/parameters.yml
+	"	1	1
+	.	1	0
+	+	1	0
+
+> /etc/nginx/nginx.conf
+	"	136	0
+	^	136	1
+	.	114	2
+	+	114	2
+	+	115	2
+	+	116	2
+	+	119	3
+	+	120	3
+	+	119	3
+	+	114	2
+
+> /etc/nginx/conf.d/default.conf
+	"	2	4
