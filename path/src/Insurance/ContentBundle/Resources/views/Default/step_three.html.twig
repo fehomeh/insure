@@ -155,24 +155,24 @@
                                     <div class="text"><b>Наличными</b> курьеру</div>
                                 </div>
                                 <div class="payment_point{% if app.session.get('payType') == 'plastic'%} current{%endif%}">
-                                    <!-- <div id="plastic" class="ico plastic"></div>
-                                    <div class="text"><b>Пластиковая</b> карта</div>-->
+                                    <div id="plastic" class="ico plastic"></div>
+                                    <div class="text"><b>Пластиковая</b> карта</div>
                                 </div>
                                 <div class="payment_point{% if app.session.get('payType') == 'privat_card'%} current{%endif%}">
-                                    <!-- <div id="privat_card" class="ico privat_card"></div>
-                                    <div class="text"><b>Карта</b> Приват Банка</div>-->
+                                    <div id="privat_card" class="ico privat_card"></div>
+                                    <div class="text"><b>Карта</b> Приват Банка</div>
                                 </div>
                                 <div class="payment_point{% if app.session.get('payType') == 'privat24'%} current{%endif%}">
-                                    <!-- <div id="privat24" class="ico privat24"></div>-->
+                                    <div id="privat24" class="ico privat24"></div>
                                     <div class="text"><b>Приват 24</b></div>
                                 </div>
                                 <div class="payment_point{% if app.session.get('payType') == 'terminal' %} current{%endif%}">
-                                    <!-- <div id="terminal" class="ico terminal"></div>
-                                    <div class="text"><b>Терминалы</b> оплаты</div>-->
+                                    <div id="terminal" class="ico terminal"></div>
+                                    <div class="text"><b>Терминалы</b> оплаты</div>
                                 </div>
                                 <div class="payment_point{% if app.session.get('payType') == 'webmoney'%} current{%endif%}">
-                                    <!-- <div id="webmoney" class="ico webmoney"></div>
-                                    <div class="text"><b>Webmoney</b></div>-->
+                                    <div id="webmoney" class="ico webmoney"></div>
+                                    <div class="text"><b>Webmoney</b></div>
                                 </div>
                                 <div style="clear: both;"></div>
                             </div>
@@ -184,8 +184,8 @@
                             </div>
                             <!-- buttons -->
                             <div class="pay_now"{% if app.session.get('payType') == 'terminal' or app.session.get('payType') == 'cash' or app.session.get('payType') is null %} style="display: none;"{% endif %}>
-                                <div class="form_green_button success_link">Оплатить сейчас</div>
-                                <div class="form_grey_button error_link">Оплатить позже</div>
+                                <!--<div class="form_green_button success_link">Оплатить сейчас</div>-->
+                                <div class="form_grey_button error_link">! Онлайн оплата временно недоступна. Пожалуйста, выберите, оплату наличными.</div>
                             </div>
                             <div class="pay_later"{% if app.session.get('payType') != 'terminal' and app.session.get('payType') != 'cash' and app.session.get('payType') is not null %} style="display: none;"{% endif %}>
                                 <div class="form_green_button">Подтвердить заказ</div>
