@@ -188,7 +188,7 @@ $(function() {
                             <!-- -->
                             <div class="box_line year{%if (app.session.get('carAge')) or app.session.get('carModel') %} focus{% endif %}"{%if (app.session.get('carAge')) is null and app.session.get('carModel') is null %} style="display:none;"{% endif %}>
                                 <div class="fixed_pop_up">
-                                    Выберите год выпуска Вашего автомобиля. Вы получаете скидку от 3% до 25% в зависимости от возраста автомобиля.
+                                    Выберите год выпуска Вашего автомобиля. Вы получаете скидку от 3% до 20% в зависимости от возраста автомобиля.
                                 </div>
                                 <div class="param_name">Год выпуска:</div>
                                 <ul form-input-id="carAge" class="list" id="carAgeList">
@@ -206,11 +206,11 @@ $(function() {
                                 <div style="clear: both;"></div>
                                 <input type="hidden" name="carAge" id="carAge" value="{% if (app.session.get('carAge'))%}{{app.session.get('carAge')}}{% endif %}">
                                 {% if app.session.get('carAge') is null %}
-                                <div class="discount">Ваша<br /> скидка<span>0%</span></div>
+                                <div class="discount">Ваша<br /> скидка<span>3%</span></div>
                                 {% else %}
                                 {% set discount = ('now'|date('Y') - app.session.get('carAge'))*5%}
-                                    {% if discount > 25%}
-                                    <div class="discount">Ваша<br /> скидка<span>-25%</span></div>
+                                    {% if discount > 20%}
+                                    <div class="discount">Ваша<br /> скидка<span>-20%</span></div>
                                     {% else %}
                                     <div class="discount">Ваша<br /> скидка<span>-{{discount}}%</span></div>
                                     {% endif %}
@@ -528,7 +528,7 @@ $(function() {
                 $('#scrollbar2').tinyscrollbar({ sizethumb: 47 });
                 var discount = (date.getFullYear() - $(this).attr('data-value')) * 5;
                 if ((date.getFullYear() - $(this).attr('data-value')) == 0) discount = 3;
-                if (discount > 25) discount = 25;
+                if (discount > 20) discount = 20;
                 if ($('#insuranceTerm').val() <=7) discount = 0;
                 if (discount > 0)
                     $('.discount span').text('-' + discount + '%');
