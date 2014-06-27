@@ -185,7 +185,7 @@
                             <!-- buttons -->
                             <div class="pay_now"{% if app.session.get('payType') == 'terminal' or app.session.get('payType') == 'cash' or app.session.get('payType') is null %} style="display: none;"{% endif %}>
                                 <div class="form_green_button success_link">Оплатить сейчас</div>
-                                <div class="form_grey_button error_link">Оплатить позже</div>
+                                <div class="form_grey_button error_link">Оплатить позжеее</div>
                             </div>
                             <div class="pay_later"{% if app.session.get('payType') != 'terminal' and app.session.get('payType') != 'cash' and app.session.get('payType') is not null %} style="display: none;"{% endif %}>
                                 <div class="form_green_button">Подтвердить заказ</div>
