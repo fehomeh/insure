@@ -91,7 +91,7 @@ class Calculator {
         $this->setCompany($fields['company'])
           ->setRateType('base');
         $k1Obj = $this->getRate($fields['region'], 'region');
-        if ($k1Obj === null) $k1 = 1;
+        if ($k1Obj === null) $k1 = 1.3;
             else $k1 = $k1Obj->getValue();
         $k2Obj = $this->getRate($fields['displacement'], 'displacement');
         if ($k2Obj === null) $k2 = 1;
