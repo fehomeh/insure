@@ -385,3 +385,42 @@ head -2 /proc/slabinfo; cat /proc/slabinfo  | egrep dentry\|inode
 free
 vmstat
  df -h
+cd pmpath/
+cd /pmpath
+git add.
+git add .
+git commit -m 'закрыть онлайн оплату'
+ls
+git push
+git pull
+rm -rf app/cache/prod/
+git pull
+php app/console assets:install
+git pull
+php app/console assets:install
+git pull
+php app/console assets:install
+git add .
+git pull
+php app/console assets:install
+git pull
+php app/console assets:install
+cd /pmpath
+git pull
+php app/console assets:install
+git pull
+php app/console assets:install
+git pull
+php app/console assets:install
+git pull
+php app/console assets:install
+git status
+git checkout master
+git reset --hard HEAD 7abfe0343cac05de9787f808c513a4bd7a04f382
+git checkout master
+git pull
+php app/console assets:install
+php app/console cache:clear
+cd /pmpath
+php app/console cache:clear
+chown -R apache:apache /pmpath/app/cache/ /pmpath/app/logs/
