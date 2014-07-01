@@ -463,7 +463,7 @@ footer {
 	  font-family: 'robotoregular', Arial, Helvetica, sans-serif;
 	  color: #5c5c5c;}
     footer .bottom_part .counter_container {
-      width: 266px;
+      width: 306;
       margin-right: 60px;
       float: right; 
 	  display: inline-block;
@@ -478,10 +478,19 @@ footer {
 	  margin-right: 4px;
 	  display: inline-block;
 	}
-	footer .bottom_part .counter_container span.webmoney {
+	footer .bottom_part .counter_container span.webmoney1 {
 	width: 88px;
-	height: 34px;
-	background-image: url(../images/webmoney.png);
+	height: 32px;
+	background-image: url(../images/acc_blue_on_transp_ru.png);
+      background-repeat: no-repeat;
+      background-color: transparent;
+	  margin-right: 4px;
+	  display: inline-block;
+	}
+	footer .bottom_part .counter_container span.webmoney2 {
+	width: 88px;
+	height: 32px;
+	background-image: url(../images/v_blue_on_transp_ru.png);
       background-repeat: no-repeat;
       background-color: transparent;
 	  margin-right: 4px;
